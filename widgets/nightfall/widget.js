@@ -42,7 +42,7 @@ const widgetSettings = {
 
   // Other Settings
   max_tile_width: widgetStyle.max_tile_width,
-  margin: widgetStyle.margin, // 10px
+  margin: widgetStyle.margin,
   // click_through_url_select: widgetStyle.click_through_url, // done: [EXPAND] || [ORIGINAL_URL] || [NONE] || [CUSTOM]
   click_through_url: widgetStyle.click_through_url,
   load_more_type: widgetStyle.load_more_type, // button || scroll
