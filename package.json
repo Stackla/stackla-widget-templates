@@ -30,5 +30,5 @@
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
-  },
+  }
 }
