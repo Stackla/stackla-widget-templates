@@ -15,13 +15,13 @@ widgetTitle.innerHTML = title;
 sdk.querySelector('.container').prepend(widgetTitle);
 const widgetSettings = {
   // Widget Status
-  enabled: enabled, // to do: enabled
+  enabled: enabled,
   name: widgetStyle.name, 
 
   // Content Rules
   minimal_tiles: widgetStyle.minimal_tiles,
-  auto_refresh: widgetStyle.auto_refresh, // to-do
-  unavailable_products_behaviour: widgetStyle.unavailable_products_behaviour, // done
+  auto_refresh: widgetStyle.auto_refresh,
+  unavailable_products_behaviour: widgetStyle.unavailable_products_behaviour,
   enable_custom_tiles_per_page: widgetStyle.enable_custom_tiles_per_page, // screen size to show 
   rows_per_page: widgetStyle.rows_per_page,
   tiles_per_page: widgetStyle.tiles_per_page,
