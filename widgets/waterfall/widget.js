@@ -81,7 +81,6 @@ const showWidget = ugcTiles && ugcTilesLength > widgetSettings.minimal_tiles;
 const urlPattern = /^https?:\/\/.+/;
 sdk.addLoadedComponents([
   "https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js",
-  "https://assetscdn.stackla.com/media/js/common/stackla_tile_decorator.js",
   'https://static.addtoany.com/menu/page.js',
   'https://platform-api.sharethis.com/js/sharethis.js#property=66503b7a2b0bca00199fbe95&product=inline-share-buttons&source=platform',
 ]);
@@ -271,6 +270,49 @@ if (widgetSettings.load_more_type === 'button') {
   });
 }
 
+const _getTimephrase = (timestamp) => {
+  var now, then, diff, timeNumber, timeWord;
+
+  if (!timestamp) {
+    return 'just now';
+  }
+  now = Math.round(new Date().getTime() / 1000);
+  then = Math.round(timestamp);
+  if (isNaN(then)) {
+    return 'a while ago';
+  }
+  diff = now - then;
+  timeNumber = diff;
+  timeWord = '';
+
+  if (diff >= 2592000) {
+    // = 30 days, an estimate
+    timeNumber = Math.round(diff / 2592000);
+    timeWord = 'month';
+  } else if (diff >= 604800) {
+    timeNumber = Math.round(diff / 604800);
+    timeWord = 'week';
+  } else if (diff >= 86400) {
+    timeNumber = Math.round(diff / 86400);
+    timeWord = 'day';
+  } else if (diff >= 3600) {
+    timeNumber = Math.round(diff / 3600);
+    timeWord = 'hour';
+  } else if (diff >= 60) {
+    timeNumber = Math.round(diff / 60);
+    timeWord = 'minute';
+  } else if (diff > 0) {
+    timeNumber = diff;
+    timeWord = 'second';
+  } else {
+    return 'just now';
+  }
+
+  if (timeNumber !== 1) {
+    timeWord += 's'; // add an 's' if not just one. 2second -> 2seconds.
+  }
+  return timeNumber + ' ' + timeWord + ' ago';
+};
 sdk.addEventListener("load", () => {
   const autoRefreshTime = 60000;
   sdk.masonry = new Masonry(sdk.querySelector(".ugc-tiles"), {
@@ -594,7 +636,7 @@ const customExpandedTileTemplate = (sdk) => {
                                 }
                             </div>
                         </div>
-                        <div class="tile-timestamp">${tile.source_created_at && widgetSettings.expanded_tile_show_timestamp ? window.StacklaTileDecorator._getTimephrase(tile.source_created_at) : ""}</div>
+                        <div class="tile-timestamp">${tile.source_created_at && widgetSettings.expanded_tile_show_timestamp ? _getTimephrase(tile.source_created_at) : ""}</div>
                         <div class="caption">
                             <p class="caption-paragraph">${
                               (tile.message && widgetSettings.expanded_tile_show_caption) ? tile.message : ""

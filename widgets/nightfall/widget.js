@@ -80,7 +80,6 @@ const showWidget = ugcTiles && ugcTilesLength > widgetSettings.minimal_tiles;
 const urlPattern = /^https?:\/\/.+/;
 sdk.addLoadedComponents([
   "https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js",
-  "https://assetscdn.stackla.com/media/js/common/stackla_tile_decorator.js",
   'https://platform-api.sharethis.com/js/sharethis.js#property=66503b7a2b0bca00199fbe95&product=inline-share-buttons&source=platform',
   'https://static.addtoany.com/menu/page.js'
 ]);
@@ -299,7 +298,7 @@ const _getTimephrase = (timestamp) => {
     timeWord += 's'; // add an 's' if not just one. 2second -> 2seconds.
   }
   return timeNumber + ' ' + timeWord + ' ago';
-}
+};
 sdk.addEventListener("load", () => {
   sdk.masonry = new Masonry(sdk.querySelector(".ugc-tiles"), {
     itemSelector: ".ugc-tile",

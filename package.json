@@ -17,9 +17,18 @@
     "eslint-config-stylelint": "^21.0.0",
     "eslint-plugin-css": "^0.9.2",
     "eslint-plugin-promise": "^6.2.0",
+    "husky": "^9.0.11",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-prettier": "^5.0.0",
     "typescript": "^5.5.0"
-  }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
+  },
 }
