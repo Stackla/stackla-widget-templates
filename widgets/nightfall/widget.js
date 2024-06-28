@@ -21,7 +21,7 @@ const widgetSettings = {
   // Content Rules
   minimal_tiles: widgetStyle.minimal_tiles,
   auto_refresh: widgetStyle.auto_refresh,
-  unavailable_products_behaviour: widgetStyle.unavailable_products_behaviour, // done
+  unavailable_products_behaviour: widgetStyle.unavailable_products_behaviour,
   enable_custom_tiles_per_page: widgetStyle.enable_custom_tiles_per_page, // screen size to show 
   rows_per_page: widgetStyle.rows_per_page,
   tiles_per_page: widgetStyle.tiles_per_page,
