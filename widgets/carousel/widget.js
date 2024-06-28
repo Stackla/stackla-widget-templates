@@ -15,7 +15,7 @@ widgetTitle.innerHTML = title;
 // sdk.querySelector('.container').prepend(widgetTitle);
 const widgetSettings = {
   // Widget Status
-  enabled: enabled, // to do: enabled
+  enabled: enabled,
   name: widgetStyle.name,
 
   // Content Rules
