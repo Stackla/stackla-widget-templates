@@ -5,7 +5,6 @@ const {
   enabled,
   widgetOptions
 } = widgetContainer;
-asdfasdf;
 const {
   widgetStyle,
   widgetConfig
