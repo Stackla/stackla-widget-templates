@@ -1,5 +1,5 @@
 const widgetContainer = sdk.placement.getWidgetContainer();
-
+assertDeclareFunction;
 const {
   title,
   enabled,
