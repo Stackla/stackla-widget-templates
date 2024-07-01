@@ -24,10 +24,5 @@
     "stylelint-config-standard": "^36.0.1",
     "stylelint-prettier": "^5.0.0",
     "typescript": "^5.5.0"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix"
-    ]
   }
 }

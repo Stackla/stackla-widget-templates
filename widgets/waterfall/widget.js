@@ -1,11 +1,10 @@
 const widgetContainer = sdk.placement.getWidgetContainer();
-assertDeclareFunction;
+
 const {
   title,
   enabled,
   widgetOptions
 } = widgetContainer;
-assertDeclareFunction;
 const {
   widgetStyle,
   widgetConfig
