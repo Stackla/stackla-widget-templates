@@ -5,6 +5,7 @@ const {
   enabled,
   widgetOptions
 } = widgetContainer;
+assertDeclareFunction;
 const {
   widgetStyle,
   widgetConfig
