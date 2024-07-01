@@ -12,7 +12,7 @@ const {
 } = widgetOptions;
 let widgetTitle = document.createElement('p');
 widgetTitle.innerHTML = title;
-// sdk.querySelector('.container').prepend(widgetTitle);
+sdk.querySelector('.container').prepend(widgetTitle);
 const widgetSettings = {
   // Widget Status
   enabled: enabled,
