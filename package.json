@@ -19,7 +19,7 @@
     "@happy-dom/jest-environment": "^14.12.3",
     "@stackla/eslint-config": "^1.0.0",
     "@stackla/jest-config": "^1.0.6",
-    "@stackla/types": "^0.0.19",
+    "@stackla/ugc-widgets": "^0.0.30",
     "@types/glidejs__glide": "^3.6.5",
     "@types/jest": "^29.5.12",
     "@types/masonry-layout": "^4.2.8",

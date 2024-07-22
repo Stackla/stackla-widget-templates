@@ -27,6 +27,6 @@
       "skipLibCheck": true,
       "resolveJsonModule": true
     },
-    "include": ["widgets/**/*.ts"],
+    "include": ["widgets/**/*.ts", "shims.d.ts"],
     "exclude": []
   }

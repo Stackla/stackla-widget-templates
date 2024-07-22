@@ -1,4 +1,4 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 
 const EVENT_LOAD_MORE = "moreLoad";
 const EVENT_LOAD_LESS = "lessLoad";

@@ -1,4 +1,4 @@
-import type { Sdk, Tile } from "@stackla/types";
+import type { Sdk, Tile } from "@stackla/ugc-widgets";
 
 declare const sdk: Sdk;
 

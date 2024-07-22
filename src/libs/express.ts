@@ -1,6 +1,6 @@
 import express from 'express';
 import 'hbs';
-import { WidgetRequest } from '@stackla/types';
+import { WidgetRequest } from '@stackla/ugc-widgets';
 import cors from 'cors';
 import path from 'path';
 import { readFileSync } from "fs";

@@ -1,4 +1,4 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 import { IWidgetSettings } from "../../types/IWidgetSettings";
 import Glide from "@glidejs/glide";
 import { getConfig } from "./widget.config";

@@ -18,8 +18,9 @@ import { addCSSVariablesToPlacement } from "widgets/libs/widget.layout";
 import expandedTileCSS from "./components/expanded-tile/base.scss";
 import productsCSS from "./components/products/base.scss";
 import shopspotStyle from "./components/shopspot-icon/base.scss";
-import customExpandedTileTemplate from "./components/expanded-tile/base.template";
+import customExpandedTileTemplate from "./components/expanded-tile/base.template.hbs";
 import getCSSVariables from "widgets/libs/css-variables";
+import { getTimephrase } from "widgets/libs/tile.lib";
 
 declare const sdk: ISdkMasonry;
 
@@ -50,4 +51,18 @@ sdk.addEventListener("tilesUpdated", () => refreshMasonryLayout());
 sdk.addCSSToComponent(expandedTileCSS, "expanded-tile");
 sdk.addCSSToComponent(productsCSS, "ugc-products");
 sdk.addCSSToComponent(shopspotStyle, "shopspot-icon");
-sdk.addTemplateToComponent(customExpandedTileTemplate, "expanded-tile");
+
+sdk.addTemplateToComponent(customExpandedTileTemplate, async () => {
+  const tile = sdk.tiles.getTile();
+  return {
+    shopspotEnabled: sdk.isComponentLoaded('shopspots'),
+    productsEnabled: sdk.isComponentLoaded('products'),
+    parent: sdk.getNodeId() || '',
+    tile: sdk.tiles.getTile(),
+    showTimestamp: tile && tile.source_created_at && widgetSettings.expanded_tile_show_timestamp,
+    timephrase: tile && getTimephrase(tile.source_created_at),
+    showCaption: tile && tile.message && widgetSettings.expanded_tile_show_caption,
+    showSharing: widgetSettings.expanded_tile_show_sharing
+  }
+},
+"expanded-tile");

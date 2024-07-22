@@ -1,4 +1,4 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 
 export default (sdk: Sdk) => {
   const tile = sdk.tiles.getTile();

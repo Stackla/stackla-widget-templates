@@ -1,4 +1,4 @@
-import type { Sdk, Hotspot } from "@stackla/types";
+import type { Sdk, Hotspot } from "@stackla/ugc-widgets";
 export default function shopspotFlyoutTemplate(sdk: Sdk): string {
   const shopspots = sdk.tiles.getShopspotsFromTile();
 

@@ -1,7 +1,7 @@
 declare const sdk: Sdk;
 
 import { getConfig } from "./widget.config";
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 import {
   initializeMasonry,
   loadMoreMasonryTiles,
@@ -17,13 +17,14 @@ import {
 } from "widgets/libs/widget.features";
 import { loadExpandSettingComponents } from "widgets/libs/widget.components";
 import { IWidgetSettings } from "types/IWidgetSettings";
-import customExpandedTileTemplate from "./components/expanded-tile/base.template";
+import customExpandedTileTemplate from "./components/expanded-tile/base.template.hbs";
 import customExpandedTileCSS from "./components/expanded-tile/base.scss";
 import customProductsCSS from "./components/products/base.scss";
 import shopspotStyle from "./components/shopspot-icon/base.scss";
 import getCSSVariables from "../libs/css-variables";
 import { addCSSVariablesToPlacement } from "widgets/libs/widget.layout";
 import { onTileClose } from "./widget.listeners";
+import { getTimephrase } from "widgets/libs/tile.lib";
 
 sdk.tiles.setLoadMode("all");
 sdk.tiles.hideBrokenTiles = true;
@@ -54,4 +55,19 @@ sdk.addEventListener("tilesUpdated", () => refreshMasonryLayout());
 sdk.addCSSToComponent(customExpandedTileCSS, "expanded-tile");
 sdk.addCSSToComponent(customProductsCSS, "ugc-products");
 sdk.addCSSToComponent(shopspotStyle, "shopspot-icon");
-sdk.addTemplateToComponent(customExpandedTileTemplate, "expanded-tile");
+
+sdk.addTemplateToComponent(customExpandedTileTemplate, async () => {
+  const tile = sdk.tiles.getTile();
+
+  return {
+    shopspotEnabled: sdk.isComponentLoaded('shopspots'),
+    productsEnabled: sdk.isComponentLoaded('products'),
+    parent: sdk.getNodeId() || '',
+    tile: sdk.tiles.getTile(),
+    showTimestamp: tile && tile.source_created_at && widgetSettings.expanded_tile_show_timestamp,
+    timephrase: tile && getTimephrase(tile.source_created_at),
+    showCaption: tile && tile.message && widgetSettings.expanded_tile_show_caption,
+    showSharing: widgetSettings.expanded_tile_show_sharing
+  }
+},
+"expanded-tile");

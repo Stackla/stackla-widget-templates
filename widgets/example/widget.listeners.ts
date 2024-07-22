@@ -1,4 +1,4 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 import { getLoadLessButton, getLoadMoreButton } from "./widget.buttons";
 
 declare const sdk: Sdk;

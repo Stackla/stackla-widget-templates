@@ -4,6 +4,7 @@ dist
 .esbuild
 cypress/videos
 cypress/screenshots
-*.d.ts
+widgets/**/*.d.ts
+src/**/*.d.ts
 *.map
 cypress/support/e2e.js

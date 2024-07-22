@@ -1,4 +1,4 @@
-import { Tile } from "@stackla/types";
+import { Tile } from "@stackla/ugc-widgets";
 
 const tiles : Tile[] = [
     {

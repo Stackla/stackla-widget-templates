@@ -1,4 +1,4 @@
-import type { Sdk, TagExtended } from "@stackla/types";
+import type { Sdk, TagExtended } from "@stackla/ugc-widgets";
 
 export function getProductHeaderDiv(product: TagExtended): string {
   const { id, tag, custom_url, target, price } = product;

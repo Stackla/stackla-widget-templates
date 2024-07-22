@@ -1,4 +1,4 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 import { initButtons } from "./widget.buttons";
 import { loadListeners } from "./widget.listeners";
 

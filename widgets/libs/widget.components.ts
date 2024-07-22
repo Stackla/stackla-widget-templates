@@ -1,4 +1,4 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 import { BaseConfig } from "types/IBaseConfig";
 
 declare const sdk: Sdk;

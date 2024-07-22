@@ -1,6 +1,6 @@
-import type { Sdk } from "@stackla/types";
+import type { Sdk } from "@stackla/ugc-widgets";
 import { getConfig } from "./widget.config";
-import { expandedTileTemplate } from "./components/expanded-tile/base.template";
+import expandedTileTemplate from "./components/expanded-tile/base.template.hbs";
 import expandedTileStyle from "./components/expanded-tile/base.scss";
 import productsStyle from "./components/products/base.scss";
 import shopspotStyle from "./components/shopspot-icon/base.scss";
@@ -19,6 +19,7 @@ import {
 import { addCSSVariablesToPlacement } from "widgets/libs/widget.layout";
 import { IWidgetSettings } from "types/IWidgetSettings";
 import getCSSVariables from "widgets/libs/css-variables";
+import { getTimephrase } from "widgets/libs/tile.lib";
 
 declare const sdk: Sdk;
 sdk.tiles.preloadImages = true;
@@ -55,4 +56,17 @@ loadHoverTile<IWidgetSettings>(widgetSettings);
 sdk.addCSSToComponent(expandedTileStyle, "expanded-tile");
 sdk.addCSSToComponent(productsStyle, "ugc-products");
 sdk.addCSSToComponent(shopspotStyle, "shopspot-icon");
-sdk.addTemplateToComponent(expandedTileTemplate, "expanded-tile");
+
+sdk.addTemplateToComponent(expandedTileTemplate, async () => {
+  const tile = sdk.tiles.getTile();
+  return {
+    shopspotEnabled: sdk.isComponentLoaded('shopspots'),
+    productsEnabled: sdk.isComponentLoaded('products'),
+    parent: sdk.getNodeId() || '',
+    tile: sdk.tiles.getTile(),
+    showTimestamp: tile && tile.source_created_at && widgetSettings.expanded_tile_show_timestamp,
+    timephrase: tile && getTimephrase(tile.source_created_at),
+    showCaption: tile && tile.message && widgetSettings.expanded_tile_show_caption,
+    showSharing: widgetSettings.expanded_tile_show_sharing,
+  }
+},"expanded-tile");
