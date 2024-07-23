@@ -1,12 +1,13 @@
-import type { Sdk, Hotspot } from "@stackla/types"
-export default function shopspotFlyoutTemplate(sdk: Sdk): string {
-  const shopspots = sdk.tiles.getShopspotsFromTile()
+import type { Sdk } from "@stackla/types"
+
+export default async function shopspotFlyoutTemplate(sdk: Sdk): Promise<string> {
+  const shopspots = await sdk.tiles.getShopspotsFromTile()
 
   if (shopspots.length === 0) {
     return ""
   }
 
-  const shopspotsContainer = shopspots.map((shopspot: Hotspot, index: number) => {
+  const shopspotsContainer = shopspots.map((shopspot, index) => {
     const x = shopspot.coords[0]
     const y = shopspot.coords[1]
     const tagId = shopspot.tag.id
