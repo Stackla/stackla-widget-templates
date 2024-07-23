@@ -24,7 +24,7 @@ import shopspotStyle from "./components/shopspot-icon/base.scss";
 import getCSSVariables from "../libs/css-variables";
 import { addCSSVariablesToPlacement } from "widgets/libs/widget.layout";
 import { onTileClose } from "./widget.listeners";
-import { getTimephrase } from "widgets/libs/tile.lib";
+import { expandedTileView } from "./components/expanded-tile/expanded-tile.view";
 
 sdk.tiles.setLoadMode("all");
 sdk.tiles.hideBrokenTiles = true;
@@ -56,18 +56,4 @@ sdk.addCSSToComponent(customExpandedTileCSS, "expanded-tile");
 sdk.addCSSToComponent(customProductsCSS, "ugc-products");
 sdk.addCSSToComponent(shopspotStyle, "shopspot-icon");
 
-sdk.addTemplateToComponent(customExpandedTileTemplate, async () => {
-  const tile = sdk.tiles.getTile();
-
-  return {
-    shopspotEnabled: sdk.isComponentLoaded('shopspots'),
-    productsEnabled: sdk.isComponentLoaded('products'),
-    parent: sdk.getNodeId() || '',
-    tile: sdk.tiles.getTile(),
-    showTimestamp: tile && tile.source_created_at && widgetSettings.expanded_tile_show_timestamp,
-    timephrase: tile && getTimephrase(tile.source_created_at),
-    showCaption: tile && tile.message && widgetSettings.expanded_tile_show_caption,
-    showSharing: widgetSettings.expanded_tile_show_sharing
-  }
-},
-"expanded-tile");
+sdk.addTemplateToComponent(customExpandedTileTemplate, expandedTileView, "expanded-tile");
