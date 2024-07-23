@@ -1,7 +1,7 @@
 import type { Sdk } from "@stackla/types"
 
 export default (sdk: Sdk) => {
-  const tile = sdk.tiles.getTile()
+  const tile = sdk.tiles.getTile()!
   const shopspotEnabled = sdk.isComponentLoaded("shopspots")
   const productsEnabled = sdk.isComponentLoaded("products")
   const parent = sdk.getNodeId()
