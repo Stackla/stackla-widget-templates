@@ -4,6 +4,7 @@
   "description": "Widget Templates",
   "scripts": {
     "eslint": "eslint widgets/. --fix",
+    "typecheck": "npx tsc",
     "prettier": "prettier '**/*.{js,ts}' --write",
     "stylelint": "stylelint **/*.scss --fix",
     "lint": "npm run eslint && npm run stylelint",

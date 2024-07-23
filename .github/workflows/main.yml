@@ -31,7 +31,9 @@ jobs:
       - uses: Stackla/stackla-github-actions/npm-cache@master
       - name: Build
         run: npm run build
+      - name: Typecheck
+        run: npm run typecheck  
       - name: Lint
         run: npm run lint  
       - name: Test
-        run: npm test
+        run: npm test       
