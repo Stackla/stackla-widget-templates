@@ -35,7 +35,7 @@
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-sass-plugin": "^3.3.1",
     "eslint": "^8.56.0",
-    "eslint-config-stylelint": "^21.0.0",
+    "eslint-config-stylelint": "^22.0.0",
     "eslint-plugin-css": "^0.9.2",
     "eslint-plugin-promise": "^6.2.0",
     "glob": "^11.0.0",
