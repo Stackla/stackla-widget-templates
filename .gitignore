@@ -2,10 +2,70 @@ node_modules
 .idea
 dist
 .esbuild
-cypress/videos
-cypress/screenshots
 *.d.ts
 *.map
 cypress/support/e2e.js
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.localstack
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+/lcov-report
+*.info
+.jest
+
+# IDEs and editors
+.idea/*.xml
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Serverless
+/.build
+/.serverless
+/_warmup
+/_optimize
+.webpack/*
+
+# Local files
+/.env
+secrets.yml
+web
+
+/docs
+
+cypress/support/e2e.d.ts 
+cypress/support/e2e.d.ts.map
+
+serverless.d.ts
+serverless.d.ts.map
+
+src/**/**.d.ts
+src/**/**.map
+
+cypress/videos/*
+cypress/screenshots/*
 .serverless
 server
