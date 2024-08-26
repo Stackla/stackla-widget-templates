@@ -7,7 +7,7 @@ permissions:
   id-token: write
 
 env:
-    GH_TOKEN: ${{ github.token }}
+  GH_TOKEN: ${{ github.token }}
 
 on:
   pull_request:
@@ -32,12 +32,14 @@ jobs:
         with:
           node-version: 20
       - uses: Stackla/stackla-github-actions/npm-cache@master
+      - name: verify and build ugc-widgets deps
+        uses: "./.github/workflows/actions/build-ugc-widgets"
       - name: Build
         run: npm run build
       - name: Typecheck
-        run: npm run typecheck  
+        run: npm run typecheck
       - name: Lint
-        run: npm run lint  
+        run: npm run lint
       - name: Test
         run: npm test
   trigger_deploy:

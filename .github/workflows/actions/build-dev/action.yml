@@ -1,0 +1,12 @@
+name: "Build UGC Widgets"
+description: "Check UGC-Widgets dependency and builds if it refers to Github branch"
+inputs:
+  path: # id of input
+    description: "workspace path"
+    required: true
+outputs:
+  distAvailable: # id of output
+    description: "If the ugc-widgets deps through Github url"
+runs:
+  using: "node20"
+  main: "action.js"

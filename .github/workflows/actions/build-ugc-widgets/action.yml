@@ -1,0 +1,17 @@
+name: "Build ugc-widgets development"
+description: "Checks and builds ugc-widgets deps for development purpose"
+runs:
+  using: "composite"
+  steps:
+    - name: check ugc-widgets deps type
+      id: ugc-widgets-deps-type
+      uses: "./.github/workflows/actions/build-dev"
+      with:
+        path: ${{ github.workspace }}
+
+    - name: build ugc-widgets
+      if: ${{ steps.ugc-widgets-deps-type.outputs.distAvailable != 'true' }}
+      working-directory: "./node_modules/@stackla/ugc-widgets"
+      shell: bash
+      run: |
+        npm run build
