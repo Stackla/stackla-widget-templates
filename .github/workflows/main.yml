@@ -29,6 +29,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4.0.3
+        with:
+          node-version: 22
       - uses: Stackla/stackla-github-actions/npm-cache@master
       - name: verify and build ugc-widgets deps
         uses: "./.github/workflows/actions/build-ugc-widgets"
