@@ -9,7 +9,9 @@
       "declaration-no-important": true,
       "no-empty-source": null,
       "selector-class-pattern": null,
-      "import-notation": null
+      "import-notation": null,
+      "at-rule-no-unknown": null,
+      "scss/at-rule-no-unknown": true
     },
     "ignoreFiles": [
       "node_modules/**/*",

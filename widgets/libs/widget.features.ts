@@ -81,54 +81,6 @@ export function addAutoAddTileFeature<T extends BaseConfig>(widgetSettings: T) {
   }
 }
 
-export function showTilesView() {
-  const ugcTiles = sdk.querySelector("#tiles")
-
-  if (!ugcTiles) {
-    throw new Error("Failed to find tiles UI element")
-  }
-
-  ugcTiles.style.display = "block"
-}
-
-export function hideTilesView() {
-  const ugcTiles = sdk.querySelector("#tiles")
-
-  if (!ugcTiles) {
-    throw new Error("Failed to find tiles UI element")
-  }
-
-  ugcTiles.style.display = "none"
-}
-
-export function loadTileExpandArrows() {
-  const expandedTile = sdk.querySelector("expanded-tile")
-
-  if (!expandedTile) {
-    throw new Error("Failed to find expanded tile UI element")
-  }
-
-  const expandedTileShadowRoot = expandedTile.shadowRoot
-
-  if (!expandedTileShadowRoot) {
-    throw new Error("Failed to find expanded tile shadow root")
-  }
-
-  // FIXME: This is a hack to wait for the shadow root to be ready, we should have a more accurate event
-
-  setTimeout(() => {
-    const prevButton = expandedTileShadowRoot.querySelector(".tile-arrows-left")
-    const nextButton = expandedTileShadowRoot.querySelector(".tile-arrows-right")
-
-    if (!prevButton || !nextButton) {
-      throw new Error("Failed to find arrow UI elements")
-    }
-
-    prevButton.addEventListener("click", arrowClickListener)
-    nextButton.addEventListener("click", arrowClickListener)
-  }, 500)
-}
-
 export function loadWidgetIsEnabled<T extends BaseConfig>(widgetSettings: T) {
   if (isEnabled(widgetSettings)) {
     return true
@@ -163,6 +115,12 @@ export function loadExpandedTileFeature<T extends BaseConfig>(
 }
 
 function loadMore() {
+  if (window.__isLoading) {
+    return
+  }
+
+  window.__isLoading = true
+
   const EVENT_LOAD_MORE = "moreLoad"
   const loadMoreButton = sdk.querySelector("#load-more")
 
@@ -175,6 +133,10 @@ function loadMore() {
   if (!sdk.tiles.hasMorePages()) {
     loadMoreButton.style.display = "none"
   }
+
+  setTimeout(() => {
+    window.__isLoading = false
+  }, 500)
 }
 
 export function addLoadMoreButtonFeature<T extends BaseConfig>(widgetSettings: T) {
@@ -254,4 +216,22 @@ export function loadHoverTile<T extends BaseConfig>(widgetSettings: T) {
       }
     })
   }
+}
+
+export function waitForElm(parent: Element | ShadowRoot, targets: string[], callback: (elements: Element[]) => void) {
+  if (targets.every(it => !!parent.querySelector(it))) {
+    callback(targets.map(it => parent.querySelector(it)!))
+  }
+
+  const observer = new MutationObserver((_, observer) => {
+    if (targets.every(it => !!parent.querySelector(it))) {
+      observer.disconnect()
+      callback(targets.map(it => parent.querySelector(it)!))
+    }
+  })
+
+  observer.observe(parent, {
+    childList: true,
+    subtree: true
+  })
 }

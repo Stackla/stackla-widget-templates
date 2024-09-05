@@ -1,4 +1,4 @@
-declare const sdk: ISdkMasonry
+declare const sdk: Sdk
 
 import { getConfig } from "./widget.config"
 import { initializeMasonry, refreshMasonryLayout } from "../libs/extensions/masonry.extension"
@@ -18,7 +18,7 @@ import shopspotStyle from "./components/shopspot-icon/base.scss"
 import getCSSVariables from "../libs/css-variables"
 import { addCSSVariablesToPlacement } from "widgets/libs/widget.layout"
 import { onTileClose } from "./widget.listeners"
-import { ISdkMasonry } from "types/ISdkMasonry"
+import { Sdk } from "@stackla/ugc-widgets"
 
 sdk.tiles.setLoadMode("all")
 sdk.tiles.hideBrokenTiles = true

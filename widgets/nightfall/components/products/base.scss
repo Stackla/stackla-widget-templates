@@ -1,9 +1,14 @@
 .stacklapopup-products-item-title-wrap {
   text-decoration: none;
+  padding-top: 20px;
+}
+
+.stacklapopup-products-header {
+  padding-top: 20px;
 }
 
 .stacklapopup-products-item-title {
-  color: #fff;
+  color: black;
   text-transform: uppercase;
   font-size: 18px;
   font-weight: bold;
@@ -12,10 +17,14 @@
 }
 
 .stacklapopup-products-item-price {
-  color: #fff;
+  color: black;
   font-size: 14px;
   font-weight: normal;
   margin-bottom: 5px;
+}
+
+.stacklapopup-products-wrap {
+  padding: 10px 0;
 }
 
 .stacklapopup-product-images-wrapper {
@@ -23,9 +32,10 @@
 }
 
 .stacklapopup-products-item-description {
-  color: #fff;
+  color: black;
   font-size: 14px;
   font-weight: 400;
+  max-width: 99%;
 }
 
 .stacklapopup-shopspot-cart,

@@ -1,13 +1,9 @@
-<div class="track glide">
-	<div id="tiles" style="display:none;">
-		<div class="glide__track" data-glide-el="track">
-			{{#tiles}}
-			{{>tpl-tile}}
-			{{/tiles}}
-		</div>
+<div class="track swiper swiper-inline">
+	<div class="swiper-wrapper">
+		{{#tiles}}
+		{{>tpl-tile}}
+		{{/tiles}}
 	</div>
 </div>
-<div class="glide__arrows" style="display:none;" data-glide-el="controls">
-	<button class="glide__arrow glide__arrow--left" data-glide-dir="<"><span class="widget-icon chevron-left"></span></button>
-	<button class="glide__arrow glide__arrow--right" data-glide-dir=">"><span class="widget-icon chevron-right"></span></button>
-</div>
+<div class="swiper-inline-button-prev swiper-button-prev"></div>
+<div class="swiper-inline-button-next swiper-button-next"></div>

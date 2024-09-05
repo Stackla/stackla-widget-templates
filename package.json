@@ -12,10 +12,11 @@
     "test": "jest && npm run test:e2e",
     "cy:run": "cypress run --browser chrome --headless",
     "test:e2e": "start-server-and-test --expect 400 start http://127.0.0.1:4002/preview cy:run",
-    "build": "APP_ENV=production node ./esbuild.js",
+    "build": "node ./esbuild.js",
+    "watch": "APP_ENV=development node ./esbuild.js --watch",
     "dev": "APP_ENV=development node ./esbuild.js",
-    "prestart": "npm run build",
-    "start": "NODE_ENV=development APP_ENV=testing sls offline start --noPrependStageInUrl --reloadHandler --stage=development --region=us-west-1 --host=127.0.0.1"
+    "start:lambda": "NODE_ENV=development APP_ENV=testing sls offline start --noPrependStageInUrl --reloadHandler --stage=development --region=us-west-1 --host=127.0.0.1",
+    "start": "npx concurrently \"npm run watch\" \"npm run start:lambda\""
   },
   "license": "MIT",
   "optionalDependencies": {
@@ -29,6 +30,8 @@
     "@types/glidejs__glide": "^3.6.5",
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "chokidar": "^3.6.0",
+    "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^12.0.2",
     "cypress": "^13.13.2",
     "esbuild": "^0.20.2",
@@ -56,10 +59,12 @@
   },
   "dependencies": {
     "@glidejs/glide": "^3.6.1",
-    "@stackla/ugc-widgets": "^0.0.34",
+    "@stackla/ugc-widgets": "^0.0.44",
     "happy-dom": "^14.12.3",
     "hbs": "^4.2.0",
     "masonry-layout": "^4.2.2",
-    "serverless-http": "^3.2.0"
+    "serverless-hooks-plugin": "^1.1.0",
+    "serverless-http": "^3.2.0",
+    "swiper": "^11.1.9"
   }
 }

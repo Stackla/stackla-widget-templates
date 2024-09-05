@@ -1,7 +1,9 @@
-import { ISdkMasonry } from "../../../types/ISdkMasonry"
+import { Sdk } from "@stackla/ugc-widgets"
 import Masonry from "masonry-layout"
 
-declare const sdk: ISdkMasonry
+declare const sdk: Sdk
+
+export let masonryInstance: Masonry
 
 export function initializeMasonry() {
   const tileContainer = sdk.querySelector(".ugc-tiles")
@@ -10,32 +12,32 @@ export function initializeMasonry() {
     throw new Error("Failed to find tiles UI element")
   }
 
-  sdk.masonry = new Masonry(tileContainer, {
+  masonryInstance = new Masonry(tileContainer, {
     itemSelector: ".ugc-tile",
     gutter: 20,
     fitWidth: true,
     initLayout: false,
     percentPosition: true,
-    stagger: 5
+    columnWidth: ".ugc-tile"
   })
 
-  sdk.masonry.layout()
+  masonryInstance.layout()
 }
 
 export function refreshMasonryLayout() {
   clearTimeout(window.refreshMasonryLayout)
 
   window.refreshMasonryLayout = setTimeout(() => {
-    sdk.masonry.reloadItems()
-    sdk.masonry.layout()
+    masonryInstance.reloadItems()
+    masonryInstance.layout()
   }, 200)
 }
 
 export function loadMoreMasonryTiles() {
-  if (!sdk.masonry) {
+  if (!masonryInstance) {
     initializeMasonry()
   }
 
-  sdk.masonry.reloadItems()
-  sdk.masonry.layout()
+  masonryInstance.reloadItems()
+  masonryInstance.layout()
 }

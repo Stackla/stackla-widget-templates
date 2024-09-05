@@ -1,0 +1,18 @@
+<div class="ugc-tile-wrapper tile-{{media}}">
+    <div class="tile-hover inactive">
+        <ul class="tile-tags">
+            {{#tags_extended}}
+                <li class='tile-tag'><a href="{{custom_url}}">{{tag}}</a></li>
+            {{/tags_extended}}
+        </ul>
+	</div>
+    <img  alt="UGC Image Thumbnail" src="{{image_thumbnail_url}}" width="120"/>
+    <shopspot-flyout tile-id="{{id}}"></shopspot-flyout>
+    <shopspot-icon tile-id="{{id}}"></shopspot-icon>
+    <div class="tile-message-wrapper">
+        <div class="tile-author">{{name}}</div>
+        <span class="tile-timephrase">{{time_ago}}</span>
+        <div class="network-icon icon-{{source}}"></div>
+        <div class="tile-caption"><p>{{message}}</p></div>
+    </div>
+</div>

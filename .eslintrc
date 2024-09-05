@@ -36,7 +36,7 @@
     ],
     "overrides": [
       {
-        "files": ["./widgets/**/*.ts"],
+        "files": ["./widgets/**/*.ts", "./widgets/**/*.tsx"],
         "rules": {
           "@typescript-eslint/no-floating-promises": "error"
         },

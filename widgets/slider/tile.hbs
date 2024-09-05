@@ -1,18 +1,18 @@
-{{#ifEquals media "image"}}
 <div class="ugc-tile-wrapper tile-{{media}}">
-    <div class="tile-img">
+	<div class="tile-hover inactive">
+        <ul class="tile-tags">
+            {{#tags_extended}}
+                <li class='tile-tag'><a href="{{custom_url}}">{{tag}}</a></li>
+            {{/tags_extended}}
+        </ul>
+	</div>
+    <img src="{{image_thumbnail_url}}" alt="UGC Image Thumbnail" width="120"/>
+    <shopspot-flyout tile-id="{{id}}"></shopspot-flyout>
+    <shopspot-icon tile-id="{{id}}"></shopspot-icon>
+    <div class="tile-message-wrapper">
+        <div class="tile-author">{{name}}</div>
+        <span class="tile-timephrase">{{time_ago}}</span>
         <div class="network-icon icon-{{source}}"></div>
-        <img src="{{image_thumbnail_url}}" width="120"/>
+        <div class="tile-caption"><p>{{message}}</p></div>
     </div>
-    <div class="tile-caption">{{{message}}}</div>
 </div>
-{{/ifEquals}}
-{{#ifEquals media "video"}}
-<div class="ugc-tile-wrapper tile-{{media}}">
-    <div class="tile-img">
-        <div class="network-icon icon-{{source}}"></div>
-        <img src="{{image_thumbnail_url}}" width="120"/>
-    </div>
-    <div class="tile-caption">{{{message}}}</div>
-</div>
-{{/ifEquals}}

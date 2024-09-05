@@ -1,14 +1,15 @@
-<div class="glide__slide">
-	<div class="tile-hover inactive">
-	<ul class="tile-tags">
+<div class="swiper-slide">
+  <div class="tile-hover inactive">
+    <ul class="tile-tags">
       {{#tags_extended}}
-		<li class='tile-tag'><a href="{{custom_url}}">{{tag}}</a></li>
-       {{/tags_extended}}
-	</ul>
-	</div>
-	<div class="network-icon icon-{{source}}"></div>
-	<img src="{{image_thumbnail_url}}" width="120"/>
-	<span class="tile-timephrase">{{time_ago}}</span>
-	<shopspot-flyout tile-id="{{id}}"></shopspot-flyout>
-    <shopspot-icon tile-id="{{id}}"></shopspot-icon>
+        <li class="tile-tag"><a href="{{custom_url}}">{{tag}}</a></li>
+      {{/tags_extended}}
+    </ul>
+  </div>
+  <div class="network-icon icon-{{source}}"></div>
+  <img src="{{image_thumbnail_url}}" width="120" />
+  <div class="swiper-lazy-preloader"></div>
+  <span class="tile-timephrase">{{time_ago}}</span>
+  <shopspot-flyout tile-id="{{id}}"></shopspot-flyout>
+  <shopspot-icon tile-id="{{id}}"></shopspot-icon>
 </div>

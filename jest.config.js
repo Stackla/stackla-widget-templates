@@ -31,7 +31,5 @@ module.exports = {
     "^.+\\.js$": "babel-jest",
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
-  transformIgnorePatterns: [
-    "/node_modules/(?!(@stackla)/)"
-  ]
+  transformIgnorePatterns: ["/node_modules/(?!(@stackla)/)"]
 }

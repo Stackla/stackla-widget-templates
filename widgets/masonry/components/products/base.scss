@@ -1,0 +1,40 @@
+.stacklapopup-products-item-title-wrap {
+  text-decoration: none;
+}
+
+.stacklapopup-products-item-title {
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.stacklapopup-products-item-price {
+  font-size: 14px;
+  font-weight: normal;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.stacklapopup-products-item-description {
+  color: #282828;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.stacklapopup-shopspot-cart,
+.stacklapopup-products-item-button {
+  color: var(--shopspot-btn-font-color);
+  background-color: var(--shopspot-btn-background);
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: bold;
+  padding: 15px 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  min-width: 300px;
+}

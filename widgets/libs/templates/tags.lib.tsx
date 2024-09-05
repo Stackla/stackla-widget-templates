@@ -1,20 +1,20 @@
 import { Tile } from "@stackla/ugc-widgets"
 import { createElement, createFragment } from "jsx-html"
 
-export function getTagsFromTile(tile: Tile) {
-  if (!tile.tags_extended) {
-    return <></>
-  }
+type TagsProps = {
+  tile: Tile
+}
 
-  return (
+export function Tags({ tile }: TagsProps) {
+  return tile.tags_extended ? (
     <div class="tags">
       {tile.tags_extended.map(tag => (
         <div class="tag">
-          <span>
-            <a href={tag.custom_url ?? "#"}>{tag.tag}</a>
-          </span>
+          <a href={tag.custom_url ?? "#"}>{tag.tag}</a>
         </div>
       ))}
     </div>
+  ) : (
+    <></>
   )
 }

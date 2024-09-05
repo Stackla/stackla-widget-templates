@@ -16,6 +16,28 @@
   position: relative;
 }
 
+.tile-caption {
+  margin-top: 15px;
+  display: var(--show-caption);
+  text-align: left;
+
+  p {
+    max-height: 200px;
+    overflow: hidden;
+  }
+}
+
+.tile-timephrase {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  background-color: rgb(255 255 255 / 60%);
+  border-radius: 2px;
+  font-size: 12px;
+  display: var(--tile-timephrase-display);
+}
+
 .ugc-tile:not([data-media="image"], [data-media="video"]) {
   display: none;
 }
@@ -23,12 +45,6 @@
 .ugc-tile img {
   width: 100%;
   height: auto;
-}
-
-.network-icon {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
 }
 
 .widget-icon {

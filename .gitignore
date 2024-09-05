@@ -69,3 +69,4 @@ cypress/videos/*
 cypress/screenshots/*
 .serverless
 server
+.vscode/settings.json

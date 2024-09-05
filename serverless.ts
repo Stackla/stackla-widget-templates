@@ -1,40 +1,36 @@
 const { serverlessConfig } = require("@stackla/base-serverless")
 const { handlerPath } = require("@stackla/lambda-api-bootstrap")
 
+const env = process.env.APP_ENV || "development"
+
 const testingHooks = {
-  "before:package:initialize": "npm run dev",
-  "before:offline:start:init": "npm run dev",
-  "before:webpack:compile:compile": "npm run dev"
+  "before:package:initialize": ["npm run dev"],
+  "before:offline:start:init": ["npm run dev"],
+  "before:webpack:compile:compile": ["npm run dev"]
 }
 
-const productionHooks = {
-  "before:package:initialize": "npm run build",
-  "before:webpack:compile:compile": "npm run build"
+const defaultHooks = {
+  "before:package:initialize": [`APP_ENV=${env} npm run build`],
+  "before:webpack:compile:compile": [`APP_ENV=${env} npm run build`]
 }
 
-const plugins : string[] = [
-  'serverless-webpack',
-  'serverless-offline'
-];
+const plugins: string[] = ["serverless-webpack", "serverless-offline", "serverless-hooks-plugin"]
 
-
-module.exports = {
+const config = {
   ...serverlessConfig({
-  plugins: plugins,
-  service: "widget-templates",
-  offlinePort: process.env.APP_ENV == "testing" ? 4002 : 80,
-  custom: {
-    scriptable: {
-      hooks: process.env.APP_ENV === "testing" ? testingHooks : productionHooks
+    plugins: plugins,
+    service: "widget-templates",
+    offlinePort: process.env.APP_ENV == "testing" ? 4003 : 80,
+    custom: {
+      esbuild: {
+        otherExternal: ["hbs"]
+      },
+      hooks: process.env.APP_ENV == "testing" ? testingHooks : defaultHooks
     },
-    esbuild: {
-      otherExternal: ["hbs"]
+    package: {
+      include: ["views/**/*", "dist/**/*", "build/**/*"],
+      exclude: ["node_modules/**/*"]
     }
-  },
-  package: {
-    include: ["views/**/*", "dist/**/*", "build/**/*"],
-    exclude: ["node_modules/**/*"],
-  }
   }),
   functions: {
     main: {
@@ -57,3 +53,5 @@ module.exports = {
     }
   }
 }
+
+module.exports = config

@@ -11,13 +11,14 @@
   flex-direction: row;
   justify-content: center;
   background-color: transparent;
+  text-rendering: auto;
 }
 
 .exit {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1;
+  top: 0;
+  right: 55px;
+  z-index: 2;
 }
 
 .panel {
@@ -25,76 +26,58 @@
   position: relative;
   background: #f4f4f4;
   width: 100%;
-  height: 100%;
-}
+  height: fit-content;
 
-.panel-left {
-  min-width: 40%;
-  max-width: 40%;
-  background: #fff;
-  display: flex;
-  place-content: center center;
-  align-items: center;
-}
+  .panel-left {
+    min-width: 50%;
+    max-width: 50%;
+    display: flex;
+    place-content: center center;
+    align-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 
-.panel-left img {
-  width: 100%;
-}
+    .image-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      margin-bottom: 0;
 
-.panel-right {
-  padding: 26px 40px;
-}
+      .image-wrapper-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
 
-.tile-arrows-left {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 50%;
-  left: -60px;
-  border: 0;
-  background: none;
-}
+        div.image {
+          position: relative;
 
-.tile-arrows-right {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 50%;
-  right: -60px;
-  border: 0;
-  background: none;
-}
+          img.image-element {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
 
-.widget-icon {
-  display: block;
-}
+  .panel-right {
+    padding: 26px 40px;
+    height: calc(100vh - 100px);
+  }
 
-.tile-arrows .widget-icon {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-}
-
-div.image {
-  position: relative;
-}
-
-.image-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 16px;
-}
-
-.image-wrapper-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  .panel-right-wrapper {
+    overflow: auto hidden;
+    height: 100%;
+  }
 }
 
 .user-info {
@@ -171,4 +154,22 @@ html {
   padding-right: 20px;
   text-align: left;
   width: 100%;
+}
+
+.swiper {
+  height: calc(100% - 50px);
+
+  .swiper-slide {
+    align-items: flex-start;
+
+    div.image-filler {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: absolute;
+      filter: blur(50px) brightness(0.5);
+      inset: 0;
+      transform: scale(1.2);
+    }
+  }
 }

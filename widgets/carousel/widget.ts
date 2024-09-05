@@ -1,11 +1,26 @@
 import type { Sdk } from "@stackla/ugc-widgets"
 import { getConfig } from "./widget.config"
-import expandedTileTemplate from "./components/expanded-tile/base.template"
+import { ExpandedTiles } from "./components/expanded-tile/base.template"
 import expandedTileStyle from "./components/expanded-tile/base.scss"
 import productsStyle from "./components/products/base.scss"
 import shopspotStyle from "./components/shopspot-icon/base.scss"
-import { hideGlideArrows, initializeGlideListeners, showGlideArrows } from "./widget.extensions"
-import { registerLoadListener } from "widgets/libs/tile.listeners"
+import swiperFont from "./swiper-font.scss"
+import swiperCommon from "./swiper-common.scss"
+import icons from "../../uikit/icon.scss"
+import swiperBundleCss from "@swiper/swiper-bundle.css"
+
+import {
+  onTileExpand,
+  initializeInlineSwiperListeners,
+  onTileClosed,
+  hideSlidesWithInvisibleTiles,
+  onPreloadTileHidden
+} from "./widget.extensions"
+import {
+  registerPreloadTileHidden,
+  registerTilesUpdated,
+  registerWidgetInitComplete
+} from "widgets/libs/tile.listeners"
 import {
   addAutoAddTileFeature,
   loadExpandedTileFeature,
@@ -27,12 +42,20 @@ const widgetSettings = getConfig(widgetContainer)
 loadWidgetIsEnabled(widgetSettings)
 addCSSVariablesToPlacement(getCSSVariables(widgetSettings))
 loadTitle()
-registerLoadListener(initializeGlideListeners)
+registerWidgetInitComplete(initializeInlineSwiperListeners)
 addAutoAddTileFeature(widgetSettings)
-loadExpandedTileFeature(widgetSettings, hideGlideArrows, showGlideArrows)
+loadExpandedTileFeature(widgetSettings, onTileExpand, onTileClosed)
 loadHoverTile(widgetSettings)
+registerTilesUpdated(hideSlidesWithInvisibleTiles)
+registerPreloadTileHidden(onPreloadTileHidden)
 
-sdk.addCSSToComponent(expandedTileStyle, "expanded-tile")
+sdk.addWidgetCustomStyles(swiperFont)
+
+sdk.addSharedCssCustomStyles(swiperBundleCss)
+sdk.addSharedCssCustomStyles(icons)
+sdk.addSharedCssCustomStyles(swiperCommon)
+sdk.addSharedCssCustomStyles(shopspotStyle)
+
+sdk.addCSSToComponent(expandedTileStyle, "expanded-tiles")
 sdk.addCSSToComponent(productsStyle, "ugc-products")
-sdk.addCSSToComponent(shopspotStyle, "shopspot-icon")
-sdk.addTemplateToComponent(expandedTileTemplate, "expanded-tile")
+sdk.addTemplateToComponent(ExpandedTiles, "expanded-tiles")
