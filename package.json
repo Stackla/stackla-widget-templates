@@ -29,7 +29,7 @@
     "@stackla/lambda-api-bootstrap": "^1.0.12",
     "@types/glidejs__glide": "^3.6.5",
     "@types/jest": "^29.5.12",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
     "chokidar": "^3.6.0",
     "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^12.0.2",
