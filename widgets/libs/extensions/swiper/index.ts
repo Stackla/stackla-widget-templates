@@ -1,7 +1,7 @@
 import { Sdk } from "@stackla/ugc-widgets"
 import swiperFont from "./swiper-font.scss"
 import swiperCommon from "./swiper-common.scss"
-import swiperBundleCss from "@swiper/swiper-bundle.css"
+import swiperBundleCss from "./swiper.scss"
 
 declare const sdk: Sdk
 
