@@ -54,13 +54,24 @@
   --swiper-navigation-size: 20px;
 }
 
+@include breakpoint(mobile) {
+  .swiper .swiper-wrapper {
+    max-height: 100vh;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+}
+
 @include breakpoint(tablet) {
   .swiper .swiper-slide {
     border-radius: 0;
   }
 
-  .swiper-expanded-button-next,
-  .swiper-expanded-button-prev {
+  .swiper-button-next,
+  .swiper-button-prev {
     display: none;
   }
 }

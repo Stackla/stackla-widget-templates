@@ -1,5 +1,5 @@
-@import "../styles/mixins.scss";
-@import "templates/tags/tags.scss";
+@import "@styles/mixins.scss";
+@import "@templates/tags/tags.scss";
 
 #nosto-ugc-container {
   .ugc-tile {
@@ -17,10 +17,10 @@
     position: relative;
 
     .play-icon {
-        top: 43%;
-        left: 0;
-        right: 0;
-        margin: auto;
+      top: 43%;
+      left: 0;
+      right: 0;
+      margin: auto;
     }
 
     .tile-timephrase {
@@ -66,4 +66,3 @@
   z-index: 10;
   cursor: pointer;
 }
-

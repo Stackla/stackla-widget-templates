@@ -54,7 +54,7 @@ export function onTileRendered() {
     if (!shareButton) {
       throw new Error(`Share button not found in expanded tile ${tile.getAttribute("data-id")}`)
     }
-    registerExpandedTileShareMenuListeners(shareButton, tile)
+    registerExpandedTileShareMenuListeners(expandedTilesElement, shareButton, tile)
   })
 }
 

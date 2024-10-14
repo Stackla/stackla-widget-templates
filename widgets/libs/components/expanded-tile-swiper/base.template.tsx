@@ -1,9 +1,13 @@
 import type { Sdk } from "@stackla/ugc-widgets"
 import { ExpandedTile } from "./tile.template"
 import { createElement, createFragment } from "@stackla/ugc-widgets/src/ui/core/utils/jsx-html"
+import { getConfig } from "@widgets/carousel/widget.config"
 
 export function ExpandedTiles(sdk: Sdk) {
-  const tiles = sdk.tiles.getTiles()
+  const tiles = sdk.tiles.tiles
+  const widgetContainer = sdk.placement.getWidgetContainer()
+  const widgetSettings = getConfig(widgetContainer)
+  const navigationArrowsEnabled = widgetSettings.expanded_tile_show_navigation_arrows
 
   return (
     <div class="expanded-tile-wrapper">
@@ -20,10 +24,14 @@ export function ExpandedTiles(sdk: Sdk) {
           ))}
         </div>
       </div>
-      <div class="swiper-expanded-button-prev swiper-button-prev">
+      <div
+        class="swiper-expanded-button-prev swiper-button-prev"
+        style={{ display: !navigationArrowsEnabled ? "none" : "flex" }}>
         <span class="chevron-left" alt="Previous arrow" />
       </div>
-      <div class="swiper-expanded-button-next swiper-button-next">
+      <div
+        class="swiper-expanded-button-next swiper-button-next"
+        style={{ display: !navigationArrowsEnabled ? "none" : "flex" }}>
         <span class="chevron-right" alt="Next arrow" />
       </div>
     </div>

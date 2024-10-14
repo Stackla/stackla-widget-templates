@@ -15,7 +15,8 @@ const defaultWidgetSettings: BaseConfig = {
   auto_refresh: false,
   expanded_tile_show_shopspots: false,
   expanded_tile_show_products: false,
-  expanded_tile_show_add_to_cart: false
+  expanded_tile_show_add_to_cart: false,
+  expanded_tile_show_navigation_arrows: true
 }
 
 describe("Widget Settings Functions", () => {

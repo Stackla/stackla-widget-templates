@@ -22,7 +22,7 @@ export interface IDraftRequest {
   }
   customCSS: string
   customJS: string,
-  widgetConfig: typeof widgetOptions.widgetConfig
+  widgetOptions: typeof widgetOptions.widgetConfig
 }
 
 type PreviewContent = {
@@ -46,7 +46,9 @@ expressApp.use(cookieParser())
 const stripSymbols = (str: string) => str.replace(/[^a-zA-Z0-9]/g, "")
 const stripSymbolsThatAreNotDash = (str: string) => str.replace(/[^a-zA-Z0-9-]/g, "")
 
-loadStaticFileRoutes(expressApp)
+if (process.env.APP_ENV == "testing" || process.env.APP_ENV == "development") {
+  loadStaticFileRoutes(expressApp)
+}
 
 expressApp.use((req, res, next) => {
   const host = req.headers.host || "http://localhost:4003"
@@ -119,7 +121,7 @@ async function getHTML(content: PreviewContent, page: number = 1, limit: number 
       },
       customCSS: content.cssCode || "",
       customJS: content.jsCode || "",
-      widgetConfig: widgetOptions.widgetConfig
+      widgetOptions: widgetOptions.widgetConfig
     },
     page,
     limit
@@ -189,6 +191,7 @@ expressApp.get("/preview", async (req, res) => {
   res.render("preview", {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
+    widgetOptions: JSON.stringify(widgetOptions.widgetConfig),
     ...(await getContent(widgetType)),
     port: port
   })

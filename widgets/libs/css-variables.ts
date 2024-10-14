@@ -31,6 +31,7 @@ export default function getCSSVariables<T extends BaseConfig>(widgetSettings: T)
     "--cta-button-background-color": `#${widgetSettings.cta_button_background_color}`,
     "--cta-button-font-color": `#${widgetSettings.cta_button_font_color}`,
     "--cta-button-font-size": `${widgetSettings.cta_button_font_size}px`,
+    "--expanded-tile-border-radius": `${widgetSettings.expanded_tile_border_radius}px`,
     "--tile-size": `${tileSizes["medium"]}` // Set default to medium until tile_size is available
   }
 

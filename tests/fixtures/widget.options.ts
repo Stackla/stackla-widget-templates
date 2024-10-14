@@ -31,7 +31,8 @@ export default {
       show_sharing: true,
       show_shopspots: true,
       show_tags: true,
-      show_votes: true
+      show_votes: true,
+      inline_tile_show_shopspots: true
     },
     claim_config: {
       show_claim_button: false,
@@ -55,12 +56,12 @@ export default {
     shopspot_icon: "",
     style: "base_carousel_v3",
     text_tile_background: "ffffff",
-    text_tile_font_color: "666666",
-    text_tile_font_size: 24,
-    text_tile_user_handle_font_color: "333333",
-    text_tile_user_handle_font_size: 18,
-    text_tile_user_name_font_color: "333333",
-    text_tile_user_name_font_size: 18,
+    text_tile_font_color: "000000",
+    text_tile_font_size: 12,
+    text_tile_user_handle_font_color: "636062",
+    text_tile_user_handle_font_size: 10,
+    text_tile_user_name_font_color: "#000000",
+    text_tile_user_name_font_size: 14,
     text_tile_link_color: "00abf0",
     text_tile_tag_font_color: "201C1F",
     tile_tag_background: "D6D4D5",
@@ -79,7 +80,8 @@ export default {
     },
     cta_button_background_color: "000000",
     cta_button_font_color: "ffffff",
-    cta_button_font_size: 14
+    cta_button_font_size: 14,
+    expanded_tile_border_radius: 5
   },
   guid: "668ca52ada8fb",
   filterId: 10695,

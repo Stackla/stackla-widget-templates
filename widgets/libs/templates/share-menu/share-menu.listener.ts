@@ -17,21 +17,53 @@ export async function copyToClipboard(inputElement: HTMLInputElement) {
   }
 }
 
-function addShareMenuListeners(shareMenuWrapper: HTMLElement, tile: Element) {
+function reduceBackgroundControlsVisibility(expandedTilesElement: HTMLElement) {
+  const navigationPrevButton =
+    expandedTilesElement.shadowRoot!.querySelector<HTMLElement>(".swiper-expanded-button-prev")
+  const navigationNextButton =
+    expandedTilesElement.shadowRoot!.querySelector<HTMLElement>(".swiper-expanded-button-next")
+  const exitTileButton = expandedTilesElement.shadowRoot!.querySelector<HTMLElement>(".exit")
+
+  navigationNextButton?.classList.add("swiper-button-disabled")
+  navigationPrevButton?.classList.add("swiper-button-disabled")
+
+  if (exitTileButton) {
+    exitTileButton.style.opacity = "0.4"
+  }
+}
+
+function resetBackgroundControlsVisibility(expandedTilesElement: HTMLElement) {
+  const navigationPrevButton =
+    expandedTilesElement.shadowRoot!.querySelector<HTMLElement>(".swiper-expanded-button-prev")
+  const navigationNextButton =
+    expandedTilesElement.shadowRoot!.querySelector<HTMLElement>(".swiper-expanded-button-next")
+  const exitTileButton = expandedTilesElement.shadowRoot!.querySelector<HTMLElement>(".exit")
+
+  navigationNextButton?.classList.remove("swiper-button-disabled")
+  navigationPrevButton?.classList.remove("swiper-button-disabled")
+
+  if (exitTileButton) {
+    exitTileButton.removeAttribute("style")
+  }
+}
+
+function addShareMenuListeners(expandedTilesElement: HTMLElement, shareMenuWrapper: HTMLElement, tile: Element) {
   // Exit button listener
-  const exitButton = shareMenuWrapper.querySelector<HTMLElement>(".share-modal-exit")
+  const shareExitButton = shareMenuWrapper.querySelector<HTMLElement>(".share-modal-exit")
   const panelOverlay = tile.querySelector<HTMLElement>(".panel-overlay")
   const panelRightWrapper = tile.querySelector<HTMLElement>(".panel-right-wrapper")
 
-  if (exitButton) {
-    exitButton.addEventListener("click", exitButtonEvent => {
-      exitButtonEvent.preventDefault()
-      exitButtonEvent.stopPropagation()
+  if (shareExitButton) {
+    shareExitButton.addEventListener("click", shareExitButtonEvent => {
+      shareExitButtonEvent.preventDefault()
+      shareExitButtonEvent.stopPropagation()
       shareMenuWrapper.style.display = "none"
       panelOverlay?.classList.remove("active")
+
       if (panelRightWrapper) {
         panelRightWrapper.removeAttribute("style")
       }
+      resetBackgroundControlsVisibility(expandedTilesElement)
     })
   }
 
@@ -44,7 +76,11 @@ function addShareMenuListeners(shareMenuWrapper: HTMLElement, tile: Element) {
   }
 }
 
-export function registerExpandedTileShareMenuListeners(shareButtonElement: HTMLElement, tile: Element) {
+export function registerExpandedTileShareMenuListeners(
+  expandedTilesElement: HTMLElement,
+  shareButtonElement: HTMLElement,
+  tile: Element
+) {
   shareButtonElement.addEventListener("click", (shareButtonEvent: MouseEvent) => {
     shareButtonEvent.preventDefault()
     shareButtonEvent.stopPropagation()
@@ -57,9 +93,11 @@ export function registerExpandedTileShareMenuListeners(shareButtonElement: HTMLE
     }
     wrapper.style.display = "block"
     panelOverlay?.classList.add("active")
+
     if (panelRightWrapper) {
       panelRightWrapper.style.overflow = "unset"
     }
-    addShareMenuListeners(wrapper, tile)
+    reduceBackgroundControlsVisibility(expandedTilesElement)
+    addShareMenuListeners(expandedTilesElement, wrapper, tile)
   })
 }

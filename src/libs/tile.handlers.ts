@@ -10,7 +10,7 @@ export function getTilesToRender(page: number, limit: number) {
 
 export async function getAndRenderTiles(widgetContainer: IDraftRequest, page: number = 1, limit: number = 25) {
   const tileTemplate = widgetContainer.customTemplates.tile.template
-  return renderTilesWithTemplate(tileTemplate, getTilesToRender(page, limit), widgetContainer.widgetConfig)
+  return renderTilesWithTemplate(tileTemplate, getTilesToRender(page, limit), widgetContainer.widgetOptions)
 }
 
 export async function renderTemplates(widgetContainer: IDraftRequest, page: number = 1, limit: number = 25) {
@@ -21,6 +21,6 @@ export async function renderTemplates(widgetContainer: IDraftRequest, page: numb
     tileTemplate,
     layoutTemplate,
     getTilesToRender(page, limit),
-    widgetContainer.widgetConfig
+    widgetContainer.widgetOptions
   )
 }

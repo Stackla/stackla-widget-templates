@@ -4,6 +4,7 @@ export interface IWidgetSettings extends BaseConfig {
   expanded_tile_show_shopspots: boolean
   expanded_tile_show_products: boolean
   expanded_tile_show_add_to_cart: boolean
+  expanded_tile_border_radius?: number
   enable_custom_tiles_per_page: boolean
   tiles_per_page: number
   enabled: boolean
@@ -36,5 +37,6 @@ export interface IWidgetSettings extends BaseConfig {
   expanded_tile_show_sharing: boolean
   expanded_tile_show_caption: boolean
   expanded_tile_show_timestamp: boolean
-  expanded_tile_show_tags: boolean
+  expanded_tile_show_tags?: boolean
+  expanded_tile_show_navigation_arrows?: boolean
 }

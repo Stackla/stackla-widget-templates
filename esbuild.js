@@ -1,3 +1,5 @@
+const { pathToFileURL } = require("node:url")
+
 function startWebSocketServer() {
   const { spawn } = require("node:child_process")
   const server = spawn("node", ["hot-reload-server.js"], {
@@ -49,7 +51,24 @@ async function buildAll() {
           const result = sass.compile(item.relative(), {
             style: env === "development" ? "expanded" : "compressed",
             loadPaths: [path.join(__dirname, "./widgets/libs")],
-            importers: [new sass.NodePackageImporter()] // refer https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
+            importers: [
+              new sass.NodePackageImporter(),
+              {
+                findFileUrl(url) {
+                  if (url.startsWith("@templates")) {
+                    const newUrl = pathToFileURL(url.replace("@", "widgets/libs/"))
+                    return new URL(newUrl)
+                  }
+
+                  if (url.startsWith("@styles")) {
+                    const newUrl = pathToFileURL(url.replace("@", "widgets/"))
+                    return new URL(newUrl)
+                  }
+
+                  return null
+                }
+              }
+            ] // refer https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
           })
 
           const combined = `${result.css.toString()}\n${additionalData}`

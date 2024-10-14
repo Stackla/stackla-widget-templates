@@ -22,6 +22,10 @@ export function ExpandedTile({ sdk, tile }: ExpandedTileProps) {
   const widgetSettings = getConfig(widgetContainer)
   const shopspotEnabled = sdk.isComponentLoaded("shopspots") && widgetSettings.expanded_tile_show_shopspots
   const productsEnabled = sdk.isComponentLoaded("products") && widgetSettings.expanded_tile_show_products
+  const tagsEnabled = widgetSettings.expanded_tile_show_tags
+  const sharingToolsEnabled = widgetSettings.expanded_tile_show_sharing
+  const timestampEnabled = widgetSettings.expanded_tile_show_timestamp
+  const captionsEnabled = widgetSettings.expanded_tile_show_caption
 
   const parent = sdk.getNodeId()
 
@@ -62,28 +66,24 @@ export function ExpandedTile({ sdk, tile }: ExpandedTileProps) {
               <button class="share-button">
                 <span class="widget-icon icon-share" alt="Share button"></span>
               </button>
-              <ShareMenu tile={tile} />
+              {sharingToolsEnabled && <ShareMenu tile={tile} />}
               <div class="user-info-wrapper">
                 <UserInfoTemplate tile={tile} />
               </div>
               <div class="description">
-                <div class="caption">
-                  <p class="caption-paragraph">
-                    {tile.message && widgetSettings.expanded_tile_show_caption ? tile.message : ""}
-                  </p>
-                </div>
-                <div class="tile-timestamp">
-                  {tile.source_created_at && widgetSettings.expanded_tile_show_timestamp
-                    ? getTimephrase(tile.source_created_at)
-                    : ""}
-                </div>
-                <Tags tile={tile} />
-                {productsEnabled ? (
+                {captionsEnabled && (
+                  <div class="caption">
+                    <p class="caption-paragraph">{tile.message}</p>
+                  </div>
+                )}
+                {timestampEnabled && (
+                  <div class="tile-timestamp">{tile.source_created_at && getTimephrase(tile.source_created_at)}</div>
+                )}
+                {tagsEnabled && <Tags tile={tile} />}
+                {productsEnabled && (
                   <>
                     <ugc-products parent={parent} tile-id={tile.id} />
                   </>
-                ) : (
-                  ""
                 )}
                 <div class="footer">
                   <span class="base-v2 source source-instagram">

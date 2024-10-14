@@ -13,7 +13,8 @@ export function getConfig(widgetContainer: WidgetContainer): IWidgetSettings {
     expanded_tile_show_shopspots: widgetConfig?.lightbox?.show_shopspots ?? false,
     expanded_tile_show_timestamp: widgetConfig?.lightbox?.show_timestamp ?? false,
     expanded_tile_show_add_to_cart: widgetConfig?.lightbox?.show_add_to_cart ?? false,
-    expanded_tile_show_tags: widgetConfig?.lightbox?.show_tags ?? false
+    expanded_tile_show_tags: widgetConfig?.lightbox?.show_tags ?? false,
+    expanded_tile_show_navigation_arrows: widgetConfig?.tile_options?.show_navigation_arrows ?? true
   }
 
   const tileTextProperties = {
@@ -63,6 +64,7 @@ export function getConfig(widgetContainer: WidgetContainer): IWidgetSettings {
     cta_button_background_color: widgetStyle?.cta_button_background_color,
     cta_button_font_color: widgetStyle?.cta_button_font_color,
     cta_button_font_size: widgetStyle?.cta_button_font_size,
+    expanded_tile_border_radius: widgetStyle?.expanded_tile_border_radius,
     ...widgetProperties,
     ...inlineTileProperties,
     ...tileTextProperties,

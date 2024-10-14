@@ -1,6 +1,6 @@
-@import "templates/tags/tags.scss";
-@import "../styles/inline-tile.scss";
-@import "../styles/mixins.scss";
+@import "@templates/tags/tags.scss";
+@import "@styles/inline-tile.scss";
+@import "@styles/mixins.scss";
 
 .loading {
   border-radius: 50% !important;
@@ -65,5 +65,12 @@
 @include breakpoint(tablet) {
   .expanded-tile-overlay {
     align-items: normal;
+  }
+}
+
+@include breakpoint(mobile) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
   }
 }

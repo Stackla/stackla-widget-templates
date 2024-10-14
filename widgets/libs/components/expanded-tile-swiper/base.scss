@@ -26,24 +26,27 @@ html {
 }
 
 .expanded-tile-wrapper {
-  width: 100%;
+  .panel-overlay {
+    display: none;
+  }
 
-  .swiper {
-    max-width: 90%;
+  .panel {
+    border-radius: var(--expanded-tile-border-radius);
   }
 
   .panel-left {
     video {
       display: flex;
       width: 100%;
-      height: auto;
+      height: 100%;
       z-index: 10;
       position: relative;
-
-      .panel-overlay {
-        display: none;
-      }
     }
+
+    .video-content-wrapper {
+      height: 100%;
+    }
+
     .video-fallback-content {
       display: flex;
       justify-content: center;
@@ -76,6 +79,21 @@ html {
 
         .tile-tags {
           margin: 0 16.4px 8.4px 0;
+        }
+
+        .caption-paragraph {
+          color: var(--text-tile-font-color);
+          font-size: var(--text-tile-font-size);
+        }
+
+        .user-name {
+          color: var(--text-tile-user-name-font-color);
+          font-size: var(--text-tile-user-name-font-size);
+        }
+
+        .user-handle {
+          color: var(--text-tile-user-handle-font-color);
+          color: var(--text-tile-user-handle-font-size);
         }
       }
     }

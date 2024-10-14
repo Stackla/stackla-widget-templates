@@ -29,11 +29,13 @@ describe("getCSSVariables", () => {
       expanded_tile_show_add_to_cart: false,
       expanded_tile_show_products: false,
       expanded_tile_show_shopspots: false,
+      expanded_tile_show_navigation_arrows: true,
       inline_tile_show_timestamps: false,
       tile_tag_background: "D6D4D5",
       cta_button_background_color: "000000",
       cta_button_font_color: "ffffff",
-      cta_button_font_size: 14
+      cta_button_font_size: 14,
+      expanded_tile_border_radius: 5
     }
 
     const expectedCSS = `
@@ -59,6 +61,7 @@ describe("getCSSVariables", () => {
     --cta-button-background-color:#000000;
     --cta-button-font-color:#ffffff;
     --cta-button-font-size:14px;
+    --expanded-tile-border-radius:5px;
       `
 
     expect(getCSSVariables(widgetSettings).replace(/\s/g, "")).toBe(expectedCSS.replace(/\s/g, ""))
@@ -86,11 +89,13 @@ describe("getCSSVariables", () => {
       expanded_tile_show_add_to_cart: false,
       expanded_tile_show_products: false,
       expanded_tile_show_shopspots: false,
+      expanded_tile_show_navigation_arrows: true,
       inline_tile_show_timestamps: true,
       tile_tag_background: "D6D4D5",
       cta_button_background_color: "000000",
       cta_button_font_color: "ffffff",
-      cta_button_font_size: 14
+      cta_button_font_size: 14,
+      expanded_tile_border_radius: 5
     }
 
     const expectedCSS = `
@@ -116,6 +121,7 @@ describe("getCSSVariables", () => {
     --cta-button-background-color:#000000;
     --cta-button-font-color:#ffffff;
     --cta-button-font-size:14px;
+    --expanded-tile-border-radius:5px;
       `
 
     expect(getCSSVariables(widgetSettings).replace(/\s/g, "")).toBe(expectedCSS.replace(/\s/g, ""))

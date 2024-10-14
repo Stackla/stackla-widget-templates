@@ -2,10 +2,11 @@
 
 .swiper {
   .swiper-wrapper {
-    height: 701px;
-
+    max-width: 891px;
+    max-height: 712px;
     .swiper-slide {
       align-items: flex-start;
+      height: auto;
 
       div.image-filler {
         background-position: center;

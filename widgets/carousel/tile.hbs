@@ -12,7 +12,9 @@
     <div class="play-icon"></div>
     {{/ifequals}}
     <span class="tile-timephrase">{{time_ago}}</span>
+  {{#if options.tile_options.show_shopspots}}
     <shopspot-icon tile-id={{id}} />
+    {{/if}}
   </div>
   <div class="tile-image">
     {{#lazy image_thumbnail_url "120"}}{{/lazy}}
