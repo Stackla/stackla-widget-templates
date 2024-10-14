@@ -2,18 +2,9 @@
 @import "templates/tags/tags.scss";
 
 @mixin tile-size {
-  grid-auto-rows: 210.4px;
-  grid-template-columns: repeat(auto-fit, 210.4px);
-  //use this when tile-size is available
-  // grid-auto-rows: map-get($tile-sizes, var(--tile-size));
-  // grid-template-columns: repeat(auto-fit, var(--tile-size));
+  grid-template-columns: repeat(auto-fit, var(--tile-size));
+  grid-auto-rows: var(--tile-size);
 }
-
-$tile-sizes: (
-  "small": 127.8px,
-  "medium": 210.4px,
-  "large": 265.5px
-);
 
 #nosto-ugc-container {
   .ugc-tiles {

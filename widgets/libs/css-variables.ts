@@ -1,6 +1,11 @@
 import { BaseConfig } from "types/IBaseConfig"
 
 export default function getCSSVariables<T extends BaseConfig>(widgetSettings: T): string {
+  const tileSizes: { [key: string]: string } = {
+    small: "127.8px",
+    medium: "210.4px",
+    large: "265.5px"
+  }
   const cssVariables: { [key: string]: string } = {
     "--widget-background": `#${widgetSettings.widget_background}`,
     "--text-tile-background": `#${widgetSettings.text_tile_background}`,
@@ -25,7 +30,8 @@ export default function getCSSVariables<T extends BaseConfig>(widgetSettings: T)
     "--tile-tag-background": `#${widgetSettings.tile_tag_background}`,
     "--cta-button-background-color": `#${widgetSettings.cta_button_background_color}`,
     "--cta-button-font-color": `#${widgetSettings.cta_button_font_color}`,
-    "--cta-button-font-size": `${widgetSettings.cta_button_font_size}px`
+    "--cta-button-font-size": `${widgetSettings.cta_button_font_size}px`,
+    "--tile-size": `${tileSizes["medium"]}` // Set default to medium until tile_size is available
   }
 
   return Object.entries(cssVariables)
