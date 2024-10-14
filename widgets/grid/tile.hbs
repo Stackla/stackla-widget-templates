@@ -1,0 +1,22 @@
+{{#tile data-hash=@index}}
+<div class="tile">
+  <div class="tile-loading"></div>
+  <div class="tile-content hidden">
+    <ul class="tile-tags">
+      {{#tags_extended}}
+      <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
+      {{/tags_extended}}
+    </ul>
+    <div class="network-icon icon-{{source}}"></div>
+    {{#ifequals media "video"}}
+    <div class="play-icon"></div>
+    {{/ifequals}}
+    <span class="tile-timephrase">{{time_ago}}</span>
+    <shopspot-icon tile-id={{id}} />
+  </div>
+  <div class="tile-image">
+    {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+    <div class="swiper-lazy-preloader"></div>
+  </div>
+</div>
+{{/tile}}
