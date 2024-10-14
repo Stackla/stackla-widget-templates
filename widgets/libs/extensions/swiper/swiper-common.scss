@@ -55,10 +55,6 @@
 }
 
 @include breakpoint(mobile) {
-  .swiper .swiper-wrapper {
-    max-height: 100vh;
-  }
-
   .swiper-button-next,
   .swiper-button-prev {
     display: none;
@@ -69,7 +65,9 @@
   .swiper .swiper-slide {
     border-radius: 0;
   }
-
+  .swiper .swiper-wrapper {
+    max-height: 100vh;
+  }
   .swiper-button-next,
   .swiper-button-prev {
     display: none;
