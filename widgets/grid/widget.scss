@@ -68,3 +68,9 @@ $tile-sizes: (
   align-items: center;
   justify-content: center;
 }
+
+@include breakpoint(tablet) {
+  .expanded-tile-overlay {
+    align-items: normal;
+  }
+}

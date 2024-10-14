@@ -31,7 +31,7 @@ export function ExpandedTiles(sdk: Sdk) {
 }
 
 function BackArrowIcon() {
-  const isDesktopScreen = window.innerWidth >= 1024
+  const isDesktopScreen = window.innerWidth >= 992
   return !isDesktopScreen ? (
     <a class="back" href="#">
       <span class="widget-icon back-arrow"></span>
