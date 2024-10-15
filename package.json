@@ -28,7 +28,7 @@
     "@esbuild/linux-x64": "^0.23.1"
   },
   "devDependencies": {
-    "@happy-dom/jest-environment": "^15.0.0",
+    "@happy-dom/jest-environment": "^15.7.4",
     "@stackla/eslint-config": "^1.0.0",
     "@stackla/jest-config": "^1.0.6",
     "@stackla/lambda-api-bootstrap": "^1.0.12",
