@@ -1,6 +1,6 @@
 import { Sdk } from "@stackla/ugc-widgets"
 import getCSSVariables from "@widgets/libs/css-variables"
-import "@appnest/masonry-layout"
+import { MasonryLayout } from "@appnest/masonry-layout"
 import {
   loadTitle,
   addAutoAddTileFeature,
@@ -25,15 +25,19 @@ export function loadWidgetSettings() {
   addTilesPerPageFeature(widgetSettings)
   addLoadMoreButtonFeature(widgetSettings)
 
-  const masonryLayout = document.querySelector("masonry-layout")
-
   const refreshMasonryLayout = () => {
-    if (masonryLayout) {
+    const masonryLayout = sdk.querySelector<MasonryLayout>("masonry-layout")
+    if (masonryLayout instanceof MasonryLayout) {
       masonryLayout.layout()
     }
   }
 
+  window.refreshMasonryLayout = refreshMasonryLayout
+
   sdk.addEventListener("moreLoad", () => {
+    refreshMasonryLayout()
+  })
+  window.addEventListener("scroll", () => {
     refreshMasonryLayout()
   })
   sdk.addEventListener("tilesUpdated", refreshMasonryLayout)

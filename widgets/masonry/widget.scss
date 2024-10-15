@@ -13,6 +13,7 @@
       height: auto;
     }
   }
+
   .tile {
     position: relative;
 
@@ -50,6 +51,19 @@
         }
       }
     }
+  }
+}
+
+#load-more-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  margin-top: 25px;
+
+  .loading {
+      height: 50px !important;
+      width: 50px !important;
   }
 }
 

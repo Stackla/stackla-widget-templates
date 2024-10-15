@@ -51073,4 +51073,8 @@ export default [
     id: "63fd7674814802255280c8b9",
     time_phrase: "28 Feb 23"
   }
-] as unknown as Tile[]
+].map((tile, index) => {
+  tile.image = `https://picsum.photos/id/${index}/600`
+  tile.image_thumbnail_url = `https://picsum.photos/id/${index}/400`
+  return tile
+}) as unknown as Tile[]

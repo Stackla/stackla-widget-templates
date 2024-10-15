@@ -161,12 +161,16 @@ export function addLoadMoreButtonFeature<T extends BaseConfig>(widgetSettings: T
     throw new Error("Failed to find load more button")
   }
 
-  if (widgetSettings.load_more_type === "button") {
+  const loadMoreType = widgetSettings.load_more_type
+
+  if (loadMoreType === "button") {
     loadMoreButton.onclick = loadMore
-  } else {
+  } else if (loadMoreType === "scroll") {
     loadMoreButton.style.display = "none"
     useInfiniteScroller(sdk, window, loadMore)
     loadUntilVisibleTilesCountInScreen()
+  } else if (loadMoreType === "static") {
+    loadMoreButton.style.display = "none"
   }
 }
 

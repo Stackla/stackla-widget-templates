@@ -26,7 +26,7 @@ export interface IWidgetSettings extends BaseConfig {
   enable_typekit?: boolean
   max_tile_width?: number
   margin?: number
-  load_more_type?: string
+  load_more_type: "static" | "scroll" | "button" | undefined
   show_claim_button?: boolean
   enable_doublecolumnspan?: boolean
   shopspot_btn_background?: string

@@ -182,6 +182,10 @@ expressApp.get("/widgets/668ca52ada8fb/rendered/tiles", async (req, res) => {
   res.json(tileHtml)
 })
 
+expressApp.get("/stackla/cs/image/disable", async (req, res) => {
+  res.json({ success: true })
+});
+
 // Register preview route
 expressApp.get("/preview", async (req, res) => {
   const port = req.headers.host?.split(":")[1] || "4003"

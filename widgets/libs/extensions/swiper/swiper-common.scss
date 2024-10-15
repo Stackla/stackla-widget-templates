@@ -31,6 +31,40 @@
   }
 }
 
+.loading {
+  border-radius: 50% !important;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  z-index: 10;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-bottom: 5px solid #3498db;
+  width: 30px !important;
+  height: 30px !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.swiper {
+  height: 100%;
+
+  .swiper-slide {
+    align-items: center;
+
+    > .tile > .tile-loading {
+      @extend .loading;
+    }
+  }
+}
+
 .swiper-button-next,
 .swiper-button-prev,
 .swiper-expanded-button-next,

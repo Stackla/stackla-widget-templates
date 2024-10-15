@@ -10,7 +10,7 @@ export interface BaseConfig {
   expanded_tile_show_add_to_cart: boolean
   expanded_tile_show_navigation_arrows?: boolean
   expanded_tile_border_radius?: number
-  load_more_type?: string
+  load_more_type?: "static" | "scroll" | "button"
   widget_background?: string
   text_tile_background?: string
   text_tile_font_color?: string
