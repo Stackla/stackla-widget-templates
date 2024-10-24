@@ -78,17 +78,8 @@ async function buildAll() {
     }
   }
 
-  /** @type {esbuild.BuildOptions} */
-  const config = {
-    entryPoints: [...globSync("./widgets/**/widget.ts")],
-    bundle: true,
-    outdir: "dist/widgets",
-    loader: {
-      ".hbs": "text",
-      ".css": "text"
-    },
-    banner: {
-      js: isDevelopment
+  const getWebSocketJS = () => {
+    return isDevelopment
         ? `(() => {
       const ws = new WebSocket("ws://localhost:3001");
       ws.onmessage = () => {
@@ -96,8 +87,37 @@ async function buildAll() {
       };
     })();`
         : ``
+}
+
+
+
+  /** @type {esbuild.BuildOptions} */
+  const config = {
+    entryPoints: [...globSync("./widgets/**/widget.ts")], // Entry points for all widgets
+    bundle: true,
+    outdir: "dist/widgets",
+    loader: {
+      ".hbs": "text",
+      ".css": "text"
+    },
+    banner: {
+      js: `
+      // get selector attribute from url
+      function getSelectorAttribute(url) {
+        const urlParams = new URLSearchParams(url.search);
+        return urlParams.get("selector");
+      }
+
+      // Get the current js file loaded 
+      const jsFile = import.meta.url;
+      const sdk = window.ugc.getWidgetBySelector(getSelectorAttribute(jsFile));
+      ${getWebSocketJS()}
+      `
     },
     minify: true,
+    splitting: true,
+    format: 'esm',
+    chunkNames: '[name]-[hash]',
     plugins: [
       preAndPostBuild,
       sassPlugin({
