@@ -68,7 +68,23 @@ const config = {
         ]
       })
     }
-  }
+  },
+  resources: {
+    Resources: {
+      CloudfrontPermissionGrant: {
+        Type: 'AWS::Lambda::Permission',
+        Properties: {
+          Action: 'lambda:InvokeFunctionUrl',
+          FunctionName: {
+            Ref: 'MainLambdaFunction',
+          },
+          Principal: 'cloudfront.amazonaws.com',
+          SourceArn:
+            '${file(./config/${self:provider.stage}.json):cloudfront.sourceArn}' as any,
+        },
+      },
+    },
+  },
 };
 
 module.exports = config;
