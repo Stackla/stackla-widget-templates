@@ -84,7 +84,8 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
     rows_per_page: "",
     shopspot_btn_font_size: "",
     inline_tile_size: "medium",
-    inline_tile_border_radius: ""
+    inline_tile_border_radius: "",
+    tile_tag_background: ""
   },
   guid: "668ca52ada8fb",
   filter_id: "10695"

@@ -18,7 +18,6 @@
       </div>
       <div class="tile-image">
         {{#lazy image_thumbnail_url "120"}}{{/lazy}}
-        <div class="swiper-lazy-preloader"></div>
         {{#if options.tile_options.show_shopspots}}
           <shopspot-icon tile-id={{id}} />
         {{/if}}
@@ -26,10 +25,12 @@
     </div>
     <div class="tile-bottom">
       {{#if tags_extended.length}}
-        <ul class="tile-tags">
+        <ul class="tile-tags swiper-tags">
           {{#tags_extended}}
             <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
           {{/tags_extended}}
+          <div class="swiper-tags-prev swiper-button-prev"></div>
+          <div class="swiper-tags-next swiper-button-next"></div>
         </ul>
       {{/if}}
       <div class="description">
@@ -39,7 +40,7 @@
         {{#if user}}
           <div class="user-handle">@{{user}}</div>
         {{/if}}
-          <div class="tile-timestamp">{{time_ago}}</div>
+        <div class="tile-timestamp">{{time_ago}}</div>
         {{#if message}}
           <div class="caption">
             <div class="caption-paragraph">{{message}}</div>

@@ -76,22 +76,12 @@
   width: -webkit-fill-available;
   z-index: 2;
   margin: 0 0 12.5px;
+  position: relative;
 }
 
 .tag-inline {
-  background: var(--tile-tag-background);
+  background: darkgrey !important;
   border-radius: 3px !important;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  padding: 0 4px;
-  line-height: 16px;
-  text-wrap: nowrap;
-
-  a {
-    color: var(--text-tile-tag-font-color);
-    text-decoration: none;
-  }
 }
 
 .description {
@@ -162,4 +152,12 @@
   position: absolute;
   top: 10%;
   right: 8px;
+}
+
+.swiper-tags-prev {
+  left: 0;
+}
+
+.swiper-tags-next {
+  right: 0;
 }

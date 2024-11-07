@@ -1,7 +1,10 @@
 import { loadAllUnloadedTiles } from "@stackla/widget-utils/dist/libs/extensions/swiper/loader.extension"
-import { loadWidget } from "@stackla/widget-utils"
+import { ISdk, loadWidget } from "@stackla/widget-utils"
+import { initializeSwiperForTags } from "@stackla/widget-utils/dist/libs/templates/tags/tags-swiper.loader"
 import shopspotStyle from "./components/shopspot-icon/base.scss"
 import { refreshWaterfallLayout, reinitialiseWaterfallLayout, resizeAllUgcTilesHeight } from "./waterfall.lib"
+
+declare const sdk: ISdk
 
 const settings = {
   extensions: {},
@@ -24,3 +27,11 @@ const settings = {
 loadWidget(settings)
 resizeAllUgcTilesHeight()
 loadAllUnloadedTiles()
+
+const tiles = Array.from(sdk.querySelectorAll<HTMLElement>(".grid-item") ?? [])
+tiles.forEach(async (tile: HTMLElement) => {
+  const tileId = tile.getAttribute("data-id")
+  if (tileId) {
+    initializeSwiperForTags(tileId, tile)
+  }
+})
