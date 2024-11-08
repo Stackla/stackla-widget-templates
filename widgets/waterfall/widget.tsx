@@ -1,6 +1,6 @@
 import { loadAllUnloadedTiles } from "@stackla/widget-utils/extensions/swiper"
 import { ISdk, loadWidget } from "@stackla/widget-utils"
-import { initializeSwiperForTags } from "@stackla/widget-utils/dist/libs/templates/tags/tags-swiper.loader"
+import { initializeSwiperForTags } from "@stackla/widget-utils/libs"
 import shopspotStyle from "./components/shopspot-icon/base.scss"
 import { refreshWaterfallLayout, reinitialiseWaterfallLayout, resizeAllUgcTilesHeight } from "./waterfall.lib"
 
