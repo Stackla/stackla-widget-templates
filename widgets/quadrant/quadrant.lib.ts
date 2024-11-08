@@ -1,5 +1,5 @@
 import type { ISdk } from "@stackla/widget-utils"
-import { waitForElements } from "@stackla/widget-utils/dist/libs/widget.features"
+import { waitForElements } from "@stackla/widget-utils/libs"
 
 declare const sdk: ISdk
 

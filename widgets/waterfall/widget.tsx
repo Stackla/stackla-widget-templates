@@ -1,4 +1,4 @@
-import { loadAllUnloadedTiles } from "@stackla/widget-utils/dist/libs/extensions/swiper/loader.extension"
+import { loadAllUnloadedTiles } from "@stackla/widget-utils/extensions/swiper"
 import { ISdk, loadWidget } from "@stackla/widget-utils"
 import { initializeSwiperForTags } from "@stackla/widget-utils/dist/libs/templates/tags/tags-swiper.loader"
 import shopspotStyle from "./components/shopspot-icon/base.scss"

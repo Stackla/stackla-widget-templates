@@ -1,6 +1,5 @@
 import { SdkSwiper } from "types"
-import { initializeSwiper, refreshSwiper } from "@stackla/widget-utils/dist/libs/extensions/swiper/swiper.extension"
-import { enableTileImages } from "@stackla/widget-utils/dist/libs/extensions/swiper/loader.extension"
+import { initializeSwiper, refreshSwiper, enableTileImages } from "@stackla/widget-utils/extensions/swiper"
 import Swiper from "swiper"
 
 declare const sdk: SdkSwiper

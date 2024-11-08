@@ -22,16 +22,3 @@ export function loadDirectUploaderTileButton() {
     lastTile.appendChild(loadMoreJSX)
   }
 }
-
-export function loadDirectUploaderListeners() {
-  sdk.querySelector("#submit-more-content-btn").addEventListener("click", () => {
-    sdk.querySelector("#direct-uploader-form").classList.remove("hidden")
-  })
-  sdk.querySelector("#direct-uploader-form .exit").addEventListener("click", () => {
-    sdk.querySelector("#direct-uploader-form").classList.add("hidden")
-  })
-
-  sdk.querySelector("#direct-uploader-form .overlay").addEventListener("click", () => {
-    sdk.querySelector("#direct-uploader-form").classList.add("hidden")
-  })
-}

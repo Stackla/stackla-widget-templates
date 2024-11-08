@@ -35,6 +35,8 @@ class DirectUploaderWidget extends HTMLElement {
       const { guid } = await response.json()
 
       this.appendChild(createDUIFrame(guid))
+
+      loadDirectUploaderListeners()
     } catch (error) {
       console.error(`Failed to fetch direct uploader widget: ${error}`)
     }
@@ -45,4 +47,18 @@ try {
   customElements.define("direct-uploader", DirectUploaderWidget)
 } catch (error) {
   // eslint-disable-next-line no-console
+}
+
+export function loadDirectUploaderListeners() {
+  sdk.querySelector("#submit-more-content-btn").addEventListener("click", () => {
+    sdk.querySelector("#direct-uploader-form").classList.remove("hidden")
+  })
+
+  sdk.querySelector("#direct-uploader-form .exit").addEventListener("click", () => {
+    sdk.querySelector("#direct-uploader-form").classList.add("hidden")
+  })
+
+  sdk.querySelector("#direct-uploader-form .overlay").addEventListener("click", () => {
+    sdk.querySelector("#direct-uploader-form").classList.add("hidden")
+  })
 }
