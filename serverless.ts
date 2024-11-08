@@ -7,8 +7,8 @@ const testingHooks = {
 };
 
 const defaultHooks = {
-  "before:package:initialize": [`APP_ENV=${env} npm run build`],
-  "before:webpack:compile:compile": [`APP_ENV=${env} npm run build`]
+  "before:package:initialize": [`npm run build:${env}`],
+  "before:webpack:compile:compile": [`npm run build:${env}`]
 };
 
 const plugins = [
@@ -34,10 +34,21 @@ const config = {
     name: "aws",
     environment: {
       APP_ENV: env
-    }
+    },
+    stage: '${opt:stage, self:custom.defaultStage}',
+    iam: '${file(./config/${self:provider.stage}.json):iam}',
+    region: '${opt:region}',
+    deploymentBucket: {
+        name: 'stackla-serverless-${self:provider.stage}-deploys',
+        maxPreviousDeploymentArtifacts: 10,
+        blockPublicAccess: true,
+        skipPolicySetup: true,
+        versioning: true,
+    },
   },
   plugins,
   custom: {
+    defaultStage: 'development',
     'serverless-offline': {
       httpPort: getPort()
     },

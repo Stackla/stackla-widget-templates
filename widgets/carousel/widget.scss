@@ -7,16 +7,17 @@
 #nosto-ugc-container {
   display: flex;
   place-items: center;
-  height: styles.$nosto-container-height;
-  margin-top: styles.$nosto-container-mt;
+  margin: styles.$nosto-container-margin;
+  width: calc(100% - (styles.$nosto-container-margin * 2));
 
   .swiper {
     width: styles.$swiper-container-width-lg;
+  }
 
-    .tile {
-      width: styles.$tile-width-lg;
-      height: styles.$tile-height-lg;
-    }
+  .icon-section {
+    display: flex;
+    position: absolute;
+    height: 100%;
   }
 }
 
@@ -39,6 +40,10 @@
     .tile {
       width: styles.$tile-width-md !important;
       height: styles.$tile-height-md !important;
+
+      .icon-section {
+        width: styles.$tile-width-md;
+      }
     }
   }
 }

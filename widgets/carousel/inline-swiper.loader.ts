@@ -1,6 +1,5 @@
 import { SdkSwiper } from "types"
-import { initializeSwiper, refreshSwiper } from "@stackla/widget-utils/dist/libs/extensions/swiper/swiper.extension"
-import { enableTileImages } from "@stackla/widget-utils/dist/libs/extensions/swiper/loader.extension"
+import { initializeSwiper, refreshSwiper, enableTileImages } from "@stackla/widget-utils/extensions/swiper"
 import Swiper from "swiper"
 
 declare const sdk: SdkSwiper
@@ -23,6 +22,7 @@ function initializeSwiperForInlineTiles() {
     throw new Error("Failed to find widget UI element. Failed to initialise Swiper")
   }
 
+  // TODO: remove this section after introducing css variable for Nosto container
   const tileWidth = 210
   const screenSize = window.innerWidth
   const perView = !enable_custom_tiles_per_page
@@ -42,9 +42,16 @@ function initializeSwiperForInlineTiles() {
       slidesPerView: "auto",
       grabCursor: false,
       allowTouchMove: false,
+      breakpointsBase: "container",
       breakpoints: {
-        577: {
-          slidesOffsetBefore: 20
+        0: {
+          slidesPerView: 1
+        },
+        537: {
+          slidesPerView: 3
+        },
+        952: {
+          slidesPerView: 7
         }
       },
       keyboard: {

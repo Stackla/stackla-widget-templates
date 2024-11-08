@@ -6,7 +6,12 @@
 
   "iam": {
     "role": {
-      "statements": []
+      "statements": [
+        {
+          "Effect": "Allow",
+          "Action": ["s3:PutBucketTagging"],
+          "Resource": ["*"]
+        }]
+      }
     }
-  }
 }

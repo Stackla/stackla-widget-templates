@@ -2,6 +2,7 @@ $icon-placement-top: 8px;
 $icon-placement-bottom: 8px;
 $icon-placement-left: 8.67px;
 $icon-placement-right: 8.67px;
+$icon-absolute-positioning-right: 0;
 
 .tile-tags {
   margin: 0;
@@ -45,8 +46,11 @@ $icon-placement-right: 8.67px;
     }
 
     .network-icon {
+      background-repeat: no-repeat;
       margin-left: auto;
       margin-right: $icon-placement-right;
+      position: absolute;
+      right: $icon-absolute-positioning-right;
     }
   }
 

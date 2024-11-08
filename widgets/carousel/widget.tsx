@@ -1,13 +1,19 @@
-import { loadAllUnloadedTiles } from "@stackla/widget-utils/dist/libs/extensions/swiper/loader.extension"
+import { SdkSwiper } from "types"
+
+declare const sdk: SdkSwiper
+
 import { loadWidget } from "@stackla/widget-utils"
+import { initializeInlineSwiperListeners } from "./inline-swiper.loader"
 import shopspotStyle from "./components/shopspot-icon/base.scss"
 
-const settings = {
+loadWidget({
   extensions: {},
   features: {
     handleLoadMore: false
   },
-  callbacks: {},
+  callbacks: {
+    onLoad: [initializeInlineSwiperListeners]
+  },
   templates: {
     "expanded-tiles": {
       style: {
@@ -16,7 +22,6 @@ const settings = {
       }
     }
   }
-}
+})
 
-loadWidget(settings)
-loadAllUnloadedTiles()
+sdk.querySelector(".track")?.style.removeProperty("display")
