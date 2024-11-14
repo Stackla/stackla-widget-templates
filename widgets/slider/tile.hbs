@@ -1,0 +1,36 @@
+{{#tile class="ugc-tile-wrapper" }}
+<div class="image-section">
+    <div class="icon-section">
+        <div class="top-section">
+            {{#each attrs}}
+            {{#ifequals this "instagram.reel"}}
+            <div class="content-icon icon-reel"></div>
+            {{/ifequals}}
+            {{#ifequals this "youtube.short"}}
+            <div class="content-icon icon-youtube-short"></div>
+            {{/ifequals}}
+            {{/each}}
+            <div class="network-icon icon-{{source}}"></div>
+        </div>
+        <div class="center-section">
+            {{#ifequals media "video"}}
+            <div class="play-icon"></div>
+            {{/ifequals}}
+        </div>
+        <shopspot-icon tile-id="{{id}}"></shopspot-icon>
+    </div>
+    {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+</div>
+<div class="details-section">
+    <div class="tile-message-wrapper">
+        <tile-content tileId="{{id}}" mode="dark" context="slider-inline"></tile-content>
+        <div class="tile">
+            <ul class="tile-tags">
+                {{#tags_extended}}
+                <li class='tile-tag'><a href="{{custom_url}}">{{tag}}</a></li>
+                {{/tags_extended}}
+            </ul>
+        </div>
+    </div>
+</div>
+{{/tile}}

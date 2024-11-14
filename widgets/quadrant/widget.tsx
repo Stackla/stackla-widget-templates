@@ -12,16 +12,20 @@ loadWidget({
   callbacks: {},
   templates: {
     "expanded-tiles": {
-      style: {
-        css: shopspotStyle,
-        global: true
-      }
+      styles: [
+        {
+          css: shopspotStyle,
+          global: true
+        }
+      ]
     },
     "ugc-products": {
-      style: {
-        css: productsStyle,
-        global: false
-      }
+      styles: [
+        {
+          css: productsStyle,
+          global: false
+        }
+      ]
     }
   }
 })

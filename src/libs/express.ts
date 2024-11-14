@@ -8,7 +8,23 @@ import { getAndRenderTiles, getTilesToRender, renderTemplates } from "./tile.han
 import widgetOptions from "../../tests/fixtures/widget.options"
 import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
-import { createMockRoutes } from "../../tests/libs/developer"
+import { createMockRoutes, PRODUCTION_UI_URL } from "../../tests/libs/developer"
+
+export function getDomain(isDev: boolean) {
+  if (isDev) {
+    return "http://localhost:4002/development"
+  }
+  
+  if (process.env.APP_ENV === "testing") {
+    return `${PRODUCTION_UI_URL}/testing`
+  }
+
+  if (process.env.APP_ENV === "production") {
+    return PRODUCTION_UI_URL
+  }
+
+  return `${PRODUCTION_UI_URL}/local`
+}
 
 export interface IDraftRequest {
   customTemplates: {
@@ -17,7 +33,7 @@ export interface IDraftRequest {
     }
     tile: {
       template: string
-    }
+    } 
   }
   customCSS: string
   customJS: string,
@@ -74,7 +90,7 @@ expressApp.use("/preview", (req, res, next) => {
   }
 })
 
-async function getContent(widgetType: string, retry = 0): Promise<PreviewContent> {
+export async function getContent(widgetType: string, retry = 0): Promise<PreviewContent> {
   if (retry > 3) {
     throw new Error(`Failed to get content, exiting after 3 retries, widgetType: ${widgetType}`)
   }
@@ -185,7 +201,6 @@ expressApp.get("/development/stackla/cs/image/disable", async (req, res) => {
 
 // Register preview route
 expressApp.get("/preview", async (req, res) => {
-  const port = req.headers.host?.split(":")[1] || "4003"
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
 
@@ -193,9 +208,8 @@ expressApp.get("/preview", async (req, res) => {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions.widgetConfig),
-    environment: process.env.APP_ENV,
+    domain: getDomain(req.query.dev === "true"),
     ...(await getContent(widgetType)),
-    port: port
   })
 })
 

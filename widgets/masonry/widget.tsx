@@ -9,10 +9,12 @@ loadWidget({
   callbacks: {},
   templates: {
     "expanded-tiles": {
-      style: {
-        css: shopspotStyle,
-        global: true
-      }
+      styles: [
+        {
+          css: shopspotStyle,
+          global: true
+        }
+      ]
     }
   }
 })

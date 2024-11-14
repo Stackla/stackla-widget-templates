@@ -59,4 +59,21 @@ Cypress.Commands.add("widgetTests", widgetType => {
 
     shareButton.find(".share-socials-popup-wrapper").should("not.exist")
   })
+
+  it("should find the content inside the tile-content element", () => {
+    cy.getFirstTile().click()
+
+    const expandedTile = shadowRoot.get("expanded-tile")
+    cy.expandedTileTest(expandedTile)
+
+    const tileContent = expandedTile.find("tile-content")
+
+    tileContent.should("exist")
+
+    const tileContentShadow = tileContent.shadow()
+
+    tileContentShadow.find(".tile-content-wrapper").should("exist")
+
+    tileContentShadow.find(".caption-paragraph").invoke("text").should("not.be.empty")
+  })
 })

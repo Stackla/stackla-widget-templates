@@ -1,0 +1,199 @@
+@use "styles";
+@use "responsive";
+@use "sass:math";
+
+$space-between: 10px;
+
+:host {
+  --rendered-tile-size: var(--tile-size) * 2 + 20px;
+  --width-adjustment: rem(95%, var(--rendered-tile-size));
+  --container-width: calc(95% - var(--width-adjustment));
+
+  transition: ease all 0.5s;
+}
+
+#nosto-ugc-container {
+  display: flex;
+  width: 100vw;
+  place-items: center;
+
+  .track {
+    display: flex;
+    width: 100%;
+    place-items: center;
+    flex-direction: column;
+
+    .container {
+      display: flex;
+      width: var(--container-width);
+      flex-direction: column;
+
+      .ugc-tiles {
+        display: grid;
+        gap: $space-between; /* Space between blocks */
+        width: 100%; /* Fixed Width */
+        height: 600px; /* Fixed Height */
+        overflow: hidden;
+        justify-content: center;
+
+        .ugc-tile {
+          display: grid;
+          justify-content: flex-start;
+          height: fit-content;
+          box-sizing: border-box;
+          grid-column: span 2;
+          grid-template:
+            "image1 details1"
+            "details2 image2"
+            "image3 details4"
+            "details3 image4";
+
+          .image-section {
+            display: flex;
+            width: var(--tile-size);
+            position: relative;
+            grid-area: image1;
+            height: var(--tile-size);
+          }
+
+          .details-section {
+            display: flex;
+            flex-direction: column;
+            place-items: flex-start;
+            place-content: flex-start;
+            height: var(--tile-size);
+            width: var(--tile-size);
+            grid-area: details1;
+
+            .tile-message-wrapper {
+              display: grid;
+              grid-template-rows: 85% 15%;
+              grid-auto-columns: 1fr;
+              height: 100%;
+              padding: 10px 0 0 10px;
+
+              .tile-tags .tile-tag {
+                --tile-tag-background: #bcbbbc;
+              }
+            }
+          }
+
+          img {
+            width: 100%;
+            object-fit: cover;
+          }
+
+          /* Style for individual blocks */
+          .ugc-tile,
+          .ugc-tile-wrapper {
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #ccc;
+            font-size: 1.5em;
+            transition: transform 0.5s ease-in-out; /* Apply transition to all blocks */
+            cursor: pointer;
+          }
+
+          &:nth-child(2n) {
+            .image-section {
+              grid-area: image2;
+            }
+
+            .details-section {
+              grid-area: details2;
+            }
+          }
+
+          &:nth-child(4n-1),
+          &:nth-child(4n) {
+            min-width: initial;
+            grid-column: auto;
+            grid-row: span 2;
+            height: 100%;
+          }
+
+          &:nth-child(4n-1) {
+            .image-section {
+              grid-area: image3;
+            }
+
+            .details-section {
+              grid-area: details3;
+            }
+          }
+
+          &:nth-child(4n) {
+            .image-section {
+              grid-area: image4;
+            }
+
+            .details-section {
+              grid-area: details4;
+            }
+          }
+        }
+      }
+
+      .ugc-tile:nth-child(even) .ugc-tile-wrapper {
+        flex-direction: row-reverse; /* Swap image and text for even rows */
+      }
+
+      /* Small Screens: Stack all blocks vertically */
+      @media (width <= 599px) {
+        .ugc-tiles {
+          grid-template-columns: 1fr;
+        }
+
+        .ugc-tile {
+          flex-direction: column; /* Stack image and text vertically on small screens */
+        }
+      }
+
+      /* Styles for Scroll Buttons */
+      .tiles-scroll-button {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        place-items: center;
+        flex-direction: column;
+        cursor: pointer;
+
+        &#scroll-up,
+        &#scroll-down {
+          .widget-icon {
+            transform: rotate(90deg);
+          }
+
+          &.disabled {
+            pointer-events: none;
+          }
+        }
+      }
+
+      #load-more {
+        background: 0 0;
+        margin: auto;
+        padding: 12px 0;
+        text-transform: uppercase;
+        color: #525252;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 24px;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        width: 100%;
+        border: none;
+      }
+
+      .close {
+        width: 24px;
+        height: 24px;
+        background-size: contain;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 -960 960 960' width='24'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+      }
+    }
+  }
+}

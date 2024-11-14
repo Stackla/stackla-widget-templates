@@ -1,0 +1,13 @@
+$social-icon-bg: #000;
+
+.icon-section {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  .top-section .network-icon {
+    margin-left: auto;
+    background-color: $social-icon-bg;
+  }
+}

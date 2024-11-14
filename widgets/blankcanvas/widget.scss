@@ -1,0 +1,62 @@
+@use "styles";
+
+:host {
+  transition: ease all 0.5s;
+}
+
+.grid {
+  justify-content: center;
+
+  .grid-item {
+    width: var(--tile-size);
+
+    @include styles.breakpoint(tablet) {
+      width: calc(50vw - 10px);
+      height: calc(50vw - 10px);
+    }
+
+    @include styles.breakpoint(mobile) {
+      width: 100vw;
+      height: 100vw;
+    }
+  }
+}
+
+#nosto-ugc-container {
+  .ugc-tile {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .tile {
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    .play-icon {
+      top: 43%;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+}
+
+#load-more-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  margin-top: 25px;
+
+  .loading {
+    height: 50px !important;
+    width: 50px !important;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

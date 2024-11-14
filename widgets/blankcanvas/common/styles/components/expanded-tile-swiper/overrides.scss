@@ -1,0 +1,102 @@
+@use "../../../styles/mixins";
+@use "dimens";
+
+%loading {
+  border-radius: 50% !important; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  z-index: 10;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-bottom: 5px solid #3498db;
+  width: dimens.$loading-width !important;
+  height: dimens.$loading-width !important;
+  top: calc(50% - dimens.$loading-width);
+  left: calc(50% - dimens.$loading-width);
+}
+
+.swiper {
+  display: flex;
+  height: 100%;
+
+  .swiper-slide {
+    align-items: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    border-radius: dimens.$border-radius;
+    overflow: hidden;
+
+    > .tile > .tile-loading {
+      @extend %loading;
+    }
+
+    .tile-image {
+      height: 100%;
+
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+        border-radius: 5px;
+        position: relative;
+        opacity: 1;
+      }
+    }
+
+    &:not(.swiper-initialized) {
+      .swiper-slide > .ugc-tile > img {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  top: unset;
+}
+
+.loading {
+  @extend %loading;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.swiper-inline-button-next::after,
+.swiper-inline-button-prev::after,
+.swiper-expanded-button-next::after,
+.swiper-expanded-button-prev::after {
+  content: unset;
+
+  --swiper-navigation-size: 20px;
+}
+
+@include mixins.breakpoint(mobile) {
+  .swiper .swiper-wrapper {
+    max-height: 100vh;
+  }
+}
+
+@include mixins.media-query-target(tablet) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+@include mixins.breakpoint(desktop) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;
+  }
+}

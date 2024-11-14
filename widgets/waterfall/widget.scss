@@ -13,9 +13,9 @@
     $total-padding: 10px;
 
     box-sizing: border-box;
-    border-radius: 5px;
     overflow: hidden;
     max-width: 100%;
+    grid-row-end: span 30;
   }
 
   .tile {
@@ -25,10 +25,6 @@
     height: 100%;
     padding: 0 5px;
     background: white;
-  }
-
-  .tile-image {
-    grid-row-end: span 30;
   }
 
   .tile-top {

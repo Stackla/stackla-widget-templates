@@ -3,6 +3,7 @@ $icon-placement-bottom: 8px;
 $icon-placement-left: 8.67px;
 $icon-placement-right: 8.67px;
 $icon-absolute-positioning-right: 0;
+$icon-absolute-positioning-bottom: 0;
 
 .tile-tags {
   margin: 0;
@@ -51,6 +52,7 @@ $icon-absolute-positioning-right: 0;
       margin-right: $icon-placement-right;
       position: absolute;
       right: $icon-absolute-positioning-right;
+      bottom: $icon-absolute-positioning-bottom;
     }
   }
 
@@ -63,12 +65,4 @@ $icon-absolute-positioning-right: 0;
     align-items: center;
     height: 100%;
   }
-}
-
-.tile-timephrase {
-  color: #b9bab9;
-  border-radius: 2px;
-  font-size: 14px;
-  font-weight: 400;
-  display: var(--tile-timephrase-display);
 }

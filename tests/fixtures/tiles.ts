@@ -51455,8 +51455,9 @@ export default [
     tile.image_thumbnail_url = "blah"
     return tile
   }
-
+  const getRandomSize = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min
+  const height = getRandomSize(250, 800)
   tile.image = `https://picsum.photos/id/${index}/600`
-  tile.image_thumbnail_url = `https://picsum.photos/id/${index}/400`
+  tile.image_thumbnail_url = `https://picsum.photos/id/${index}/400/${height}`
   return tile
 }) as unknown as Tile[]

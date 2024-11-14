@@ -3,6 +3,8 @@ import nostoApiJS from "../data/nosto-api"
 import * as path from "node:path"
 import * as fs from "node:fs"
 
+export const PRODUCTION_UI_URL = "https://widget-ui.stackla.com"
+
 export const createMockRoutes = (app: Express) => {
   app.get("/development/stackla/cs/image/disable", (_req, res) => {
     res.json({ success: true })
@@ -106,18 +108,6 @@ export const createMockRoutes = (app: Express) => {
       },
       stackId: 1451,
       guid: "663acb8116377"
-    })
-  })
-
-  app.get("/test-preview", (_req, res) => {
-    const widget = {
-      wid: "668ca52ada8fb",
-      dev: true
-    }
-
-    res.render("preview", {
-      widgetRequest: JSON.stringify(widget),
-      environment: process.env.APP_ENV
     })
   })
 }

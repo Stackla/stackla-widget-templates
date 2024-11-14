@@ -2,32 +2,13 @@ import { ISdk } from "@stackla/widget-utils"
 
 declare const sdk: ISdk
 
-const { inline_tile_size } = sdk.getStyleConfig()
-const minmax: [number, number] =
-  inline_tile_size === "small" ? [200, 340] : inline_tile_size === "large" ? [350, 700] : [260, 450]
-
 export function reinitialiseWaterfallLayout() {
-  resizeAllUgcTilesHeight(true)
+  loadWaterfallLayout(true)
 }
 
-export function refreshWaterfallLayout() {
-  resizeAllUgcTilesHeight()
-}
-
-/**
- * Generate random heights for the tiles in the waterfall layout
- * @param minHeight Minimum height for each tile
- * @param maxHeight Maximum height for each tile
- * @returns
- */
-export function generateRandomHeights(minHeight: number, maxHeight: number) {
-  return Math.floor(Math.random() * (maxHeight - minHeight)) + minHeight
-}
-
-export function resizeAllUgcTilesHeight(reset = false) {
+export function loadWaterfallLayout(reset = false) {
   const allTiles = Array.from(sdk.querySelectorAll<HTMLElement>(".grid-item") ?? [])
   const ugcTiles = reset ? allTiles : allTiles.filter(tile => tile.getAttribute("height-set") !== "true")
-  const [minHeight, maxHeight] = minmax
 
   if (!ugcTiles || ugcTiles.length === 0) {
     return
@@ -38,13 +19,16 @@ export function resizeAllUgcTilesHeight(reset = false) {
   const gap = parseInt(margin)
 
   ugcTiles.forEach(async (tile: HTMLElement) => {
-    const randomHeight = generateRandomHeights(minHeight, maxHeight)
+    const imageElement = tile.querySelector("img")
+    if (imageElement && imageElement.complete) {
+      const height = imageElement?.naturalHeight
 
-    const rowSpan = Math.floor((randomHeight + gap) / (rowHeight + gap))
+      const rowSpan = Math.floor((height + gap) / (rowHeight + gap))
 
-    tile.style.gridRowEnd = `span ${rowSpan}`
+      tile.style.gridRowEnd = `span ${rowSpan}`
 
-    tile.setAttribute("height-set", "true")
-    tile.classList.add("processed")
+      tile.setAttribute("height-set", "true")
+      tile.classList.add("processed")
+    }
   })
 }
