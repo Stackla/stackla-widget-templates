@@ -121,7 +121,7 @@ export async function getContent(widgetType: string, retry = 0): Promise<Preview
   }
 }
 
-async function getHTML(content: PreviewContent, page: number = 1, limit: number = 25) {
+async function getHTML(content: PreviewContent, page: number = 1, limit) {
   return await getAndRenderTiles(
     {
       customTemplates: {
