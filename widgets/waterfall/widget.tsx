@@ -7,10 +7,9 @@ loadWidget({
   extensions: {},
   features: {},
   callbacks: {
-    //TODO fix the event
-    //onMoreLoad: [() => loadWaterfallLayout()],
+    onLoadMore: [() => loadWaterfallLayout()],
     onTilesUpdated: [() => loadWaterfallLayout()],
-    resize: [() => reinitialiseWaterfallLayout()]
+    onResize: [() => reinitialiseWaterfallLayout()]
   },
   templates: {
     "expanded-tiles": {
