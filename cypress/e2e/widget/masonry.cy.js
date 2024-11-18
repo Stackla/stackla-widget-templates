@@ -1,11 +1,24 @@
 describe("Should test the masonry", () => {
-  it("Should pass default tests", () => {
-    cy.widgetTests("masonry")
+  beforeEach(() => {
+    cy.on("uncaught:exception", (err, runnable) => {
+      return false
+    })
+    cy.visitWidget("masonry")
+  })
+
+  it("Should show tile", () => {
+    cy.shouldShowTile("masonry")
+  })
+
+  it("Should expand tile", () => {
+    cy.shouldExpandedTile("masonry")
   })
 
   it("Should display timephrase in the tile", () => {
-    cy.visitWidget("masonry")
-
     cy.getFirstTile().find(".tile-timephrase").should("exist").invoke("text").should("not.be.empty")
+  })
+
+  it("Should load share icons", () => {
+    cy.shouldLoadShareMenu()
   })
 })

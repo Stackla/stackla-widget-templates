@@ -156,6 +156,16 @@ async function buildAll() {
   await esbuild.build(config)
 }
 
+async function buildUtils() {
+  const { exec } = require("child_process")
+  const util = require("util")
+  const execPromise = util.promisify(exec)
+
+  console.log("Building utils...")
+
+  await execPromise("npm run build:utils")
+}
+
 async function buildAllWithErrorHandling(retries = 0) {
   if (retries > 3) {
     console.error("Failed to build after 3 retries. Exiting.")
@@ -163,6 +173,7 @@ async function buildAllWithErrorHandling(retries = 0) {
   }
 
   try {
+    await buildUtils()
     await buildAll()
   } catch (e) {
     console.error("Error building. Retrying.", e)

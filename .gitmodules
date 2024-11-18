@@ -1,0 +1,3 @@
+[submodule "packages/widget-utils"]
+	path = packages/widget-utils
+	url = https://github.com/Stackla/widget-utils

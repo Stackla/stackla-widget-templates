@@ -21,7 +21,16 @@ on:
 
 jobs:
   deploy:
-    uses: Stackla/stackla-github-actions/.github/workflows/serverless.yml@master
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
+    environment: ${{ inputs.environment }}
+    env:
+      NODE_AUTH_TOKEN: ${{secrets.STACKLA_BOT_GITHUB_TOKEN}}
+      ENV_VARS: ${inputs.env_vars}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: Stackla/stackla-github-actions/serverless@master
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          stage: ${{ inputs.environment }}
+          sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
