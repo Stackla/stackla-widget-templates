@@ -9,6 +9,7 @@ import widgetOptions from "../../tests/fixtures/widget.options"
 import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
 import { createMockRoutes, PRODUCTION_UI_URL } from "../../tests/libs/developer"
+import fs from "fs"
 
 export function getDomain(isDev: boolean) {
   if (isDev) {
@@ -16,7 +17,7 @@ export function getDomain(isDev: boolean) {
   }
   
   if (process.env.APP_ENV === "testing") {
-    return `${PRODUCTION_UI_URL}/testing`
+    return `${PRODUCTION_UI_URL}/external-testing`
   }
 
   if (process.env.APP_ENV === "production") {
@@ -37,7 +38,7 @@ export interface IDraftRequest {
   }
   customCSS: string
   customJS: string,
-  widgetOptions: typeof widgetOptions.widgetConfig
+  widgetOptions: typeof widgetOptions.config
 }
 
 type PreviewContent = {
@@ -141,6 +142,31 @@ async function getHTML(content: PreviewContent, page: number = 1, limit) {
   )
 }
 
+  expressApp.get("/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050.js", (_req, res) => {
+    const fileData = fs.readFileSync(path.resolve("./mock/atc-laptop.json"), "utf-8")
+    res.json(JSON.parse(fileData))
+  })
+
+  expressApp.get("/development/products/samsung-98-qn90d-neo-qled-4k-smart-tv-2024.js", (_req, res) => {
+    const fileData = fs.readFileSync(path.resolve("./mock/atc-tv.json"), "utf-8")
+    res.json(JSON.parse(fileData))
+  })
+
+  expressApp.get("/development/products/contrast-felted-sweater-black.js", (_req, res) => {
+    const fileData = fs.readFileSync(path.resolve("./mock/contrast-felted-sweater-black.json"), "utf-8")
+    res.json(JSON.parse(fileData))
+  })
+
+  expressApp.get("/development/products/desna-dress.js", (_req, res) => {
+    const fileData = fs.readFileSync(path.resolve("./mock/desna-dress.json"), "utf-8")
+    res.json(JSON.parse(fileData))
+  })
+
+  expressApp.get("/development/products/pure-city-vintage-leather-saddle.js", (_req, res) => {
+    const fileData = fs.readFileSync(path.resolve("./mock/pure-city-vintage-leather-saddle.json"), "utf-8")
+    res.json(JSON.parse(fileData))
+  })
+
 expressApp.post("/development/widgets/668ca52ada8fb/draft", async (req, res) => {
   const body = JSON.parse(req.body)
   const draft = body.draft as IDraftRequest
@@ -207,7 +233,7 @@ expressApp.get("/preview", async (req, res) => {
   res.render("preview", {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
-    widgetOptions: JSON.stringify(widgetOptions.widgetConfig),
+    widgetOptions: JSON.stringify(widgetOptions.config),
     domain: getDomain(req.query.dev === "true"),
     ...(await getContent(widgetType)),
   })

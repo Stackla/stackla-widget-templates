@@ -12,3 +12,4 @@ cypress/support/e2e.js
 server
 .vscode/settings.json
 .DS_Store
+cypress/snapshots/diff

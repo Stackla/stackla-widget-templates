@@ -31,8 +31,9 @@
     },
     "jsx": "react",
     "jsxFactory": "createElement",
-    "jsxFragmentFactory": "createFragment"
+    "jsxFragmentFactory": "createFragment",
+    "types": ["node", "jest", "cypress"]
   },
   "include": ["widgets/**/*.ts", "widgets/**/*.tsx"],
-  "exclude": [] 
+  "exclude": ["widget-utils"]
 }

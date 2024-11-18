@@ -8,6 +8,8 @@ permissions:
 
 env:
   GH_TOKEN: ${{ github.token }}
+  NODE_AUTH_TOKEN: ${{secrets.STACKLA_BOT_GITHUB_TOKEN}}
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
 on:
   pull_request:
@@ -28,10 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - uses: actions/setup-node@v1
         with:
           node-version: 20
-      - uses: Stackla/stackla-github-actions/npm-cache@master
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
       - name: Build
         run: npm run build
       - name: Lint
@@ -40,6 +46,31 @@ jobs:
         run: npm run typecheck
       - name: Test
         run: npm test
+  cypress-run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        containers: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          start: npm run start:test
+          wait-on: 'http://localhost:4002/preview?widgetType=carousel'
+          record: true
+          parallel: true 
+          browser: chrome
   trigger_deploy:
     if: github.ref == 'refs/heads/master'
     needs: [build]

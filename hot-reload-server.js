@@ -45,7 +45,7 @@ const notifyClients = debounce(filePath => {
 }, DEBOUNCE_DELAY)
 
 chokidar
-  .watch(["./widgets"], {
+  .watch(["./widgets", "./packages/widget-utils/src"], {
     ignoreInitial: true,
     persistent: true
   })

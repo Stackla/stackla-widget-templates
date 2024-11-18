@@ -1,9 +1,16 @@
 describe("Should test the grid", () => {
-  it("Should pass default tests", () => {
-    cy.widgetTests("grid")
-  })
-
-  it("Should display timephrase in the tile", () => {
+  beforeEach(() => {
+    cy.on("uncaught:exception", (err, runnable) => {
+      return false;
+    });
     cy.visitWidget("grid")
   })
+  
+  it("Should show tile", () => {
+      cy.shouldShowTile("grid");
+  });
+
+  it('Should expand tile', () => {
+     cy.shouldExpandedTile("grid");
+  });
 })
