@@ -154,8 +154,26 @@
   display: none;
 }
 
-.widget-icon {
+.icon-share {
   position: absolute;
   top: 10%;
   right: 8px;
+}
+
+.share-socials-popup-wrapper {
+  height: auto;
+  top: 50vh;
+  right: 50vw;
+}
+
+.overlay {
+  display: block;
+  background: #000000;
+  cursor: pointer;
+  height: 100%;
+  opacity: 0.8;
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  top: 0;
 }
