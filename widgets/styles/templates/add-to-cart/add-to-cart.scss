@@ -1,0 +1,102 @@
+add-to-cart {
+  .ugc-add-to-cart-button {
+    align-content: center;
+    border-radius: 0;
+    height: 40px;
+    padding: 8px 16px;
+    margin-top: 37px;
+    width: auto;
+  }
+
+  .ugc-add-to-cart-colorpicker-text,
+  .ugc-add-to-cart-colorpicker-text b,
+  #variant-container p,
+  #variant-container p span {
+    color: #333;
+    //TODO: import font
+    // font-family: "Open Sans";
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0;
+  }
+
+  #variant-container div:not(.ugc-add-to-cart-sizepicker):not(.ugc-add-to-cart-sizepicker-btn) {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  #variant-container div p::after {
+    content: ":";
+  }
+
+  .ugc-add-to-cart-other-variant-selector {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ugc-add-to-cart-colorpicker-text {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 6px;
+  }
+
+  #variant-container p {
+    margin: 12.4px 0 6.4px 0;
+  }
+
+  .ugc-add-to-cart-colorpicker {
+    display: flex;
+    gap: 12px;
+  }
+
+  .ugc-add-to-cart-colorpicker-ring {
+    height: 24px;
+    width: 24px;
+    margin: 0;
+  }
+
+  .ugc-add-to-cart-colorpicker-inner {
+    width: 15.6px;
+    height: 15.6px;
+    left: 24.5%;
+    top: 24%;
+  }
+
+  .ugc-add-to-cart-sizepicker {
+    display: flex;
+    gap: 10px;
+  }
+
+  .ugc-add-to-cart-sizepicker-btn {
+    border-radius: 0;
+    cursor: pointer;
+    //TODO: import font
+    // font-family: "Open Sans";
+    font-family: "Open Sans";
+    font-size: 12px;
+    font-weight: 400;
+    height: 34px;
+    margin: 0;
+  }
+
+  .ugc-add-to-cart-sizepicker-btn[selected="true"] {
+    border: 2px solid #4083b9;
+  }
+
+  .ugc-add-to-cart-sizepicker-btn:not([enabled="true"]) {
+    border: 1px solid #dcdcdc;
+    background: #f2f2f2;
+    color: #B9B9B9;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .ugc-add-to-cart-sizepicker-btn:not([enabled="true"]):before {
+    content: none;
+  }
+}

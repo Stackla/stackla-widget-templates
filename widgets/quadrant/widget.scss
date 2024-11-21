@@ -2,6 +2,11 @@
 @use "@styles/tile-overlay";
 @use "@templates/tags/tags";
 @use "@styles/icon-sections";
+@forward "@templates/expanded-tiles/expanded-tile";
+@forward "@templates/shopspots/shopspot-flyout";
+@forward "@templates/shopspots/shopspot-icon";
+@forward "@templates/add-to-cart/add-to-cart";
+@forward "@templates/load-more/load-more";
 
 #nosto-ugc-container {
   --tile-size-with-margin: calc(var(--tile-size) - var(--margin) * 1px);
