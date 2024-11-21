@@ -15,11 +15,11 @@ shopspot-icon {
     position: absolute;
     width: 13px;
     height: 13px;
-    background: #000000;
+    background: #000;
     color: white;
     display: block;
     background-size: 70%;
-    border: solid #ffffff 1px;
+    border: solid #fff 1px;
     border-radius: 50%;
     text-align: center;
     font-size: 10px;
@@ -54,7 +54,7 @@ shopspot-icon {
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent transparent #000 transparent;
+      border-color: transparent transparent #000;
     }
   }
 }

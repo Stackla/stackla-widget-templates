@@ -13,14 +13,13 @@ add-to-cart {
   #variant-container p,
   #variant-container p span {
     color: #333;
-    //TODO: import font
-    // font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-weight: 400;
     padding: 0;
   }
 
-  #variant-container div:not(.ugc-add-to-cart-sizepicker):not(.ugc-add-to-cart-sizepicker-btn) {
+  #variant-container div:not(.ugc-add-to-cart-sizepicker, .ugc-add-to-cart-sizepicker-btn) {
     flex-direction: row;
     align-items: baseline;
   }
@@ -46,7 +45,7 @@ add-to-cart {
   }
 
   #variant-container p {
-    margin: 12.4px 0 6.4px 0;
+    margin: 12.4px 0 6.4px;
   }
 
   .ugc-add-to-cart-colorpicker {
@@ -75,9 +74,7 @@ add-to-cart {
   .ugc-add-to-cart-sizepicker-btn {
     border-radius: 0;
     cursor: pointer;
-    //TODO: import font
-    // font-family: "Open Sans";
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-weight: 400;
     height: 34px;
@@ -96,7 +93,7 @@ add-to-cart {
     text-decoration: line-through;
   }
 
-  .ugc-add-to-cart-sizepicker-btn:not([enabled="true"]):before {
+  .ugc-add-to-cart-sizepicker-btn:not([enabled="true"])::before {
     content: none;
   }
 }

@@ -20,7 +20,6 @@ ugc-products {
   }
 
   .stacklapopup-products-item {
-    align-items: center;
     display: flex;
     flex-shrink: 0;
     height: 100%;
@@ -84,9 +83,9 @@ ugc-products {
       radial-gradient(farthest-side, colors.$tide 94%, colors.$black) top / 8px 8px no-repeat,
       conic-gradient(colors.$black 30%, colors.$natural-grey);
     mask: radial-gradient(farthest-side, colors.$black calc(100% - 8px), colors.$black 0);
-    -webkit-mask: radial-gradient(farthest-side, colors.$black calc(100% - 8px), colors.$black 0);
     animation: l13 1s infinite linear;
   }
+
   @keyframes l13 {
     100% {
       transform: rotate(1turn);
@@ -103,13 +102,14 @@ ugc-products {
     background: colors.$black;
     border-radius: 14px;
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 10px;
     z-index: 2;
   }
 
   .stacklapopup-products-item-image-recommendation-label p {
     color: colors.$white;
+
     // TODO: import the font family
     // font-family: "Gotham SSm";
     font-size: 8px;

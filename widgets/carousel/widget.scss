@@ -10,8 +10,10 @@
   margin: styles.$nosto-container-margin;
   width: calc(100% - (styles.$nosto-container-margin * 2));
 
-  .swiper {
-    width: styles.$swiper-container-width-lg;
+  .track {
+    .swiper {
+      width: styles.$swiper-container-width-lg;
+    }
   }
 
   .icon-section {
@@ -29,11 +31,13 @@
   #nosto-ugc-container {
     height: auto;
 
-    .swiper-inline {
-      width: styles.$swiper-container-width-md !important;
+    .track {
+      .swiper-inline {
+        width: styles.$swiper-container-width-md !important;
 
-      .swiper-slide {
-        width: 100% !important;
+        .swiper-slide {
+          width: 100% !important;
+        }
       }
     }
 

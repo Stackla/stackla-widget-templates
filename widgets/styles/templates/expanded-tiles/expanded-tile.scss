@@ -138,26 +138,29 @@ position: relative;
   }
 }
 
-//TODO: move to templates and use variables
+// TODO: move to templates and use variables
 .user-name {
   color: colors.$text-dark;
   font-size: 14px;
   font-weight: 600;
 }
-//TODO: move to templates and use variables
+
+// TODO: move to templates and use variables
 .user-handle {
   color: colors.$text-grey;
   font-size: 10px;
   font-weight: 400;
 }
-//TODO: move to templates and use variables
+
+// TODO: move to templates and use variables
 .caption {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-//TODO: move to templates and use variables
+
+// TODO: move to templates and use variables
 .caption-paragraph {
   color: colors.$text-dark;
   font-size: 12px;
@@ -171,6 +174,6 @@ position: relative;
   width: 100%;
 }
 
-@include responsive.md-panel();
-@include responsive.sm-panel();
+@include responsive.md-panel;
+@include responsive.sm-panel;
 }

@@ -2,21 +2,19 @@ shopspot-flyout {
   :host {
     position: absolute;
     display: block;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    inset: 0;
   }
+
   .shopspots {
     position: relative;
     height: 100%;
   }
+
   .stacklapopup-shopspot {
     border-radius: 50%;
     box-sizing: border-box;
     cursor: default;
     overflow: visible;
-    position: absolute;
     transition-property: top, left, opacity;
     transition-duration: 0.5s;
     width: 32px;
@@ -26,17 +24,14 @@ shopspot-flyout {
 
   .stacklapopup-shopspot span {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .stacklapopup-shopspot-icon {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgb(255 255 255 / 80%);
     border-radius: 50%;
     cursor: pointer;
     font-weight: bold;
@@ -49,7 +44,7 @@ shopspot-flyout {
 
   .stacklapopup-shopspot-flyout-title {
     overflow: visible;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgb(0 0 0 / 80%);
     color: #fff;
     cursor: pointer;
     font-size: 14px;
@@ -63,9 +58,9 @@ shopspot-flyout {
   }
 
   .stacklapopup-shopspot-flyout-title::after {
-    border: 8px solid rgba(0, 0, 0, 0);
+    border: 8px solid rgb(0 0 0 / 0%);
     border-top: none;
-    border-bottom: 8px solid rgba(0, 0, 0, 0.8);
+    border-bottom: 8px solid rgb(0 0 0 / 80%);
     content: " ";
     height: 0;
     left: 9px;

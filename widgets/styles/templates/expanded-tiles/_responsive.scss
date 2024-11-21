@@ -14,9 +14,9 @@
       .exit {
         display: none !important;
       }
+
       .panel {
         grid-template-columns: 1fr;
-        overflow: auto;
         width: 100%;
         max-height: unset;
         overflow: hidden auto;
@@ -32,7 +32,8 @@
 }
 
 @mixin md-panel {
-  @include common-panel();
+  @include common-panel;
+
   @media only screen and (min-width: dimens.$breakpoint-tab-min-width) and (max-width: dimens.$breakpoint-tab-max-width) {
     .panel {
       grid-template-rows: dimens.$tablet-panel-top-width-upper-limit fit-content(50%) !important;
@@ -41,7 +42,8 @@
 }
 
 @mixin sm-panel {
-  @include common-panel();
+  @include common-panel;
+
   @media only screen and (max-width: dimens.$breakpoint-mob-max-width) {
     .panel {
       grid-template-columns: minmax(100%, 1fr) !important;
