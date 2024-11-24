@@ -8,16 +8,14 @@ $space-between: 10px;
   --rendered-tile-size: var(--tile-size) * 2 + 20px;
   --width-adjustment: rem(95%, var(--rendered-tile-size));
   --container-width: calc(95% - var(--width-adjustment));
+  --text-caption-paragraph-font-size: 14px;
+  --tile-timephrase-display: flex;
 
   transition: ease all 0.5s;
-}
 
-#nosto-ugc-container {
   display: flex;
   width: 100vw;
   place-items: center;
-  --text-caption-paragraph-font-size: 14px;
-  --tile-timephrase-display: flex;
 
   .track {
     display: flex;
