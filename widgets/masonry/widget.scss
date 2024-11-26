@@ -6,13 +6,15 @@
 }
 
 #nosto-ugc-container {
-  .ugc-tile {
-    box-sizing: border-box;
-    overflow: hidden;
-    transition: opacity 0.5s ease;
+  .grid {
+    .ugc-tile {
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: opacity 0.5s ease;
 
-    &:not([width-set*="true"]) {
-      opacity: 0;
+      &:not([width-set*="true"]) {
+        opacity: 0;
+      }
     }
   }
 

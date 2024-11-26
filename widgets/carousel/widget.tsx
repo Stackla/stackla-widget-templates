@@ -7,7 +7,9 @@ import { initializeInlineSwiperListeners } from "./inline-swiper.loader"
 import shopspotStyle from "./components/shopspot-icon/base.scss"
 
 loadWidget({
-  extensions: {},
+  extensions: {
+    swiper: true
+  },
   features: {
     handleLoadMore: false
   },

@@ -1,40 +1,42 @@
 @use "../../../styles/mixins";
 @use "dimens";
 
-:host {
-  transition: ease all 0.5s;
-}
+expanded-tiles {
+  :host {
+    transition: ease all 0.5s;
+  }
 
-.swiper {
-  .swiper-wrapper {
-    max-width: dimens.$container-max-width-lg;
-    max-height: dimens.$container-max-height-lg;
+  .swiper {
+    .swiper-wrapper {
+      max-width: dimens.$container-max-width-lg;
+      max-height: dimens.$container-max-height-lg;
 
-    .swiper-slide {
-      align-items: flex-start;
-      height: auto;
+      .swiper-slide {
+        align-items: flex-start;
+        height: auto;
 
-      div.image-filler {
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: absolute;
-        filter: blur(50px) brightness(0.5);
-        inset: 0;
-        transform: scale(1.2);
+        div.image-filler {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          position: absolute;
+          filter: blur(50px) brightness(0.5);
+          inset: 0;
+          transform: scale(1.2);
+        }
       }
     }
   }
-}
 
-@include mixins.media-query-target(tablet) {
-  .swiper .swiper-wrapper {
-    max-height: unset;
-    max-width: 100vw;
-    height: auto;
+  @include mixins.media-query-target(tablet) {
+    .swiper .swiper-wrapper {
+      max-height: unset;
+      max-width: 100vw;
+      height: auto;
 
-    .swiper-slide {
-      border-radius: 0;
+      .swiper-slide {
+        border-radius: 0;
+      }
     }
   }
 }

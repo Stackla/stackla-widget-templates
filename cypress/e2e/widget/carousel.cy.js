@@ -1,17 +1,20 @@
+const WIDGET_TYPE = "carousel"
+
 describe("Should test the carousel", () => {
   beforeEach(() => {
-    cy.on("uncaught:exception", (err, runnable) => {
+    cy.on("uncaught:exception", () => {
       return false
     })
-    cy.visitWidget("carousel")
+    cy.visitWidget(WIDGET_TYPE)
+    cy.before()
   })
 
-  it("Should show tile", () => {
-    cy.shouldShowTile("carousel")
+  it("Should show widget contents", () => {
+    cy.shouldShowWidgetContents(WIDGET_TYPE)
   })
 
   it("Should expand tile", () => {
-    cy.shouldExpandedTile("carousel")
+    cy.shouldExpandedTile(WIDGET_TYPE)
   })
 
   it("Should load share icons", () => {

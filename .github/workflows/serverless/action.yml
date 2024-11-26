@@ -1,0 +1,63 @@
+name: 'Serverless Deploy'
+inputs:
+  stage:
+    required: true
+    description: 'The serverless stage'
+  aws-region:
+    required: true
+    description: 'The aws region used to authenticate with AWS'
+  install:
+    required: false
+    default: 'true'
+    description: whether to run npm install
+  arch:
+    required: false
+    default: 'arm64'
+  platform:
+    required: false
+    default: 'linux'
+  build:
+    required: false
+    default: 'false'
+    description: whether to run npm run build
+  working-directory:
+    required: false
+    default: '.'
+    description: where to run the commands
+  sentry-auth-token:
+    required: false
+    default: ''
+    description: for releasing sentry projects
+runs:
+  using: 'composite'
+  steps:
+    - name: Install NPM
+      if: inputs.install == 'true'
+      run: cd ${{ inputs.working-directory }} && npm install
+      env:
+        npm_config_arch: ${{ inputs.arch }}
+        npm_config_platform: ${{ inputs.linux }}
+      shell: bash
+    - uses: ./.github/workflows/aws
+      with:
+        aws-region: ${{ inputs.aws-region }}
+    - name: Do Build
+      if: inputs.build == 'true'
+      run: cd ${{ inputs.working-directory }} && npm run build
+      shell: bash
+    - name: Deploy serverless
+      env:
+        APP_ENV: ${{ inputs.stage }}
+      run: cd ${{ inputs.working-directory }} && npx sls deploy --stage ${{ inputs.stage }} --region ${{ inputs.aws-region }}
+      shell: bash
+    - name: Sentry Release
+      uses: getsentry/action-release@v1
+      if: inputs.sentry-auth-token != ''
+      env:
+        SENTRY_AUTH_TOKEN: ${{ inputs.sentry-auth-token }}
+        SENTRY_ORG: "stackla"
+        SENTRY_PROJECT: ${{ github.event.repository.name }}
+      with:
+        environment: ${{ inputs.stage }}
+        version: ${{ github.sha }}
+        ignore_empty: true

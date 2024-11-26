@@ -14,6 +14,16 @@ export const createMockRoutes = (app: Express) => {
     res.send(nostoApiJS)
   })
 
+  app.get("/development/stackla/autoload", async (req, res) => {
+    res.redirect(
+      301,
+      "/autoload?" +
+        Object.keys(req.query)
+          .map(key => `${key}=${req.query[key]}`)
+          .join("&")
+    )
+  })
+
   app.get("/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050.js", (_req, res) => {
     const fileData = fs.readFileSync(path.resolve("src/tests/mock/atc-laptop.json"), "utf-8")
     res.json(JSON.parse(fileData))

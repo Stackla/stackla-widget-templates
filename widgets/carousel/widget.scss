@@ -9,6 +9,7 @@
   place-items: center;
   margin: styles.$nosto-container-margin;
   width: calc(100% - (styles.$nosto-container-margin * 2));
+  height: var(--tile-size);
 
   .swiper {
     width: styles.$swiper-container-width-lg;

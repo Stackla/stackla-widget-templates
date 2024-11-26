@@ -29,11 +29,10 @@
       <div class="network-icon icon-{{source}}"></div>
       <span class="tile-timephrase">{{time_ago}}</span>
     </div>
-
-    <shopspot-icon tile-id={{id}} />
   </div>
-  <div class="tile-image">
-    {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+  <div class="tile-image-wrapper">
+    <shopspot-icon tile-id={{id}}></shopspot-icon>
+    {{#lazy image_thumbnail_url }}{{/lazy}}
     <div class="swiper-lazy-preloader"></div>
   </div>
 </div>

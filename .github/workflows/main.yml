@@ -63,15 +63,25 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          start: npm run start:test
-          wait-on: 'http://localhost:4002/preview?widgetType=carousel'
-          record: true
-          parallel: true 
-          browser: chrome
+      -   name: Cache cypress binary
+          id: cypress-cache
+          uses: actions/cache@v4
+          with:
+              path: '~/.cache/Cypress'
+              key: ${{ runner.OS }}-cypress-cache-${{ hashFiles('pnpm-lock.yaml') }}
+      -   name: Install cypress
+          run: npx cypress install
+      -   name: Cypress run e2e tests
+          uses: cypress-io/github-action@v5
+          env:
+              SPLIT: ${{ strategy.job-total }}
+              SPLIT_INDEX: ${{ strategy.job-index }}
+              DEBUG: cypress-split
+          with:
+              start: npm run start:test
+              wait-on: 'http://localhost:4002/preview?widgetType=carousel'
+              browser: chrome
+              install: true
   trigger_deploy:
     if: github.ref == 'refs/heads/master'
     needs: [build]
