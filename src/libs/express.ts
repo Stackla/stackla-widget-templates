@@ -8,7 +8,7 @@ import { getAndRenderTiles, getTilesToRender, renderTemplates } from "./tile.han
 import widgetOptions from "../../tests/fixtures/widget.options"
 import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
-import { createMockRoutes, PRODUCTION_UI_URL } from "../../tests/libs/developer"
+import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
 
 export function getDomain(isDev: boolean) {
@@ -17,14 +17,14 @@ export function getDomain(isDev: boolean) {
   }
   
   if (process.env.APP_ENV === "testing") {
-    return `${PRODUCTION_UI_URL}/external-testing`
+    return `${STAGING_UI_URL}/external-testing`
   }
 
   if (process.env.APP_ENV === "production") {
-    return PRODUCTION_UI_URL
+    return STAGING_UI_URL
   }
 
-  return `${PRODUCTION_UI_URL}/local`
+  return `${STAGING_UI_URL}/local`
 }
 
 export interface IDraftRequest {

@@ -3,7 +3,7 @@ import nostoApiJS from "../data/nosto-api"
 import * as path from "node:path"
 import * as fs from "node:fs"
 
-export const PRODUCTION_UI_URL = "https://widget-ui.stackla.com"
+export const STAGING_UI_URL = "https://widget-ui.teaser.stackla.com"
 
 export const createMockRoutes = (app: Express) => {
   app.get("/development/stackla/cs/image/disable", (_req, res) => {
