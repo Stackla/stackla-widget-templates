@@ -158,12 +158,15 @@
   position: absolute;
   top: 10%;
   right: 8px;
+  cursor: pointer;
 }
 
 .share-socials-popup-wrapper {
-  height: auto;
-  top: 50vh;
-  right: 50vw;
+  height: auto !important;
+  top: 50%;
+  left: 35%;
+  position: fixed;
+  place-items: center;
 }
 
 .overlay {
