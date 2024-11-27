@@ -1,7 +1,6 @@
-@use "@styles/mixins";
-@use "@styles/tile-overlay";
-@use "@templates/tags/tags";
-@use "@styles/icon-sections";
+@use "pkg:@stackla/widget-utils/mixins";
+@use "pkg:@stackla/widget-utils/tile-overlay";
+@use "pkg:@stackla/widget-utils/icon-sections";
 
 #nosto-ugc-container {
   --tile-size-with-margin: calc(var(--tile-size) - var(--margin) * 1px);

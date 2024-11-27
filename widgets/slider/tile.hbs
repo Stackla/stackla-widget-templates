@@ -10,13 +10,14 @@
 </div>
 <div class="details-section">
     <div class="tile-message-wrapper">
-        <tile-content tileId="{{id}}" mode="dark" context="slider-inline"></tile-content>
+        <tile-content tileId="{{id}}" mode="dark" context="slider-inline" render-timephrase="false"
+            render-share-menu="false" trim-description="true"></tile-content>
         <div class="tile">
-            <ul class="tile-tags">
-                {{#tags_extended}}
-                <li class='tile-tag'><a href="{{custom_url}}">{{tag}}</a></li>
-                {{/tags_extended}}
-            </ul>
+            <tile-tags tile-id="{{id}}" />
+        </div>
+        <div class="footer">
+            <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
+            <share-menu tile-id="{{id}}"></ShareMenu>
         </div>
     </div>
 </div>

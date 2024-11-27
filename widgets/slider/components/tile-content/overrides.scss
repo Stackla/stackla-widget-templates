@@ -1,13 +1,17 @@
-.tile-content-wrapper.slider-inline {
-  .user-info {
-    .user-link {
-      .user-name {
-        text-transform: uppercase;
-      }
-    }
+@use "@styles/templates/tile-content/styles";
 
-    .avatar-wrapper {
-      display: none;
+tile-content {
+  .tile-content-wrapper.slider-inline {
+    .user-info {
+      .user-link {
+        .user-name {
+          text-transform: uppercase;
+        }
+      }
+
+      .avatar-wrapper {
+        display: none;
+      }
     }
   }
 }

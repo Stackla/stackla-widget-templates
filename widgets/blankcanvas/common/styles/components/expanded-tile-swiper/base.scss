@@ -1,6 +1,6 @@
 @use "sass:map";
-@use "../../../styles/mixins";
-@use "../../../styles/icon-sections";
+@use "pkg:@stackla/widget-utils/mixins";
+@use "pkg:@stackla/widget-utils/icon-sections";
 @use "dimens";
 
 html {
