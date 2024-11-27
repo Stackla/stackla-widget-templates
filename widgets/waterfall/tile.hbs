@@ -26,11 +26,7 @@
   </div>
   <div class="tile-bottom">
     {{#if tags_extended.length}}
-    <ul class="tile-tags">
-      {{#tags_extended}}
-      <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
-      {{/tags_extended}}
-    </ul>
+    <tile-tags tile-id="{{id}}" variant="dark"></tile-tags>
     {{/if}}
     <div class="description">
       {{#if name}}

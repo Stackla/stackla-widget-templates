@@ -1,6 +1,6 @@
 import { loadAllUnloadedTiles } from "@stackla/widget-utils/extensions/swiper"
 import { loadWidget } from "@stackla/widget-utils"
-import shopspotStyle from "./components/shopspot-icon/base.scss"
+
 import { ExpandedTiles } from "./common/components/expanded-tile-swiper/base.template"
 import expandedTileStyle from "./common/styles/components/expanded-tile-swiper/base.scss"
 import swiperExpandedStyles from "./common/styles/components/expanded-tile-swiper/swiper-expanded.scss"
