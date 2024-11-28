@@ -85,8 +85,12 @@ Cypress.Commands.add("shouldExpandedTile", widgetType => {
   // Set visibility to hidden for all images
   cy.getExpandedTile().find(".image-element").should("exist").invoke("css", "visibility", "hidden")
 
+  cy.wait(1000)
+
+  cy.get(WIDGET_ID).shadow().find(".expanded-tile-overlay").should("exist").invoke("css", "background-color", "#000")
+
   // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(5000)
+  cy.wait(10000)
 
   cy.snapshot(`${widgetType}-tile`)
 })

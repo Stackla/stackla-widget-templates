@@ -8,12 +8,15 @@ $space-between: 10px;
   --rendered-tile-size: var(--tile-size) * 2 + 20px;
   --width-adjustment: rem(95%, var(--rendered-tile-size));
   --container-width: calc(95% - var(--width-adjustment));
-  --text-caption-paragraph-font-size: 14px;
 
   transition: ease all 0.5s;
 }
 
 #nosto-ugc-container {
+  --text-caption-paragraph-font-size: 14px;
+  --tile-timephrase-display: flex;
+
+  background-color: var(--widget-background);
   display: flex;
   width: 100vw;
   place-items: center;
@@ -33,7 +36,7 @@ $space-between: 10px;
         display: grid;
         gap: $space-between; /* Space between blocks */
         width: 100%; /* Fixed Width */
-        height: 600px; /* Fixed Height */
+        height: calc(100vh - 100px); /* Fixed Height */
         overflow: hidden;
         justify-content: center;
 
@@ -42,7 +45,6 @@ $space-between: 10px;
           align-items: center;
           background-color: #000;
           color: #fff;
-          border: 1px solid #ccc;
           font-size: 1.5em;
           transition: transform 0.5s ease-in-out; /* Apply transition to all blocks */
           cursor: pointer;
@@ -54,7 +56,9 @@ $space-between: 10px;
           height: fit-content;
           box-sizing: border-box;
           grid-column: span 2;
-          grid-template: "image details";
+          grid-template: subgrid / subgrid;
+          grid-template-areas: "image details";
+          gap: 0;
 
           .image-section {
             display: flex;
@@ -73,25 +77,40 @@ $space-between: 10px;
             width: var(--tile-size);
             grid-area: details;
 
+            .tile {
+              display: flex;
+              height: fit-content;
+
+              .tile-tags {
+                width: 100%;
+                margin: 0;
+
+                .tile-tag {
+                  --tile-tag-background: #bcbbbc;
+                }
+              }
+            }
+
             .tile-message-wrapper {
               display: grid;
-              grid-template-rows: 80% 20%;
+              grid-template-rows: calc(100% - 70px) 20px 15px;
               grid-auto-columns: 1fr;
-              height: 100%;
+              height: calc(100% - 10px);
               padding: 10px 0 0 10px;
+              gap: 10px;
+              place-content: flex-start;
+              width: calc(100% - 10px);
 
-              .tile {
-                display: flex;
-                height: fit-content;
-
-                .tile-tags {
-                  width: 100%;
+              tile-content {
+                .description p {
                   margin: 0;
-
-                  .tile-tag {
-                    --tile-tag-background: #bcbbbc;
-                  }
                 }
+              }
+
+              .footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
               }
             }
           }
@@ -103,7 +122,7 @@ $space-between: 10px;
 
           .icon-section {
             display: grid;
-            grid-template:
+            grid-template-areas:
               "type media"
               "shop .";
             grid-column: image-start / image-end;
@@ -133,10 +152,10 @@ $space-between: 10px;
           }
 
           &:nth-child(2n) {
-            grid-template: "details image";
+            grid-template-areas: "details image";
 
             .icon-section {
-              grid-template:
+              grid-template-areas:
                 "media type"
                 ". shop";
 
@@ -161,16 +180,15 @@ $space-between: 10px;
             min-width: initial;
             grid-column: auto;
             grid-row: span 2;
-            height: 100%;
           }
 
           &:nth-child(4n-1) {
-            grid-template:
+            grid-template-areas:
               "image"
               "details";
 
             .icon-section {
-              grid-template:
+              grid-template-areas:
                 "type shop"
                 "media .";
 
@@ -192,12 +210,12 @@ $space-between: 10px;
           }
 
           &:nth-child(4n) {
-            grid-template:
+            grid-template-areas:
               "details"
               "image";
 
             .icon-section {
-              grid-template:
+              grid-template-areas:
                 "media ."
                 "type shop";
 

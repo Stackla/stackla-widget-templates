@@ -1,12 +1,20 @@
-@use "@styles/mixins";
-@use "@styles/tile-overlay";
-@use "@templates/tags/tags";
-@use "@styles/icon-sections";
+@use "pkg:@stackla/widget-utils/mixins";
+@use "pkg:@stackla/widget-utils/tile-overlay";
+@use "pkg:@stackla/widget-utils/icon-sections";
+@use "pkg:@stackla/widget-utils/icons";
+@use "@styles/templates/tags";
+@use "@styles/templates/shopspot-icon";
+@use "@styles/templates/time-phrase";
+@use "@styles/templates/share-menu";
+@forward "@styles/templates/load-more";
+@forward "@styles/templates/tile-content";
 
 #nosto-ugc-container {
   --tile-size-with-margin: calc(var(--tile-size) - var(--margin) * 1px);
   --full: 100%;
   --half: 50%;
+
+  background-color: var(--widget-background);
 
   .ugc-tiles {
     min-height: 100vh;
@@ -83,7 +91,7 @@
   .tile {
     position: relative;
 
-    .play-icon {
+    .icon-play {
       top: 43%;
       left: 0;
       right: 0;

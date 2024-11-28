@@ -1,4 +1,4 @@
-@use "styles";
+@use "styles" as gridStyles;
 
 :host {
   transition: ease all 0.5s;
@@ -10,12 +10,12 @@
   .grid-item {
     width: var(--tile-size);
 
-    @include styles.breakpoint(tablet) {
+    @include gridStyles.breakpoint(tablet) {
       width: calc(50vw - 10px);
       height: calc(50vw - 10px);
     }
 
-    @include styles.breakpoint(mobile) {
+    @include gridStyles.breakpoint(mobile) {
       width: 100vw;
       height: 100vw;
     }
@@ -23,6 +23,8 @@
 }
 
 #nosto-ugc-container {
+  background-color: var(--widget-background);
+
   .ugc-tile {
     box-sizing: border-box;
     overflow: hidden;
@@ -35,7 +37,7 @@
     width: 100%;
     position: relative;
 
-    .play-icon {
+    .icon-play {
       top: 43%;
       left: 0;
       right: 0;

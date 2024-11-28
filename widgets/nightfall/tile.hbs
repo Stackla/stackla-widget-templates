@@ -13,7 +13,7 @@
       {{/if}}
       <div class="network-icon icon-{{source}}"></div>
       {{#ifequals media "video"}}
-      <div class="play-icon"></div>
+      <div class="icon-play"></div>
       {{/ifequals}}
     </div>
     <div class="tile-image-wrapper">
@@ -26,11 +26,7 @@
   </div>
   <div class="tile-bottom">
     {{#if tags_extended.length}}
-    <ul class="tile-tags">
-      {{#tags_extended}}
-      <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
-      {{/tags_extended}}
-    </ul>
+    <tile-tags tile-id="{{id}}"></tile-tags>
     {{/if}}
     <div class="description">
       {{#if name}}

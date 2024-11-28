@@ -1,0 +1,14 @@
+$load-more-margin: 20px;
+
+load-more {
+    #buttons {
+        display: flex;
+        place-content: center;
+        margin-top: $load-more-margin;
+        margin-bottom: $load-more-margin;
+
+        .load-more {
+            display: flex;
+        }
+    }
+}

@@ -1,5 +1,13 @@
 {{#tile data-hash=@index class="grid-item"}}
 <div class="tile" data-background-image="{{image_thumbnail_url}}">
+  <div class="direct-uploader-load-more">
+    <div class="direct-uploader-container">
+      <div>
+        <span class="icon-picture"></span>
+        <p>View all</p>
+      </div>
+    </div>
+  </div>
   <div class="icon-section">
     <div class="top-section">
       {{#each attrs}}
@@ -13,19 +21,15 @@
     </div>
     <div class="center-section">
       {{#ifequals media "video"}}
-      <div class="play-icon"></div>
+      <div class="icon-play"></div>
       {{/ifequals}}
     </div>
     <div class="bottom-section">
-      <ul class="tile-tags">
-        {{#tags_extended}}
-        <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
-        {{/tags_extended}}
-      </ul>
+      <tile-tags variant="dark" tile-id="{{id}}"></tile-tags>
       <div class="network-icon icon-{{source}}"></div>
     </div>
 
-    <shopspot-icon tile-id={{id}} />
+    <shopspot-icon tile-id={{id}}></shopspot-icon>
   </div>
 </div>
 {{/tile}}

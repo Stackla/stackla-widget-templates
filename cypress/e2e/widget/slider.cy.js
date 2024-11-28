@@ -1,6 +1,6 @@
-const WIDGET_TYPE = "masonry"
+const WIDGET_TYPE = "slider"
 
-describe("Should test the masonry", () => {
+describe("Should test the slider", () => {
   beforeEach(() => {
     cy.on("uncaught:exception", () => {
       return false

@@ -1,0 +1,59 @@
+@use "styles";
+
+#nosto-ugc-container {
+   background-color: var(--widget-background);
+   margin: var(--margin);
+
+   @include styles.breakpoint(mobile) {
+    margin: 16px;
+  }
+
+  .ugc-tiles {
+    &.__inline {
+        display: grid;
+        justify-content: center;
+        margin-top: var(--margin);
+        gap: var(--margin);
+        grid-template-columns: repeat(auto-fit, minmax(min-content, var(--tile-size)));
+        grid-auto-flow: row;
+        margin-bottom: 20px;
+        
+        .ugc-tile {
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: var(--tile-size);
+            box-sizing: border-box;
+            object-fit: cover;
+            overflow: hidden;
+        }
+
+        @include styles.breakpoint(mobile) {
+            grid-template-columns: repeat(auto-fit, minmax(min-content, 100%));
+
+            .ugc-tile {
+                height: auto
+            }
+
+            .tile {
+                aspect-ratio: 1 / 1;
+            }
+        }
+
+        .direct-uploader-load-more {
+            display: none;
+        }
+
+        .ugc-tile.last-tile {
+            .direct-uploader-load-more {
+                display: block;
+                z-index: 3;
+            }
+        }
+    }
+  }
+}

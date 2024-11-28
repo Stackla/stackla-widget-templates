@@ -13,15 +13,11 @@
     </div>
     <div class="center-section">
       {{#ifequals media "video"}}
-      <div class="play-icon"></div>
+      <div class="icon-play"></div>
       {{/ifequals}}
     </div>
     <div class="bottom-section">
-      <ul class="tile-tags">
-        {{#tags_extended}}
-        <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
-        {{/tags_extended}}
-      </ul>
+      <tile-tags tile-id="{{id}}" variant="dark"></tile-tags>
       <div class="network-icon icon-{{source}}"></div>
     </div>
 

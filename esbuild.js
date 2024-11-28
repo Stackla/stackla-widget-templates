@@ -130,7 +130,8 @@ async function buildAll() {
         minify: true,
         importMapper: url => {
           return url.replace(/^@styles\//, path.join(__dirname, "widgets/styles/"))
-        }
+        },
+        importers: [new sass.NodePackageImporter()]
       }),
       copy({
         resolveFrom: "cwd",
@@ -169,12 +170,12 @@ async function buildUtils() {
 async function buildAllWithErrorHandling(retries = 0) {
   if (!process.env.APP_ENV) {
     console.error("APP_ENV is not set. Exiting.")
-    return;
+    return
   }
 
   if (retries > 3) {
     console.error("Failed to build after 3 retries. Exiting.")
-    return;
+    return
   }
 
   try {
