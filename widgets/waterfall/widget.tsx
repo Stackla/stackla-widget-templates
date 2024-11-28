@@ -12,4 +12,3 @@ loadWidget({
   extensions: {}
 })
 loadWaterfallLayout()
-// loadAllUnloadedTiles()
