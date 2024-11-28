@@ -10,7 +10,6 @@ loadWidget({
   templates: {},
   features: {},
   extensions: {}
-
 })
 loadWaterfallLayout()
 // loadAllUnloadedTiles()

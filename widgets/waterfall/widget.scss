@@ -157,14 +157,6 @@
   display: none;
 }
 
-.overlay {
-  display: block;
-  background: #000;
-  cursor: pointer;
-  height: 100%;
-  opacity: 0.8;
-  position: absolute;
-  width: 100%;
-  z-index: 3;
-  top: 0;
+.share-socials-popup-wrapper {
+  position: fixed !important;
 }
