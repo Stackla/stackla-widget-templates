@@ -2,6 +2,7 @@
 
 #nosto-ugc-container {
   background-color: var(--widget-background);
+  height: 100vh;
 
   .grid {
     display: grid;
@@ -9,6 +10,10 @@
     grid-auto-rows: 10px;
     gap: var(--margin);
     background: var(--widget-background);
+
+    .grid-item {
+      position: initial;
+    }
   }
 
   .ugc-tile {
@@ -92,10 +97,6 @@
   }
 }
 
-.description {
-  position: relative;
-}
-
 .tile-timestamp {
   color: #908e8f;
   font-size: 10px;
@@ -154,21 +155,6 @@
 
 .hidden {
   display: none;
-}
-
-.icon-share {
-  position: absolute;
-  top: 10%;
-  right: 8px;
-  cursor: pointer;
-}
-
-.share-socials-popup-wrapper {
-  height: auto !important;
-  top: 50%;
-  left: 35%;
-  position: fixed;
-  place-items: center;
 }
 
 .overlay {
