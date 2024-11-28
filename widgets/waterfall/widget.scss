@@ -2,7 +2,7 @@
 
 #nosto-ugc-container {
   background-color: var(--widget-background);
-  height: 100vh;
+  height: 100vh; // newly added
 
   .grid {
     display: grid;
@@ -12,7 +12,7 @@
     background: var(--widget-background);
 
     .grid-item {
-      position: initial;
+      position: initial; // newly added
     }
   }
 
