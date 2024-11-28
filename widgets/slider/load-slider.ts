@@ -8,6 +8,7 @@ export default function () {
   const sliderScrollDownButton = sdk.querySelector("#scroll-down")
   const tileBlockElement = sdk.querySelector(".ugc-tile-wrapper")
   const tilesContainer = sdk.querySelector(".ugc-tiles")
+
   let scrollIndex = 0
 
   const tileSizeConfig = getTileSizeByWidget()
@@ -31,6 +32,13 @@ export default function () {
   const tileSizeUnitless = Number(tileSizeConfig["--tile-size-unitless"])
   const blockHeight = isNaN(tileSizeUnitless) ? 220 : tileSizeUnitless
 
+  controlNavigationButtonVisibility()
+
+  tilesContainer.addEventListener("scroll", () => {
+    sliderScrollUpButton.style.pointerEvents = "none"
+    sliderScrollDownButton.style.pointerEvents = "none"
+  })
+
   sliderScrollUpButton.addEventListener("click", () => {
     if (tilesContainer.scrollTop > 0 && scrollIndex > 0) {
       scrollIndex--
@@ -39,6 +47,7 @@ export default function () {
         left: 0,
         behavior: "smooth"
       })
+      setTimeout(() => controlNavigationButtonVisibility(), 500)
     }
   })
 
@@ -49,5 +58,25 @@ export default function () {
       left: 0,
       behavior: "smooth"
     })
+    setTimeout(() => controlNavigationButtonVisibility(), 500)
   })
+
+  function controlNavigationButtonVisibility() {
+    if (tilesContainer.scrollTop > 0 && scrollIndex > 0) {
+      sliderScrollUpButton.style.visibility = "visible"
+    } else {
+      sliderScrollUpButton.style.visibility = "hidden"
+    }
+
+    const offset = tilesContainer.scrollHeight - tilesContainer.scrollTop - tilesContainer.offsetHeight
+
+    if (offset === 0 || (tilesContainer.scrollHeight > 0 && offset >= blockHeight / 2)) {
+      sliderScrollDownButton.style.visibility = "visible"
+    } else {
+      sliderScrollDownButton.style.visibility = "hidden"
+    }
+
+    sliderScrollUpButton.style.pointerEvents = "auto"
+    sliderScrollDownButton.style.pointerEvents = "auto"
+  }
 }

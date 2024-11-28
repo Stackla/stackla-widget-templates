@@ -130,7 +130,8 @@ async function buildAll() {
         minify: true,
         importMapper: url => {
           return url.replace(/^@styles\//, path.join(__dirname, "widgets/styles/"))
-        }
+        },
+        importers: [new sass.NodePackageImporter()]
       }),
       copy({
         resolveFrom: "cwd",
@@ -161,15 +162,20 @@ async function buildUtils() {
   const util = require("util")
   const execPromise = util.promisify(exec)
 
-  console.log("Building utils...")
+  console.log(`Building utils... for ${process.env.APP_ENV}`)
 
   await execPromise("npm run build:utils")
 }
 
 async function buildAllWithErrorHandling(retries = 0) {
+  if (!process.env.APP_ENV) {
+    console.error("APP_ENV is not set. Exiting.")
+    return
+  }
+
   if (retries > 3) {
     console.error("Failed to build after 3 retries. Exiting.")
-    process.exit(1)
+    return
   }
 
   try {

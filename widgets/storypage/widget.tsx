@@ -1,36 +1,31 @@
-import { loadAllUnloadedTiles } from "@stackla/widget-utils/extensions/swiper"
-import { loadWidget } from "@stackla/widget-utils"
-import shopspotStyle from "./components/shopspot-icon/base.scss"
+import { createElement, ISdk, loadWidget } from "@stackla/widget-utils"
 import "./direct-uploader.component"
-import { loadDirectUploaderTileButton } from "./direct-uploader.lib"
+import { calculateTilesToShow, registerResizeObserver, tileSettings } from "./direct-uploader.lib"
+
+declare const sdk: ISdk
 
 loadWidget({
-  extensions: {},
   features: {
-    handleLoadMore: false
+    handleLoadMore: false,
+    tileSizeSettings: tileSettings,
+    limitTilesPerPage: false
   },
   callbacks: {
-    onLoad: [
-      () => {
-        loadDirectUploaderTileButton()
-      }
-    ],
-    onTilesUpdated: [
-      () => {
-        loadDirectUploaderTileButton()
-      }
-    ]
-  },
-  templates: {
-    "expanded-tiles": {
-      styles: [
-        {
-          css: shopspotStyle,
-          global: true
-        }
-      ]
-    }
+    onLoad: [() => createSubmitMoreContentBtn(), () => registerResizeObserver()],
+    onTileBgImageError: [calculateTilesToShow]
   }
 })
 
-loadAllUnloadedTiles()
+function createSubmitMoreContentBtn() {
+  const submitMoreContentBtn = (
+    <div id="submit-more-content-btn">
+      <span class="icon-upload"></span>
+      <span>Submit your content</span>
+    </div>
+  )
+
+  const existingBtn = sdk.querySelector("#submit-more-content-btn")
+  existingBtn?.remove()
+
+  sdk.querySelector(".ugc-tiles").appendChild(submitMoreContentBtn)
+}

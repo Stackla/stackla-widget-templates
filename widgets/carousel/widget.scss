@@ -1,17 +1,19 @@
-@use "styles";
+@use "styles" as carouselStyles;
 
 :host {
   transition: ease all 0.5s;
 }
 
 #nosto-ugc-container {
+  background-color: var(--widget-background);
   display: flex;
   place-items: center;
-  margin: styles.$nosto-container-margin;
-  width: calc(100% - (styles.$nosto-container-margin * 2));
+  margin: carouselStyles.$nosto-container-margin;
+  width: calc(100% - (carouselStyles.$nosto-container-margin * 2));
+  height: var(--tile-size);
 
   .swiper {
-    width: styles.$swiper-container-width-lg;
+    width: carouselStyles.$swiper-container-width-lg;
   }
 
   .icon-section {
@@ -25,12 +27,12 @@
   display: none;
 }
 
-@include styles.breakpoint(mobile) {
+@include carouselStyles.breakpoint(mobile) {
   #nosto-ugc-container {
     height: auto;
 
     .swiper-inline {
-      width: styles.$swiper-container-width-md !important;
+      width: carouselStyles.$swiper-container-width-md !important;
 
       .swiper-slide {
         width: 100% !important;
@@ -38,11 +40,11 @@
     }
 
     .tile {
-      width: styles.$tile-width-md !important;
-      height: styles.$tile-height-md !important;
+      width: carouselStyles.$tile-width-md !important;
+      height: carouselStyles.$tile-height-md !important;
 
       .icon-section {
-        width: styles.$tile-width-md;
+        width: carouselStyles.$tile-width-md;
       }
     }
   }

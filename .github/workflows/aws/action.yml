@@ -1,0 +1,16 @@
+name: "AWS Configure"
+inputs:
+  aws-region:
+    required: true
+    description: "The AWS region used to authenticate with AWS"
+runs:
+  using: "composite"
+  steps:
+    - name: Configure AWS credentials
+      id: configure-aws
+      uses: Stackla/configure-aws-credentials@main
+      with:
+        role-to-assume: arn:aws:iam::953585160895:role/GitHubAction-AssumeRoleWithAction
+        role-session-name: GitHub_to_AWS_via_FederatedOIDC
+        aws-region: ${{ inputs.aws-region }}
+        mask-aws-account-id: true

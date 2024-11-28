@@ -1,6 +1,8 @@
 @use "styles";
 
 #nosto-ugc-container {
+  background-color: var(--widget-background);
+
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(auto, var(--tile-size)));
@@ -35,7 +37,7 @@
     background-size: cover;
     overflow: hidden;
 
-    .play-icon {
+    .icon-play {
       top: 43%;
       left: 0;
       right: 0;

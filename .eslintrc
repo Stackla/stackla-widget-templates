@@ -27,7 +27,7 @@
       "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
     },
     "ignorePatterns": [
-      "widget-utils/",
+      "packages/widget-utils/",
       "node_modules/", 
       "dist/", 
       "*.d.ts",

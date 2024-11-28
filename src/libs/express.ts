@@ -8,7 +8,7 @@ import { getAndRenderTiles, getTilesToRender, renderTemplates } from "./tile.han
 import widgetOptions from "../../tests/fixtures/widget.options"
 import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
-import { createMockRoutes, PRODUCTION_UI_URL } from "../../tests/libs/developer"
+import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
 
 export function getDomain(isDev: boolean) {
@@ -17,14 +17,14 @@ export function getDomain(isDev: boolean) {
   }
   
   if (process.env.APP_ENV === "testing") {
-    return `${PRODUCTION_UI_URL}/external-testing`
+    return `${STAGING_UI_URL}/external-testing`
   }
 
   if (process.env.APP_ENV === "production") {
-    return PRODUCTION_UI_URL
+    return STAGING_UI_URL
   }
 
-  return `${PRODUCTION_UI_URL}/local`
+  return `${STAGING_UI_URL}/local`
 }
 
 export interface IDraftRequest {
@@ -92,8 +92,8 @@ expressApp.use("/preview", (req, res, next) => {
 })
 
 export async function getContent(widgetType: string, retry = 0): Promise<PreviewContent> {
-  if (retry > 3) {
-    throw new Error(`Failed to get content, exiting after 3 retries, widgetType: ${widgetType}`)
+  if (retry > 10) {
+    throw new Error(`Failed to get content, exiting after 10 retries, widgetType: ${widgetType}`)
   }
 
   const rootDir = path.resolve(__dirname, `../../../../../dist/widgets/${widgetType}`)
@@ -116,6 +116,7 @@ export async function getContent(widgetType: string, retry = 0): Promise<Preview
         .replace(/\t/g, "\\t")
     }
   } catch (e) {
+    console.error(e);
     await new Promise(resolve => setTimeout(resolve, 3000))
 
     return getContent(widgetType, retry + 1)
@@ -203,6 +204,15 @@ expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
 expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
   const page = (req.query.page ?? 0) as number
   const limit = (req.query.limit ?? 25) as number
+  
+  if (req.query.after_id) {
+    res.send({
+      tiles: []
+    })
+
+    return;
+  }
+
   res.send({
     tiles: getTilesToRender(page, limit)
   })
@@ -231,6 +241,19 @@ expressApp.get("/preview", async (req, res) => {
   const widgetType = req.query.widgetType as string
 
   res.render("preview", {
+    widgetRequest: JSON.stringify(widgetRequest),
+    widgetType,
+    widgetOptions:  JSON.stringify(widgetOptions),
+    domain: getDomain(req.query.dev === "true"),
+    ...(await getContent(widgetType)),
+  })
+})
+
+expressApp.get("/staging", async (req, res) => {
+  const widgetRequest = req.query
+  const widgetType = req.query.widgetType as string
+
+  res.render("staging", {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions.config),

@@ -1,17 +1,20 @@
+const WIDGET_TYPE = "quadrant"
+
 describe("Should test the quadrant", () => {
   beforeEach(() => {
     cy.on("uncaught:exception", (err, runnable) => {
       return false
     })
-    cy.visitWidget("quadrant")
+    cy.visitWidget(WIDGET_TYPE)
+    cy.before()
   })
 
-  it("Should show tile", () => {
-    cy.shouldShowTile("quadrant")
+  it("Should show widget contents", () => {
+    cy.shouldShowWidgetContents(WIDGET_TYPE)
   })
 
   it("Should expand tile", () => {
-    cy.shouldExpandedTile("quadrant")
+    cy.shouldExpandedTile(WIDGET_TYPE)
   })
 
   it("Should display timephrase in the tile", () => {

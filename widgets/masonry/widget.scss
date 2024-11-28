@@ -1,20 +1,39 @@
 @use "sass:map";
-@use "styles";
+@use "styles" as masonryStyles;
 
 :host {
   transition: ease all 0.5s;
 }
 
 #nosto-ugc-container {
-  .ugc-tile {
-    box-sizing: border-box;
-    overflow: hidden;
-    transition: opacity 0.5s ease;
+  background-color: var(--widget-background);
+  margin: var(--margin);
 
-    &:not([width-set*="true"]) {
-      opacity: 0;
+  .grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--margin);
+
+    .ugc-tile {
+      height: var(--tile-size);
+      border-radius: 5px;
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: opacity 0.5s ease;
+
+      &:not([width-set*="true"]) {
+        opacity: 0;
+      }
+
+      max-width: 50%;
+
+      @include masonryStyles.breakpoint(mobile) {
+        max-width: 100%;
+      }
     }
   }
+
 
   .tile {
     position: relative;
@@ -24,13 +43,13 @@
     width: 100%;
     height: 100%;
 
-    .play-icon {
+    .icon-play {
       top: 43%;
       left: 0;
       right: 0;
       margin: auto;
-      width: styles.$play-icon-width;
-      height: styles.$play-icon-height;
+      width: masonryStyles.$play-icon-width;
+      height: masonryStyles.$play-icon-height;
     }
 
     .icon-section {
@@ -52,8 +71,15 @@
   transition: opacity 0.5s ease;
 
   .loading {
-    height: styles.$loading-height !important;
-    width: styles.$loading-width !important;
+    height: masonryStyles.$loading-height !important;
+    width: masonryStyles.$loading-width !important;
+  }
+}
+
+load-more {
+  #buttons {
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 }
 

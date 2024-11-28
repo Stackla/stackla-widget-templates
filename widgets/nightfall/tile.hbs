@@ -1,52 +1,48 @@
 {{#tile class="grid-item"}}
-  <div class="tile">
-    <div class="tile-top">
-      <div class="tile-loading"></div>
-      <div class="tile-content hidden">
-        {{#each attrs}}
-          {{#ifequals this "instagram.reel"}}
-            <div class="content-icon icon-reel"></div>
-          {{/ifequals}}
-        {{/each}}
-        {{#if tags_extended.length}}
-          <div class="shopping-icon icon-products"></div>
-        {{/if}}
-        <div class="network-icon icon-{{source}}"></div>
-        {{#ifequals media "video"}}
-          <div class="play-icon"></div>
-        {{/ifequals}}
-      </div>
-      <div class="tile-image">
-        {{#lazy image_thumbnail_url "120"}}{{/lazy}}
-        <div class="swiper-lazy-preloader"></div>
-        {{#if options.tile_options.show_shopspots}}
-          <shopspot-icon tile-id={{id}} />
-        {{/if}}
-      </div>
-    </div>
-    <div class="tile-bottom">
+<div class="tile">
+  <div class="tile-top">
+    <div class="tile-loading"></div>
+    <div class="tile-content hidden">
+      {{#each attrs}}
+      {{#ifequals this "instagram.reel"}}
+      <div class="content-icon icon-reel"></div>
+      {{/ifequals}}
+      {{/each}}
       {{#if tags_extended.length}}
-        <ul class="tile-tags">
-          {{#tags_extended}}
-            <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
-          {{/tags_extended}}
-        </ul>
+      <div class="shopping-icon icon-products"></div>
       {{/if}}
-      <div class="description">
-        {{#if name}}
-          <div class="user-name">{{name}}</div>
-        {{/if}}
-        {{#if user}}
-          <div class="user-handle">@{{user}}</div>
-        {{/if}}
-          <div class="tile-timestamp">{{time_ago}}</div>
-        {{#if message}}
-          <div class="caption">
-            <div class="caption-paragraph">{{message}}</div>
-          </div>
-        {{/if}}
-        <span class="widget-icon icon-share"></span>
-      </div>
+      <div class="network-icon icon-{{source}}"></div>
+      {{#ifequals media "video"}}
+      <div class="icon-play"></div>
+      {{/ifequals}}
+    </div>
+    <div class="tile-image-wrapper">
+      {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+      <div class="swiper-lazy-preloader"></div>
+      {{#if options.tile_options.show_shopspots}}
+      <shopspot-icon tile-id={{id}} />
+      {{/if}}
     </div>
   </div>
+  <div class="tile-bottom">
+    {{#if tags_extended.length}}
+    <tile-tags tile-id="{{id}}"></tile-tags>
+    {{/if}}
+    <div class="description">
+      {{#if name}}
+      <div class="user-name">{{name}}</div>
+      {{/if}}
+      {{#if user}}
+      <div class="user-handle">@{{user}}</div>
+      {{/if}}
+      <div class="tile-timestamp">{{time_ago}}</div>
+      {{#if message}}
+      <div class="caption">
+        <div class="caption-paragraph">{{message}}</div>
+      </div>
+      {{/if}}
+      <span class="widget-icon icon-share"></span>
+    </div>
+  </div>
+</div>
 {{/tile}}

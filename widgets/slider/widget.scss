@@ -13,6 +13,10 @@ $space-between: 10px;
 }
 
 #nosto-ugc-container {
+  --text-caption-paragraph-font-size: 14px;
+  --tile-timephrase-display: flex;
+
+  background-color: var(--widget-background);
   display: flex;
   width: 100vw;
   place-items: center;
@@ -32,27 +36,35 @@ $space-between: 10px;
         display: grid;
         gap: $space-between; /* Space between blocks */
         width: 100%; /* Fixed Width */
-        height: 600px; /* Fixed Height */
+        height: calc(100vh - 100px); /* Fixed Height */
         overflow: hidden;
         justify-content: center;
 
+        .ugc-tile,
+        .ugc-tile-wrapper {
+          align-items: center;
+          background-color: #000;
+          color: #fff;
+          font-size: 1.5em;
+          transition: transform 0.5s ease-in-out; /* Apply transition to all blocks */
+          cursor: pointer;
+        }
+
         .ugc-tile {
           display: grid;
-          justify-content: flex-start;
+          place-content: flex-start;
           height: fit-content;
           box-sizing: border-box;
           grid-column: span 2;
-          grid-template:
-            "image1 details1"
-            "details2 image2"
-            "image3 details4"
-            "details3 image4";
+          grid-template: subgrid / subgrid;
+          grid-template-areas: "image details";
+          gap: 0;
 
           .image-section {
             display: flex;
             width: var(--tile-size);
             position: relative;
-            grid-area: image1;
+            grid-area: image;
             height: var(--tile-size);
           }
 
@@ -63,17 +75,42 @@ $space-between: 10px;
             place-content: flex-start;
             height: var(--tile-size);
             width: var(--tile-size);
-            grid-area: details1;
+            grid-area: details;
+
+            .tile {
+              display: flex;
+              height: fit-content;
+
+              .tile-tags {
+                width: 100%;
+                margin: 0;
+
+                .tile-tag {
+                  --tile-tag-background: #bcbbbc;
+                }
+              }
+            }
 
             .tile-message-wrapper {
               display: grid;
-              grid-template-rows: 85% 15%;
+              grid-template-rows: calc(100% - 70px) 20px 15px;
               grid-auto-columns: 1fr;
-              height: 100%;
+              height: calc(100% - 10px);
               padding: 10px 0 0 10px;
+              gap: 10px;
+              place-content: flex-start;
+              width: calc(100% - 10px);
 
-              .tile-tags .tile-tag {
-                --tile-tag-background: #bcbbbc;
+              tile-content {
+                .description p {
+                  margin: 0;
+                }
+              }
+
+              .footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
               }
             }
           }
@@ -83,25 +120,58 @@ $space-between: 10px;
             object-fit: cover;
           }
 
-          /* Style for individual blocks */
-          .ugc-tile,
-          .ugc-tile-wrapper {
-            align-items: center;
-            background-color: #000;
-            color: #fff;
-            border: 1px solid #ccc;
-            font-size: 1.5em;
-            transition: transform 0.5s ease-in-out; /* Apply transition to all blocks */
-            cursor: pointer;
+          .icon-section {
+            display: grid;
+            grid-template-areas:
+              "type media"
+              "shop .";
+            grid-column: image-start / image-end;
+            grid-row: image-start / image-end;
+            z-index: 10;
+            align-self: flex-start;
+            height: 100%;
+
+            > .network-icon {
+              background-color: #000;
+              grid-area: media;
+              justify-self: flex-end;
+              margin-top: 10px;
+            }
+
+            > .content-icon {
+              grid-area: type;
+              place-self: flex-start;
+              margin: 10px 0 0 10px;
+            }
+
+            > .shopping-icon {
+              grid-area: shop;
+              align-self: flex-end;
+              margin: 0 0 10px 10px;
+            }
           }
 
           &:nth-child(2n) {
-            .image-section {
-              grid-area: image2;
-            }
+            grid-template-areas: "details image";
 
-            .details-section {
-              grid-area: details2;
+            .icon-section {
+              grid-template-areas:
+                "media type"
+                ". shop";
+
+              > .network-icon {
+                place-self: flex-start;
+              }
+
+              > .content-icon {
+                justify-self: flex-end;
+                margin: 10px 10px 0 0;
+              }
+
+              > .shopping-icon {
+                place-self: flex-end;
+                margin: 0 10px 10px 0;
+              }
             }
           }
 
@@ -110,26 +180,60 @@ $space-between: 10px;
             min-width: initial;
             grid-column: auto;
             grid-row: span 2;
-            height: 100%;
           }
 
           &:nth-child(4n-1) {
-            .image-section {
-              grid-area: image3;
-            }
+            grid-template-areas:
+              "image"
+              "details";
 
-            .details-section {
-              grid-area: details3;
+            .icon-section {
+              grid-template-areas:
+                "type shop"
+                "media .";
+
+              > .network-icon {
+                place-self: flex-end center;
+                grid-column: span 2;
+              }
+
+              > .content-icon {
+                place-self: flex-start;
+                margin: 10px 0 0 10px;
+              }
+
+              > .shopping-icon {
+                place-self: flex-start flex-end;
+                margin: 10px 10px 0 0;
+              }
             }
           }
 
           &:nth-child(4n) {
-            .image-section {
-              grid-area: image4;
-            }
+            grid-template-areas:
+              "details"
+              "image";
 
-            .details-section {
-              grid-area: details4;
+            .icon-section {
+              grid-template-areas:
+                "media ."
+                "type shop";
+
+              > .network-icon {
+                place-self: flex-start center;
+                grid-column: span 2;
+                margin: 0;
+              }
+
+              > .content-icon {
+                place-self: flex-end flex-start;
+                margin: 0 0 10px 10px;
+              }
+
+              > .shopping-icon {
+                place-self: flex-end;
+                margin: 0 10px 10px 0;
+              }
             }
           }
         }

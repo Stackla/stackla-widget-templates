@@ -7,7 +7,6 @@ cypress/screenshots
 cypress/downloads
 *.d.ts
 *.map
-cypress/support/e2e.js
 .serverless
 server
 .vscode/settings.json

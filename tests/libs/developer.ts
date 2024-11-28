@@ -3,7 +3,7 @@ import nostoApiJS from "../data/nosto-api"
 import * as path from "node:path"
 import * as fs from "node:fs"
 
-export const PRODUCTION_UI_URL = "https://widget-ui.stackla.com"
+export const STAGING_UI_URL = "https://widget-ui.teaser.stackla.com"
 
 export const createMockRoutes = (app: Express) => {
   app.get("/development/stackla/cs/image/disable", (_req, res) => {
@@ -12,6 +12,16 @@ export const createMockRoutes = (app: Express) => {
 
   app.get("/development/nosto/shopify-64671154416", (_req, res) => {
     res.send(nostoApiJS)
+  })
+
+  app.get("/development/stackla/autoload", async (req, res) => {
+    res.redirect(
+      301,
+      "/autoload?" +
+        Object.keys(req.query)
+          .map(key => `${key}=${req.query[key]}`)
+          .join("&")
+    )
   })
 
   app.get("/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050.js", (_req, res) => {

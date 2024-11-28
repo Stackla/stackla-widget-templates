@@ -4,6 +4,9 @@ sdk.addLoadedComponents([
   "shopspots",
   "add-to-cart",
   "cross-sellers",
+  "tile-content",
+  "share-menu",
+  "timephrase",
   "https://code.jquery.com/jquery-3.7.1.slim.min.js"
 ])
 sdk.tiles.preloadImages = true
