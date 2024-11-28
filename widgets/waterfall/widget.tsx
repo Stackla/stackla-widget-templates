@@ -7,7 +7,10 @@ loadWidget({
     onLoadMore: [() => loadWaterfallLayout()],
     onTilesUpdated: [() => loadWaterfallLayout()],
     onResize: [() => reinitialiseWaterfallLayout()]
-  }
+  },
+  templates: {},
+  features: {},
+  extensions: {}
 })
 loadWaterfallLayout()
 loadAllUnloadedTiles()
