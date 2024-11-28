@@ -1,12 +1,16 @@
 import { loadWidget } from "@stackla/widget-utils"
-import { reinitialiseWaterfallLayout, loadWaterfallLayout } from "./waterfall.lib"
+import { loadWaterfallLayout } from "./waterfall.lib"
 
 loadWidget({
   callbacks: {
     onLoadMore: [() => loadWaterfallLayout()],
     onTilesUpdated: [() => loadWaterfallLayout()],
-    onResize: [() => reinitialiseWaterfallLayout()]
-  }
+    onResize: [() => loadWaterfallLayout()]
+  },
+  templates: {},
+  features: {},
+  extensions: {}
+
 })
 loadWaterfallLayout()
 // loadAllUnloadedTiles()
