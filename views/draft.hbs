@@ -1,0 +1,105 @@
+<body></body>
+<script>
+    function getDomain(environment) {
+        switch (environment) {
+            case 'staging':
+                return 'https://my.teaser.stackla.com';
+            case 'production':
+                return 'https://my.stackla.com';
+        }
+    }
+
+    function WidgetPreview({ widgetId, stack }) {
+    let widgetPreviewData = null;
+
+    async function fetchData() {
+        try {
+        const environment = '{{{environment}}}';
+        const domain = getDomain(environment);
+        const draftParameter = '&draft=1';
+        const endpoint = `${domain}/api/widgets/${widgetId}.json?stack=${stack}&mode=preview${draftParameter}`;
+
+        if (!environment) {
+            alert('Please provide an environment');
+        }
+
+        if (!widgetId) {
+            alert('Please provide a widget ID');
+        }
+
+        const response = await fetch(endpoint, {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        const data = await response.json();
+        widgetPreviewData = data;
+
+        const { scriptURL, widgetParams, assetPath } = data.data;
+        const mutatedParams = { ...widgetParams };
+        const externalScript = document.createElement('script');
+        externalScript.src = scriptURL;
+        externalScript.onload = () => {
+            const script = document.createElement('script');
+            script.className = 'ugc-widget-script';
+            script.innerHTML = `
+            (function() {
+                var stackWidgetAssetPath = "${assetPath}";
+                var stackWidgetCustomData = {};
+                const widgetParams = ${JSON.stringify(mutatedParams)};
+                const widget = new window.ugc.widget(widgetParams);
+                widget.init();
+            })();
+            `;
+            document.body.appendChild(script);
+        };
+        document.body.appendChild(externalScript);
+        } catch (error) {
+        console.error('Error fetching widget data:', error);
+        }
+    }
+
+    function renderWidget() {
+        if (!widgetPreviewData || !widgetPreviewData.data) {
+            return;
+        }
+
+        const { title, ttl, guid, id, extra, tagGroup } = widgetPreviewData.data;
+
+        const html = `
+            <div class="ugc-widget" id="ugc-widget" 
+                data-hash="${guid}" 
+                data-id="${id}" 
+                data-title="${title}" 
+                data-ttl="${ttl}" 
+                ${extra} 
+                data-tag-group="${tagGroup}">
+            </div>
+        `;
+
+        const container = document.getElementById('widget-preview-container');
+        if (container) {
+            container.innerHTML = html;
+        }
+    }
+
+    // Simulate React's useEffect
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchData().then(renderWidget);
+    });
+    }
+
+    // Example usage
+    WidgetPreview({
+        widgetId: '{{{widgetId}}}',
+        stack: '{{stack}}',
+    });
+
+    // Ensure there's a container to render into
+    const container = document.createElement('div');
+    container.id = 'widget-preview-container';
+    document.body.appendChild(container);
+</script>

@@ -249,6 +249,15 @@ expressApp.get("/preview", async (req, res) => {
   })
 })
 
+// Register draft route
+expressApp.get("/draft", async (req, res) => {
+  res.render("draft", {
+    environment: req.query.environment,
+    widgetId: req.query.widgetId,
+    stack: req.query.stack
+  })
+})
+
 expressApp.get("/staging", async (req, res) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
