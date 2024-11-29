@@ -86,19 +86,16 @@
         }
     }
 
-    // Simulate React's useEffect
     document.addEventListener('DOMContentLoaded', () => {
         fetchData().then(renderWidget);
     });
     }
 
-    // Example usage
     WidgetPreview({
         widgetId: '{{{widgetId}}}',
         stack: '{{stack}}',
     });
 
-    // Ensure there's a container to render into
     const container = document.createElement('div');
     container.id = 'widget-preview-container';
     document.body.appendChild(container);
