@@ -28,12 +28,15 @@ class DirectUploaderWidget extends HTMLElement {
     const settings = sdk.getStyleConfig()
     const { plugin_instance_id } = settings
 
-    const widgetEndpoint = `${WIDGET_ENDPOINT}/widgets/${widgetId}/direct-uploader/${plugin_instance_id}`
+    let widgetEndpoint = `${WIDGET_ENDPOINT}/widgets/${widgetId}/direct-uploader/${plugin_instance_id}`
+
+    if (!plugin_instance_id || plugin_instance_id === "0") {
+      widgetEndpoint = `${WIDGET_ENDPOINT}/widgets/${widgetId}/direct-uploader`
+    }
 
     try {
       const response = await fetch(widgetEndpoint)
       const { guid } = await response.json()
-
       this.appendChild(createDUIFrame(guid))
 
       loadDirectUploaderListeners()
@@ -50,15 +53,36 @@ try {
 }
 
 export function loadDirectUploaderListeners() {
-  sdk.querySelector("#submit-more-content-btn").addEventListener("click", () => {
-    sdk.querySelector("#direct-uploader-form").classList.remove("hidden")
+  const submitMoreContentBtn = sdk.querySelector("#submit-more-content-btn")
+  const directUploaderForm = sdk.querySelector("#direct-uploader-form")
+  const overlay = sdk.querySelector("#direct-uploader-form .overlay")
+  const exitBtn = sdk.querySelector("#direct-uploader-form .exit")
+
+  if (!submitMoreContentBtn) {
+    throw new Error("Failed to find submit more content button")
+  }
+
+  if (!directUploaderForm) {
+    throw new Error("Failed to find direct uploader form")
+  }
+
+  if (!overlay) {
+    throw new Error("Failed to find overlay")
+  }
+
+  if (!exitBtn) {
+    throw new Error("Failed to find exit button")
+  }
+
+  submitMoreContentBtn.addEventListener("click", () => {
+    directUploaderForm.classList.remove("hidden")
   })
 
-  sdk.querySelector("#direct-uploader-form .exit").addEventListener("click", () => {
-    sdk.querySelector("#direct-uploader-form").classList.add("hidden")
+  exitBtn.addEventListener("click", () => {
+    directUploaderForm.classList.add("hidden")
   })
 
-  sdk.querySelector("#direct-uploader-form .overlay").addEventListener("click", () => {
-    sdk.querySelector("#direct-uploader-form").classList.add("hidden")
+  overlay.addEventListener("click", () => {
+    directUploaderForm.classList.add("hidden")
   })
 }

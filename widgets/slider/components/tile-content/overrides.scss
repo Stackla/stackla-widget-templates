@@ -1,17 +1,23 @@
-@use "@styles/templates/tile-content";
+@use "@styles/templates/tile-content" as tc;
 
-tile-content {
-  .tile-content-wrapper.slider-inline {
-    .user-info {
-      .user-link {
-        .user-name {
-          text-transform: uppercase;
+.slider-inline {
+  @include tc.tile-content-styles {
+    .tile-content-wrapper {
+      .user-info {
+        .user-link {
+          .user-name {
+            text-transform: uppercase;
+          }
         }
-      }
 
-      .avatar-wrapper {
-        display: none;
+        .avatar-wrapper {
+          display: none;
+        }
       }
     }
   }
+}
+
+expanded-tiles {
+  @include tc.tile-content-styles;
 }

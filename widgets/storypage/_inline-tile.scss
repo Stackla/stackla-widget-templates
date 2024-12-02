@@ -14,7 +14,7 @@
         justify-content: center;
         margin-top: var(--margin);
         gap: var(--margin);
-        grid-template-columns: repeat(auto-fit, minmax(min-content, var(--tile-size)));
+        grid-template-columns: repeat(auto-fit, minmax(var(--tile-size), 1fr));
         grid-auto-flow: row;
         margin-bottom: 20px;
         
@@ -26,10 +26,12 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: var(--tile-size);
+            height: 100%;
             box-sizing: border-box;
             object-fit: cover;
             overflow: hidden;
+            width: 100%;
+            aspect-ratio: 1 / 1;
         }
 
         @include styles.breakpoint(mobile) {

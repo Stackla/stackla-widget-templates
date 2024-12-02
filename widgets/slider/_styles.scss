@@ -2,10 +2,16 @@
 @forward "pkg:@stackla/widget-utils/tile-overlay";
 @forward "pkg:@stackla/widget-utils/grid";
 @forward "pkg:@stackla/widget-utils/icons";
-@forward "@styles/templates/shopspot-icon";
-@forward "@styles/templates/time-phrase";
-@forward "@styles/templates/tags";
-@forward "@styles/templates/share-menu";
 @forward "./components/tile-content/overrides";
-@forward "@styles/templates/tile-content";
-@forward "@styles/templates/load-more";
+@use "@styles/templates/shopspot-icon" as sicon;
+@use "@styles/templates/time-phrase" as tphrase;
+@use "@styles/templates/share-menu" as smenu;
+@use "@styles/templates/tags";
+
+.slider-inline,
+expanded-tiles {
+  @include sicon.shopspot-icon-styles;
+  @include tphrase.time-phrase-styles;
+  @include smenu.share-menu-styles;
+  @include tags.tile-tags-styles;
+}

@@ -26,8 +26,10 @@
     }
 
     .icon-picture {
+      left: 0;
+      right: 0;
+      top: -12px;
       margin: 0 auto;
-      display: block;
     }
   }
 
@@ -43,7 +45,7 @@
     position: fixed;
     inset: 0;
     background-color: black;
-    z-index: 2;
+    z-index: 10;
     opacity: 0.8;
   }
 
@@ -59,7 +61,7 @@
     background-color: var(--form-background-color);
     position: fixed;
     inset: var(--form-insent);
-    z-index: 3;
+    z-index: 10;
     padding: var(--form-padding);
     max-height: var(--form-max-height);
     border-radius: var(--form-border-radius);

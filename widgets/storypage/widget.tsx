@@ -11,10 +11,12 @@ loadWidget({
     limitTilesPerPage: false
   },
   callbacks: {
-    onLoad: [() => createSubmitMoreContentBtn(), () => registerResizeObserver()],
+    onLoad: [() => registerResizeObserver()],
     onTileBgImageError: [calculateTilesToShow]
   }
 })
+
+createSubmitMoreContentBtn()
 
 function createSubmitMoreContentBtn() {
   const submitMoreContentBtn = (

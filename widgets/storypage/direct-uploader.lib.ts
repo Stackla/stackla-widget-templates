@@ -31,7 +31,12 @@ export function calculateTilesToShow() {
   const tileSize = parseInt(getTileSize(tileSettings).replace("px", ""))
   const tilesByScreenWidth = Math.floor(screenWidth / (tileSize + marginAsInt))
   const rows = getRowsPerPage(tileSize, marginAsInt)
-  const tilesPerPage = tilesByScreenWidth * rows
+  let tilesPerPage = tilesByScreenWidth * rows
+  const { enable_custom_tiles_per_page, tiles_per_page } = sdk.getStyleConfig()
+
+  if (enable_custom_tiles_per_page) {
+    tilesPerPage = parseInt(tiles_per_page)
+  }
 
   sdk.tiles.setVisibleTilesCount(tilesPerPage)
   void sdk.tiles.loadTilesUntilVisibleTilesCount()

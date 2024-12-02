@@ -1,44 +1,49 @@
-tile-tags {
-  width: 100%;
+@use "sass:string";
 
-  .tile-tags {
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    gap: var(--tags-gap);
-    list-style: none;
-    mask-image: linear-gradient(to left, transparent 5%, black 15%);
-    overflow-y: auto;
-    padding: 0;
-    scrollbar-width: none;
-    z-index: 2;
+@mixin tile-tags-styles($parent: "") {
+  #{if(&, "& tile-tags", string.unquote($parent) "tile-tags")} {
+    width: 100%;
 
-    .tile-tag {
-      background: var(--tile-tag-background, color(srgb 0.74 0.73 0.74));
-      border-radius: 3px;
-      font-size: 10px;
-      font-style: normal;
-      font-weight: 400;
-      padding: 2px 4px;
-      line-height: 16px;
-      text-wrap: nowrap;
+    .tile-tags {
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--tags-gap);
+      list-style: none;
+      mask-image: linear-gradient(to left, transparent 5%, black 15%);
+      overflow-y: auto;
+      padding: 0;
+      scrollbar-width: none;
+      z-index: 2;
 
-      a {
-        color: var(--text-tile-tag-font-color);
-        text-decoration: none;
+      .tile-tag {
+        background: var(--tile-tag-background, color(srgb 0.74 0.73 0.74));
+        border-radius: 3px;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        padding: 2px 4px;
+        line-height: 16px;
+        text-wrap: nowrap;
+
+        a {
+          color: var(--text-tile-tag-font-color);
+          text-decoration: none;
+        }
       }
     }
-  }
 
-  &[variant="dark"] {
-    .tile-tags .tile-tag {
-      background: var(--tile-tag-inline-background, color(srgb 0 0 0 / 40%));
-      border-radius: 25px;
-      line-height: 12px;
+    &[variant="dark"] {
+      .tile-tags .tile-tag {
+        background: var(--tile-tag-inline-background, color(srgb 0 0 0 / 40%));
+        border-radius: 25px;
+        line-height: 12px;
 
-      a {
-        color: #fff;
+        a {
+          color: #fff;
+        }
       }
     }
+    @content;
   }
 }

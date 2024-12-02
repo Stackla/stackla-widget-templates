@@ -1,59 +1,64 @@
-shopspot-icon {
-  .stacklapopup-shopspot-badge {
-    background: #fff;
-    border-radius: 50%;
-    cursor: pointer;
-    left: -12px;
-    position: absolute;
-    top: -12px;
-    padding: 5px 8px;
-    text-align: center;
-  }
+@use "sass:string";
 
-  .fs-tag {
-    position: absolute;
-    width: 13px;
-    height: 13px;
-    background: #000;
-    color: white;
-    display: block;
-    background-size: 70%;
-    border: solid #fff 1px;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    z-index: 10;
-
-    > .tooltip {
-      display: none;
-      width: auto;
-      background-color: #000;
-      color: #fff;
+@mixin shopspot-icon-styles($parent: "") {
+  #{if(&, "& shopspot-icon", string.unquote($parent) "shopspot-icon")} {
+    .stacklapopup-shopspot-badge {
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      left: -12px;
+      position: absolute;
+      top: -12px;
+      padding: 5px 8px;
       text-align: center;
-      padding: 3px;
-      border-radius: 0.5px;
-      position: absolute;
-      z-index: 1;
-      top: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      transition: opacity 0.3s;
-      white-space: nowrap;
-      line-height: 12px;
-      font-size: 12px;
     }
 
-    > .tooltip::after {
-      content: "";
+    .fs-tag {
       position: absolute;
-      bottom: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: transparent transparent #000;
+      width: 13px;
+      height: 13px;
+      background: #000;
+      color: white;
+      display: block;
+      background-size: 70%;
+      border: solid #fff 1px;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 500;
+      z-index: 10;
+
+      > .tooltip {
+        display: none;
+        width: auto;
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+        padding: 3px;
+        border-radius: 0.5px;
+        position: absolute;
+        z-index: 1;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: opacity 0.3s;
+        white-space: nowrap;
+        line-height: 12px;
+        font-size: 12px;
+      }
+
+      > .tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #000;
+      }
     }
+    @content;
   }
 }

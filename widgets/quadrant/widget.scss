@@ -3,11 +3,21 @@
 @use "pkg:@stackla/widget-utils/icon-sections";
 @use "pkg:@stackla/widget-utils/icons";
 @use "@styles/templates/tags";
-@use "@styles/templates/shopspot-icon";
-@use "@styles/templates/time-phrase";
-@use "@styles/templates/share-menu";
-@forward "@styles/templates/load-more";
-@forward "@styles/templates/tile-content";
+@use "@styles/templates/load-more" as lm;
+@use "@styles/templates/tile-content" as tc;
+@use "@styles/templates/shopspot-icon" as sicon;
+@use "@styles/templates/time-phrase" as tphrase;
+@use "@styles/templates/share-menu" as smenu;
+
+.quadrant-inline,
+expanded-tiles {
+  @include sicon.shopspot-icon-styles;
+  @include tphrase.time-phrase-styles;
+  @include smenu.share-menu-styles;
+  @include tags.tile-tags-styles;
+  @include tc.tile-content-styles;
+  @include lm.load-more-styles;
+}
 
 #nosto-ugc-container {
   --tile-size-with-margin: calc(var(--tile-size) - var(--margin) * 1px);

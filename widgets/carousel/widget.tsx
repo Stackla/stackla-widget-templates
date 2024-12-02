@@ -11,10 +11,9 @@ loadWidget({
   },
   features: {
     handleLoadMore: false
-  },
-  callbacks: {
-    onLoad: [initializeInlineSwiperListeners]
   }
 })
 
 sdk.querySelector(".track")?.style.removeProperty("display")
+
+initializeInlineSwiperListeners()

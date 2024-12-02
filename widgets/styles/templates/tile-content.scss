@@ -1,125 +1,127 @@
 @use "sass:math";
+@use "sass:string";
 
-tile-content {
-  :host {
+@mixin tile-content-styles($parent: "") {
+  #{if(&, "& tile-content", string.unquote($parent) "tile-content")} {
     height: 100%;
-  }
 
-  .tile-content-wrapper {
-    --max-lines: 7;
+    .tile-content-wrapper {
+      --max-lines: 7;
 
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 10px;
-
-    .description {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      height: 100%;
       gap: 10px;
-      flex: 1 1 auto;
 
-      .caption {
-        // intentional duplicate display props. When --webkit-box not supported, display with be flex
-        display: flex;
-        display: -webkit-box;
-        -webkit-line-clamp: var(--lines);
-        line-clamp: 7;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        line-height: 1.2rem;
-
-        .caption-paragraph {
-          font-size: var(--text-caption-paragraph-font-size);
-        }
-      }
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-
-      .user-link {
+      .description {
         display: flex;
         flex-direction: column;
-        margin-right: auto;
-        text-decoration: none;
-        gap: 5px;
+        overflow: hidden;
+        gap: 10px;
+        flex: 1 1 auto;
 
-        .user-name {
-          font-size: var(--text-tile-user-name-font-size);
-        }
+        .caption {
+          // intentional duplicate display props. When --webkit-box not supported, display with be flex
+          display: flex;
+          display: -webkit-box;
+          -webkit-line-clamp: var(--lines);
+          line-clamp: 7;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.2rem;
 
-        .user-handle {
-          font-size: var(--text-tile-user-handle-font-size);
+          .caption-paragraph {
+            font-size: var(--text-caption-paragraph-font-size);
+          }
         }
       }
 
-      .avatar-wrapper {
+      .user-info {
         display: flex;
+        align-items: center;
 
-        .avatar-link {
+        .user-link {
+          display: flex;
+          flex-direction: column;
+          margin-right: auto;
+          text-decoration: none;
+          gap: 5px;
+
+          .user-name {
+            font-size: var(--text-tile-user-name-font-size);
+          }
+
+          .user-handle {
+            font-size: var(--text-tile-user-handle-font-size);
+          }
+        }
+
+        .avatar-wrapper {
           display: flex;
 
-          > img {
-            width: 40px !important;
-            height: 40px !important;
-            border-radius: 50%;
+          .avatar-link {
+            display: flex;
+
+            > img {
+              width: 40px !important;
+              height: 40px !important;
+              border-radius: 50%;
+            }
           }
         }
       }
-    }
 
-    .header {
-      display: flex;
-      flex-direction: row;
-
-      share-menu {
+      .header {
         display: flex;
-        margin-left: auto;
-      }
-    }
+        flex-direction: row;
 
-    &.light {
-      .caption .caption-paragraph {
-        color: var(--text-tile-font-color);
+        share-menu {
+          display: flex;
+          margin-left: auto;
+        }
       }
 
-      .user-info {
-        .user-link {
+      &.light {
+        .caption .caption-paragraph {
           color: var(--text-tile-font-color);
+        }
 
-          .user-name {
-            color: var(--text-tile-user-name-font-color);
-          }
+        .user-info {
+          .user-link {
+            color: var(--text-tile-font-color);
 
-          .user-handle {
-            color: var(--text-tile-user-handle-font-color);
+            .user-name {
+              color: var(--text-tile-user-name-font-color);
+            }
+
+            .user-handle {
+              color: var(--text-tile-user-handle-font-color);
+            }
           }
         }
       }
-    }
 
-    &.dark {
-      .caption .caption-paragraph {
-        color: #fff;
-      }
-
-      .user-info {
-        .user-link {
+      &.dark {
+        .caption .caption-paragraph {
           color: #fff;
+        }
 
-          .user-name {
+        .user-info {
+          .user-link {
             color: #fff;
-            text-transform: uppercase;
-          }
 
-          .user-handle {
-            color: #fff;
+            .user-name {
+              color: #fff;
+              text-transform: uppercase;
+            }
+
+            .user-handle {
+              color: #fff;
+            }
           }
         }
       }
     }
+    @content;
   }
 }
