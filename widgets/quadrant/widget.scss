@@ -1,23 +1,5 @@
-@use "pkg:@stackla/widget-utils/mixins";
-@use "pkg:@stackla/widget-utils/tile-overlay";
-@use "pkg:@stackla/widget-utils/icon-sections";
-@use "pkg:@stackla/widget-utils/icons";
-@use "@styles/templates/tags";
-@use "@styles/templates/load-more" as lm;
-@use "@styles/templates/tile-content" as tc;
-@use "@styles/templates/shopspot-icon" as sicon;
-@use "@styles/templates/time-phrase" as tphrase;
-@use "@styles/templates/share-menu" as smenu;
-
-.quadrant-inline,
-expanded-tiles {
-  @include sicon.shopspot-icon-styles;
-  @include tphrase.time-phrase-styles;
-  @include smenu.share-menu-styles;
-  @include tags.tile-tags-styles;
-  @include tc.tile-content-styles;
-  @include lm.load-more-styles;
-}
+@use "styles";
+@use "@styles/partials/media-queries";
 
 #nosto-ugc-container {
   --tile-size-with-margin: calc(var(--tile-size) - var(--margin) * 1px);
@@ -33,7 +15,7 @@ expanded-tiles {
     gap: var(--margin);
     justify-content: center;
 
-    @include mixins.breakpoint(mobile) {
+    @include media-queries.breakpoint(mobile) {
       grid-template-columns: var(--full);
     }
   }
@@ -46,11 +28,11 @@ expanded-tiles {
     margin-bottom: var(--margin);
     grid-template-columns: repeat(4, var(--column-width));
 
-    @include mixins.breakpoint(tablet) {
+    @include media-queries.breakpoint(tablet) {
       grid-template-columns: repeat(2, var(--column-width));
     }
 
-    @include mixins.breakpoint(mobile) {
+    @include media-queries.breakpoint(mobile) {
       grid-template-columns: var(--full);
       gap: 0;
     }

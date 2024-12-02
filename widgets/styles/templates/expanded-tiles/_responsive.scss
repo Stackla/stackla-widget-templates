@@ -1,0 +1,103 @@
+@use "../../partials/dimens";
+@use "../../partials/media-queries";
+
+@mixin common-panel {
+  // For tables or medium sized screens
+  @media only screen and (max-width: dimens.$breakpoint-tab-max-width) {
+    margin: 0;
+    max-width: unset;
+    max-height: unset;
+    height: 100vh;
+    width: 100%;
+
+    .expanded-tile-wrapper {
+      .exit {
+        display: none !important;
+      }
+
+      .back {
+        display: flex;
+      }
+
+      .swiper .swiper-wrapper {
+        max-height: calc(100vh - 50px);
+
+        .swiper-slide ugc-products {
+          max-width: calc(100vw - (dimens.$panel-padding * 2));
+        }
+      }
+
+      .panel {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-height: unset;
+        overflow: hidden;
+        margin-bottom: 56px;
+
+        .panel-left,
+        .panel-right {
+          width: auto;
+        }
+
+        .panel-left {
+          max-width: 100vw;
+        }
+
+        .panel-right {
+          max-width: 100vw;
+          overflow: hidden auto;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+@mixin md-panel {
+  @include common-panel;
+
+  @media only screen and (min-width: dimens.$breakpoint-tab-min-width) and (max-width: dimens.$breakpoint-tab-max-width) {
+    .expanded-tile-wrapper {
+      flex-direction: column;
+
+      .swiper .swiper-wrapper {
+        max-height: unset;
+        max-width: 100vw;
+        height: auto;
+
+        .swiper-slide {
+          border-radius: 0;
+
+          .panel {
+            grid-template-rows: calc(dimens.$tablet-panel-top-width-upper-limit - dimens.$back-icon-height) fit-content(
+                50%
+              ) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin sm-panel {
+  @include common-panel;
+
+  @media only screen and (max-width: dimens.$breakpoint-mob-max-width) {
+    .expanded-tile-wrapper {
+      height: 100%;
+
+      .swiper {
+        max-width: unset;
+
+        .swiper-wrapper {
+          max-width: 100vw;
+
+          .panel {
+            grid-template-columns: minmax(100%, 1fr) !important;
+            grid-template-rows: 50% fit-content(50%) !important;
+          }
+        }
+      }
+    }
+  }
+}

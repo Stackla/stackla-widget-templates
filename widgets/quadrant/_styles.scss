@@ -1,16 +1,16 @@
-@forward "pkg:@stackla/widget-utils/icons";
-@forward "inline-tile";
+@use "pkg:@stackla/widget-utils/icons";
 @forward "@styles/partials/tile-overlay";
 @forward "@styles/templates/expanded-tiles";
 @forward "@styles/templates/swiper-overrides";
+@use "@styles/templates/tags";
+@use "@styles/templates/load-more" as lm;
 @use "@styles/templates/tile-content" as tc;
 @use "@styles/templates/shopspot-icon" as sicon;
 @use "@styles/templates/time-phrase" as tphrase;
 @use "@styles/templates/share-menu" as smenu;
 @use "@styles/partials/icon-sections" as is;
-@use "@styles/templates/tags";
 
-.carousel-inline,
+.quadrant-inline,
 expanded-tiles {
   @include is.icon-sections-styles;
   @include sicon.shopspot-icon-styles;
@@ -18,4 +18,5 @@ expanded-tiles {
   @include smenu.share-menu-styles;
   @include tags.tile-tags-styles;
   @include tc.tile-content-styles;
+  @include lm.load-more-styles;
 }

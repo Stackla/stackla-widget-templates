@@ -1,4 +1,6 @@
 @use "styles" as carouselStyles;
+@use "@styles/partials/media-queries";
+@use "dimens";
 
 :host {
   transition: ease all 0.5s;
@@ -8,12 +10,12 @@
   background-color: var(--widget-background);
   display: flex;
   place-items: center;
-  margin: carouselStyles.$nosto-container-margin;
-  width: calc(100% - (carouselStyles.$nosto-container-margin * 2));
+  margin: dimens.$nosto-container-margin;
+  width: calc(100% - (dimens.$nosto-container-margin * 2));
   height: var(--tile-size);
 
   .swiper {
-    width: carouselStyles.$swiper-container-width-lg;
+    width: dimens.$swiper-container-width-lg;
   }
 
   .icon-section {
@@ -27,12 +29,12 @@
   display: none;
 }
 
-@include carouselStyles.breakpoint(mobile) {
+@include media-queries.breakpoint(mobile) {
   #nosto-ugc-container {
     height: auto;
 
     .swiper-inline {
-      width: carouselStyles.$swiper-container-width-md !important;
+      width: dimens.$swiper-container-width-md !important;
 
       .swiper-slide {
         width: 100% !important;
@@ -40,11 +42,11 @@
     }
 
     .tile {
-      width: carouselStyles.$tile-width-md !important;
-      height: carouselStyles.$tile-height-md !important;
+      width: dimens.$tile-width-md !important;
+      height: dimens.$tile-height-md !important;
 
       .icon-section {
-        width: carouselStyles.$tile-width-md;
+        width: dimens.$tile-width-md;
       }
     }
   }

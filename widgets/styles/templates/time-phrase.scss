@@ -1,14 +1,30 @@
 @use "sass:string";
+@use "@styles/partials/media-queries";
 
-@mixin time-phrase-styles($parent: "") {
-  #{if(&, "& time-phrase", string.unquote($parent) "time-phrase")} {
-    .tile-timephrase {
-      color: #b9bab9;
-      border-radius: 2px;
-      font-size: var(--text-tile-font-size);
-      font-weight: 400;
-      display: var(--tile-timephrase-display);
-    }
-    @content;
+// style placeholder
+%time-phrase-styles-ph {
+  .tile-timephrase {
+    color: #b9bab9;
+    border-radius: 2px;
+    font-size: var(--text-tile-font-size);
+    font-weight: 400;
+    display: var(--tile-timephrase-display);
   }
+}
+
+@mixin time-phrase-styles($parent: null) {
+  /* if parent selector is supplied use it */
+  @if $parent {
+    #{string.unquote($parent) time-phrase} {
+      @extend %time-phrase-styles-ph;
+    }
+  } @else {
+    /* dynamically determine the parent selector if available */
+    #{if(&, "& time-phrase", "time-phrase")} {
+      @extend %time-phrase-styles-ph;
+    }
+  }
+
+  /* any style overrides */
+  @content;
 }

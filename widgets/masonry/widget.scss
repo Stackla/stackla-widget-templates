@@ -1,5 +1,6 @@
 @use "sass:map";
 @use "styles" as masonryStyles;
+@use "@styles/partials/media-queries";
 
 :host {
   transition: ease all 0.5s;
@@ -28,12 +29,11 @@
 
       max-width: 50%;
 
-      @include masonryStyles.breakpoint(mobile) {
+      @include media-queries.breakpoint(mobile) {
         max-width: 100%;
       }
     }
   }
-
 
   .tile {
     position: relative;

@@ -1,13 +1,19 @@
-$social-icon-bg: #000;
+@use "@styles/partials/icon-sections" as is;
 
-.icon-section {
-  display: flex;
-  position: absolute;
-  height: 100%;
-  width: 100%;
+expanded-tiles {
+  @include is.icon-sections-styles {
+    $social-icon-bg: #000;
 
-  .top-section .network-icon {
-    margin-left: auto;
-    background-color: $social-icon-bg;
+    .icon-section {
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+
+      .top-section .network-icon {
+        margin-left: auto;
+        background-color: $social-icon-bg;
+      }
+    }
   }
 }

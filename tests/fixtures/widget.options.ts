@@ -24,7 +24,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
       show_tags: true,
       show_votes: true,
       show_cross_sellers: true,
-      show_add_to_cart: true
+      show_add_to_cart: false
     },
     tile_options: {
       show_comments: true,

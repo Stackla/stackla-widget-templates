@@ -1,127 +1,144 @@
 @use "sass:math";
 @use "sass:string";
+@use "@styles/partials/media-queries";
 
-@mixin tile-content-styles($parent: "") {
-  #{if(&, "& tile-content", string.unquote($parent) "tile-content")} {
+// style placeholder
+%tile-content-styles-ph {
+  display: flex;
+
+  .tile-content-wrapper {
+    --max-lines: 7;
+
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    gap: 10px;
 
-    .tile-content-wrapper {
-      --max-lines: 7;
-
+    .description {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      overflow: hidden;
       gap: 10px;
+      flex: 1 1 auto;
 
-      .description {
+      .caption {
+        // intentional duplicate display props. When --webkit-box not supported, display with be flex
+        display: flex;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--lines);
+        line-clamp: 7;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.2rem;
+
+        .caption-paragraph {
+          display: flex;
+          font-size: var(--text-caption-paragraph-font-size);
+        }
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+
+      .user-link {
         display: flex;
         flex-direction: column;
-        overflow: hidden;
-        gap: 10px;
-        flex: 1 1 auto;
+        margin-right: auto;
+        text-decoration: none;
+        gap: 5px;
 
-        .caption {
-          // intentional duplicate display props. When --webkit-box not supported, display with be flex
-          display: flex;
-          display: -webkit-box;
-          -webkit-line-clamp: var(--lines);
-          line-clamp: 7;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          line-height: 1.2rem;
+        .user-name {
+          font-size: var(--text-tile-user-name-font-size);
+        }
 
-          .caption-paragraph {
-            font-size: var(--text-caption-paragraph-font-size);
-          }
+        .user-handle {
+          font-size: var(--text-tile-user-handle-font-size);
         }
       }
 
-      .user-info {
+      .avatar-wrapper {
         display: flex;
-        align-items: center;
 
-        .user-link {
-          display: flex;
-          flex-direction: column;
-          margin-right: auto;
-          text-decoration: none;
-          gap: 5px;
-
-          .user-name {
-            font-size: var(--text-tile-user-name-font-size);
-          }
-
-          .user-handle {
-            font-size: var(--text-tile-user-handle-font-size);
-          }
-        }
-
-        .avatar-wrapper {
+        .avatar-link {
           display: flex;
 
-          .avatar-link {
-            display: flex;
-
-            > img {
-              width: 40px !important;
-              height: 40px !important;
-              border-radius: 50%;
-            }
-          }
-        }
-      }
-
-      .header {
-        display: flex;
-        flex-direction: row;
-
-        share-menu {
-          display: flex;
-          margin-left: auto;
-        }
-      }
-
-      &.light {
-        .caption .caption-paragraph {
-          color: var(--text-tile-font-color);
-        }
-
-        .user-info {
-          .user-link {
-            color: var(--text-tile-font-color);
-
-            .user-name {
-              color: var(--text-tile-user-name-font-color);
-            }
-
-            .user-handle {
-              color: var(--text-tile-user-handle-font-color);
-            }
-          }
-        }
-      }
-
-      &.dark {
-        .caption .caption-paragraph {
-          color: #fff;
-        }
-
-        .user-info {
-          .user-link {
-            color: #fff;
-
-            .user-name {
-              color: #fff;
-              text-transform: uppercase;
-            }
-
-            .user-handle {
-              color: #fff;
-            }
+          > img {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50%;
           }
         }
       }
     }
-    @content;
+
+    .header {
+      display: flex;
+      flex-direction: row;
+
+      share-menu {
+        display: flex;
+        margin-left: auto;
+      }
+    }
+
+    &.light {
+      .caption .caption-paragraph {
+        color: var(--text-tile-font-color);
+      }
+
+      .user-info {
+        .user-link {
+          color: var(--text-tile-font-color);
+
+          .user-name {
+            color: var(--text-tile-user-name-font-color);
+          }
+
+          .user-handle {
+            color: var(--text-tile-user-handle-font-color);
+          }
+        }
+      }
+    }
+
+    &.dark {
+      .caption .caption-paragraph {
+        color: #fff;
+      }
+
+      .user-info {
+        .user-link {
+          color: #fff;
+
+          .user-name {
+            color: #fff;
+            text-transform: uppercase;
+          }
+
+          .user-handle {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
+}
+
+@mixin tile-content-styles($parent: null) {
+  /* if parent selector is supplied use it */
+  @if $parent {
+    #{string.unquote($parent) tile-content} {
+      @extend %tile-content-styles-ph;
+    }
+  } @else {
+    /* dynamically determine the parent selector if available */
+    #{if(&, "& tile-content", "tile-content")} {
+      @extend %tile-content-styles-ph;
+    }
+  }
+
+  /* any style overrides */
+  @content;
 }
