@@ -57,7 +57,17 @@
             <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
           {{/if}}
           {{#if options.tile_options.show_sharing}}
-            <span class="widget-icon icon-share"></span>
+            <tile-content
+              tile-id="{{id}}"
+              context="waterfall-inline"
+              render-avatar-image="false"
+              render-timephrase="false"
+              render-description="false"
+              render-user-title="false"
+              render-user-info="false"
+              render-caption="false"
+              render-share-menu="true"
+            ></tile-content>
           {{/if}}
           {{#if message}}
             <div class="caption">
