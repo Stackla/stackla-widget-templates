@@ -8,12 +8,10 @@
 @use "@styles/templates/shopspot-icon" as sicon;
 @use "@styles/templates/time-phrase" as tphrase;
 @use "@styles/templates/share-menu" as smenu;
-@use "@styles/partials/grid";
 @use "@styles/partials/icon-sections" as is;
 
 .grid-inline,
 expanded-tiles {
-  @include grid.grid-styles;
   @include is.icon-sections-styles;
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;

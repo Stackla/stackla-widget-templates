@@ -13,18 +13,18 @@
 }
 
 @mixin time-phrase-styles($parent: null) {
-  /* if parent selector is supplied use it */
+  // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) time-phrase} {
       @extend %time-phrase-styles-ph;
     }
   } @else {
-    /* dynamically determine the parent selector if available */
+    // dynamically determine the parent selector if available
     #{if(&, "& time-phrase", "time-phrase")} {
       @extend %time-phrase-styles-ph;
     }
   }
 
-  /* any style overrides */
+  // any style overrides
   @content;
 }

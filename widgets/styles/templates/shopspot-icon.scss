@@ -63,18 +63,18 @@
 }
 
 @mixin shopspot-icon-styles($parent: null) {
-  /* if parent selector is supplied use it */
+  // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) shopspot-icon} {
       @extend %shopspot-icon-styles-ph;
     }
   } @else {
-    /* dynamically determine the parent selector if available */
+    // dynamically determine the parent selector if available
     #{if(&, "& shopspot-icon", "shopspot-icon")} {
       @extend %shopspot-icon-styles-ph;
     }
   }
 
-  /* any style overrides */
+  // any style overrides
   @content;
 }

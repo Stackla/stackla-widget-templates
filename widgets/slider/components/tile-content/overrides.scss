@@ -1,17 +1,32 @@
 @use "@styles/templates/tile-content" as tc;
+@use "@styles/partials/media-queries";
 
 .slider-inline {
   @include tc.tile-content-styles {
     .tile-content-wrapper {
-      .user-info {
-        .user-link {
-          .user-name {
-            text-transform: uppercase;
-          }
+      .header {
+        share-menu {
+          display: none;
         }
 
-        .avatar-wrapper {
-          display: none;
+        .user-info {
+          .user-link {
+            .user-name {
+              text-transform: uppercase;
+            }
+          }
+
+          .avatar-wrapper {
+            display: none;
+          }
+        }
+      }
+
+      @include media-queries.breakpoint(mobile) {
+        .header {
+          share-menu {
+            display: flex;
+          }
         }
       }
     }

@@ -11,7 +11,7 @@
 @use "@styles/templates/tags";
 
 .slider-inline,
-expanded-tiles {
+expanded-tiles:not(:empty) {
   @include grid.grid-styles;
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;

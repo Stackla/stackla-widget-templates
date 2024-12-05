@@ -18,18 +18,18 @@ $load-more-margin: 20px;
 }
 
 @mixin load-more-styles($parent: null) {
-  /* if parent selector is supplied use it */
+  // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) load-more} {
       @extend %load-more-styles-ph;
     }
   } @else {
-    /* dynamically determine the parent selector if available */
+    // dynamically determine the parent selector if available
     #{if(&, "& load-more", "load-more")} {
       @extend %load-more-styles-ph;
     }
   }
 
-  /* any style overrides */
+  // any style overrides
   @content;
 }

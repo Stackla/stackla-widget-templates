@@ -9,7 +9,7 @@ html {
   background: var(--widget-background);
 }
 
-expanded-tiles {
+expanded-tiles:not(:empty) {
   :host {
     transition: ease all 0.5s;
   }

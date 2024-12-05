@@ -50,18 +50,18 @@
 }
 
 @mixin tile-tags-styles($parent: null) {
-  /* if parent selector is supplied use it */
+  // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) tile-tags} {
       @extend %tags-styles-ph;
     }
   } @else {
-    /* dynamically determine the parent selector if available */
+    // dynamically determine the parent selector if available
     #{if(&, "& tile-tags", "tile-tags")} {
       @extend %tags-styles-ph;
     }
   }
 
-  /* any style overrides */
+  // any style overrides
   @content;
 }

@@ -145,18 +145,18 @@
 }
 
 @mixin share-menu-styles($parent: null) {
-  /* if parent selector is supplied use it */
+  // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) share-menu} {
       @extend %share-menu-styles-ph;
     }
   } @else {
-    /* dynamically determine the parent selector if available */
+    // dynamically determine the parent selector if available
     #{if(&, "& share-menu", "share-menu")} {
       @extend %share-menu-styles-ph;
     }
   }
 
-  /* any style overrides */
+  // any style overrides
   @content;
 }

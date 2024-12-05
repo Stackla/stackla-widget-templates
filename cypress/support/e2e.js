@@ -106,6 +106,8 @@ Cypress.Commands.add("getExpandedTile", () => {
 Cypress.Commands.add("shouldLoadShareMenu", () => {
   cy.getFirstTile().should("exist").click({ force: true })
 
+  cy.wait(1000)
+
   cy.getExpandedTile().find(".share-button").first().should("exist").click({ force: true })
 
   cy.getExpandedTile()

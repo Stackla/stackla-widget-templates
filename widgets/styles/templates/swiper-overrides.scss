@@ -2,7 +2,7 @@
 @use "../partials/dimens";
 
 %loading {
-  border-radius: 50% !important; /* Safari */
+  border-radius: 50% !important;
   animation: spin 2s linear infinite;
   position: absolute;
   z-index: 10;

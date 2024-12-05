@@ -1,39 +1,71 @@
 {{#tile class="grid-item"}}
-<div class="tile">
-  <div class="tile-top">
-    <div class="tile-loading"></div>
-    <div class="tile-content hidden">
-      {{#each attrs}}
-      {{#ifequals this "instagram.reel"}}
-      <div class="content-icon icon-reel"></div>
-      {{/ifequals}}
-      {{/each}}
-      {{#if tags_extended.length}}
-      <div class="shopping-icon icon-products"></div>
-      {{/if}}
-      <div class="network-icon icon-{{source}}"></div>
-      {{#ifequals media "video"}}
-      <div class="icon-play"></div>
-      {{/ifequals}}
+  <div class="tile">
+    <div class="tile-top">
+      <div class="tile-loading"></div>
+      <div class="icon-section">
+        <div class="top-section">
+          {{#each attrs}}
+            {{#ifequals this "instagram.reel"}}
+              <div class="content-icon icon-reel"></div>
+            {{/ifequals}}
+            {{#ifequals this "youtube.short"}}
+              <div class="content-icon icon-youtube-short"></div>
+            {{/ifequals}}
+          {{/each}}
+          {{#if tags_extended.length}}
+            <div class="shopping-icon icon-products"></div>
+          {{/if}}
+        </div>
+        <div class="center-section">
+          {{#ifequals media "video"}}
+            <div class="icon-play"></div>
+          {{/ifequals}}
+        </div>
+        <div class="bottom-section">
+          <div class="network-icon icon-{{source}}"></div>
+        </div>
+      </div>
+      <div class="tile-image-wrapper">
+        {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+        <div class="swiper-lazy-preloader"></div>
+        {{#if options.tile_options.show_shopspots}}
+          <shopspot-icon tile-id={{id}} />
+        {{/if}}
+      </div>
     </div>
-    <div class="tile-image-wrapper">
-      {{#lazy image_thumbnail_url "120"}}{{/lazy}}
-      <div class="swiper-lazy-preloader"></div>
-      {{#if options.tile_options.show_shopspots}}
-      <shopspot-icon tile-id={{id}} />
-      {{/if}}
-    </div>
-  </div>
-  <div class="tile-bottom">
-    {{#if tags_extended.length}}
-    <tile-tags tile-id="{{id}}" />
-    {{/if}}
-    <div class="description">
-      <div class="waterfall-widget">
-      <tile-content tile-id="{{id}}" context="waterfall-inline" render-avatar-image="false" render-timephrase="false"
-        trim-description="true"></tile-content>
+    <div class="tile-bottom">
+      <div class="tag-slider">
+        {{#if tags_extended.length}}
+          <button class="tag-slider-arrow left-arrow" style="display: none;">‹</button>
+          <ul class="tile-tags">
+            {{#tags_extended}}
+              <li class="tile-tag tag-inline"><a href="{{custom_url}}">{{tag}}</a></li>
+            {{/tags_extended}}
+          </ul>
+          <button class="tag-slider-arrow right-arrow" style="display: none;">›</button>
+        {{/if}}
+      </div>
+      <div class="description">
+        <div class="waterfall-widget">
+          {{#if name}}
+            <div class="user-name">{{name}}</div>
+          {{/if}}
+          {{#if user}}
+            <div class="user-handle">@{{user}}</div>
+          {{/if}}
+          {{#if options.tile_options.show_timestamp}}
+            <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
+          {{/if}}
+          {{#if options.tile_options.show_sharing}}
+            <span class="widget-icon icon-share"></span>
+          {{/if}}
+          {{#if message}}
+            <div class="caption">
+              <div class="caption-paragraph">{{message}}</div>
+            </div>
+          {{/if}}
+        </div>
       </div>
     </div>
   </div>
-</div>
 {{/tile}}

@@ -24,16 +24,20 @@
       .caption {
         // intentional duplicate display props. When --webkit-box not supported, display with be flex
         display: flex;
-        display: -webkit-box;
-        -webkit-line-clamp: var(--lines);
-        line-clamp: 7;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
         line-height: 1.2rem;
+        overflow: hidden;
+        flex: 1 1 auto;
 
         .caption-paragraph {
           display: flex;
+          display: -webkit-box;
+          -webkit-line-clamp: var(--lines);
+          line-clamp: 7;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
           font-size: var(--text-caption-paragraph-font-size);
+          -webkit-box-pack: end;
+          height: fit-content;
         }
       }
     }
@@ -76,6 +80,7 @@
     .header {
       display: flex;
       flex-direction: row;
+      width: 100%;
 
       share-menu {
         display: flex;
@@ -127,18 +132,21 @@
 }
 
 @mixin tile-content-styles($parent: null) {
-  /* if parent selector is supplied use it */
+  // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) tile-content} {
       @extend %tile-content-styles-ph;
+
+      // any style overrides
+      @content;
     }
   } @else {
-    /* dynamically determine the parent selector if available */
+    // dynamically determine the parent selector if available
     #{if(&, "& tile-content", "tile-content")} {
       @extend %tile-content-styles-ph;
+
+      // any style overrides
+      @content;
     }
   }
-
-  /* any style overrides */
-  @content;
 }
