@@ -1,49 +1,16 @@
 @use "../partials/media-queries";
-@use "../partials/dimens";
-
-%loading {
-  border-radius: 50% !important;
-  animation: spin 2s linear infinite;
-  position: absolute;
-  z-index: 10;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-bottom: 5px solid #3498db;
-  width: dimens.$loading-width !important;
-  height: dimens.$loading-width !important;
-  top: calc(50% - dimens.$loading-width);
-  left: calc(50% - dimens.$loading-width);
-}
 
 .swiper {
   display: flex;
   height: 100%;
+  width: 100%;
 
   .swiper-slide {
     align-items: center;
     position: relative;
     display: flex;
     justify-content: center;
-    border-radius: dimens.$border-radius;
     overflow: hidden;
-
-    > .tile > .tile-loading {
-      @extend %loading;
-    }
-
-    .tile-image-wrapper {
-      height: 100%;
-
-      > img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        overflow: hidden;
-        border-radius: 5px;
-        position: relative;
-        opacity: 1;
-      }
-    }
 
     &:not(.swiper-initialized) {
       .swiper-slide > .ugc-tile > img {
@@ -56,10 +23,6 @@
 .swiper-button-next,
 .swiper-button-prev {
   top: unset;
-}
-
-.loading {
-  @extend %loading;
 }
 
 @keyframes spin {
@@ -90,13 +53,13 @@
 @include media-queries.media-query-target(tablet) {
   .swiper-button-next.btn-lg,
   .swiper-button-prev.btn-lg {
-    display: none !important;
+    display: none;
   }
 }
 
 @include media-queries.breakpoint(desktop) {
   .swiper-button-next,
   .swiper-button-prev {
-    display: flex !important;
+    display: flex;
   }
 }

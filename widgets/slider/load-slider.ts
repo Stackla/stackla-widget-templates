@@ -1,7 +1,7 @@
-import { SdkSwiper } from "types"
+import { Sdk } from "types"
 import { Features, getTileSizeByWidget } from "@stackla/widget-utils"
 
-declare const sdk: SdkSwiper
+declare const sdk: Sdk
 
 type SwiperDirection = "none" | "left" | "right" | "up" | "down"
 

@@ -1,4 +1,4 @@
-import { ISdk, waitForElements } from "@stackla/widget-utils"
+import { ISdk } from "@stackla/widget-utils"
 
 declare const sdk: ISdk
 
@@ -48,74 +48,5 @@ export function loadWaterfallLayout(reset = false) {
         calculateHeight()
       }
     }
-  })
-}
-
-export function initializeTagSlider() {
-  const tilesContainer = sdk.querySelector(".ugc-tiles")
-
-  waitForElements(tilesContainer, ".tag-slider", () => {
-    const tagSliders = sdk.querySelectorAll<HTMLElement>(".tag-slider")
-
-    if (!tagSliders.length) {
-      return
-    }
-
-    tagSliders.forEach(tagSlider => {
-      const tagList = tagSlider.querySelector<HTMLElement>(".tile-tags")
-      const leftArrow = tagSlider.querySelector<HTMLButtonElement>(".left-arrow")
-      const rightArrow = tagSlider.querySelector<HTMLButtonElement>(".right-arrow")
-
-      if (!tagList || !leftArrow || !rightArrow) {
-        console.warn("Tag list or arrows not found in the tag slider")
-        return
-      }
-
-      const updateArrowVisibility = () => {
-        const tagListWidth = tagList.offsetWidth
-        const tagListScrollWidth = tagList.scrollWidth
-
-        if (tagListWidth === 0 || tagListScrollWidth === 0) {
-          return
-        }
-
-        const atStart = tagList.scrollLeft <= 0
-        const atEnd = tagList.scrollLeft + tagListWidth >= tagListScrollWidth
-        const isScrollable = tagListScrollWidth > tagListWidth
-
-        leftArrow.style.display = atStart ? "none" : "block"
-        rightArrow.style.display = atEnd || !isScrollable ? "none" : "block"
-
-        tagList.classList.remove("mask-left", "mask-right", "mask-both")
-
-        if (!atStart && !atEnd) {
-          tagList.classList.add("mask-both")
-        } else {
-          if (!atStart) {
-            tagList.classList.add("mask-left")
-          }
-          if (!atEnd) {
-            tagList.classList.add("mask-right")
-          }
-        }
-      }
-
-      const attachArrowScroll = (arrow: HTMLButtonElement, amount: number) => {
-        arrow.addEventListener("click", () => {
-          tagList.scrollBy({ left: amount, behavior: "smooth" })
-        })
-      }
-
-      const observer = new ResizeObserver(() => updateArrowVisibility())
-
-      observer.observe(tagList)
-
-      attachArrowScroll(leftArrow, -100)
-      attachArrowScroll(rightArrow, 100)
-
-      tagList.addEventListener("scroll", updateArrowVisibility)
-
-      updateArrowVisibility()
-    })
   })
 }

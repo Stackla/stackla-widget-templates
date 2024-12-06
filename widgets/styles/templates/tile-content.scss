@@ -18,7 +18,6 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      gap: 10px;
       flex: 1 1 auto;
 
       .caption {
@@ -63,6 +62,7 @@
       }
 
       .avatar-wrapper {
+        margin-right: 16px;
         display: flex;
 
         .avatar-link {

@@ -149,14 +149,17 @@
   @if $parent {
     #{string.unquote($parent) share-menu} {
       @extend %share-menu-styles-ph;
+
+      // any style overrides
+      @content;
     }
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& share-menu", "share-menu")} {
       @extend %share-menu-styles-ph;
+
+      // any style overrides
+      @content;
     }
   }
-
-  // any style overrides
-  @content;
 }

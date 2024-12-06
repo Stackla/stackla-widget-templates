@@ -3,6 +3,13 @@ $height-lg: 712px;
 $panel-left-width-lg: 517px;
 $panel-right-width-lg: 363px;
 $panel-padding: 10px;
+
+// back arrow icon used in smaller screens (md)
+$back-icon-height: 56px;
+$container-max-width-lg: 895px;
+$container-max-height-lg: 90vh;
+
+// responsiveness dimensions
 $tablet-panel-top-width-upper-limit: 643px;
 $breakpoint-mob-max-width: 576px;
 $breakpoint-tab-min-width: 577px;
@@ -11,14 +18,3 @@ $breakpoint-tab-max-width: 992px;
 // video play icon
 $play-icon-width: 50px;
 $play-icon-height: 50px;
-
-// back arrow icon used in smaller screens (md)
-$back-icon-height: 56px;
-$container-max-width-lg: 895px;
-$container-max-height-lg: 90vh;
-$border-radius: 5px;
-
-// tile loading icon
-$loading-width: 30px;
-$loading-height: 30px;
-$border-radius: 5px;

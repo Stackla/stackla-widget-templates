@@ -1,4 +1,5 @@
 @forward "pkg:@stackla/widget-utils/icons";
+@forward "@styles/partials/loading";
 @forward "inline-tile";
 @forward "@styles/partials/tile-overlay";
 @forward "@styles/templates/expanded-tiles";
@@ -16,6 +17,6 @@ expanded-tiles {
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;
   @include smenu.share-menu-styles;
-  @include tags.tile-tags-styles;
   @include tc.tile-content-styles;
+  @include tags.tile-tags-styles;
 }

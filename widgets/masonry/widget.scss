@@ -1,6 +1,7 @@
 @use "sass:map";
-@use "styles" as masonryStyles;
+@use "styles";
 @use "@styles/partials/media-queries";
+@use "@styles/partials/inline-dimens" as dimens;
 
 :host {
   transition: ease all 0.5s;
@@ -8,7 +9,7 @@
 
 #nosto-ugc-container {
   background-color: var(--widget-background);
-  margin: var(--margin);
+  padding: var(--margin);
 
   .grid {
     width: 100%;
@@ -18,7 +19,7 @@
 
     .ugc-tile {
       height: var(--tile-size);
-      border-radius: 5px;
+      border-radius: var(--inline-tile-border-radius);
       box-sizing: border-box;
       overflow: hidden;
       transition: opacity 0.5s ease;
@@ -46,8 +47,8 @@
       left: 0;
       right: 0;
       margin: auto;
-      width: masonryStyles.$play-icon-width;
-      height: masonryStyles.$play-icon-height;
+      width: dimens.$play-icon-width;
+      height: dimens.$play-icon-height;
     }
 
     .icon-section {
@@ -69,8 +70,8 @@
   transition: opacity 0.5s ease;
 
   .loading {
-    height: masonryStyles.$loading-height !important;
-    width: masonryStyles.$loading-width !important;
+    height: dimens.$loading-height !important;
+    width: dimens.$loading-width !important;
   }
 }
 

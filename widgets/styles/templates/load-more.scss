@@ -22,14 +22,17 @@ $load-more-margin: 20px;
   @if $parent {
     #{string.unquote($parent) load-more} {
       @extend %load-more-styles-ph;
+
+      // any style overrides
+      @content;
     }
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& load-more", "load-more")} {
       @extend %load-more-styles-ph;
+
+      // any style overrides
+      @content;
     }
   }
-
-  // any style overrides
-  @content;
 }

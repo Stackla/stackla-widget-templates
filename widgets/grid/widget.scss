@@ -1,5 +1,6 @@
 @use "styles" as gridStyles;
 @use "@styles/partials/media-queries";
+@use "@styles/partials/inline-dimens" as dimens;
 
 :host {
   transition: ease all 0.5s;
@@ -8,7 +9,6 @@
 .grid {
   display: grid;
   justify-content: center;
-  margin-top: var(--margin);
   gap: var(--margin);
   grid-template-columns: repeat(auto-fit, minmax(var(--tile-size), 1fr));
   grid-auto-flow: row;
@@ -17,7 +17,7 @@
   .ugc-tile {
     color: white;
     text-align: center;
-    border-radius: 5px;
+    border-radius: var(--inline-tile-border-radius);
     position: relative;
     background-size: cover;
     background-position: center;
@@ -45,7 +45,7 @@
 
 #nosto-ugc-container {
   background-color: var(--widget-background);
-  margin: var(--margin);
+  padding: var(--margin);
 
   .tile {
     background-size: cover;

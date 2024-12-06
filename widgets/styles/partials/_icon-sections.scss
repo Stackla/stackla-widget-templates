@@ -19,6 +19,7 @@
     z-index: 1;
     width: 100%;
     align-items: flex-end;
+    flex-direction: row;
   }
 
   .top-section {
@@ -36,10 +37,6 @@
 
   .bottom-section {
     bottom: $icon-placement-bottom;
-
-    .tile-tags {
-      margin-left: $icon-placement-left;
-    }
 
     .network-icon {
       margin-left: auto;

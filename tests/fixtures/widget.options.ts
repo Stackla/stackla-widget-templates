@@ -56,7 +56,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
     margin: "10",
     name: "NextGen Widget Sample 3.0",
     polling_frequency: "30",
-    shopspot_btn_background: "0198CF",
+    shopspot_btn_background: "000000",
     shopspot_btn_font_color: "ffffff",
     shopspot_icon: "",
     style: "base_carousel_v3",

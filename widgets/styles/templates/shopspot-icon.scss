@@ -18,9 +18,9 @@
     position: absolute;
     width: 13px;
     height: 13px;
-    background: #000;
+    background: var(--shopspot-icon);
     color: white;
-    display: block;
+    display: var(--shopspots-display);
     background-size: 70%;
     border: solid #fff 1px;
     border-radius: 50%;
@@ -67,14 +67,17 @@
   @if $parent {
     #{string.unquote($parent) shopspot-icon} {
       @extend %shopspot-icon-styles-ph;
+
+      // any style overrides
+      @content;
     }
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& shopspot-icon", "shopspot-icon")} {
       @extend %shopspot-icon-styles-ph;
+
+      // any style overrides
+      @content;
     }
   }
-
-  // any style overrides
-  @content;
 }

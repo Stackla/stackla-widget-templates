@@ -8,7 +8,7 @@
     border-radius: 2px;
     font-size: var(--text-tile-font-size);
     font-weight: 400;
-    display: var(--tile-timephrase-display);
+    display: inline-block;
   }
 }
 
@@ -17,14 +17,17 @@
   @if $parent {
     #{string.unquote($parent) time-phrase} {
       @extend %time-phrase-styles-ph;
+
+      // any style overrides
+      @content;
     }
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& time-phrase", "time-phrase")} {
       @extend %time-phrase-styles-ph;
+
+      // any style overrides
+      @content;
     }
   }
-
-  // any style overrides
-  @content;
 }

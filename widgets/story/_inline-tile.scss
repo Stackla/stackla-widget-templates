@@ -2,7 +2,7 @@
 @use "@styles/partials/media-queries";
 @use "dimens";
 
-.carousel-inline {
+.story-inline {
   .tile-image,
   .tile-video {
     position: relative;
@@ -21,13 +21,8 @@
         height: var(--tile-size) !important;
 
         img {
+          height: unset !important;
           aspect-ratio: auto;
-          width: 100%;
-          object-fit: cover;
-          overflow: hidden;
-          border-radius: dimens.$border-radius;
-          position: relative;
-          opacity: 1;
         }
       }
     }

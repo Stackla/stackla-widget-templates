@@ -112,14 +112,17 @@
   @if $parent {
     #{string.unquote($parent) add-to-cart} {
       @extend %add-to-cart-styles-ph;
+
+      // any style overrides
+      @content;
     }
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& add-to-cart", "add-to-cart")} {
       @extend %add-to-cart-styles-ph;
+
+      // any style overrides
+      @content;
     }
   }
-
-  // any style overrides
-  @content;
 }
