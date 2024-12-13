@@ -8,6 +8,7 @@ $space-between: 10px;
   --rendered-tile-size: var(--tile-size) * 2 + 20px;
   --width-adjustment: rem(95%, var(--rendered-tile-size));
   --container-width: calc(95% - var(--width-adjustment));
+  --tile-size-prop: var(--tile-size);
 }
 
 .hidden {
@@ -15,22 +16,30 @@ $space-between: 10px;
 }
 
 @keyframes slide-up {
-  from {
+  25% {
+    transform: translateY(0);
+  }
+
+  50% {
     transform: translateY(var(--tile-size-prop));
   }
 
-  to {
+  75% {
+    transform: translateY(calc(var(--tile-size-prop) / 2));
+  }
+
+  100% {
     transform: translateY(0);
   }
 }
 
 @keyframes slide-down {
   from {
-    transform: translateY(calc(-1 * var(--tile-size-prop)));
+    transform: translateY(0);
   }
 
   to {
-    transform: translateY(0);
+    transform: translateY(calc(-1 * var(--tile-size-prop)));
   }
 }
 
@@ -80,6 +89,7 @@ $space-between: 10px;
         grid-auto-flow: row;
         opacity: 0;
         visibility: hidden;
+        transition: top 100ms ease;
 
         .ugc-tile,
         .ugc-tile-wrapper {
@@ -100,6 +110,13 @@ $space-between: 10px;
           grid-template-columns: subgrid;
           gap: 0;
           transition: opacity 200ms ease;
+
+          @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+            animation: slide-up cubic-bezier(0.1, -0.6, 0.2, 0) both;
+            animation-timeline: view();
+            animation-range: entry 10% entry 100%;
+            view-timeline-inset: 10%;
+          }
 
           .image-section {
             display: flex;

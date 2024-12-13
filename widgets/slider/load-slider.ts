@@ -1,6 +1,6 @@
 import { Sdk } from "types"
 import { Features } from "@stackla/widget-utils"
-import { markColumnsForIndent } from "./slider-design"
+import { markColumns } from "./slider-design"
 import navigator from "./navigator"
 import { getTileSizeUnitless } from "./utils"
 import { initObservers } from "./observers"
@@ -42,11 +42,11 @@ export function loadSlider(settings: Features["tileSizeSettings"]) {
 
   navigator(settings)
 
-  markColumnsForIndent(settings)
+  markColumns(settings)
   loadingElement?.classList.add("hidden")
 
   function tilesUpdatedEventHandler() {
-    markColumnsForIndent(settings)
+    markColumns(settings)
     observers.configTileIntersectionTargets()
   }
 

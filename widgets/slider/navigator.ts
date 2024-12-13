@@ -211,7 +211,7 @@ export default function (settings: Features["tileSizeSettings"]) {
         return calcHeightAndRecordHistory(getTopElementHeight(tilesContainerElement, defaultBlockHeight))
       }
       default:
-        return calcHeightAndRecordHistory(defaultBlockHeight)
+        return calcHeightAndRecordHistory(defaultBlockHeight * 2)
     }
   }
 }

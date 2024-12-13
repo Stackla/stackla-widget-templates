@@ -1,6 +1,6 @@
 import { Features } from "packages/widget-utils"
 import { getRenderMode, getSliderElement, getTileContainerElement, getTileElements } from "./utils"
-import { markColumnsForIndent } from "./slider-design"
+import { markColumns } from "./slider-design"
 
 export function initObservers(settings: Features["tileSizeSettings"]) {
   const animationClasses = { up: "tile-animate-up", down: "tile-animate-down" }
@@ -12,7 +12,7 @@ export function initObservers(settings: Features["tileSizeSettings"]) {
   const resizeObserver = new ResizeObserver(() =>
     requestAnimationFrame(() => {
       if (getRenderMode(sliderInlineElement) === "desktop") {
-        markColumnsForIndent(settings)
+        markColumns(settings)
       } else {
         tilesIntersectionObserver.disconnect()
       }
@@ -25,7 +25,9 @@ export function initObservers(settings: Features["tileSizeSettings"]) {
         if (entry.isIntersecting) {
           if (entry.target.classList.contains(partiallyVisibleClass)) {
             if (entry.intersectionRatio === 1) {
-              enableAnimation(entry.target)
+              if (!supportsAnimationTimeline()) {
+                enableAnimation(entry.target)
+              }
               entry.target.classList.remove(partiallyVisibleClass)
             }
           }
@@ -39,6 +41,10 @@ export function initObservers(settings: Features["tileSizeSettings"]) {
   )
 
   configObserverTargets()
+
+  function supportsAnimationTimeline() {
+    return CSS.supports("(animation-timeline: scroll()) and (animation-range: 0% 100%)")
+  }
 
   function filterRecentEntries(entries: IntersectionObserverEntry[]) {
     const uniqueEntries = []

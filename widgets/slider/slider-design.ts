@@ -56,7 +56,7 @@ function getIndentationProps(settings: Features["tileSizeSettings"]) {
  *
  * @param settings the tile size configuration of the widget
  */
-export function markColumnsForIndent(settings: Features["tileSizeSettings"]) {
+export function markColumns(settings: Features["tileSizeSettings"]) {
   const sliderInline = sdk.querySelector(".slider-inline")
   const tilesContainer = sliderInline.querySelector<HTMLElement>(".ugc-tiles")
   const tiles = tilesContainer!.querySelectorAll(".ugc-tile")
