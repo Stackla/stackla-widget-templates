@@ -17,11 +17,16 @@ function getColumnCount(settings: Features["tileSizeSettings"]) {
   return Math.floor(availableWidth / tileRenderingWidth)
 }
 
-function markTileFromInitialRowOffsets(tileElement: Element, indentedOffsets: number[], verticalRender: boolean) {
+function markTileFromInitialRowOffsets(
+  tileElement: HTMLElement,
+  indentedOffsets: number[],
+  verticalRender: boolean,
+  offsetValue = 0
+) {
   const actualLeft = Math.floor(tileElement.getBoundingClientRect().left)
 
   if (indentedOffsets.includes(actualLeft)) {
-    toggleIndentAttribute(tileElement, true, verticalRender)
+    toggleIndentAttribute(tileElement, true, verticalRender, offsetValue)
   } else {
     toggleIndentAttribute(tileElement, false, verticalRender)
   }
@@ -33,11 +38,21 @@ function markTileFromInitialRowOffsets(tileElement: Element, indentedOffsets: nu
  * @param tileElement the tile element to which the attribute gets added/removed
  * @param flag a boolean value. True value adds the attribute and false value removes it
  */
-function toggleIndentAttribute(tileElement: Element | null, flag: boolean, verticalRender: boolean) {
+function toggleIndentAttribute(
+  tileElement: HTMLElement | null,
+  flag: boolean,
+  verticalRender: boolean,
+  offsetValue = 0
+) {
   tileElement?.toggleAttribute(COLUMN_INDENT_CLASS, flag)
+  tileElement?.style.setProperty("--top-offset", `${offsetValue}px`)
 
   if (verticalRender) {
+    const subsequentVerticalTile = tileElement?.nextElementSibling
+      ? (tileElement?.nextElementSibling as HTMLElement)
+      : undefined
     tileElement?.nextElementSibling?.toggleAttribute(COLUMN_INDENT_CLASS, flag)
+    subsequentVerticalTile?.style.setProperty("--top-offset", `${offsetValue}px`)
   }
 }
 
@@ -59,10 +74,13 @@ function getIndentationProps(settings: Features["tileSizeSettings"]) {
 export function markColumns(settings: Features["tileSizeSettings"]) {
   const sliderInline = sdk.querySelector(".slider-inline")
   const tilesContainer = sliderInline.querySelector<HTMLElement>(".ugc-tiles")
-  const tiles = tilesContainer!.querySelectorAll(".ugc-tile")
+  const tiles = tilesContainer!.querySelectorAll<HTMLElement>(".ugc-tile")
   const leftOffset = tiles[0].getBoundingClientRect().left
   const { targetColumnCount, totalExpectedIndentedColumns, totalTileWidth } = getIndentationProps(settings)
   const indentedOffsets: number[] = []
+  const offsetValue = getTileSizeUnitless(settings) / 2
+
+  tilesContainer?.classList.remove("animate")
 
   let skipNext = false
   let columnCounter = 0
@@ -105,9 +123,9 @@ export function markColumns(settings: Features["tileSizeSettings"]) {
         const expectedLeft = Math.floor(leftOffset + totalTileWidth * (columnCounter - 1))
 
         if (indentedOffsets.length === totalExpectedIndentedColumns) {
-          markTileFromInitialRowOffsets(tileElement, indentedOffsets, verticalRender)
+          markTileFromInitialRowOffsets(tileElement, indentedOffsets, verticalRender, offsetValue)
         } else if (actualLeft === expectedLeft) {
-          toggleIndentAttribute(tileElement, true, verticalRender)
+          toggleIndentAttribute(tileElement, true, verticalRender, offsetValue)
 
           if (indentedOffsets.length < totalExpectedIndentedColumns) {
             indentedOffsets.push(actualLeft)
@@ -130,4 +148,6 @@ export function markColumns(settings: Features["tileSizeSettings"]) {
       columnCounter = 0
     }
   })
+
+  tilesContainer?.classList.add("animate")
 }

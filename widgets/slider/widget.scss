@@ -16,19 +16,11 @@ $space-between: 10px;
 }
 
 @keyframes slide-up {
-  25% {
-    transform: translateY(0);
+  from {
+    transform: translateY(100%);
   }
 
-  50% {
-    transform: translateY(var(--tile-size-prop));
-  }
-
-  75% {
-    transform: translateY(calc(var(--tile-size-prop) / 2));
-  }
-
-  100% {
+  to {
     transform: translateY(0);
   }
 }
@@ -39,7 +31,7 @@ $space-between: 10px;
   }
 
   to {
-    transform: translateY(calc(-1 * var(--tile-size-prop)));
+    transform: translateY(-100%);
   }
 }
 
@@ -82,14 +74,13 @@ $space-between: 10px;
         gap: $space-between;
         width: 100%;
         height: calc(100vh - 100px);
-        overflow: hidden;
+        overflow: hidden auto;
         justify-content: center;
         grid-auto-columns: var(--tile-size);
         grid-template-columns: repeat(auto-fill, minmax(min-content, var(--tile-size)));
         grid-auto-flow: row;
         opacity: 0;
         visibility: hidden;
-        transition: top 100ms ease;
 
         .ugc-tile,
         .ugc-tile-wrapper {
@@ -110,13 +101,6 @@ $space-between: 10px;
           grid-template-columns: subgrid;
           gap: 0;
           transition: opacity 200ms ease;
-
-          @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
-            animation: slide-up cubic-bezier(0.1, -0.6, 0.2, 0) both;
-            animation-timeline: view();
-            animation-range: entry 10% entry 100%;
-            view-timeline-inset: 10%;
-          }
 
           .image-section {
             display: flex;
@@ -312,6 +296,14 @@ $space-between: 10px;
                 margin: 0 10px 10px 0;
               }
             }
+          }
+        }
+
+        @supports ((animation-timeline: view()) and (animation-range: 0% 100%)) {
+          &.animate > .ugc-tile {
+            animation: slide-up cubic-bezier(0.1, -0.6, 0.2, 0) both;
+            animation-timeline: view();
+            animation-range: entry calc(10% - var(--top-offset)) entry 50%;
           }
         }
 
