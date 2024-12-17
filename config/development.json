@@ -3,7 +3,9 @@
     "subnetIds": [],
     "securityGroupIds": []
   },
-
+  "cloudfront": {
+    "sourceArn": ""
+  },
   "iam": {
     "role": {
       "statements": []
