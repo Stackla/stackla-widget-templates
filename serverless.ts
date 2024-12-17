@@ -51,6 +51,22 @@ const config = {
     },
     hooks: process.env.APP_ENV == 'testing' ? [] : defaultHooks
   },
+  resources: {
+    Resources: {
+      CloudfrontPermissionGrant: {
+        Type: 'AWS::Lambda::Permission',
+        Properties: {
+          Action: 'lambda:InvokeFunctionUrl',
+          FunctionName: {
+            Ref: 'ApiLambdaFunction',
+          },
+          Principal: 'cloudfront.amazonaws.com',
+          SourceArn:
+            '${file(./config/${self:provider.stage}.json):cloudfront.sourceArn}' as any,
+        },
+      },
+    },
+  },
   package: {
     include: ["views/**/*", "dist/**/*", "build/**/*"],
     exclude: ["node_modules/**/*"]
