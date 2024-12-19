@@ -24,6 +24,10 @@
       grid-template-columns: auto;
       grid-auto-rows: auto;
     }
+
+    video {
+      object-fit: fill;
+    }
   }
 
   .tile-group {

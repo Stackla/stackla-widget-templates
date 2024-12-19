@@ -1,27 +1,33 @@
 {{#tile data-hash=@index class="grid-item"}}
-<div class="tile" data-background-image="{{image_thumbnail_url}}">
-  <div class="icon-section">
-    <div class="top-section">
-      {{#each attrs}}
-      {{#ifequals this "instagram.reel"}}
-      <div class="content-icon icon-reel"></div>
-      {{/ifequals}}
-      {{/each}}
-      {{#if tags_extended.length}}
-      <div class="shopping-icon icon-products"></div>
-      {{/if}}
+  {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+    <div class="tile inline-video-play">
+      {{playVideo this "100%" "100%"}}
     </div>
-    <div class="center-section">
-      {{#ifequals media "video"}}
-      <div class="icon-play"></div>
-      {{/ifequals}}
-    </div>
-    <div class="bottom-section">
-      <tile-tags tile-id="{{id}}" variant="dark" mode="swiper" context="quadrant-inline"></tile-tags>
-      <div class="network-icon icon-{{source}}"></div>
-    </div>
+  {{else}}
+    <div class="tile" data-background-image="{{image_thumbnail_url}}">
+      <div class="icon-section">
+        <div class="top-section">
+          {{#each attrs}}
+            {{#ifequals this "instagram.reel"}}
+              <div class="content-icon icon-reel"></div>
+            {{/ifequals}}
+          {{/each}}
+          {{#if tags_extended.length}}
+            <div class="shopping-icon icon-products"></div>
+          {{/if}}
+        </div>
+        <div class="center-section">
+          {{#ifequals media "video"}}
+            <div class="icon-play"></div>
+          {{/ifequals}}
+        </div>
+        <div class="bottom-section">
+          <tile-tags tile-id="{{id}}" variant="dark" mode="swiper" context="quadrant-inline"></tile-tags>
+          <div class="network-icon icon-{{source}}"></div>
+        </div>
 
-    <shopspot-icon tile-id={{id}} />
-  </div>
-</div>
+        <shopspot-icon tile-id={{id}} />
+      </div>
+    </div>
+  {{/ifAutoPlayVideo}}
 {{/tile}}

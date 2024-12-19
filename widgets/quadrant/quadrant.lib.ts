@@ -80,7 +80,12 @@ export async function preloadTileImagesAndRemoveBrokenTiles(tiles: NodeListOf<HT
   const promises = Array.from(tiles).map(async tile => {
     const tileElement = tile.querySelector<HTMLElement>(".tile")
     const tileImage = tileElement?.getAttribute("data-background-image") ?? ""
+    const inlineVideoPlay = tileElement?.classList.contains("inline-video-play")
     return new Promise(resolve => {
+      if (inlineVideoPlay) {
+        resolve(tile)
+        return
+      }
       const image = new Image()
       image.onload = () => resolve(tile)
       image.onerror = () => {
