@@ -7,8 +7,54 @@
   background-color: var(--widget-background);
   display: flex;
   place-items: center;
-  margin: dimens.$nosto-container-margin;
+  margin: dimens.$nosto-container-margin 0;
   height: calc(var(--tile-size) + 50px);
+
+  .hidden {
+    display: none;
+  }
+
+  @include media-queries.breakpoint(desktop) {
+    .story-inline.swiper-inline {
+      --render-mode: desktop;
+
+      // tile width is ugc-tile width plus swiper spaceBetween value
+      --tile-width: (var(--tile-size-unitless) + var(--spacing) + var(--additional-size));
+      // stylelint-disable-next-line scss/no-global-function-names
+      --container-width-adjust: calc(round(100% / var(--tile-width), 1px) - 1px);
+      --container-width: calc(var(--tile-width) * var(--container-width-adjust));
+
+      width: 90%;
+    }
+  }
+
+  @include media-queries.breakpoint(tablet) {
+    .story-inline.swiper-inline {
+      --render-mode: tablet;
+
+      // tile width is ugc-tile width plus swiper spaceBetween value
+      --tile-width: (var(--tile-size-unitless) + var(--spacing) + var(--additional-size));
+      // stylelint-disable-next-line scss/no-global-function-names
+      --container-width-adjust: round(100% / var(--tile-width), 1px);
+      --container-width: calc(var(--tile-width) * var(--container-width-adjust));
+
+      width: calc(95% - 20px);
+    }
+  }
+
+  @include media-queries.breakpoint(mobile) {
+    .story-inline.swiper-inline {
+      --render-mode: mobile;
+
+      // tile width is ugc-tile width plus swiper spaceBetween value
+      --tile-width: (var(--tile-size-unitless) + var(--spacing) + var(--additional-size));
+      // stylelint-disable-next-line scss/no-global-function-names
+      --container-width-adjust: round(100% / var(--tile-width), 1px);
+      --container-width: calc(var(--tile-width) * var(--container-width-adjust));
+
+      width: calc(95% - 20px);
+    }
+  }
 
   .story-inline.swiper-inline {
     --additional-size: 0;
@@ -25,13 +71,6 @@
       }
     }
 
-    // tile width is ugc-tile width plus swiper spaceBetween value
-    --tile-width: (var(--tile-size-unitless) + var(--spacing) + var(--additional-size));
-    // stylelint-disable-next-line scss/no-global-function-names
-    --container-width-adjust: calc(round(down, 100% / var(--tile-width), 1px) - 1px);
-    --container-width: calc(var(--tile-width) * var(--container-width-adjust));
-
-    width: var(--container-width);
     height: 100%;
 
     .ugc-tile {
@@ -72,33 +111,6 @@
         .icon-section {
           height: calc(var(--tile-size) - 10px);
         }
-      }
-    }
-  }
-}
-
-.hidden {
-  display: none;
-}
-
-@include media-queries.breakpoint(mobile) {
-  #nosto-ugc-container {
-    height: auto;
-
-    .story-inline.swiper-inline {
-      width: dimens.$swiper-container-width-md !important;
-
-      .swiper-slide {
-        width: 100% !important;
-      }
-    }
-
-    .tile {
-      width: dimens.$tile-width-md !important;
-      height: dimens.$tile-height-md !important;
-
-      .icon-section {
-        width: dimens.$tile-width-md;
       }
     }
   }

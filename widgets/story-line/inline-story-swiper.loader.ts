@@ -8,40 +8,24 @@ import {
   updateSwiperInstance
 } from "@stackla/widget-utils/extensions"
 import Swiper from "swiper"
+import { getSlidesPerView } from "./slides-per-view"
 
 declare const sdk: Sdk
 
-export function initializeInlineStorySwiperListeners() {
-  const swiper = sdk.querySelector(".story-inline.swiper-inline")
-
-  if (!swiper) {
-    throw new Error("Failed to find swiper element")
-  }
-
-  initializeSwiperForInlineStoryTiles()
-}
-
-function initializeSwiperForInlineStoryTiles() {
-  const { enable_custom_tiles_per_page, tiles_per_page, inline_tile_size } = sdk.getStyleConfig()
+export function initializeSwiperForInlineStoryTiles() {
+  const { inline_tile_size } = sdk.getStyleConfig()
   const widgetSelector = sdk.placement.querySelector<HTMLElement>(".story-inline.swiper-inline")
+
+  const prev = widgetSelector!.parentNode!.querySelector<HTMLElement>(".swiper-inline-story-button-prev")
+  const next = widgetSelector!.parentNode!.querySelector<HTMLElement>(".swiper-inline-story-button-next")
 
   if (!widgetSelector) {
     throw new Error("Failed to find widget UI element. Failed to initialise Swiper")
   }
 
-  // TODO: remove this section after introducing css variable for Nosto container
-  const tileWidth = 210
-  const screenSize = window.innerWidth
-  const perView = !enable_custom_tiles_per_page
-    ? Math.floor(screenSize / (tileWidth + 10))
-    : // FIXME: All numbers should be numbers across the board
-      parseInt(tiles_per_page)
-
-  sdk.tiles.setVisibleTilesCount(perView * 2)
-
-  const spacing = inline_tile_size === "small" ? 5 : inline_tile_size === "medium" ? 15 : 25
+  const spaceBetween = inline_tile_size === "small" ? 5 : inline_tile_size === "medium" ? 20 : 25
   widgetSelector.setAttribute("variation", inline_tile_size)
-  widgetSelector.parentElement!.style.setProperty("--spacing", `${spacing}`)
+  widgetSelector.parentElement!.style.setProperty("--spacing", `${spaceBetween}`)
 
   initializeSwiper({
     id: "inline-story",
@@ -51,10 +35,30 @@ function initializeSwiperForInlineStoryTiles() {
     nextButton: "swiper-inline-story-button-next",
     paramsOverrides: {
       slidesPerView: "auto",
-      spaceBetween: spacing,
       grabCursor: false,
-      allowTouchMove: false,
+      shortSwipes: false,
+      longSwipes: false,
+      slidesOffsetBefore: 5,
+      allowTouchMove: true,
       breakpointsBase: "container",
+      allowSlideNext: false,
+      allowSlidePrev: false,
+      breakpoints: {
+        0: {
+          slidesPerView: getSlidesPerView()
+        },
+        993: {
+          allowSlideNext: true,
+          allowSlidePrev: true,
+          allowTouchMove: false,
+          followFinger: false,
+          navigation: {
+            enabled: !!(prev && next),
+            prevEl: prev,
+            nextEl: next
+          }
+        }
+      },
       keyboard: {
         enabled: true,
         onlyInViewport: false
@@ -66,6 +70,7 @@ function initializeSwiperForInlineStoryTiles() {
         },
         afterInit: (swiper: Swiper) => {
           setSwiperLoadingStatus("inline-story", true)
+          disblePrevNavigation(swiper)
           void loadTilesAsync(swiper)
         },
         activeIndexChange: (swiper: Swiper) => {
@@ -80,6 +85,18 @@ function initializeSwiperForInlineStoryTiles() {
       }
     }
   })
+}
+
+function getRenderMode(hostElement?: HTMLElement) {
+  const widgetSelector = hostElement || sdk.placement.querySelector<HTMLElement>(".story-inline.swiper-inline")
+  if (widgetSelector) {
+    return getComputedStyle(widgetSelector).getPropertyValue("--render-mode")
+  }
+  return "desktop"
+}
+
+export function onTilesUpdated() {
+  refreshSwiper("inline-story")
 }
 
 export function enableLoadedTiles() {
@@ -102,7 +119,7 @@ async function loadTilesAsync(swiper: Swiper) {
   }
 
   observer.disconnect()
-  swiper.navigation.nextEl.classList.remove("swiper-button-hidden")
+  enableNextNavigation(swiper)
   updateLoadingStateInterval(swiper.el)
 }
 
@@ -115,25 +132,34 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
         swiperData.isLoading = false
         if (swiperData.instance) {
           swiperData.instance.off("activeIndexChange")
-          swiperData.instance.setGrabCursor()
-          swiperData.instance.allowTouchMove = true
           swiperData.instance.params.loop = true
           enablePrevNavigation(swiperData.instance)
         }
       })
-      refreshSwiper("inline")
+      refreshSwiper("inline-story")
     }
   }, 200)
 }
 
+function enableNextNavigation(swiper: Swiper) {
+  if (getRenderMode() === "desktop") {
+    swiper.allowSlideNext = true
+    swiper.navigation.nextEl.classList.remove("swiper-button-disabled")
+  }
+}
+
 function enablePrevNavigation(swiper: Swiper) {
-  swiper.allowSlidePrev = true
-  swiper.navigation.prevEl.classList.remove("swiper-button-hidden")
+  if (getRenderMode() === "desktop") {
+    swiper.allowSlidePrev = true
+    swiper.navigation.prevEl.classList.remove("swiper-button-disabled")
+  }
 }
 
 function disblePrevNavigation(swiper: Swiper) {
-  swiper.allowSlidePrev = false
-  swiper.navigation.prevEl.classList.add("swiper-button-hidden")
+  if (getRenderMode() === "desktop") {
+    swiper.allowSlidePrev = false
+    swiper.navigation.prevEl.classList.add("swiper-button-disabled")
+  }
 }
 
 function registerObserver(swiper: Swiper) {
