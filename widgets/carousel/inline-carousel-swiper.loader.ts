@@ -35,7 +35,7 @@ function initializeSwiperForInlineTiles() {
   const perView = !enable_custom_tiles_per_page
     ? Math.floor(screenSize / (tileWidth + 10))
     : // FIXME: All numbers should be numbers across the board
-      parseInt(tiles_per_page)
+      parseInt(tiles_per_page ?? "40")
 
   sdk.tiles.setVisibleTilesCount(perView * 2)
 

@@ -34,7 +34,7 @@ export function calculateTilesToShow() {
   let tilesPerPage = tilesByScreenWidth * rows
   const { enable_custom_tiles_per_page, tiles_per_page } = sdk.getStyleConfig()
 
-  if (enable_custom_tiles_per_page) {
+  if (enable_custom_tiles_per_page && tiles_per_page) {
     tilesPerPage = parseInt(tiles_per_page)
   }
 

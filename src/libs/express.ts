@@ -123,7 +123,7 @@ export async function getContent(widgetType: string, retry = 0): Promise<Preview
   }
 }
 
-async function getHTML(content: PreviewContent, page: number = 1, limit: number = 25) {
+async function getHTML(content: PreviewContent, request) {
   return await getAndRenderTiles(
     {
       customTemplates: {
@@ -138,8 +138,7 @@ async function getHTML(content: PreviewContent, page: number = 1, limit: number 
       customJS: content.jsCode || "",
       widgetOptions: widgetOptions.widgetConfig
     },
-    page,
-    limit
+    request
   )
 }
 
@@ -195,7 +194,7 @@ function mutateStylesForCustomWidgets(widgetType: string) {
 expressApp.post("/development/widgets/668ca52ada8fb/draft", async (req, res) => {
   const body = JSON.parse(req.body)
   const draft = body.draft as IDraftRequest
-  const html = await renderTemplates(draft, body.page, body.limit)
+  const html = await renderTemplates(draft, req)
   const customCss = draft.customCSS
   const customJs = draft.customJS
 
@@ -219,7 +218,7 @@ expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
   const widgetOptionsMutated = mutateStylesForCustomWidgets(req.cookies.widgetType as string)
 
   res.json({
-    html: await getHTML(content),
+    html: await getHTML(content, req),
     customCSS: content.cssCode,
     customJS: content.jsCode,
     widgetOptions: widgetOptionsMutated,
@@ -230,9 +229,6 @@ expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
 })
 
 expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
-  const page = (req.query.page ?? 0) as number
-  const limit = (req.query.limit ?? 25) as number
-
   if (req.query.after_id) {
     res.send({
       tiles: []
@@ -242,7 +238,7 @@ expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
   }
 
   res.send({
-    tiles: getTilesToRender(page, limit)
+    tiles: getTilesToRender(req)
   })
 })
 
@@ -252,9 +248,7 @@ expressApp.get("/development/widgets/668ca52ada8fb/tiles/:tid", async (req, res)
 
 expressApp.get("/development/widgets/668ca52ada8fb/rendered/tiles", async (req, res) => {
   const widgetType = req.cookies.widgetType as string
-  const page = (req.query.page ?? 0) as number
-  const limit = (req.query.limit ?? 25) as number
-  const tileHtml = await getHTML(await getContent(widgetType), page, limit)
+  const tileHtml = await getHTML(await getContent(widgetType), req)
 
   res.json(tileHtml)
 })

@@ -1,0 +1,64 @@
+@use "styles" as gridStyles;
+@use "@styles/partials/media-queries";
+@use "@styles/partials/inline-dimens" as dimens;
+
+:host {
+  transition: ease all 0.5s;
+}
+
+.grid {
+  display: grid;
+  justify-content: center;
+  gap: var(--margin);
+  grid-template-columns: repeat(auto-fit, minmax(var(--tile-size), 1fr));
+  grid-auto-flow: row;
+  margin-bottom: 20px;
+
+  .ugc-tile {
+    color: white;
+    text-align: center;
+    border-radius: var(--inline-tile-border-radius, dimens.$inline-tile-border-radius);
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    box-sizing: border-box;
+    object-fit: cover;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  @include media-queries.breakpoint(mobile) {
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 100%));
+
+    .ugc-tile {
+      height: auto;
+    }
+
+    .tile {
+      aspect-ratio: 1 / 1;
+    }
+  }
+}
+
+#nosto-ugc-container {
+  background-color: var(--widget-background);
+  padding: var(--margin);
+
+  .tile {
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    .icon-play {
+      top: 43%;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+}

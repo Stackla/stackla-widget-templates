@@ -17,8 +17,8 @@ export function getTileSizeUnitless(settings: Features["tileSizeSettings"]) {
  * @returns the gap value for slider inline tile grid
  */
 export function inlineTileGap() {
-  const { inline_tile_margin } = sdk.getStyleConfig()
-  const value = Number(inline_tile_margin)
+  const { margin } = sdk.getStyleConfig()
+  const value = Number(margin)
   return isNaN(value) ? 10 : value
 }
 

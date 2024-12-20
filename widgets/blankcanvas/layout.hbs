@@ -1,0 +1,12 @@
+<div id="search">
+    <input type="text" id="search-input" placeholder="Search for tiles" />
+</div>
+<div class="ugc-tiles grid grid-inline">
+    {{#tiles}}
+    {{>tpl-tile}}
+    {{/tiles}}
+</div>
+<load-more />
+<div id="load-more-loader" class="hidden">
+    <div class="loading"></div>
+</div>
