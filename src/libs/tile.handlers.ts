@@ -15,7 +15,16 @@ export function getTilesToRender(req: Request) {
   let mutatedTiles: Tile[] = tiles
 
   if (media) {
-    mutatedTiles = mutatedTiles.filter(tile => tile.media === media)
+    if (media === "short") {
+      return mutatedTiles.filter(
+        tile =>
+          (tile.media == "video" && tile.attrs.includes("instagram.reel")) ||
+          tile.attrs.includes("tiktok.short") ||
+          tile.attrs.includes("youtube.short")
+      )
+    } else {
+      mutatedTiles = mutatedTiles.filter(tile => tile.media === media)
+    }
   }
 
   mutatedTiles = mutatedTiles.slice(startIndex, endIndex)

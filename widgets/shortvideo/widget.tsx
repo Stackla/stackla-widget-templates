@@ -14,7 +14,7 @@ loadWidget({
   },
   config: {
     filter: {
-      media: "video"
+      media: "short"
     }
   }
 })
