@@ -3,13 +3,22 @@ import tiles from "../../tests/fixtures/tiles"
 import type { IDraftRequest } from "./express"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { renderHTMLWithTemplates, renderTilesWithTemplate } from "@stackla/handlebars"
+import { Tile } from "@stackla/widget-utils"
 
 export function getTilesToRender(req: Request) {
   const page = (req.query.page ?? 0) as number
   const limit = (req.query.limit ?? 25) as number
+  const media = req.query.media as string
   const startIndex = limit * (page - 1)
   const endIndex = limit * page
-  const mutatedTiles = tiles.slice(startIndex, endIndex)
+
+  let mutatedTiles: Tile[] = tiles
+
+  if (media) {
+    mutatedTiles = mutatedTiles.filter(tile => tile.media === media)
+  }
+
+  mutatedTiles = mutatedTiles.slice(startIndex, endIndex)
 
   const search = req.query.search as string
   if (search) {
@@ -24,6 +33,7 @@ export function getTilesToRender(req: Request) {
       })
     })
   }
+
   return mutatedTiles
 }
 

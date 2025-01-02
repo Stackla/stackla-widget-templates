@@ -11,6 +11,11 @@ loadWidget({
   },
   features: {
     handleLoadMore: false
+  },
+  config: {
+    filter: {
+      media: "video"
+    }
   }
 })
 
