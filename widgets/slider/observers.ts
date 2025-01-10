@@ -47,14 +47,14 @@ export function initObservers({ resizeCb, intersectionCb }: SliderObserverProps)
   getTileElements()[0].classList.add(animationClasses.up)
 
   function getNextTilePosition() {
-    if (window.innerWidth < 600) {
-      return window.innerHeight * 2
+    if (getTileElements().length === 0) {
+      return window.innerHeight * 0.4
     }
 
     const classesAsArray = Array.from(getTileElements()[0].classList)
 
     if (classesAsArray.includes("pattern-horizontal") || classesAsArray.includes("pattern-horizontal-reversed")) {
-      return getTileElements()[0].getBoundingClientRect().height
+      return getTileElements()[0].getBoundingClientRect().width
     }
 
     return getTileElements()[0].getBoundingClientRect().height * 2

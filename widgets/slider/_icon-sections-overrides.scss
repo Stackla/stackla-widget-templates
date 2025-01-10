@@ -1,95 +1,19 @@
-.pattern-horizontal-reversed {
-  .icon-section {
-        grid-template-areas:
-      "media type"
-      ". shop";
+@use "@styles/partials/icon-sections" as is;
 
-      .network-icon {
-        grid-area: unset;
-        justify-self: flex-start;
-        margin: 10px 0;
+expanded-tiles {
+  @include is.icon-sections-styles {
+    $social-icon-bg: #000;
+
+    .icon-section {
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+
+      .top-section .network-icon {
+        margin-left: auto;
+        background-color: $social-icon-bg;
       }
-
-      .content-icon {
-        place-self: flex-end;
-        margin: 10px 0 0 10px;
-      }
-
-      .shopping-icon {
-        place-self: flex-end flex-end;
-        margin: 0 10px 10px 0;
-      }
-  }
-
-}
-
-.pattern-horizontal {
-  .icon-section {
-    grid-template-areas:
-      "type media"
-      "shop .";
-
-      .network-icon {
-        place-self: flex-start flex-end;
-        margin: 10px 0 0;
-      }
-
-      .content-icon {
-        place-self: flex-start;
-        margin: 10px 0 0 10px;
-      }
-      
-      .shopping-icon {
-        place-self: flex-end flex-start;
-        margin: 0 10px 10px;
-      }
-  }
-}
-
-.pattern-vertical {
-  .icon-section {
-    grid-template-areas:
-      "type"
-      "media"
-      "shop";
-
-      .network-icon {
-        place-self: flex-end flex-start;
-        margin: 0 0 10px;
-      }
-
-      .content-icon {
-        place-self: flex-end;
-        margin: 0 0 0 10px;
-      }
-      
-      .shopping-icon {
-        place-self: flex-start flex-end;
-        margin: 10px 10px 0 0;
-      }
-  }
-}
-
-.pattern-vertical-reversed {
-  .icon-section {
-    grid-template-areas:
-      "shop"
-      "media"
-      "type";
-
-      .network-icon {
-        place-self: flex-start flex-end;
-        margin: 10px 0 0;
-      }
-
-      .content-icon {
-        place-self: flex-start;
-        margin: 0 0 0 10px;
-      }
-      
-      .shopping-icon {
-        place-self: flex-end flex-start;
-        margin: 0 10px 10px;
-      }
+    }
   }
 }

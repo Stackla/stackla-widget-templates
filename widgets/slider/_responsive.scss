@@ -80,6 +80,10 @@
       }
     }
 
+    @media (min-width: 544px) and (max-width: 700px) {
+      --render-mode: small-tablet;
+    }
+
     @media (min-width: 1080px) and (max-width: 1400px) {
      .container {
         max-width: 1080px !important;

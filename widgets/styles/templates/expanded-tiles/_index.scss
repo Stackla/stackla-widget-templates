@@ -104,7 +104,7 @@ expanded-tiles:not(:empty) {
       height: 100%;
       position: relative;
       max-width: 879px;
-      min-height: 57vh;
+      min-height: 70vh;
       background: var(--expanded-tiles-background);
       border-radius: var(--expanded-tile-border-radius);
       grid-template-columns: minmax(0, dimens.$panel-left-width-lg) minmax(0, dimens.$panel-right-width-lg);

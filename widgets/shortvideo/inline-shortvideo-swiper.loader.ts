@@ -68,8 +68,9 @@ function initializeSwiperForInlineTiles() {
         onlyInViewport: false
       },
       on: {
-        reachEnd: () => {
+        reachEnd: (swiper: Swiper) => {
           sdk.triggerEvent(EVENT_LOAD_MORE)
+          swiper.update()
         },
         beforeInit: (swiper: Swiper) => {
           enableLoadedTiles()

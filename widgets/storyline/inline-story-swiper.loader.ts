@@ -100,8 +100,9 @@ export function initializeSwiperForInlineStoryTiles() {
           enableLoadedTiles()
           swiper.slideToLoop(0, 0, false)
         },
-        reachEnd: () => {
+        reachEnd: (swiper: Swiper) => {
           sdk.triggerEvent(EVENT_LOAD_MORE)
+          swiper.update()
         },
         afterInit: (swiper: Swiper) => {
           setSwiperLoadingStatus("inline-story", true)

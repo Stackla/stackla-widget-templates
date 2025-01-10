@@ -222,6 +222,9 @@
 
             .icon-section {
               display: grid;
+              grid-template-areas:
+                "type media"
+                "shop .";
               grid-column: image-start / image-end;
               grid-row: image-start / image-end;
               z-index: 10;
@@ -230,14 +233,21 @@
 
               > .network-icon {
                 background-color: #000;
+                grid-area: media;
+                justify-self: flex-end;
+                margin-top: 10px;
               }
 
               > .content-icon {
                 grid-area: type;
+                place-self: flex-start;
+                margin: 10px 0 0 10px;
               }
 
               > .shopping-icon {
                 grid-area: shop;
+                align-self: flex-end;
+                margin: 0 0 10px 10px;
               }
             }
           }
