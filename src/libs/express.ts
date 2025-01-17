@@ -50,7 +50,7 @@ type PreviewContent = {
 }
 
 const expressApp = express()
-
+expressApp.disable('x-powered-by');
 expressApp.use(function (req, res, next) {
   res.removeHeader("x-powered-by");
   next();
