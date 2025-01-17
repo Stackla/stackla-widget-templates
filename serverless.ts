@@ -109,4 +109,11 @@ const config = {
   }
 };
 
+if (process.env.APP_ENV !== 'production') {
+  // @ts-expect-error
+  config.provider.environment = {
+    APP_ENV: env
+  }
+}
+
 module.exports = config;
