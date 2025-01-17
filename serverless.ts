@@ -102,7 +102,9 @@ const config = {
           }
         ]
       }),
-      memorySize: 128
+      memorySize: 128,
+      // Lambda @ Edge in production does not support provisioned concurrency
+      provisionedConcurrency: process.env.APP_ENV === "staging" ? 1 : 0
     }
   }
 };

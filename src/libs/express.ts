@@ -54,10 +54,15 @@ expressApp.use(express.static("dist", { redirect: false }))
 
 if (process.env.APP_ENV == "staging" || process.env.APP_ENV == "production") {
   expressApp.use((_req, res, next) => {
-    res.set("Cache-Control", "public, max-age=3600")
+    res.set("Cache-Control", ["public, max-age=3600"])
     next()
   })
 }
+
+expressApp.use(function (req, res, next) {
+  res.removeHeader("x-powered-by");
+  next();
+});
 
 expressApp.engine("hbs", Handlebars.__express)
 expressApp.set("view engine", "hbs")
