@@ -50,7 +50,11 @@ type PreviewContent = {
 }
 
 const expressApp = express()
-expressApp.use(express.static("dist", { redirect: false }))
+
+expressApp.use(function (req, res, next) {
+  res.removeHeader("x-powered-by");
+  next();
+});
 
 if (process.env.APP_ENV == "staging" || process.env.APP_ENV == "production") {
   expressApp.use((_req, res, next) => {
@@ -59,10 +63,7 @@ if (process.env.APP_ENV == "staging" || process.env.APP_ENV == "production") {
   })
 }
 
-expressApp.use(function (req, res, next) {
-  res.removeHeader("x-powered-by");
-  next();
-});
+expressApp.use(express.static("dist", { redirect: false }))
 
 expressApp.engine("hbs", Handlebars.__express)
 expressApp.set("view engine", "hbs")
