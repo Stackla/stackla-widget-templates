@@ -1,0 +1,22 @@
+{
+  "cta_btn_background": "string",
+  "cta_btn_font_color": "string",
+  "cta_btn_font_size": "int",
+  "enable_custom_tiles_per_page": "bool",
+  "click_through_url": "string",
+  "margin": "int",
+  "rows": "int",
+  "shopspot_btn_background": "color",
+  "shopspot_btn_font_color": "color",
+  "shopspot_icon": "string",
+  "tile_size": "string",
+  "widget_background": "string",
+  "load_more_type": "string",
+  "plugin_instance_id": "int",
+  "dynamic_filter": "string",
+  "dynamic_filter_fallback": {
+    "category": "bool",
+    "brand": "bool",
+    "custom": "int"
+  }
+}

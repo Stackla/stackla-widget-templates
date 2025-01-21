@@ -1,0 +1,1 @@
+The Nightfall Widget is optimised for displaying a range of content in a vertically scrolling masonry pattern

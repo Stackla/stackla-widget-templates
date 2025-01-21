@@ -1,0 +1,2 @@
+The Blank Canvas Widget allows developers to leverage Nosto's Widget framework and build a highly-customised widget
+to your specific design and interaction requirements

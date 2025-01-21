@@ -1,0 +1,1 @@
+The Direct Uploader Widget combines direct upload functionality with the Grid Widget into a single embed.

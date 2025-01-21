@@ -1,0 +1,29 @@
+{
+  "lightbox": {
+    "apply_custom_sharing_title_on_miss_title": "bool",
+    "disable_short_url": "bool",
+    "fallback_share_image": "string",
+    "layout": "string",
+    "sharing_text": "string",
+    "sharing_title": "string",
+    "show_additional_info": "bool",
+    "show_caption": "bool",
+    "show_timestamp": "bool",
+    "show_comments": "bool",
+    "show_dislikes": "bool",
+    "show_likes": "bool",
+    "show_nav": "bool",
+    "show_sharing": "bool",
+    "show_products": "bool",
+    "show_shopspots": "bool",
+    "show_tags": "bool",
+    "show_votes": "bool",
+    "show_cross_sellers": "bool",
+    "show_add_to_cart": "bool"
+  },
+  "tile_options": {
+    "show_nav": "bool",
+    "show_shopspots": "bool",
+    "auto_play_video": "bool"
+  }
+}

@@ -1,0 +1,1 @@
+The Quadrant Widget is optimised for displaying a range of content in a unique grid of small and large tiles

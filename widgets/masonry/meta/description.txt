@@ -1,0 +1,1 @@
+The Masonry Widget is optimised for displaying image content in a masonry grid of rectangular tiles

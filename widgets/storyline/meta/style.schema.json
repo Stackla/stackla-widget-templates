@@ -1,0 +1,19 @@
+{
+  "cta_btn_background": "string",
+  "cta_btn_font_color": "string",
+  "cta_btn_font_size": "int",
+  "enable_custom_tiles_per_page": "bool",
+  "widget_background": "string",
+  "widget_thumbnail_size": "int",
+  "tiles_per_page": "int",
+  "minimal_tiles": "int",
+  "dynamic_filter": "string",
+  "dynamic_filter_fallback": {
+    "category": "bool",
+    "brand": "bool",
+    "custom": "int"
+  },
+  "inline_tile_size": "string",
+  "inline_tile_border_radius": "string",
+  "expanded_tile_border_radius": "string"
+}
