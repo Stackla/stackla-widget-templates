@@ -1,0 +1,1 @@
+The Carousel Widget is optimised for displaying a range of content in a single horizontally scrolling row

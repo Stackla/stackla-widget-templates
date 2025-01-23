@@ -1,0 +1,1 @@
+The Grid Widget is optimised for displaying image content in a square grid layout

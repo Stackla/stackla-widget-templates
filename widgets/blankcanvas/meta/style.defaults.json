@@ -1,0 +1,10 @@
+{
+    "name": "Blank Canvas",
+    "tiles_per_page": 30,
+    "dynamic_filter": "none",
+    "dynamic_filter_fallback": {
+        "category": false,
+        "brand": false,
+        "custom": 0
+    }
+}

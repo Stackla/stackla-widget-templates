@@ -1,0 +1,10 @@
+{
+    "name": "string",
+    "tiles_per_page": "int",
+    "dynamic_filter": "string",
+    "dynamic_filter_fallback": {
+        "category": "bool",
+        "brand": "bool",
+        "custom": "int"
+    }
+}

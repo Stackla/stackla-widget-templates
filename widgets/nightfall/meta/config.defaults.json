@@ -1,0 +1,39 @@
+{
+    "lightbox": {
+        "apply_custom_sharing_title_on_miss_title": false,
+        "disable_short_url": false,
+        "fallback_share_image" : "",
+        "layout" : "portrait",
+        "post_comments": false,
+        "sharing_text": "",
+        "sharing_title": "",
+        "show_additional_info": true,
+        "show_caption" : true,
+        "show_timestamp" : true,
+        "show_comments": false,
+        "show_dislikes": false,
+        "show_likes": false,
+        "show_nav": true,
+        "show_sharing": false,
+        "show_shopspots" : false,
+        "show_products" : false,
+        "show_tags": false,
+        "show_votes": false,
+        "show_add_to_cart": false
+    },
+    "tile_options": {
+        "show_caption" : false,
+        "show_comments": false,
+        "show_dislikes": false,
+        "show_likes": false,
+        "show_sharing": false,
+        "show_shopspots" : true,
+        "show_tags": false,
+        "show_votes": false,
+        "auto_play_video": false
+    },
+    "claim_config": {
+        "show_claim_button": false,
+        "show_claim_button_on_tags": []
+    }
+}

@@ -1,0 +1,1 @@
+The Stories Widget behaves just like 'stories' across many social networks. It offers a horizontal scroll, and a full-page carousel once a story is selected. It's both mobile and desktop friendly.
