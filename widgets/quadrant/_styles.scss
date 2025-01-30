@@ -24,3 +24,6 @@ expanded-tiles {
   @include tc.tile-content-styles;
   @include es.swiper-expanded-styles;
 }
+.network-icon {
+  z-index: 1;
+}
