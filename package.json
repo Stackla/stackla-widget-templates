@@ -39,7 +39,7 @@
     "@esbuild/linux-x64": "^0.23.1"
   },
   "devDependencies": {
-    "@happy-dom/jest-environment": "^15.0.0",
+    "@happy-dom/jest-environment": "^16.8.1",
     "@stackla/eslint-config": "^1.0.0",
     "@stackla/handlebars": "^0.1.7",
     "@stackla/jest-config": "^1.0.6",
