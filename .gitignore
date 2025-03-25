@@ -17,3 +17,4 @@ dist/*
 !dist/samples/
 dist/assets/spritemaps/*
 meta.json
+*storybook.log

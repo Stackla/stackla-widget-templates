@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Preview</title>
+  <!-- IMP: Please don't modify the port below. We don't need this file fetched from local server as we don't do any changes in this file here -->
+  <script type="text/javascript" src="{{domain}}/core.js?widgetType={{{widgetType}}}"></script>
+</head>
+
+<body style="margin: 0;">
+  <div id="container" style="width: 80%; margin: 0 auto;">
+    <div id="ugc-widget" data-wid='668ca52ada8fb'></div>
+  </div>
+  <script> 
+    const cssTemplate = `{{{cssCode}}}`;
+    const layoutTemplate = `{{{layoutCode}}}`;
+    const tileTemplate = `{{{tileCode}}}`;
+    const jsTemplate = "{{{jsCode}}}";
+    const widgetOptions = `{{{widgetOptions}}}`;
+
+    var stackWidgetCustomData = {};
+    const widgetParams = {
+      "draft": {
+        "enabled": 1,
+        "guid": "668ca52ada8fb",
+        "filter_id": 10695,
+        "enabled": 1,
+        "customCSS": cssTemplate,
+        "customJS": jsTemplate,
+        "customTemplates": {
+          "layout": {
+            "template": layoutTemplate,
+          },
+          "tile": {
+            "template": tileTemplate,
+          },
+        },
+        "widgetOptions": widgetOptions,
+      },
+      "wid": "668ca52ada8fb",
+      "limit": 25,
+      "page": 1
+    };
+    const widget = new window.ugc.widget(widgetParams);
+    widget.init();
+  </script>
+</body>
+
+</html>
