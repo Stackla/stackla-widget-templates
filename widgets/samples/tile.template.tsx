@@ -73,9 +73,9 @@ export function IconSection({ tile, productsEnabled }: { tile: Tile; productsEna
   const topSectionIconContent = []
   const bottomSectionIconContent = []
 
-  if (tile.attrs.includes("instagram.reel")) {
+  if (tile.attrs?.includes("instagram.reel")) {
     topSectionIconContent.push(<div class="content-icon icon-reel"></div>)
-  } else if (tile.attrs.includes("youtube.short")) {
+  } else if (tile.attrs?.includes("youtube.short")) {
     topSectionIconContent.push(<div class="content-icon icon-youtube-short"></div>)
   }
   if (productsEnabled) {

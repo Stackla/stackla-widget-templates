@@ -1,3 +1,6 @@
-.ugc-tile {
-    cursor: pointer;
+#nosto-ugc-container {
+    .ugc-tile {
+        cursor: pointer;
+        max-width: 400px;
+    }
 }
