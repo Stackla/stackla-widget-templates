@@ -67,6 +67,22 @@ expanded-tiles:not(:empty) {
     justify-content: center;
     align-items: center;
   }
+  
+  @include media-queries.breakpoint(mobile) {
+    .expanded-tile-header {
+      .close-white {
+        display: none !important;
+      }
+    }
+  }
+
+  @include media-queries.breakpoint(tablet) {
+    .expanded-tile-header {
+      .close-white {
+        display: none !important;
+      }
+    }
+  }
 
   .back {
     display: none;
