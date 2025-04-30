@@ -61,6 +61,13 @@ expanded-tiles:not(:empty) {
     display: none !important;
   }
 
+  .expanded-tile-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .back {
     display: none;
     background: #fff;
@@ -121,7 +128,6 @@ expanded-tiles:not(:empty) {
       position: absolute;
       display: flex;
       right: 5%;
-      top: -15px;
       z-index: 2;
       justify-content: end;
     }
