@@ -18,11 +18,9 @@ NOTE: If you would like to use your own widget utilities fork, you can also upda
 
 Execute the following;
 
-```git submodule init && git submodule update```
-
-4) Install all packages by executing: ```npm install```
-5) Execute ```npm run start``` to see our gallery of widgets in action.
-6) Access the following URL, substituting the widgetType with any widget you wish to preview.
+1) ```./setup.sh```
+2) Execute ```npm run start``` to see our gallery of widgets in action.
+3) Access the following URL, substituting the widgetType with any widget you wish to preview.
 
 http://localhost:4003/preview?widgetType=carousel
 
