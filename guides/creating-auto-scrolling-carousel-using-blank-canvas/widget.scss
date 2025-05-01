@@ -1,0 +1,55 @@
+@use "styles" as carouselStyles;
+@use "@styles/partials/media-queries";
+@use "dimens";
+
+:host {
+  transition: ease all 0.5s;
+}
+
+#nosto-ugc-container {
+  background-color: var(--widget-background);
+  display: flex;
+  place-items: center;
+  margin: dimens.$nosto-container-margin;
+  width: calc(100% - (dimens.$nosto-container-margin * 2));
+  height: var(--tile-size);
+
+  .icon-section {
+    display: flex;
+    position: absolute;
+    height: 100%;
+
+    .bottom-section {
+      tile-tags {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+@include media-queries.breakpoint(mobile) {
+  #nosto-ugc-container {
+    height: auto;
+
+    .carousel-inline.swiper-inline {
+      width: dimens.$swiper-container-width-md !important;
+
+      .swiper-slide {
+        width: 100% !important;
+      }
+    }
+
+    .tile {
+      width: dimens.$tile-width-md !important;
+      height: dimens.$tile-height-md !important;
+
+      .icon-section {
+        width: dimens.$tile-width-md;
+      }
+    }
+  }
+}
