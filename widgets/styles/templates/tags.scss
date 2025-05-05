@@ -10,8 +10,11 @@
   display: var(--tags-display-inline);
   position: relative;
   overflow: hidden;
-  height: 20px;
   width: 100%;
+  border-bottom: 1px solid #f4f4f4;
+  margin-bottom: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 
   .swiper-slide {
       height: 100% !important;
