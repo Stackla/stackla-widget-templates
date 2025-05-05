@@ -91,7 +91,7 @@
     "@stackla/widget-utils": "workspace:*",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "happy-dom": "^14.12.3",
     "hbs": "^4.2.0",
     "serverless-hooks-plugin": "^1.1.0",
