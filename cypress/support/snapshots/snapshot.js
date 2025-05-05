@@ -119,7 +119,8 @@ const propsToCompare = [
 
   // Visibility & Display
   "visibility",
-  "pointer-events"
+  "pointer-events",
+  "cursor"
 ]
 
 export const getPropsFromComputedStyle = el => {
