@@ -80,6 +80,12 @@
     }
   }
 
+  &[context$="-inline"] {
+    .swiper-tags-button-next {
+      display: none !important;
+    }
+  }
+
   .swiper-tags-button-prev::after,
   .swiper-tags-button-next::after {
     content: "";
