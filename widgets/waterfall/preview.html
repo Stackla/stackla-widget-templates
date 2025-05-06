@@ -14,11 +14,152 @@
     <div id="ugc-widget" data-wid='668ca52ada8fb'></div>
   </div>
   <script> 
-    const cssTemplate = `{{{cssCode}}}`;
-    const layoutTemplate = `{{{layoutCode}}}`;
-    const tileTemplate = `{{{tileCode}}}`;
-    const jsTemplate = "{{{jsCode}}}";
-    const widgetOptions = `{{{widgetOptions}}}`;
+    const cssTemplate = `.test{ background-color: #f0f0f0; }`;
+    const layoutTemplate = `<div id="widget-container" class="hidden-container">
+    <div class="ugc-tiles grid waterfall-inline">
+        {{#tiles}}
+        {{>tpl-tile options=../options.config}}
+        {{/tiles}}
+    </div>
+    <load-more />
+    <div id="load-more-loader">
+        <div class="loading"></div>
+    </div>
+</div>`;
+    const tileTemplate = `{{#ifequals options.lightbox.show_carousel_grouping true}}
+  {{#ifequals carousel 0}}
+    {{#tile class="grid-item"}}
+      <div class="tile">
+        <div class="tile-top">
+          <div class="tile-loading"></div>
+          <div class="icon-section">
+            <div class="top-section">
+              {{#each attrs}}
+              {{#ifequals this "instagram.reel"}}
+              <div class="content-icon icon-reel"></div>
+              {{/ifequals}}
+              {{#ifequals this "youtube.short"}}
+              <div class="content-icon icon-youtube-short"></div>
+              {{/ifequals}}
+              {{/each}}
+              {{#ifHasProductTags this}}
+              <div class="shopping-icon icon-products"></div>
+              {{/ifHasProductTags}}
+            </div>
+            <div class="center-section">
+              {{#ifequals media "video"}}
+                {{#unless options.tile_options.auto_play_video }}
+                  <div class="icon-play"></div>
+                {{/unless}}
+              {{/ifequals}}
+            </div>
+            <div class="bottom-section">
+              <div class="network-icon icon-{{source}}"></div>
+            </div>
+          </div>
+          <div class="tile-image-wrapper">
+            {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+              {{playVideo this "100%" "100%"}}
+            {{else}}
+              {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+            {{/ifAutoPlayVideo}}
+            <div class="swiper-lazy-preloader"></div>
+            <shopspot-icon tile-id={{id}} />
+          </div>
+        </div>
+        <div class="tile-bottom">
+          <div class="tile-bottom-container">
+            {{#if tags_extended}}
+            <tile-tags tile-id="{{id}}" mode="swiper" context="waterfall-inline" navigation-arrows="true" theme="light"></tile-tags>
+            {{/if}}
+            <div class="description">
+                {{#if name}}
+                <div class="user-name">{{name}}</div>
+                {{/if}}
+                {{#if user}}
+                <div class="user-handle">@{{user}}</div>
+                {{/if}}
+                <div class="tile-share-content">
+                  <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
+                  <share-menu tile-id="{{id}}" theme="light"></share-menu>
+                </div>
+                <div class="caption">
+                  <div class="caption-paragraph">{{message}}</div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/tile}}
+  {{/ifequals}}
+{{else}}
+  {{#tile class="grid-item"}}
+    <div class="tile">
+      <div class="tile-top">
+        <div class="tile-loading"></div>
+        <div class="icon-section">
+          <div class="top-section">
+            {{#each attrs}}
+            {{#ifequals this "instagram.reel"}}
+            <div class="content-icon icon-reel"></div>
+            {{/ifequals}}
+            {{#ifequals this "youtube.short"}}
+            <div class="content-icon icon-youtube-short"></div>
+            {{/ifequals}}
+            {{/each}}
+            {{#ifHasProductTags this}}
+            <div class="shopping-icon icon-products"></div>
+            {{/ifHasProductTags}}
+          </div>
+          <div class="center-section">
+            {{#ifequals media "video"}}
+              {{#unless options.tile_options.auto_play_video }}
+                <div class="icon-play"></div>
+              {{/unless}}
+            {{/ifequals}}
+          </div>
+          <div class="bottom-section">
+            <div class="network-icon icon-{{source}}"></div>
+          </div>
+        </div>
+        <div class="tile-image-wrapper">
+          {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+            {{playVideo this "100%" "100%"}}
+          {{else}}
+            {{#lazy image_thumbnail_url "120"}}{{/lazy}}
+          {{/ifAutoPlayVideo}}
+          <div class="swiper-lazy-preloader"></div>
+          <shopspot-icon tile-id={{id}} />
+        </div>
+      </div>
+      <div class="tile-bottom">
+        <div class="tile-bottom-container">
+          {{#if tags_extended}}
+          <tile-tags tile-id="{{id}}" mode="swiper" context="waterfall-inline" navigation-arrows="true" theme="light"></tile-tags>
+          {{/if}}
+          <div class="description">
+              {{#if name}}
+              <div class="user-name">{{name}}</div>
+              {{/if}}
+              {{#if user}}
+              <div class="user-handle">@{{user}}</div>
+              {{/if}}
+              <div class="tile-share-content">
+                <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
+                <share-menu tile-id="{{id}}" theme="light"></share-menu>
+              </div>
+              <div class="caption">
+                <div class="caption-paragraph">{{message}}</div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/tile}}
+{{/ifequals}}
+`;
+    const jsTemplate = "alert('Hello World');";
+    const widgetOptions = '{}';
 
     var stackWidgetCustomData = {};
     const widgetParams = {

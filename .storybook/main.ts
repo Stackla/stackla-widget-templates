@@ -23,5 +23,30 @@ const config: StorybookConfig = {
     "name": getAbsolutePath('@storybook/web-components-webpack5'),
     "options": {}
   },
+  webpackFinal: async (config) => {
+    const distFolderPath = join(__dirname, '../dist');
+    // Add loader for Handlebars (.hbs) files
+    config.module?.rules?.push({
+      test: /\.hbs$/,
+      include: distFolderPath,
+      use: 'raw-loader',
+    });
+
+    // Add loader for raw JavaScript (.js) files
+    config.module?.rules?.push({
+      test: /\.js$/,
+      include: distFolderPath,
+      use: 'raw-loader',
+    });
+
+    // Add loaders for CSS files
+    config.module?.rules?.push({
+      test: /\.css$/,
+      include: distFolderPath,
+      use: ['raw-loader'], // Injects CSS into the DOM
+    });
+
+    return config;
+  },
 };
 export default config;
