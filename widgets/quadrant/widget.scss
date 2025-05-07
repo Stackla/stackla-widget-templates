@@ -152,6 +152,12 @@
     padding: 0 5px;
     position: absolute;
   }
+
+  [context="quadrant-inline"] {
+    .swiper-tags-button-next {
+      display: none !important;
+    }
+  }
 }
 
 .hidden {
