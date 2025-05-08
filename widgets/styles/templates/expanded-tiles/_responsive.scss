@@ -21,10 +21,6 @@
 
         .swiper-wrapper {
           max-height: calc(100vh - 50px);
-  
-          .swiper-slide ugc-products {
-            max-width: calc(100vw - (dimens.$panel-padding * 2));
-          }
         }
       }
 
