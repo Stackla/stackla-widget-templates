@@ -13,7 +13,6 @@ expanded-tiles {
 }
 
 #nosto-ugc-container {
-  max-width: 1130px;
   transition: ease all 0.5s;
   background-color: var(--widget-background);
   display: flex;
@@ -31,7 +30,7 @@ expanded-tiles {
     margin-left: unset;
 
     .ugc-tile {
-      min-width: 110px;
+      min-width: var(--tile-size);
       width: 100%;
       height: 100%;
       transition: all 300ms cubic-bezier(0.55, 0, 1, 0.45) 0s;
