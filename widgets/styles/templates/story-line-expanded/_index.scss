@@ -16,7 +16,12 @@ expanded-tiles {
   }
 
   .story-expanded {
-      max-width: 500px;
+    max-width: 500px;
+
+    @media (max-width: 1024px) {
+      max-width: 100%;
+      width: 100%;
+    }
   }
 }
 
@@ -357,6 +362,13 @@ expanded-tiles:not(:empty) {
                   border-radius: 10px;
                   background-color: #FFF;
                   height: 145px;
+
+                  @include media-queries.breakpoint(mobile) {
+                    width: 85% !important;
+                  }
+                  @include media-queries.breakpoint(tablet) {
+                    width: 85% !important;
+                  }
 
                   .tile-product-left-panel {
                     width: 30%;

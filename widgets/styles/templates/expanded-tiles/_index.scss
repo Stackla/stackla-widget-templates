@@ -118,6 +118,13 @@ expanded-tiles:not(:empty) {
           align-items: flex-start;
           height: fit-content;
 
+          @include media-queries.breakpoint(mobile) {
+            width: 100% !important;
+          }
+          @include media-queries.breakpoint(tablet) {
+            width: 100% !important;
+          }
+
           div.image-filler {
             background-position: top;
             background-repeat: no-repeat;

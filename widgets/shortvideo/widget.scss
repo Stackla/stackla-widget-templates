@@ -25,6 +25,17 @@
   display: none;
 }
 
+expanded-tiles {
+  .story-expanded {
+    max-width: 500px;
+
+    @media (max-width: 1024px) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
+
 @include media-queries.breakpoint(mobile) {
   #nosto-ugc-container {
     height: auto;
