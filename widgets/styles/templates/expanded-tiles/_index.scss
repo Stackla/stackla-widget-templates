@@ -31,6 +31,10 @@ expanded-tiles:not(:empty) {
     transition: ease all 0.5s;
   }
 
+  ugc-products {
+    max-width: 100%;
+  }
+
   min-height: $min-height;
   display: flex;
   flex-direction: row;
@@ -113,10 +117,6 @@ expanded-tiles:not(:empty) {
         .swiper-slide {
           align-items: flex-start;
           height: fit-content;
-
-          ugc-products {
-            max-width: calc(dimens.$panel-right-width-lg - (dimens.$panel-padding * 2));
-          }
 
           div.image-filler {
             background-position: top;
@@ -357,11 +357,14 @@ expanded-tiles:not(:empty) {
             height: 100%;
             width: 100%;
 
+              @include media-queries.breakpoint(mobile) {
+                align-items: center;
+              }
+
             .tile-tags {
               display: var(--tags-display-expanded);
               margin: 0 16.4px 8.4px 0;
               width: 100%;
-         
             }
           }
         }
