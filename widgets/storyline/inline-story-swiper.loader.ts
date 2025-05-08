@@ -7,7 +7,7 @@ import {
   updateSwiperInstance
 } from "@stackla/widget-utils/extensions/swiper"
 import type { Swiper } from "swiper"
-import { enableTileImages, getTileWidthBySizeString, loadAllUnloadedTiles } from "@stackla/widget-utils/libs"
+import { enableTileImages, loadAllUnloadedTiles } from "@stackla/widget-utils/libs"
 import { EVENT_LOAD_MORE } from "@stackla/widget-utils/events"
 import { getSlidesPerView } from "./slides-per-view"
 
