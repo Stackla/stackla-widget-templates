@@ -233,19 +233,15 @@ expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
 
 expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
   if (req.query.after_id) {
-    res.send({
-      tiles: getTilesToRender(req).slice(0, 1).map(tile => ({
+    res.send(getTilesToRender(req).slice(0, 1).map(tile => ({
         ...tile,
         id: "1"
-      }))
-    })
+      })))
 
     return
   }
 
-  res.send({
-    tiles: getTilesToRender(req)
-  })
+  res.send(getTilesToRender(req))
 })
 
 expressApp.get("/development/widgets/668ca52ada8fb/tiles/:tid", async (req, res) => {

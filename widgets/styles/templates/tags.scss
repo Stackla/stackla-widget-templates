@@ -106,7 +106,6 @@
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
-    padding: 2px 4px;
     line-height: 16px;
     text-wrap: nowrap;
     max-width: fit-content;
@@ -126,14 +125,6 @@
     .swiper-tags .swiper-slide {
       max-width: 100%;
     }
-  }
-
-  .tile-tags-wapper .tile-tag {
-    padding: 2px 4px;
-  }
-
-  .swiper-tags .swiper-slide {
-    padding: 2px 0;
   }
 
   &[variant="dark"] {
