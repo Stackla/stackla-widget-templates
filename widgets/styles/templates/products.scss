@@ -114,6 +114,11 @@
         cursor: pointer;
         display: inline-block;
         padding: 2px;
+        margin-top: 5px;
+
+        &.recommendation-product {
+          overflow: visible;
+        }
 
         &:hover .stacklapopup-products-item {
           opacity: 1;
@@ -152,7 +157,7 @@
           background: $black;
           border-radius: 14px;
           position: absolute;
-          top: 0;
+          top: -5px;
           left: 10px;
           z-index: 2;
 
