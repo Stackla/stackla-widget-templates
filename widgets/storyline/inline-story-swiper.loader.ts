@@ -28,99 +28,83 @@ export function initializeSwiperForInlineStoryTiles() {
   widgetSelector.setAttribute("variation", inline_tile_size)
   widgetSelector.parentElement!.style.setProperty("--spacing", `${spaceBetween}`)
 
-  initializeSwiper({
-    id: "inline-story",
-    mode: "inline",
-    widgetSelector,
-    prevButton: "swiper-inline-story-button-prev",
-    nextButton: "swiper-inline-story-button-next",
-    paramsOverrides: {
-      slidesPerView: getSlidesPerView(),
-      spaceBetween: 5,
-      grabCursor: true,
-      slidesOffsetBefore: 0,
-      allowTouchMove: true,
-      shortSwipes: false,
-      longSwipes: false,
-      mousewheel: true,
-      breakpoints: {
-        300: {
-          allowTouchMove: true,
-          followFinger: true,
-          spaceBetween: 10,
-          slidesPerView: getSlidesPerView(300)
-        },
-        400: {
-          allowTouchMove: true,
-          followFinger: true,
-          spaceBetween: 10,
-          slidesPerView: getSlidesPerView(400)
-        },
-        500: {
-          allowTouchMove: true,
-          followFinger: true,
-          spaceBetween: 10,
-          slidesPerView: getSlidesPerView(500)
-        },
-        800: {
-          allowTouchMove: true,
-          followFinger: true,
-          spaceBetween: 10,
-          slidesPerView: getSlidesPerView(800)
-        },
-        993: {
-          spaceBetween: 5,
-          allowTouchMove: false,
-          followFinger: false,
-          slidesPerView: getSlidesPerView(993),
-          navigation: {
-            enabled: !!(prev && next),
-            prevEl: prev,
-            nextEl: next
+  const container = sdk.querySelector("#nosto-ugc-container")
+  const containerObserver = new ResizeObserver(() => {
+    const slidesPerView = getSlidesPerView()
+    initializeSwiper({
+      id: "inline-story",
+      mode: "inline",
+      widgetSelector,
+      prevButton: "swiper-inline-story-button-prev",
+      nextButton: "swiper-inline-story-button-next",
+      paramsOverrides: {
+        slidesPerView: slidesPerView,
+        spaceBetween: 5,
+        grabCursor: true,
+        slidesOffsetBefore: 0,
+        allowTouchMove: true,
+        shortSwipes: false,
+        longSwipes: false,
+        mousewheel: true,
+        breakpoints: {
+          300: {
+            allowTouchMove: true,
+            followFinger: true
+          },
+          400: {
+            allowTouchMove: true,
+            followFinger: true
+          },
+          500: {
+            allowTouchMove: true,
+            followFinger: true
+          },
+          800: {
+            allowTouchMove: true,
+            followFinger: true
+          },
+          993: {
+            allowTouchMove: false,
+            followFinger: false,
+            navigation: {
+              enabled: !!(prev && next),
+              prevEl: prev,
+              nextEl: next
+            }
           }
         },
-        1300: {
-          spaceBetween: 5,
-          slidesPerView: getSlidesPerView(1300)
+        keyboard: {
+          enabled: true,
+          onlyInViewport: false
         },
-        1500: {
-          spaceBetween: 5,
-          slidesPerView: getSlidesPerView(1500)
-        },
-        2000: {
-          spaceBetween: 5,
-          slidesPerView: getSlidesPerView(2000)
-        }
-      },
-      keyboard: {
-        enabled: true,
-        onlyInViewport: false
-      },
-      on: {
-        beforeInit: (swiper: Swiper) => {
-          enableLoadedTiles()
-          swiper.slideToLoop(0, 0, false)
-        },
-        reachEnd: () => {
-          sdk.triggerEvent(EVENT_LOAD_MORE)
-        },
-        afterInit: (swiper: Swiper) => {
-          setSwiperLoadingStatus("inline-story", true)
-          disablePrevNavigation(swiper)
-          void loadTilesAsync(swiper)
-        },
-        activeIndexChange: (swiper: Swiper) => {
-          if (swiper.navigation.prevEl) {
-            if (swiper.realIndex === 0 && isSwiperLoading("inline-story")) {
-              disablePrevNavigation(swiper)
-            } else {
-              enablePrevNavigation(swiper)
+        on: {
+          beforeInit: (swiper: Swiper) => {
+            enableLoadedTiles()
+            swiper.slideToLoop(0, 0, false)
+          },
+          reachEnd: () => {
+            sdk.triggerEvent(EVENT_LOAD_MORE)
+          },
+          afterInit: (swiper: Swiper) => {
+            setSwiperLoadingStatus("inline-story", true)
+            disablePrevNavigation(swiper)
+            void loadTilesAsync(swiper)
+          },
+          activeIndexChange: (swiper: Swiper) => {
+            if (swiper.navigation.prevEl) {
+              if (swiper.realIndex === 0 && isSwiperLoading("inline-story")) {
+                disablePrevNavigation(swiper)
+              } else {
+                enablePrevNavigation(swiper)
+              }
             }
           }
         }
       }
-    }
+    })
   })
+
+  containerObserver.observe(container)
 }
 
 function getRenderMode(hostElement?: HTMLElement) {

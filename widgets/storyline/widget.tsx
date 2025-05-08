@@ -25,7 +25,6 @@ loadWidget({
     }
   },
   callbacks: {
-    onLoad: [initializeSwiperForInlineStoryTiles],
     onTilesUpdated: [onTilesUpdated]
   },
   templates: {
@@ -34,5 +33,7 @@ loadWidget({
     }
   }
 })
+
+initializeSwiperForInlineStoryTiles()
 
 sdk.querySelector(".track")?.style.removeProperty("display")
