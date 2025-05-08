@@ -28,11 +28,9 @@ export function initializeSwiperForInlineStoryTiles() {
   widgetSelector.setAttribute("variation", inline_tile_size)
   widgetSelector.parentElement!.style.setProperty("--spacing", `${spaceBetween}`)
 
-  // create resize observer for #nosto-ugc-container
   const container = sdk.querySelector("#nosto-ugc-container")
   const containerObserver = new ResizeObserver(() => {
-    const slidesPerView = getSlidesPerView();
-    console.log("slidesPerView", slidesPerView)
+    const slidesPerView = getSlidesPerView()
     initializeSwiper({
       id: "inline-story",
       mode: "inline",
