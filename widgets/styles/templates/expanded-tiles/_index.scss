@@ -121,6 +121,7 @@ expanded-tiles:not(:empty) {
           @include media-queries.breakpoint(mobile) {
             width: 100% !important;
           }
+
           @include media-queries.breakpoint(tablet) {
             width: 100% !important;
           }

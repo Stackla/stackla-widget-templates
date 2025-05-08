@@ -366,6 +366,7 @@ expanded-tiles:not(:empty) {
                   @include media-queries.breakpoint(mobile) {
                     width: 85% !important;
                   }
+
                   @include media-queries.breakpoint(tablet) {
                     width: 85% !important;
                   }
