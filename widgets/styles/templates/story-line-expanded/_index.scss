@@ -155,6 +155,10 @@ expanded-tiles:not(:empty) {
       z-index: 20;
       transition: all 0.2s ease-in;
 
+      @include media-queries.breakpoint(mobile) {
+        display: none;
+      }
+
       .icon-video-pause,
       .icon-video-play {
         width: 26px;
@@ -365,6 +369,7 @@ expanded-tiles:not(:empty) {
 
                   @include media-queries.breakpoint(mobile) {
                     width: 85% !important;
+                    height: 135px;
                   }
 
                   @include media-queries.breakpoint(tablet) {
