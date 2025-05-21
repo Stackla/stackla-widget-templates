@@ -1,0 +1,34 @@
+{{#tile class="grid-item"}}
+  {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+    <div class="tile">
+      {{playVideo this "100%" "100%"}}
+    </div>
+  {{else}}
+    <div class="tile" data-background-image="{{image}}">
+      <img style="display: none;" src="{{image}}" alt="{{name}}" />
+      <div class="icon-section">
+        <div class="top-section">
+          {{#each attrs}}
+            {{#ifequals this "instagram.reel"}}
+              <div class="content-icon icon-reel"></div>
+            {{/ifequals}}
+          {{/each}}
+          {{#ifHasProductTags this}}
+            <div class="shopping-icon icon-products"></div>
+          {{/ifHasProductTags}}
+        </div>
+        <div class="center-section">
+          {{#ifequals media "video"}}
+            <div class="icon-play"></div>
+          {{/ifequals}}
+        </div>
+        <div class="bottom-section">
+          <tile-tags tile-id="{{id}}" variant="dark" mode="swiper" context="grid-inline"></tile-tags>
+          <div class="network-icon icon-{{source}}"></div>
+        </div>
+
+        <shopspot-icon tile-id={{id}} />
+      </div>
+    </div>
+  {{/ifAutoPlayVideo}}
+{{/tile}}
