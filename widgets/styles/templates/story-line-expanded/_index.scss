@@ -178,7 +178,7 @@ expanded-tiles:not(:empty) {
 
     .swiper {
       .swiper-wrapper {
-        .swiper-slide {
+        .swiper-slide.ugc-tile {
           align-items: flex-start;
           width: dimens.$width;
           height: dimens.$height;
@@ -311,10 +311,6 @@ expanded-tiles:not(:empty) {
                 bottom: 0;
                 height: 18px;
                 margin-left: 5px;
-
-                .tile-tag {
-                  height: 13px !important;
-                }
               }
             }
 
@@ -487,6 +483,10 @@ expanded-tiles:not(:empty) {
 
             ugc-products {
               padding: 16px;
+              display: flex;
+              justify-content: stretch;
+              align-items: stretch;
+              width: 90%;
             }
           }
 
