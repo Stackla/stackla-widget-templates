@@ -114,7 +114,7 @@ expanded-tiles:not(:empty) {
         max-width: dimens.$container-max-width-lg;
         max-height: dimens.$container-max-height-lg;
 
-        .swiper-slide {
+        .swiper-slide.ugc-tile {
           align-items: flex-start;
           height: fit-content;
 
