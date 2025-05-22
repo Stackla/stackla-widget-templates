@@ -1,0 +1,14 @@
+@forward "@styles/partials/inline-dimens";
+
+// swiper element width for large screens
+$swiper-container-width-lg: 100%;
+
+// nosto-ugc-container styles
+$nosto-container-margin: 20px;
+
+// swiper slide / tile width for medium/small screens
+$tile-width-md: 95%;
+$tile-height-md: 100%;
+
+// swiper element width for medium/small screens
+$swiper-container-width-md: auto;
