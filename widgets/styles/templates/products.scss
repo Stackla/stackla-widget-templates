@@ -39,6 +39,30 @@
     padding-top: 16px;
   }
 
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  .skeleton-loader {
+    background: linear-gradient(
+      90deg,
+      rgb(60 60 60 / 10%) 25%,
+      rgb(100 100 100 / 20%) 50%,
+      rgb(60 60 60 / 10%) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite !important;
+    pointer-events: none;
+    user-select: none;
+    color: transparent !important
+  }
+
   .stacklapopup-products-header {
     display: flex;
     margin-bottom: 0;
@@ -216,7 +240,11 @@
         text-align: center;
         text-decoration: none;
         width: 100%;
-        background-color: var(--cta-button-background-color);
+
+        &:not(.skeleton-loader) {
+          background-color: var(--cta-button-background-color);
+        }
+
         color: var(--cta-button-font-color);
         font-size: var(--cta-button-font-size);
 
