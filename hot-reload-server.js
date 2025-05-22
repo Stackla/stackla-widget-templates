@@ -9,6 +9,8 @@ const PORT = 3001
 const server = http.createServer()
 const wss = new WebSocket.Server({ server })
 
+let lock = false
+
 wss.on("connection", ws => {
   console.log("Client connected")
 
@@ -40,8 +42,17 @@ const notifyClients = async filePath => {
 
     wss.clients.forEach(client => {
       buildProcess.on("exit", () => {
+        if (lock) {
+          console.log("Build process is already running")
+          return
+        }
+
         console.log("Build complete")
         client.send("reload")
+
+        setTimeout(() => {
+          lock = false
+        }, 1000)
       })
     })
   } catch (e) {
