@@ -21,7 +21,7 @@ export function createToast(message: string) {
   toast.className = "toast"
   toast.textContent = message
 
-  toastContainer.appendChild(toast)
+  toastContainer?.appendChild(toast)
 
   // Show the toast
   requestAnimationFrame(() => {

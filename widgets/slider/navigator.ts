@@ -10,7 +10,16 @@ export default function (_settings: Features["tileSizeSettings"], observers: Ret
   const sliderElement = getSliderElement()
   const tilesContainerElement = getTileContainerElement()
   const scrollHistory: Array<number> = []
+
+  if (!sliderElement) {
+    throw new Error("Slider Element not found")
+  }
+
   const scrollerHandler = scroller(sliderElement)
+
+  if (!tilesContainerElement) {
+    throw new Error("Slider Tiles Container not found")
+  }
 
   const swipeDetectHandler = swipeDetect(tilesContainerElement, direction => {
     if (direction === "up") {
@@ -35,6 +44,14 @@ export default function (_settings: Features["tileSizeSettings"], observers: Ret
         check = true
     })(navigator.userAgent || navigator.vendor)
     return check
+  }
+
+  if (!tilesContainerElement) {
+    throw new Error("Slider Tiles Container not found")
+  }
+
+  if (!sliderElement) {
+    throw new Error("Slider Element not found")
   }
 
   const screenResizeObserver = new ResizeObserver(() =>
@@ -73,6 +90,11 @@ export default function (_settings: Features["tileSizeSettings"], observers: Ret
       event.preventDefault()
       event.stopImmediatePropagation()
       event.stopPropagation()
+
+      if (!tilesContainerElement) {
+        throw new Error("Tiles Container Element not found")
+      }
+
       if (tilesContainerElement.scrollTop > 0) {
         scrollUp()
       }
@@ -115,6 +137,10 @@ export default function (_settings: Features["tileSizeSettings"], observers: Ret
       setPage(page + 1)
 
       const hasMoreTiles = sdk.hasMoreTiles()
+
+      if (!tilesContainerElement) {
+        throw new Error("Tiles Container Element not found")
+      }
 
       if (
         tilesContainerElement.scrollTop + tilesContainerElement.clientHeight + 200 >=
@@ -203,13 +229,13 @@ export default function (_settings: Features["tileSizeSettings"], observers: Ret
     scrollerHandler.toggleScrollDown("visible")
     scrollerHandler.decrementPage()
 
-    tilesContainerElement.scrollTo({
+    tilesContainerElement?.scrollTo({
       top: scrollHistory.pop(),
       left: 0
     })
 
     setTimeout(() => {
-      observers.cleanupStyles()
+      observers?.cleanupStyles()
     }, 500)
   }
 
@@ -217,15 +243,15 @@ export default function (_settings: Features["tileSizeSettings"], observers: Ret
     scrollerHandler.toggleScrollUp("visible")
     scrollerHandler.incrementPage()
 
-    tilesContainerElement.scrollBy({
+    tilesContainerElement?.scrollBy({
       top: getBlockHeight(),
       left: 0
     })
   }
 
   function getNextScrollPosition() {
-    scrollHistory.push(tilesContainerElement.scrollTop)
-    return observers.getNextTilePosition()
+    scrollHistory.push(tilesContainerElement?.scrollTop ?? 0)
+    return observers?.getNextTilePosition()
   }
 
   function getBlockHeight() {

@@ -56,6 +56,12 @@ export function calculateTilesToShow() {
 
   // Hide tiles after the calculated tiles per page
   const tiles = sdk.querySelectorAll(".ugc-tile")
+
+  if (!tiles) {
+    console.warn("Tiles not found in calculateTilesToShow")
+    return
+  }
+
   const tilesToHideArray = Array.from(tiles).slice(tilesPerPage)
   tilesToHideArray.forEach(tile => {
     tile.style.display = "none"

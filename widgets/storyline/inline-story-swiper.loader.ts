@@ -104,6 +104,10 @@ export function initializeSwiperForInlineStoryTiles() {
     })
   })
 
+  if (!container) {
+    throw new Error("Failed to find Nosto UGC container")
+  }
+
   containerObserver.observe(container)
 }
 

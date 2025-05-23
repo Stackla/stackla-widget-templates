@@ -18,8 +18,8 @@ declare const sdk: Sdk
 export function loadSlider(settings: Features["tileSizeSettings"], observers: ReturnType<typeof initObservers>) {
   const tileBlockElement = sdk.querySelector(".ugc-tile-wrapper")
   const sliderInline = sdk.querySelector(".slider-inline")
-  const loadingElement = sliderInline.querySelector(".slider-loading.loading")
-  const tilesContainer = sliderInline.querySelector<HTMLElement>(".ugc-tiles")
+  const loadingElement = sliderInline?.querySelector(".slider-loading.loading")
+  const tilesContainer = sliderInline?.querySelector<HTMLElement>(".ugc-tiles")
 
   if (!sliderInline) {
     throw new Error("Slider inline container not found")
@@ -44,7 +44,7 @@ export function loadSlider(settings: Features["tileSizeSettings"], observers: Re
 
     let sequenceIndex = 0
 
-    sdk.querySelectorAll(".ugc-tile").forEach(tile => {
+    sdk.querySelectorAll(".ugc-tile")?.forEach(tile => {
       tile.classList.remove(
         "pattern-horizontal",
         "pattern-vertical",
@@ -105,7 +105,7 @@ export function loadSlider(settings: Features["tileSizeSettings"], observers: Re
 
   function tilesUpdatedEventHandler() {
     generatePatterns()
-    observers.configTileIntersectionTargets()
+    observers?.configTileIntersectionTargets()
   }
 
   function widgetLoadedEventHandler() {
