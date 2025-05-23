@@ -33,15 +33,6 @@ export function ProductCTA({ sdk, product, tile }: { sdk: Sdk; product: TagExten
   if (addToCart) {
     return (
       <>
-        <a
-          href={custom_url}
-          target={target}
-          class="stacklapopup-products-item-button-wrap"
-          style={{
-            display: "none"
-          }}>
-          <span className={`stacklapopup-products-item-button${availability ? "" : " disabled"}`}>{cta_text}</span>
-        </a>
         <add-to-cart
           tile-id={tile.id}
           productId={id}
