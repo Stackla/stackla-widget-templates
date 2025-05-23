@@ -3,7 +3,9 @@ import { getTileWidthBySizeString } from "@stackla/widget-utils"
 
 declare const sdk: Sdk
 
-export function getSlidesPerView(screenWidth: number = sdk.querySelector("#nosto-ugc-container").clientWidth): number {
+export function getSlidesPerView(
+  screenWidth: number = sdk.querySelector("#nosto-ugc-container")?.clientWidth ?? 0
+): number {
   const {
     enable_custom_tiles_per_page: isCustomTilesPerPageEnabled,
     tiles_per_page: tilesPerPage,

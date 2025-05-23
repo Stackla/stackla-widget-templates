@@ -17,10 +17,15 @@ loadWidget({
 })
 
 const observer = new MutationObserver(createSubmitMoreContentBtn)
-observer.observe(sdk.querySelector(".ugc-tile"), {
-  childList: true,
-  subtree: true
-})
+
+const tile = sdk.querySelector(".ugc-tile")
+
+if (tile) {
+  observer.observe(tile, {
+    childList: true,
+    subtree: true
+  })
+}
 
 calculateTilesToShow()
 
@@ -35,5 +40,5 @@ function createSubmitMoreContentBtn() {
   const existingBtn = sdk.querySelector("#submit-more-content-btn")
   existingBtn?.remove()
 
-  sdk.querySelector(".ugc-tiles").appendChild(submitMoreContentBtn)
+  sdk.querySelector(".ugc-tiles")?.appendChild(submitMoreContentBtn)
 }

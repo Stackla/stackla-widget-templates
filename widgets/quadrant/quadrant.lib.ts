@@ -12,7 +12,7 @@ const tilesContainer = sdk.querySelector(".ugc-tiles")!
 
 export function removeEmptyTileGroups() {
   const tileGroups = sdk.querySelectorAll<HTMLElement>(".tile-group")
-  tileGroups.forEach(tileGroup => {
+  tileGroups?.forEach(tileGroup => {
     if (tileGroup.children.length === 0) {
       tileGroup.remove()
     }
@@ -76,7 +76,7 @@ export function addQuadrantTiles(tiles: HTMLElement[], tileSize: number, startIn
 export async function preloadTileImagesAndRemoveBrokenTiles(tiles: NodeListOf<HTMLElement>): Promise<HTMLElement[]> {
   const loadMore = sdk.querySelector("#load-more")
   if (loadMore) {
-    sdk.querySelector("#load-more").style.opacity = "0"
+    loadMore.style.opacity = "0"
   }
 
   const promises = Array.from(tiles).map(async tile => {
@@ -109,7 +109,7 @@ export async function preloadTileImagesAndRemoveBrokenTiles(tiles: NodeListOf<HT
   const loadedTiles = await Promise.all(promises)
 
   if (loadMore) {
-    sdk.querySelector("#load-more").style.opacity = "1"
+    loadMore.style.opacity = "1"
   }
 
   return loadedTiles.filter(tile => tile !== null) as HTMLElement[]

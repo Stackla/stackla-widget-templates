@@ -11,7 +11,7 @@ export function initObservers({ resizeCb, intersectionCb }: SliderObserverProps)
   const animationClasses = { up: "tile-animate-up", down: "tile-animate-down" }
   const partiallyVisibleClass = "partially-visible"
   const tilesContainerElement = getTileContainerElement()
-  let previousPosition = tilesContainerElement.scrollTop
+  let previousPosition = tilesContainerElement?.scrollTop ?? 0
   const latestEntries: IntersectionObserverEntry[] = []
 
   const resizeObserver = new ResizeObserver(() =>
@@ -39,25 +39,35 @@ export function initObservers({ resizeCb, intersectionCb }: SliderObserverProps)
         entry.target.classList.add(partiallyVisibleClass)
       })
       intersectionCb?.()
-      previousPosition = tilesContainerElement.scrollTop
+      previousPosition = tilesContainerElement?.scrollTop ?? 0
     },
     { root: tilesContainerElement, rootMargin: "0px", threshold: [1] }
   )
 
-  getTileElements()[0].classList.add(animationClasses.up)
+  const tileElements = getTileElements()
+
+  if (!tileElements) {
+    return
+  }
+
+  tileElements[0].classList.add(animationClasses.up)
 
   function getNextTilePosition() {
+    if (!tileElements) {
+      return 0
+    }
+
     if (window.innerWidth < 600) {
       return window.innerHeight * 2
     }
 
-    const classesAsArray = Array.from(getTileElements()[0].classList)
+    const classesAsArray = Array.from(tileElements[0].classList)
 
     if (classesAsArray.includes("pattern-horizontal") || classesAsArray.includes("pattern-horizontal-reversed")) {
-      return getTileElements()[0].getBoundingClientRect().height
+      return tileElements[0].getBoundingClientRect().height
     }
 
-    return getTileElements()[0].getBoundingClientRect().height * 2
+    return tileElements[0].getBoundingClientRect().height * 2
   }
 
   function cleanupStyles() {
@@ -65,6 +75,10 @@ export function initObservers({ resizeCb, intersectionCb }: SliderObserverProps)
   }
 
   function enableAnimation(element: HTMLElement) {
+    if (!tilesContainerElement) {
+      return
+    }
+
     if (previousPosition === tilesContainerElement.scrollTop) {
       return
     }
@@ -74,17 +88,26 @@ export function initObservers({ resizeCb, intersectionCb }: SliderObserverProps)
 
     Object.values(animationClasses).forEach(item => element.classList.remove(item))
 
-    if (getRenderMode(getSliderElement()) !== "mobile" || element.classList.contains(partiallyVisibleClass)) {
+    const sliderElement = getSliderElement()
+    if (!sliderElement) {
+      return
+    }
+
+    if (getRenderMode(sliderElement) !== "mobile" || element.classList.contains(partiallyVisibleClass)) {
       element.classList.add(animationClass)
     }
   }
 
   function configResizeObserverTargets() {
+    if (!tilesContainerElement) {
+      return
+    }
+
     resizeObserver.observe(tilesContainerElement)
   }
 
   function configTileIntersectionTargets() {
-    getTileElements().forEach(tile => tilesIntersectionObserver.observe(tile))
+    getTileElements()?.forEach(tile => tilesIntersectionObserver.observe(tile))
   }
 
   function disconnect() {
