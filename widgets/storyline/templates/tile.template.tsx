@@ -69,6 +69,7 @@ export function StoryExpandedTile({ tile }: ExpandedTileProps) {
 export function IconSection({ tile }: { tile: Tile }) {
   const topSectionIconContent = []
   const bottomSectionIconContent = []
+  const parent = sdk.getNodeId()
 
   if (tile.attrs?.includes("instagram.reel")) {
     topSectionIconContent.push(<div class="content-icon icon-reel"></div>)
