@@ -1,0 +1,70 @@
+@use "styles" as carouselStyles;
+@use "@styles/partials/media-queries";
+@use "dimens";
+
+:host {
+  transition: ease all 0.5s;
+}
+
+shopspot-icon .fs-tag {
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) !important;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+shopspot-icon .fs-tag:hover {
+    background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red) !important;
+    transform: scale(1.2);
+    transition: all 0.3s ease;
+}
+
+#nosto-ugc-container {
+  background-color: var(--widget-background);
+  display: flex;
+  place-items: center;
+  margin: dimens.$nosto-container-margin;
+  width: calc(100% - (dimens.$nosto-container-margin * 2));
+  height: var(--tile-size);
+
+  .icon-section {
+    display: flex;
+    position: absolute;
+    height: 100%;
+
+    .bottom-section {
+      tile-tags {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+@include media-queries.breakpoint(mobile) {
+  #nosto-ugc-container {
+    height: auto;
+
+    .carousel-inline.swiper-inline {
+      width: dimens.$swiper-container-width-md !important;
+
+      .swiper-slide {
+        width: 100% !important;
+      }
+    }
+
+    .tile {
+      width: dimens.$tile-width-md !important;
+      height: dimens.$tile-height-md !important;
+
+      .icon-section {
+        width: dimens.$tile-width-md;
+      }
+    }
+  }
+}
