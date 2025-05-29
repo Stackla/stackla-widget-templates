@@ -67,19 +67,17 @@ expressApp.use(cookieParser())
 createMockRoutes(expressApp)
 
 expressApp.use((req, res, next) => {
+  if (req.query.widgetType) {
+    res.cookie("widgetType", req.query.widgetType, { maxAge: 360000 })
+  }
+
   const host = req.headers.host || "http://localhost:4003"
   const port = host.split(":")[1]
   if (req.hostname === "127.0.0.1") {
     res.redirect(301, `http://localhost:${port}${req.originalUrl}`)
     return
   }
-
-  const dependentPaths = ["/widgets/668ca52ada8fb", "/widgets/668ca52ada8fb/rendered/tiles"]
-  if (dependentPaths.includes(req.path) && !req.cookies.widgetType) {
-    res.status(400).send("widgetType cookie is not available")
-    return
-  }
-
+  
   next()
 })
 
@@ -194,7 +192,7 @@ function mutateStylesForCustomWidgets(widgetType: string) {
   return widgetOptionsMutated
 }
 
-expressApp.post("/development/widgets/668ca52ada8fb/draft", async (req, res) => {
+expressApp.post("/development/widgets/:wid/draft", async (req, res) => {
   const body = JSON.parse(req.body)
   const draft = body.draft as IDraftRequest
   const html = await renderTemplates(draft, req)
@@ -215,7 +213,7 @@ expressApp.post("/development/widgets/668ca52ada8fb/draft", async (req, res) => 
   })
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
+expressApp.get("/development/widgets/:wid", async (req, res) => {
   const content = await getContent(req.cookies.widgetType as string)
 
   const widgetOptionsMutated = mutateStylesForCustomWidgets(req.cookies.widgetType as string)
@@ -231,7 +229,7 @@ expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
   })
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
+expressApp.get("/development/widgets/:wid/tiles", async (req, res) => {
   if (req.query.after_id) {
     res.send(getTilesToRender(req).slice(0, 1).map(tile => ({
         ...tile,
@@ -244,12 +242,18 @@ expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
   res.send(getTilesToRender(req))
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb/tiles/:tid", async (req, res) => {
+expressApp.get("/development/widgets/:wid/tiles/:tid", async (req, res) => {
   res.json(tiles.find(tile => tile.id === req.params.tid))
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb/rendered/tiles", async (req, res) => {
+expressApp.get("/development/widgets/:wid/rendered/tiles", async (req, res) => {
   const widgetType = req.cookies.widgetType as string
+
+  if (!widgetType) {
+    res.send([])
+    return
+  }
+
   const tileHtml = await getHTML(await getContent(widgetType), req)
 
   if (req.query.after_id) {
@@ -273,19 +277,27 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
   const widgetType = req.query.widgetType as string
   const dev = req.query.dev
 
-  if (dev) {
-    if (!req.query.wid) {
-      res.status(400).send("wid query parameter is required. Please search through widget list to find the id you wish to use")
-      return;
-    }
-  }
-
   res.render("preview", {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions),
     domain: getDomain(req.query.dev === "true"),
     wid: req.query.wid ?? "668ca52ada8fb",
+    ...(await getContent(widgetType))
+  })
+})
+
+expressApp.get("/multi-preview", async (req : Request, res: Response) => {
+  const widgetRequest = req.query
+  const widgetType = req.query.widgetType as string
+  const dev = req.query.dev
+
+  res.render("multi-preview", {
+    widgetRequest: JSON.stringify(widgetRequest),
+    widgetType,
+    widgetOptions: JSON.stringify(widgetOptions),
+    domain: getDomain(req.query.dev === "true"),
+    wid: "668ca52ada8fb",
     ...(await getContent(widgetType))
   })
 })
