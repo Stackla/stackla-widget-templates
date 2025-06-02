@@ -29,7 +29,7 @@
       {{#lazy image "120"}}{{/lazy}}
       {{/ifAutoPlayVideo}}
       <div class="swiper-lazy-preloader"></div>
-      <shopspot-icon widgetId="{{options.wid}}" tile-id={{id}} />
+      <shopspot-icon widgetId="{{options.wid}}" tile-id="{{id}}" />
     </div>
   </div>
   <div class="tile-bottom">
@@ -48,14 +48,14 @@
               {{/if}}
               </div>
             <div class="tile-share-right">
-                <share-menu tile-id="{{id}}" theme="light"></share-menu>
+                 <share-menu widgetId="{{options.wid}}" tile-id="{{id}}" theme="light"></share-menu>
                 <div class="network-icon-circle">
                   <div class="network-icon black icon-{{source}}"></div>
                 </div>
             </div>
           </div>
           <div class="tile-share-content">
-            <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
+            <time-phrase widgetId="{{options.wid}}" source-created-at="{{source_created_at}}"></time-phrase>
           </div>
           <div class="caption">
             <div class="caption-paragraph">{{message}}</div>

@@ -1,4 +1,4 @@
-import type { Sdk, Tile, ITileContentComponent } from "@stackla/widget-utils"
+import type { Sdk, Tile, ITileContentComponent, ISdk } from "@stackla/widget-utils"
 import { createElement, createFragment } from "@stackla/widget-utils/jsx"
 
 type RenderConfig = {
@@ -17,6 +17,8 @@ type UserInfoTemplateProps = {
   originalUrl: string
   renderConfig: RenderConfig
 }
+
+declare const sdk: ISdk
 
 export function TileContentTemplate(sdk: Sdk, component: ITileContentComponent) {
   const tileId = component.getTileId()
@@ -40,7 +42,9 @@ export function TileContentTemplate(sdk: Sdk, component: ITileContentComponent) 
             renderConfig={renderConfig}
           />
 
-          {renderConfig.renderShareMenu && <share-menu theme={mode} tile-id={tileId} source-id={sourceId}></share-menu>}
+          {renderConfig.renderShareMenu && (
+            <share-menu widgetId={sdk.getWidgetId()} theme={mode} tile-id={tileId} source-id={sourceId}></share-menu>
+          )}
         </div>
 
         <Description tile={tile} renderConfig={renderConfig} />
@@ -62,7 +66,9 @@ function Description({ tile, renderConfig }: { tile: Tile; renderConfig: RenderC
         </div>
       )}
 
-      {renderConfig.renderTimephrase && <time-phrase source-created-at={tile.source_created_at}></time-phrase>}
+      {renderConfig.renderTimephrase && (
+        <time-phrase widgetId={sdk.getWidgetId()} source-created-at={tile.source_created_at}></time-phrase>
+      )}
     </div>
   )
 }

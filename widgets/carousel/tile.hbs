@@ -33,7 +33,7 @@
     {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
       {{playVideo this "100%" "100%"}}
     {{else}}
-      <shopspot-icon tile-id={{id}} widgetId="{{options.wid}}"></shopspot-icon>
+      <shopspot-icon tile-id="{{id}}" widgetId="{{options.wid}}"></shopspot-icon>
       {{#lazy image_thumbnail_url }}{{/lazy}}
     {{/ifAutoPlayVideo}}
     <div class="swiper-lazy-preloader"></div>

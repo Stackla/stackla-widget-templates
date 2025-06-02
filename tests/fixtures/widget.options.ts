@@ -27,7 +27,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
       show_tags: true,
       show_votes: true,
       show_cross_sellers: true,
-      show_add_to_cart: false,
+      show_add_to_cart: true,
       show_carousel_grouping: false
     },
     tile_options: {
@@ -42,7 +42,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
       show_votes: true,
       show_caption: true,
       show_products: true,
-      show_add_to_cart: false,
+      show_add_to_cart: true,
       auto_play_video: false,
       show_inline_tiles: false,
       show_carousel: false

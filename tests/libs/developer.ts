@@ -43,7 +43,7 @@ export const createMockRoutes = (app: Express) => {
     res.redirect(302, "https://goconnect.teaser.stackla.com/widget/show?v=1&plugin_id=663acb8116377&editor_console=")
   })
 
-  app.get("/development/widgets/668ca52ada8fb/direct-uploader", (_req, res) => {
+  app.get("/development/widgets/:wid/direct-uploader", (_req, res) => {
     res.json({
       id: 5525,
       config: {
@@ -111,7 +111,7 @@ export const createMockRoutes = (app: Express) => {
     })
   })
 
-  app.get("/development/widgets/668ca52ada8fb/direct-uploader/0", (_req, res) => {
+  app.get("/development/widgets/:wid/direct-uploader/0", (_req, res) => {
     res.json({
       id: 5525,
       config: {
