@@ -5,10 +5,10 @@
             <div class="icon-play"></div>
         {{/ifequals}}
     </div>
-    {{#if options.tile_options.show_shopspots}}
+    {{#if options.config.tile_options.show_shopspots}}
     <shopspot-icon tile-id="{{id}}"></shopspot-icon>
     {{/if}}
-    {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+    {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
       {{playVideo this "100%" "100%"}}
     {{else}}
       {{#lazy image_thumbnail_url "120"}}{{/lazy}}
@@ -19,12 +19,12 @@
         <tile-content tileId="{{id}}" mode="dark" context="slider-inline" render-timephrase="false"
             render-avatar-image="false" trim-description="true"></tile-content>
         <div class="tile">
-            <tile-tags tile-id="{{id}}" mode="swiper" context="slider-inline" navigation-arrows="true"
+            <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" mode="swiper" context="slider-inline" navigation-arrows="true"
                 prev-icon="icon-prev-white" next-icon="icon-next-white"></tile-tags>
         </div>
         <div class="footer">
-            <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
-            <share-menu tile-id="{{id}}"></ShareMenu>
+            <time-phrase widgetId="{{options.wid}}" source-created-at="{{source_created_at}}"></time-phrase>
+             <share-menu widgetId="{{options.wid}}" tile-id="{{id}}"></ShareMenu>
         </div>
     </div>
 </div>

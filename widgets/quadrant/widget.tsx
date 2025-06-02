@@ -1,7 +1,9 @@
-import { loadWidget } from "@stackla/widget-utils"
+import { ISdk, loadWidget } from "@stackla/widget-utils"
 import { getQuadrantTiles, getTileRowHeight } from "./quadrant.lib"
 
-loadWidget({
+declare const sdk: ISdk
+
+loadWidget(sdk, {
   features: {
     preloadImages: false,
     hideBrokenImages: true,

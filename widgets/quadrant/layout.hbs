@@ -1,6 +1,6 @@
 <div class="ugc-tiles quadrant-inline" cols="auto">
     {{#tiles}}
-    {{>tpl-tile options=../options.config}}
+    {{>tpl-tile options=../options}}
     {{/tiles}}
 </div>
-<load-more />
+<load-more widgetId="{{options.wid}}"/>

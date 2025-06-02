@@ -28,7 +28,7 @@ export function StoryExpandedTiles(sdk: ISdk) {
               data-id={tile.id}
               data-yt-id={tile.youtube_id || ""}
               data-tiktok-id={tile.tiktok_id || ""}>
-              <StoryExpandedTile tile={tile} />
+              <StoryExpandedTile sdk={sdk} tile={tile} />
             </div>
           ))}
         </div>

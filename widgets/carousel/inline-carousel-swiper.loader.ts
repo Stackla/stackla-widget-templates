@@ -29,7 +29,7 @@ function initializeSwiperForInlineTiles() {
     throw new Error("Failed to find widget UI element. Failed to initialise Swiper")
   }
 
-  initializeSwiper({
+  initializeSwiper(sdk, {
     id: "inline-carousel",
     mode: "inline",
     widgetSelector,
@@ -66,12 +66,12 @@ function initializeSwiperForInlineTiles() {
           swiper.slideToLoop(0, 0, false)
         },
         afterInit: (swiper: Swiper) => {
-          setSwiperLoadingStatus("inline-carousel", true)
+          setSwiperLoadingStatus(sdk, "inline-carousel", true)
           void loadTilesAsync(swiper)
         },
         activeIndexChange: (swiper: Swiper) => {
           if (swiper.navigation.prevEl) {
-            if (swiper.realIndex === 0 && isSwiperLoading("inline-carousel")) {
+            if (swiper.realIndex === 0 && isSwiperLoading(sdk, "inline-carousel")) {
               disablePrevNavigation(swiper)
             } else {
               enablePrevNavigation(swiper)
@@ -92,7 +92,7 @@ export function enableLoadedTiles() {
 async function loadTilesAsync(swiper: Swiper) {
   const observer = registerObserver(swiper)
 
-  loadAllUnloadedTiles()
+  loadAllUnloadedTiles(sdk)
   swiper.update()
 
   observer.disconnect()
@@ -105,7 +105,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
     const elements = swiperElem.querySelectorAll<HTMLElement>(".swiper-slide:has(.icon-section.hidden)")
     if (elements.length === 0) {
       clearInterval(intervalId)
-      updateSwiperInstance("inline-carousel", (swiperData: SwiperData) => {
+      updateSwiperInstance(sdk, "inline-carousel", (swiperData: SwiperData) => {
         swiperData.isLoading = false
         if (swiperData.instance) {
           swiperData.instance.off("activeIndexChange")
@@ -115,7 +115,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
           enablePrevNavigation(swiperData.instance)
         }
       })
-      refreshSwiper("inline-carousel")
+      refreshSwiper(sdk, "inline-carousel")
     }
   }, 200)
 }

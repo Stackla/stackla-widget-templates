@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Preview</title>
+  <!-- IMP: Please don't modify the port below. We don't need this file fetched from local server as we don't do any changes in this file here -->
+  <script type="text/javascript" src="{{domain}}/core.js?widgetType={{{widgetType}}}"></script>
+</head>
+
+<body style="margin: 0;">
+  <div id="container" style="width: 80%; margin: 0 auto;">
+    <div id="ugc-widget" data-wid="668ca52ada8fb"></div>
+  </div>
+  <script> 
+    let cssTemplate = `{{{cssCode}}}`;
+    let layoutTemplate = `{{{layoutCode}}}`;
+    let tileTemplate = `{{{tileCode}}}`;
+    let jsTemplate = "{{{jsCode}}}";
+    let widgetOptions = `{{{widgetOptions}}}`;
+
+    var stackWidgetCustomData = {};
+    let widgetParams = {
+      "draft": {
+        "enabled": 1,
+        "guid": "668ca52ada8fb",
+        "filter_id": 10695,
+        "enabled": 1,
+        "custom_css": cssTemplate,
+        "custom_js": jsTemplate,
+        "custom_templates": {
+          "layout": {
+            "template": layoutTemplate,
+          },
+          "tile": {
+            "template": tileTemplate,
+          },
+        },
+        "widgetOptions": widgetOptions,
+      },
+      "wid": "668ca52ada8fb",
+      "limit": 25,
+      "page": 1
+    };
+    let widget = new window.ugc.widget(widgetParams);
+    widget.init();
+  </script>
+
+  <div id="container" style="width: 80%; margin: 0 auto;">
+    <div id="ugc-widget" data-wid="1234"></div>
+  </div>
+  <script> 
+    cssTemplate = `{{{cssCode}}}`;
+    layoutTemplate = `{{{layoutCode}}}`;
+    tileTemplate = `{{{tileCode}}}`;
+    jsTemplate = "{{{jsCode}}}";
+    widgetOptions = `{{{widgetOptions}}}`;
+
+    stackWidgetCustomData = {};
+    const widgetParams2 = {
+      "draft": {
+        "enabled": 1,
+        "guid": "1234",
+        "filter_id": 10695,
+        "enabled": 1,
+        "custom_css": cssTemplate,
+        "custom_js": jsTemplate,
+        "custom_templates": {
+          "layout": {
+            "template": layoutTemplate,
+          },
+          "tile": {
+            "template": tileTemplate,
+          },
+        },
+        "widgetOptions": widgetOptions,
+      },
+      "wid": "1234",
+      "limit": 25,
+      "page": 1
+    };
+    let widget2 = new window.ugc.widget(widgetParams2);
+    widget2.init();
+  </script>
+</body>
+
+</html>

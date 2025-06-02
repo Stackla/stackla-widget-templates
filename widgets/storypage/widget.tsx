@@ -5,7 +5,7 @@ import { createElement } from "@stackla/widget-utils/jsx"
 
 declare const sdk: ISdk
 
-loadWidget({
+loadWidget(sdk, {
   features: {
     handleLoadMore: false,
     tileSizeSettings: tileSettings

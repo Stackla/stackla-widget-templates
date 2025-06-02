@@ -41,7 +41,7 @@ export function calculateTilesToShow() {
 
   const screenWidth = element.offsetWidth
 
-  const tileSize = parseInt(getTileSize(tileSettings).replace("px", ""))
+  const tileSize = parseInt(getTileSize(sdk, tileSettings).replace("px", ""))
   const tilesByScreenWidth = Math.floor(screenWidth / (tileSize + marginAsInt))
   const rows = getRowsPerPage(tileSize, marginAsInt)
   let tilesPerPage = tilesByScreenWidth * rows

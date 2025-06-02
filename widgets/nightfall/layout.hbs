@@ -1,8 +1,8 @@
 <div id="widget-container" class="hidden-container">
     <div class="ugc-tiles grid nightfall-inline">
         {{#tiles}}
-        {{>tpl-tile options=../options.config}}
+        {{>tpl-tile options=../options}}
         {{/tiles}}
     </div>
-    <load-more />
+    <load-more widgetId="{{options.wid}}"/>
 </div>

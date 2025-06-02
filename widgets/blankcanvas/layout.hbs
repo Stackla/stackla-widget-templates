@@ -3,7 +3,7 @@
 </div>
 <div class="ugc-tiles grid grid-inline">
     {{#tiles}}
-    {{>tpl-tile}}
+    {{>tpl-tile options=../options}}
     {{/tiles}}
 </div>
-<load-more />
+<load-more widgetId="{{options.wid}}"/>

@@ -23,19 +23,19 @@
       </div>
     </div>
     <div class="tile-image-wrapper">
-      {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+      {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
         {{playVideo this "100%" "100%"}}
       {{else}}
       {{#lazy image "120"}}{{/lazy}}
       {{/ifAutoPlayVideo}}
       <div class="swiper-lazy-preloader"></div>
-      <shopspot-icon tile-id={{id}} />
+      <shopspot-icon widgetId="{{options.wid}}" tile-id="{{id}}" />
     </div>
   </div>
   <div class="tile-bottom">
     <div class="tile-bottom-container">
       {{#if tags_extended}}
-      <tile-tags tile-id="{{id}}" mode="swiper" context="nightfall-inline" navigation-arrows="true" theme="dark"></tile-tags>
+      <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" mode="swiper" context="nightfall-inline" navigation-arrows="true" theme="dark"></tile-tags>
       {{/if}}
       <div class="description">
           <div class="flex-full">
@@ -48,14 +48,14 @@
               {{/if}}
               </div>
             <div class="tile-share-right">
-                <share-menu tile-id="{{id}}" theme="light"></share-menu>
+                 <share-menu widgetId="{{options.wid}}" tile-id="{{id}}" theme="light"></share-menu>
                 <div class="network-icon-circle">
                   <div class="network-icon black icon-{{source}}"></div>
                 </div>
             </div>
           </div>
           <div class="tile-share-content">
-            <time-phrase source-created-at="{{source_created_at}}"></time-phrase>
+            <time-phrase widgetId="{{options.wid}}" source-created-at="{{source_created_at}}"></time-phrase>
           </div>
           <div class="caption">
             <div class="caption-paragraph">{{message}}</div>

@@ -2,7 +2,7 @@ import { loadWidget, Sdk } from "@stackla/widget-utils"
 import { loadWaterfallLayout } from "./waterfall.lib"
 
 declare const sdk: Sdk
-loadWidget({
+loadWidget(sdk, {
   callbacks: {
     onLoadMore: [() => loadWaterfallLayout(false)]
   },

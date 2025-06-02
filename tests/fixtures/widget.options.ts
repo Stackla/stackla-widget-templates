@@ -1,7 +1,10 @@
 import { SharedWidgetOptions } from "@stackla/widget-utils"
 
-const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
+const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
+  wid: string
+} = {
   enabled: true,
+  wid: "unknown",
   config: {
     lightbox: {
       apply_custom_sharing_title_on_miss_title: false,
@@ -104,7 +107,6 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
     pinColor: "",
     pinTextColor: ""
   },
-  guid: "668ca52ada8fb",
   filter_id: "10695"
   // TODO: Fix types in widget utils
   // plugins: {

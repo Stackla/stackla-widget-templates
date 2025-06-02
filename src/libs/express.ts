@@ -194,7 +194,7 @@ function mutateStylesForCustomWidgets(widgetType: string) {
   return widgetOptionsMutated
 }
 
-expressApp.post("/development/widgets/668ca52ada8fb/draft", async (req, res) => {
+expressApp.post("/development/widgets/:wid/draft", async (req, res) => {
   const body = JSON.parse(req.body)
   const draft = body.draft as IDraftRequest
   const html = await renderTemplates(draft, req)
@@ -215,7 +215,7 @@ expressApp.post("/development/widgets/668ca52ada8fb/draft", async (req, res) => 
   })
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
+expressApp.get("/development/widgets/:wid", async (req, res) => {
   const content = await getContent(req.cookies.widgetType as string)
 
   const widgetOptionsMutated = mutateStylesForCustomWidgets(req.cookies.widgetType as string)
@@ -231,7 +231,7 @@ expressApp.get("/development/widgets/668ca52ada8fb", async (req, res) => {
   })
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
+expressApp.get("/development/widgets/:wid/tiles", async (req, res) => {
   if (req.query.after_id) {
     res.send(getTilesToRender(req).slice(0, 1).map(tile => ({
         ...tile,
@@ -244,11 +244,11 @@ expressApp.get("/development/widgets/668ca52ada8fb/tiles", async (req, res) => {
   res.send(getTilesToRender(req))
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb/tiles/:tid", async (req, res) => {
+expressApp.get("/development/widgets/:wid/tiles/:tid", async (req, res) => {
   res.json(tiles.find(tile => tile.id === req.params.tid))
 })
 
-expressApp.get("/development/widgets/668ca52ada8fb/rendered/tiles", async (req, res) => {
+expressApp.get("/development/widgets/:wid/rendered/tiles", async (req, res) => {
   const widgetType = req.cookies.widgetType as string
   const tileHtml = await getHTML(await getContent(widgetType), req)
 
@@ -286,6 +286,20 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
     widgetOptions: JSON.stringify(widgetOptions),
     domain: getDomain(req.query.dev === "true"),
     wid: req.query.wid ?? "668ca52ada8fb",
+    ...(await getContent(widgetType))
+  })
+})
+
+expressApp.get("/multi-preview", async (req : Request, res: Response) => {
+  const widgetRequest = req.query
+  const widgetType = req.query.widgetType as string
+  const dev = req.query.dev
+
+  res.render("multi-preview", {
+    widgetRequest: JSON.stringify(widgetRequest),
+    widgetType,
+    widgetOptions: JSON.stringify(widgetOptions),
+    domain: getDomain(req.query.dev === "true"),
     ...(await getContent(widgetType))
   })
 })

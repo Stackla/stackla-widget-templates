@@ -4,7 +4,7 @@ import ProductsTemplate from "./products.template"
 
 declare const sdk: Sdk
 
-loadWidget({
+loadWidget(sdk, {
   callbacks: {
     onLoadMore: [() => loadWaterfallLayout(false)]
   },

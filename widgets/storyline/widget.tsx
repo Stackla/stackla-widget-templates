@@ -13,7 +13,7 @@ const tileSizeSettings = {
   large: "150px"
 }
 
-loadWidget({
+loadWidget(sdk, {
   extensions: {
     swiper: true
   },
