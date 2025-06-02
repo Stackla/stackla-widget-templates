@@ -23,7 +23,7 @@ export function ExpandedTiles() {
               data-id={tile.id}
               data-yt-id={tile.youtube_id || ""}
               data-tiktok-id={tile.tiktok_id || ""}>
-              <ExpandedTile tile={tile} />
+              <ExpandedTile sdk={sdk} tile={tile} />
             </div>
           ))}
         </div>

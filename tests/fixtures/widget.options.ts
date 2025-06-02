@@ -1,7 +1,10 @@
 import { SharedWidgetOptions } from "@stackla/widget-utils"
 
-const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
+const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
+  wid: string
+} = {
   enabled: true,
+  wid: "unknown",
   config: {
     lightbox: {
       apply_custom_sharing_title_on_miss_title: false,
@@ -24,7 +27,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
       show_tags: true,
       show_votes: true,
       show_cross_sellers: true,
-      show_add_to_cart: true,
+      show_add_to_cart: false,
       show_carousel_grouping: false
     },
     tile_options: {
@@ -39,7 +42,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
       show_votes: true,
       show_caption: true,
       show_products: true,
-      show_add_to_cart: true,
+      show_add_to_cart: false,
       auto_play_video: false,
       show_inline_tiles: false,
       show_carousel: false
@@ -104,7 +107,6 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] = {
     pinColor: "",
     pinTextColor: ""
   },
-  guid: "668ca52ada8fb",
   filter_id: "10695"
   // TODO: Fix types in widget utils
   // plugins: {

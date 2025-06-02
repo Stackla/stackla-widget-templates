@@ -5,7 +5,7 @@ declare const sdk: Sdk
 import { loadWidget } from "@stackla/widget-utils"
 import { initializeInlineSwiperListeners } from "./inline-carousel-swiper.loader"
 
-loadWidget({
+loadWidget(sdk, {
   extensions: {
     swiper: true
   },

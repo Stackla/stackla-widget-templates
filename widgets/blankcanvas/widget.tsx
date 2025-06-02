@@ -3,7 +3,7 @@ import { config } from "./config"
 
 declare const sdk: ISdk
 
-loadWidget({
+loadWidget(sdk, {
   config: {
     ...config
   }

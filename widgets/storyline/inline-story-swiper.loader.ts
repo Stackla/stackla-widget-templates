@@ -31,7 +31,7 @@ export function initializeSwiperForInlineStoryTiles() {
   const container = sdk.querySelector("#nosto-ugc-container")
   const containerObserver = new ResizeObserver(() => {
     const slidesPerView = getSlidesPerView()
-    initializeSwiper({
+    initializeSwiper(sdk, {
       id: "inline-story",
       mode: "inline",
       widgetSelector,
@@ -86,13 +86,13 @@ export function initializeSwiperForInlineStoryTiles() {
             sdk.triggerEvent(EVENT_LOAD_MORE)
           },
           afterInit: (swiper: Swiper) => {
-            setSwiperLoadingStatus("inline-story", true)
+            setSwiperLoadingStatus(sdk, "inline-story", true)
             disablePrevNavigation(swiper)
             void loadTilesAsync(swiper)
           },
           activeIndexChange: (swiper: Swiper) => {
             if (swiper.navigation.prevEl) {
-              if (swiper.realIndex === 0 && isSwiperLoading("inline-story")) {
+              if (swiper.realIndex === 0 && isSwiperLoading(sdk, "inline-story")) {
                 disablePrevNavigation(swiper)
               } else {
                 enablePrevNavigation(swiper)
@@ -120,8 +120,8 @@ function getRenderMode(hostElement?: HTMLElement) {
 }
 
 export function onTilesUpdated() {
-  refreshSwiper("inline-story")
-  loadAllUnloadedTiles()
+  refreshSwiper(sdk, "inline-story")
+  loadAllUnloadedTiles(sdk)
 }
 
 export function enableLoadedTiles() {
@@ -133,7 +133,7 @@ export function enableLoadedTiles() {
 async function loadTilesAsync(swiper: Swiper) {
   const observer = registerObserver(swiper)
 
-  loadAllUnloadedTiles()
+  loadAllUnloadedTiles(sdk)
   swiper.update()
 
   observer.disconnect()
@@ -146,7 +146,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
     const elements = swiperElem.querySelectorAll<HTMLElement>(".swiper-slide:has(.icon-section.hidden)")
     if (elements.length === 0) {
       clearInterval(intervalId)
-      updateSwiperInstance("inline-story", (swiperData: SwiperData) => {
+      updateSwiperInstance(sdk, "inline-story", (swiperData: SwiperData) => {
         swiperData.isLoading = false
         if (swiperData.instance) {
           swiperData.instance.off("activeIndexChange")
@@ -154,7 +154,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
           enablePrevNavigation(swiperData.instance)
         }
       })
-      refreshSwiper("inline-story")
+      refreshSwiper(sdk, "inline-story")
     }
   }, 200)
 }

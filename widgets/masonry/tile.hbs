@@ -1,5 +1,5 @@
 {{#tile class="grid-item"}}
-  {{#ifAutoPlayVideo media options.tile_options.auto_play_video }}
+  {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
     <div class="tile">
       {{playVideo this "100%" "100%"}}
     </div>
@@ -22,11 +22,11 @@
           {{/ifequals}}
         </div>
         <div class="bottom-section">
-          <tile-tags tile-id="{{id}}" variant="dark" mode="swiper" context="masonry-inline"></tile-tags>
+          <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" variant="dark" mode="swiper" context="masonry-inline"></tile-tags>
           <div class="network-icon icon-{{source}}"></div>
         </div>
 
-        <shopspot-icon tile-id={{id}} />
+        <shopspot-icon widgetId="{{options.wid}}" tile-id={{id}} />
       </div>
     </div>
   {{/ifAutoPlayVideo}}

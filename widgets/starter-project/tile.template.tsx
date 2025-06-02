@@ -29,11 +29,11 @@ export function ExpandedTile({ tile }: ExpandedTileProps) {
             <div class="image-wrapper-inner">
               {tile.media === "video" ? (
                 <>
-                  <VideoContainer shopspotEnabled={shopspotEnabled} tile={tile} parent={parent} />
-                  <VideoErrorFallbackTemplate tile={tile} />
+                  <VideoContainer sdk={sdk} shopspotEnabled={shopspotEnabled} tile={tile} />
+                  <VideoErrorFallbackTemplate sdk={sdk} tile={tile} />
                 </>
               ) : tile.media === "image" ? (
-                <ImageTemplate tile={tile} image={tile.image} shopspotEnabled={shopspotEnabled} parent={parent} />
+                <ImageTemplate tile={tile} image={tile.image} shopspotEnabled={shopspotEnabled} />
               ) : tile.media === "text" ? (
                 <span class="content-text">{tile.message}</span>
               ) : tile.media === "html" ? (
@@ -49,17 +49,24 @@ export function ExpandedTile({ tile }: ExpandedTileProps) {
             <div class="content-wrapper">
               <div class="content-inner-wrapper">
                 <tile-content
+                  widgetId={sdk.getWidgetId()}
                   tileId={tile.id}
                   render-share-menu={sharingToolsEnabled}
                   render-caption={show_caption}
                   render-timephrase={show_timestamp}
                 />
                 {tagsEnabled && (
-                  <tile-tags tile-id={tile.id} mode="swiper" context="expanded" navigation-arrows="true" />
+                  <tile-tags
+                    widgetId={sdk.getWidgetId()}
+                    tile-id={tile.id}
+                    mode="swiper"
+                    context="expanded"
+                    navigation-arrows="true"
+                  />
                 )}
                 {productsEnabled && (
                   <>
-                    <ugc-products parent={parent} tile-id={tile.id} />
+                    <ugc-products widgetId={sdk.getWidgetId()} parent={parent} tile-id={tile.id} />
                   </>
                 )}
               </div>
@@ -97,7 +104,7 @@ export function IconSection({ tile, productsEnabled }: { tile: Tile; productsEna
 export function ShopSpotTemplate({ shopspotEnabled, parent, tileId }: ShopspotProps) {
   return shopspotEnabled ? (
     <>
-      <shopspot-icon parent={parent} mode="expanded" tile-id={tileId} />
+      <shopspot-icon parent={parent} mode="expanded" tile-id={tileId} widgetId={sdk.getWidgetId()} />
     </>
   ) : (
     <></>
@@ -120,7 +127,7 @@ export function ImageTemplate({
       <div class="image-filler blurred" style={{ "background-image": `url('${image}')` }}></div>
       <div class="image">
         {shopspotEnabled ? (
-          <ShopSpotTemplate shopspotEnabled={shopspotEnabled} parent={parent} tileId={tile.id} />
+          <ShopSpotTemplate sdk={sdk} shopspotEnabled={shopspotEnabled} parent={parent} tileId={tile.id} />
         ) : (
           <></>
         )}

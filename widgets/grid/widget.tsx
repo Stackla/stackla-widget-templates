@@ -1,4 +1,6 @@
-import { loadWidget, loadAllUnloadedTiles } from "@stackla/widget-utils"
+import { loadWidget, loadAllUnloadedTiles, ISdk } from "@stackla/widget-utils"
 
-loadWidget()
-loadAllUnloadedTiles()
+declare const sdk: ISdk
+
+loadWidget(sdk)
+loadAllUnloadedTiles(sdk)

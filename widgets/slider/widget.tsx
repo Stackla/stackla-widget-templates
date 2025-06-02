@@ -1,5 +1,5 @@
 import { loadSlider } from "./load-slider"
-import { loadWidget } from "@stackla/widget-utils"
+import { ISdk, loadWidget } from "@stackla/widget-utils"
 import { initObservers } from "./observers"
 
 // dimensions from Figma design
@@ -20,7 +20,9 @@ const observers = initObservers({
 
 observers?.configTileIntersectionTargets()
 
-loadWidget({
+declare const sdk: ISdk
+
+loadWidget(sdk, {
   features: {
     handleLoadMore: false,
     addNewTilesAutomatically: false,

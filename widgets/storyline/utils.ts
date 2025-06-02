@@ -1,4 +1,6 @@
-import { Features, getTileSizeByWidget } from "packages/widget-utils"
+import { Features, getTileSizeByWidget, ISdk } from "packages/widget-utils"
+
+declare const sdk: ISdk
 
 /**
  * gets the configured tile size
@@ -6,7 +8,7 @@ import { Features, getTileSizeByWidget } from "packages/widget-utils"
  * @returns the tile size value without CSS unit
  */
 export function getTileSizeUnitless(settings: Features["tileSizeSettings"]) {
-  const tileSizeConfig = getTileSizeByWidget(settings)
+  const tileSizeConfig = getTileSizeByWidget(sdk, settings)
   return Number(tileSizeConfig["--tile-size-unitless"])
 }
 

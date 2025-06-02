@@ -30,7 +30,7 @@ function initializeSwiperForInlineTiles() {
     throw new Error("Failed to find widget UI element. Failed to initialise Swiper")
   }
 
-  initializeSwiper({
+  initializeSwiper(sdk, {
     id: "inline-shortvideo",
     mode: "inline",
     widgetSelector,
@@ -66,12 +66,12 @@ function initializeSwiperForInlineTiles() {
           swiper.slideToLoop(0, 0, false)
         },
         afterInit: (swiper: Swiper) => {
-          setSwiperLoadingStatus("inline-shortvideo", true)
+          setSwiperLoadingStatus(sdk, "inline-shortvideo", true)
           void loadTilesAsync(swiper)
         },
         activeIndexChange: (swiper: Swiper) => {
           if (swiper.navigation.prevEl) {
-            if (swiper.realIndex === 0 && isSwiperLoading("inline-shortvideo")) {
+            if (swiper.realIndex === 0 && isSwiperLoading(sdk, "inline-shortvideo")) {
               disablePrevNavigation(swiper)
             } else {
               enablePrevNavigation(swiper)
@@ -92,7 +92,7 @@ export function enableLoadedTiles() {
 async function loadTilesAsync(swiper: Swiper) {
   const observer = registerObserver(swiper)
 
-  loadAllUnloadedTiles()
+  loadAllUnloadedTiles(sdk)
   swiper.update()
 
   observer.disconnect()
@@ -105,7 +105,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
     const elements = swiperElem.querySelectorAll<HTMLElement>(".swiper-slide:has(.icon-section.hidden)")
     if (elements.length === 0) {
       clearInterval(intervalId)
-      updateSwiperInstance("inline-shortvideo", (swiperData: SwiperData) => {
+      updateSwiperInstance(sdk, "inline-shortvideo", (swiperData: SwiperData) => {
         swiperData.isLoading = false
         if (swiperData.instance) {
           swiperData.instance.off("activeIndexChange")
@@ -115,7 +115,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
           enablePrevNavigation(swiperData.instance)
         }
       })
-      refreshSwiper("inline-shortvideo")
+      refreshSwiper(sdk, "inline-shortvideo")
     }
   }, 200)
 }

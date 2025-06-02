@@ -1,6 +1,8 @@
-import { loadWidget } from "@stackla/widget-utils"
+import { ISdk, loadWidget } from "@stackla/widget-utils"
 
-loadWidget({
+declare const sdk: ISdk
+
+loadWidget(sdk, {
   extensions: {
     masonry: true
   }

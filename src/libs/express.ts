@@ -290,6 +290,20 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
   })
 })
 
+expressApp.get("/multi-preview", async (req : Request, res: Response) => {
+  const widgetRequest = req.query
+  const widgetType = req.query.widgetType as string
+  const dev = req.query.dev
+
+  res.render("multi-preview", {
+    widgetRequest: JSON.stringify(widgetRequest),
+    widgetType,
+    widgetOptions: JSON.stringify(widgetOptions),
+    domain: getDomain(req.query.dev === "true"),
+    ...(await getContent(widgetType))
+  })
+})
+
 expressApp.get("/staging", async (req : Request, res : Response) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string

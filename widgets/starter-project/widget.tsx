@@ -1,10 +1,12 @@
-import { loadWidget } from "@stackla/widget-utils"
+import { ISdk, loadWidget } from "@stackla/widget-utils"
 import { createToast, getMyMoodBorder } from "./starter-project.lib"
 import { ExpandedTiles } from "./expanded-tile.template"
 import ProductsTemplate from "./products.template"
 import { config } from "./config"
 
-loadWidget({
+declare const sdk: ISdk
+
+loadWidget(sdk, {
   config: {
     ...config
   },

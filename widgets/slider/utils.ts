@@ -8,7 +8,7 @@ declare const sdk: Sdk
  * @returns the tile size value without CSS unit
  */
 export function getTileSizeUnitless(settings: Features["tileSizeSettings"]) {
-  const tileSizeConfig = getTileSizeByWidget(settings)
+  const tileSizeConfig = getTileSizeByWidget(sdk, settings)
   return Number(tileSizeConfig["--tile-size-unitless"])
 }
 

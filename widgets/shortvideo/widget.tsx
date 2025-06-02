@@ -6,7 +6,7 @@ import { loadWidget } from "@stackla/widget-utils"
 import { initializeInlineSwiperListeners } from "./inline-shortvideo-swiper.loader"
 import { StoryExpandedTiles } from "@widgets/storyline/templates/base.template"
 
-loadWidget({
+loadWidget(sdk, {
   extensions: {
     swiper: true
   },

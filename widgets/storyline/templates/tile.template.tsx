@@ -22,14 +22,13 @@ export function StoryExpandedTile({ tile }: ExpandedTileProps) {
 
   const sharingToolsEnabled = show_sharing
 
-  const parent = sdk.getNodeId()
-
   return (
     <>
       <div class="panel-active">
         <div class="overlay"></div>
         <AutoplayProgress />
         <tile-content
+          widgetId={sdk.getWidgetId()}
           tileId={tile.id}
           render-share-menu={sharingToolsEnabled}
           render-description="false"
@@ -44,11 +43,11 @@ export function StoryExpandedTile({ tile }: ExpandedTileProps) {
           <div class="image-wrapper-inner">
             {tile.media === "video" ? (
               <>
-                <VideoContainer shopspotEnabled={shopspotEnabled} tile={tile} parent={parent} />
-                <VideoErrorFallbackTemplate tile={tile} />
+                <VideoContainer sdk={sdk} shopspotEnabled={shopspotEnabled} tile={tile} />
+                <VideoErrorFallbackTemplate sdk={sdk} tile={tile} />
               </>
             ) : tile.media === "image" ? (
-              <ImageTemplate tile={tile} image={tile.image} shopspotEnabled={shopspotEnabled} parent={parent} />
+              <ImageTemplate tile={tile} image={tile.image} shopspotEnabled={shopspotEnabled} />
             ) : tile.media === "text" ? (
               <span class="content-text">{tile.message}</span>
             ) : tile.media === "html" ? (
@@ -60,7 +59,7 @@ export function StoryExpandedTile({ tile }: ExpandedTileProps) {
         </div>
       </div>
       <div class="ugc-products-wrap" data-tile-id={tile.id}>
-        <ugc-products parent={parent} tile-id={tile.id} down-icon={true}></ugc-products>
+        <ugc-products widgetId={sdk.getWidgetId()} tile-id={tile.id} down-icon={true}></ugc-products>
       </div>
     </>
   )
@@ -84,6 +83,7 @@ export function IconSection({ tile }: { tile: Tile }) {
   bottomSectionIconContent.push(
     <div class="story-expanded-bottom-section">
       <tile-tags
+        widgetId={sdk.getWidgetId()}
         tile-id={tile.id}
         variant="dark"
         mode="swiper"
@@ -103,7 +103,13 @@ export function IconSection({ tile }: { tile: Tile }) {
 export function ShopSpotTemplate({ shopspotEnabled, parent, tileId }: ShopspotProps) {
   return shopspotEnabled ? (
     <>
-      <shopspot-icon parent={parent} mode="expanded" tile-id={tileId} show-tooltip="false" />
+      <shopspot-icon
+        parent={parent}
+        mode="expanded"
+        tile-id={tileId}
+        show-tooltip="false"
+        widgetId={sdk.getWidgetId()}
+      />
     </>
   ) : (
     <></>
@@ -126,7 +132,7 @@ export function ImageTemplate({
       <div class="image-filler" style={{ "background-image": `url('${image}')` }}></div>
       <div class="image">
         {shopspotEnabled ? (
-          <ShopSpotTemplate shopspotEnabled={shopspotEnabled} parent={parent} tileId={tile.id} />
+          <ShopSpotTemplate sdk={sdk} shopspotEnabled={shopspotEnabled} parent={parent} tileId={tile.id} />
         ) : (
           <></>
         )}
