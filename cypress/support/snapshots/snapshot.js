@@ -118,9 +118,7 @@ const propsToCompare = [
   "animation-play-state",
 
   // Visibility & Display
-  "visibility",
-  "pointer-events",
-  "cursor"
+  "visibility"
 ]
 
 export const getPropsFromComputedStyle = el => {
