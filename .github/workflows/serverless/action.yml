@@ -53,7 +53,7 @@ runs:
     - name: Release to S3
       shell: bash
       run: |
-        aws s3 sync dist/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.stage }}/ --delete
+        aws s3 sync dist/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.stage }}/widgets/ --delete
     - name: Sentry Release
       uses: getsentry/action-release@v1
       if: inputs.sentry-auth-token != ''
