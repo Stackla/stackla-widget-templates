@@ -49,7 +49,7 @@ export function ProductCTA({ sdk, product, tile }: { sdk: Sdk; product: TagExten
   }
 
   return (
-    <a href={custom_url} target={target} class="stacklapopup-products-item-button-wrap">
+    <a href={custom_url} target={target} class="skeleton-loader stacklapopup-products-item-button-wrap">
       <span className={`stacklapopup-products-item-button${availability ? "" : " disabled"}`}>{cta_text}</span>
     </a>
   )
