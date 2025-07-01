@@ -94,6 +94,10 @@
         "small1 small2"
         "small3 small4";
     }
+
+    &:empty {
+      display: none;
+    }
   }
 
   .ugc-tile {
