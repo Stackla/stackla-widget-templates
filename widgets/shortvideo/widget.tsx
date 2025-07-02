@@ -27,9 +27,7 @@ loadWidget(sdk, {
     }
   },
   templates: {
-    "expanded-tiles": {
-      template: StoryExpandedTiles
-    }
+    "expanded-tiles": StoryExpandedTiles
   }
 })
 
