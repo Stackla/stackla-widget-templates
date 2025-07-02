@@ -9,9 +9,7 @@ loadWidget(sdk, {
     onLoadMore: [() => loadWaterfallLayout(false)]
   },
   templates: {
-    "ugc-products": {
-      template: ProductsTemplate
-    }
+    "ugc-products": ProductsTemplate
   },
   features: {
     cssVariables: {

@@ -29,11 +29,7 @@ loadWidget(sdk, {
     onTileClose: [() => createToast("Tile closed!")]
   },
   templates: {
-    "expanded-tiles": {
-      template: ExpandedTiles
-    },
-    "ugc-products": {
-      template: ProductsTemplate
-    }
+    "expanded-tiles": ExpandedTiles,
+    "ugc-products": ProductsTemplate
   }
 })

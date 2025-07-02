@@ -28,9 +28,7 @@ loadWidget(sdk, {
     onTilesUpdated: [onTilesUpdated]
   },
   templates: {
-    "expanded-tiles": {
-      template: StoryExpandedTiles
-    }
+    "expanded-tiles": StoryExpandedTiles
   }
 })
 
