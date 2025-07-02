@@ -24,10 +24,13 @@
           <div class="icon-play"></div>
       {{/ifequals}}
     </div>
-    <div class="bottom-section">
-      <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" variant="dark" mode="swiper" context="carousel-inline"></tile-tags>
-      <div class="network-icon icon-{{source}}"></div>
-    </div>
+     {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
+     {{else}}
+      <div class="bottom-section">
+        <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" variant="dark" mode="swiper" context="carousel-inline"></tile-tags>
+        <div class="network-icon icon-{{source}}"></div>
+      </div>
+      {{/ifAutoPlayVideo}}
   </div>
   <div class="tile-image-wrapper">
     {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
