@@ -1,4 +1,4 @@
-import { Sdk, SwiperData } from "types"
+import { Sdk } from "types"
 import {
   initializeSwiper,
   refreshSwiper,
@@ -105,7 +105,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement) {
     const elements = swiperElem.querySelectorAll<HTMLElement>(".swiper-slide:has(.icon-section.hidden)")
     if (elements.length === 0) {
       clearInterval(intervalId)
-      updateSwiperInstance(sdk, "inline-shortvideo", (swiperData: SwiperData) => {
+      updateSwiperInstance(sdk, "inline-shortvideo", swiperData => {
         swiperData.isLoading = false
         if (swiperData.instance) {
           swiperData.instance.off("activeIndexChange")
