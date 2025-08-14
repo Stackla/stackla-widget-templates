@@ -223,7 +223,7 @@ expanded-tiles:not(:empty) {
               margin: 0;
               padding: 0;
               z-index: 1;
-              object-fit: cover;
+              object-fit: contain;
               height: 100% !important;
             }
           }
