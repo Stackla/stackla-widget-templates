@@ -6,9 +6,6 @@ import { loadWidget } from "@stackla/widget-utils"
 import { initializeInlineSwiperListeners } from "./inline-carousel-swiper.loader"
 
 loadWidget(sdk, {
-  extensions: {
-    swiper: true
-  },
   features: {
     handleLoadMore: false,
     cssVariables: {

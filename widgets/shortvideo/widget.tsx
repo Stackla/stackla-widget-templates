@@ -7,9 +7,6 @@ import { initializeInlineSwiperListeners } from "./inline-shortvideo-swiper.load
 import { StoryExpandedTiles } from "@widgets/storyline/templates/base.template"
 
 loadWidget(sdk, {
-  extensions: {
-    swiper: true
-  },
   features: {
     handleLoadMore: false,
     tileSizeSettings: {

@@ -14,9 +14,6 @@ const tileSizeSettings = {
 }
 
 loadWidget(sdk, {
-  extensions: {
-    swiper: true
-  },
   features: {
     handleLoadMore: false,
     tileSizeSettings,
