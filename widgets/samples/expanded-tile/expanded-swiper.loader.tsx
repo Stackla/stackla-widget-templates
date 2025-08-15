@@ -196,7 +196,7 @@ function initalizeStoryExpandedTile(sdk: ISdk, settings: ExpandedTileSettings) {
 }
 
 async function swiperNavigationHandler(sdk: ISdk, swiper: Swiper) {
-  controlVideoPlayback(sdk, swiper)
+  void controlVideoPlayback(sdk, swiper)
   const tileId = getTileIdFromSlide(swiper, swiper.realIndex)
   if (!tileId) {
     throw Error("Tile ID is not found in next slide from swiper")

@@ -19,10 +19,7 @@ export type ContentWrapperProps = {
   sdk: ISdk
 }
 
-import {
-  VideoContainer,
-  VideoErrorFallbackTemplate,
-} from "@widgets/samples/expanded-tile/video.templates"
+import { VideoContainer, VideoErrorFallbackTemplate } from "@widgets/samples/expanded-tile/video.templates"
 
 declare const sdk: ISdk
 
