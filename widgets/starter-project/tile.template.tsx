@@ -1,11 +1,6 @@
 import { createElement, createFragment, ISdk, Tile } from "@stackla/widget-utils"
-
-import {
-  VideoContainer,
-  VideoErrorFallbackTemplate,
-  ExpandedTileProps,
-  ShopspotProps
-} from "@stackla/widget-utils/components"
+import { VideoContainer, VideoErrorFallbackTemplate } from "@widgets/samples/expanded-tile/video.templates"
+import { ExpandedTileProps, ShopspotProps } from "@widgets/samples/tile.template"
 
 declare const sdk: ISdk
 

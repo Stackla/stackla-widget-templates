@@ -9,4 +9,14 @@ interface Window {
     cdn: string,
     domain: string
   }
+  ugc: {
+    libs: {
+      Swiper: swiper
+    }
+    swiperContainer: Record<string, Swiper>,
+    getWidgetBySelector: (selector: string) => {
+      sdk: sdk
+    }
+  },
+  stackWidgetDomain: string,
 }
