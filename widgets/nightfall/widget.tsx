@@ -16,8 +16,7 @@ loadWidget(sdk, {
       "--tile-share-content-display-inline":
         sdk.getInlineTileConfig().show_sharing || sdk.getInlineTileConfig().show_timestamp ? "flex" : "none"
     }
-  },
-  extensions: {}
+  }
 })
 
 void loadWaterfallLayout(false)
