@@ -35,8 +35,8 @@ module.exports = {
     }),
     new DefinePlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      APP_ENV: JSON.stringify(process.env.APP_ENV),
-    }),
+      APP_ENV: JSON.stringify(process.env.APP_ENV)
+    })
   ],
   resolve: {
     extensions: [".ts", ".js"]

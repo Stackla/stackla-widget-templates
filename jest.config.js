@@ -1,34 +1,29 @@
 const tsConfig = require("./tsconfig.json")
 
-const { pathsToModuleNameMapper } = require('ts-jest');
-const path = require('path');
+const { pathsToModuleNameMapper } = require("ts-jest")
+const path = require("path")
 
 function getPaths(paths, allowInternals = false) {
   if (allowInternals) {
-    return paths;
+    return paths
   }
-  return Object.fromEntries(
-    Object.entries(paths).filter(([key]) => !key.includes('@stackla/*'))
-  );
+  return Object.fromEntries(Object.entries(paths).filter(([key]) => !key.includes("@stackla/*")))
 }
 
 const baseConfig = ({ tsConfig = {}, allowInternals = true }) => ({
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    "^.+\\.tsx?$": "ts-jest"
   },
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  setupFilesAfterEnv: [path.resolve(__dirname, 'tests', 'setup-env-vars.js')],
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+  setupFilesAfterEnv: [path.resolve(__dirname, "tests", "setup-env-vars.js")],
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx", "json", "node"],
   ...(tsConfig.compilerOptions &&
     tsConfig.compilerOptions.paths && {
-      moduleNameMapper: pathsToModuleNameMapper(
-        getPaths(tsConfig.compilerOptions.paths, allowInternals),
-        {
-          prefix: '<rootDir>/',
-        }
-      ),
-    }),
-});
+      moduleNameMapper: pathsToModuleNameMapper(getPaths(tsConfig.compilerOptions.paths, allowInternals), {
+        prefix: "<rootDir>/"
+      })
+    })
+})
 
 module.exports = {
   ...baseConfig({ tsConfig }),
@@ -60,8 +55,9 @@ module.exports = {
   transform: {
     "^.+\\.js$": "babel-jest",
     "^.+\\.(ts|tsx)$": "ts-jest",
-    '^.+\\.mjs$': 'babel-jest'
+    "^.+\\.mjs$": "babel-jest"
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!swiper)', // Transpile the swiper module
-  ],}
+    "/node_modules/(?!swiper)" // Transpile the swiper module
+  ]
+}

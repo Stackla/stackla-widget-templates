@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
 import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
-import { Request, Response } from 'express';
+import { Request, Response } from "express"
 
 export function getDomain(isDev: boolean) {
   if (isDev) {
@@ -83,7 +83,7 @@ expressApp.use((req, res, next) => {
   next()
 })
 
-expressApp.use("/preview", (req : Request, res : Response, next) => {
+expressApp.use("/preview", (req: Request, res: Response, next) => {
   const widgetType = req.query.widgetType
   if (!widgetType) {
     res.status(400).send("widgetType query parameter is required")
@@ -233,10 +233,14 @@ expressApp.get("/development/widgets/:wid", async (req, res) => {
 
 expressApp.get("/development/widgets/:wid/tiles", async (req, res) => {
   if (req.query.after_id) {
-    res.send(getTilesToRender(req).slice(0, 1).map(tile => ({
-        ...tile,
-        id: "1"
-      })))
+    res.send(
+      getTilesToRender(req)
+        .slice(0, 1)
+        .map(tile => ({
+          ...tile,
+          id: "1"
+        }))
+    )
 
     return
   }
@@ -253,11 +257,13 @@ expressApp.get("/development/widgets/:wid/rendered/tiles", async (req, res) => {
   const tileHtml = await getHTML(await getContent(widgetType), req)
 
   if (req.query.after_id) {
-    res.json(tileHtml.slice(0, 1).map(tile => {
-      tile = tile.replace(`data-id=\"65e16a0b5d7e676caec68f03\"`, `data-id=\"1\"`);
-      return tile;
-    }));
-    return;
+    res.json(
+      tileHtml.slice(0, 1).map(tile => {
+        tile = tile.replace(`data-id=\"65e16a0b5d7e676caec68f03\"`, `data-id=\"1\"`)
+        return tile
+      })
+    )
+    return
   }
 
   res.json(tileHtml)
@@ -268,15 +274,17 @@ expressApp.get("/development/stackla/cs/image/disable", async (req, res) => {
 })
 
 // Register preview route
-expressApp.get("/preview", async (req : Request, res: Response) => {
+expressApp.get("/preview", async (req: Request, res: Response) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
   const dev = req.query.dev
 
   if (dev) {
     if (!req.query.wid) {
-      res.status(400).send("wid query parameter is required. Please search through widget list to find the id you wish to use")
-      return;
+      res
+        .status(400)
+        .send("wid query parameter is required. Please search through widget list to find the id you wish to use")
+      return
     }
   }
 
@@ -290,7 +298,7 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
   })
 })
 
-expressApp.get("/multi-preview", async (req : Request, res: Response) => {
+expressApp.get("/multi-preview", async (req: Request, res: Response) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
   const dev = req.query.dev
@@ -304,7 +312,7 @@ expressApp.get("/multi-preview", async (req : Request, res: Response) => {
   })
 })
 
-expressApp.get("/staging", async (req : Request, res : Response) => {
+expressApp.get("/staging", async (req: Request, res: Response) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
 
