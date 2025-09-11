@@ -1,0 +1,21 @@
+<main class="ugc-grid-widget" role="main">
+  <section class="ugc-tiles grid grid-inline" 
+           role="region" 
+           aria-label="User Generated Content Grid"
+           aria-describedby="grid-description">
+    {{#tiles}}
+    {{>tpl-tile options=../options}}
+    {{/tiles}}
+  </section>
+  
+  <div id="grid-description" class="sr-only">
+    A grid of user-generated content posts. Use arrow keys to navigate between items.
+  </div>
+  
+  <div class="load-more-section" role="region" aria-label="Load more content">
+    <load-more widgetId="{{options.wid}}" 
+               aria-label="Load more content items"
+               role="button"
+               tabindex="0"/>
+  </div>
+</main>
