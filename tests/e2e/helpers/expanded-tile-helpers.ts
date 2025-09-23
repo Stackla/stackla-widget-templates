@@ -24,7 +24,8 @@ export async function shouldExpandedTile(page: Page, widgetType: string): Promis
   const imageFiller = expandedTile.locator(".image-filler")
   await expect(imageFiller).toBeVisible()
   await imageFiller.evaluate(element => {
-    ;(element as HTMLElement).style.visibility = "hidden"
+    const htmlElement = element as HTMLElement
+    htmlElement.style.visibility = "hidden"
   })
 
   await page.waitForTimeout(1000)
