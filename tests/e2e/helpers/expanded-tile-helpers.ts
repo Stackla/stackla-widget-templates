@@ -1,5 +1,5 @@
-import { Page, expect } from '@playwright/test'
-import { getFirstTile, getExpandedTile } from './widget-helpers'
+import { Page, expect } from "@playwright/test"
+import { getFirstTile, getExpandedTile } from "./widget-helpers"
 
 /**
  * Test expanded tile functionality
@@ -21,17 +21,17 @@ export async function shouldExpandedTile(page: Page, widgetType: string): Promis
   await expect(expandedTile).toBeVisible()
 
   // Hide image filler for consistent testing
-  const imageFiller = expandedTile.locator('.image-filler')
+  const imageFiller = expandedTile.locator(".image-filler")
   await expect(imageFiller).toBeVisible()
   await imageFiller.evaluate(element => {
-    (element as HTMLElement).style.visibility = 'hidden'
+    ;(element as HTMLElement).style.visibility = "hidden"
   })
 
   await page.waitForTimeout(1000)
 
   // Check that body has overflow hidden when expanded tile is open
-  const body = page.locator('body')
-  await expect(body).toHaveCSS('overflow', 'hidden')
+  const body = page.locator("body")
+  await expect(body).toHaveCSS("overflow", "hidden")
 }
 
 /**
@@ -43,7 +43,7 @@ export async function expandedTileSnapshot(page: Page, widgetType: string): Prom
   const expandedTile = getExpandedTile(page)
   const specificTile = expandedTile.locator(".ugc-tile[data-id='65e16a0b5d7e676caec68f03']").first()
   await expect(specificTile).toBeVisible()
-  
+
   // Take screenshot of the expanded tile
   await page.screenshot({
     path: `test-results/screenshots/${widgetType}-tile.png`,

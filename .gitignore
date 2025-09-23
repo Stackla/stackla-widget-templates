@@ -1,9 +1,6 @@
 node_modules
 .idea
 .esbuild
-cypress/videos
-cypress/screenshots
-cypress/downloads
 test-results/
 playwright-report/
 *.d.ts
@@ -12,7 +9,6 @@ playwright-report/
 server
 .vscode/settings.json
 .DS_Store
-cypress/snapshots/diff
 dist/*
 !dist/assets/
 !dist/fonts/

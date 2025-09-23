@@ -1,16 +1,16 @@
-import { Page, Locator } from '@playwright/test'
+import { Page, Locator } from "@playwright/test"
 
-export const WIDGET_ID = 'ugc-widget-668ca52ada8fb'
+export const WIDGET_ID = "ugc-widget-668ca52ada8fb"
 
 /**
  * Get UGC tile selector based on widget type
  */
 function getUgcTileSelectorByWidgetType(widgetType: string): string {
   switch (widgetType) {
-    case 'quadrant':
-      return '.ugc-tile.processed'
+    case "quadrant":
+      return ".ugc-tile.processed"
     default:
-      return '.ugc-tile'
+      return ".ugc-tile"
   }
 }
 
@@ -19,13 +19,13 @@ function getUgcTileSelectorByWidgetType(widgetType: string): string {
  */
 export async function visitWidget(page: Page, widgetType: string): Promise<void> {
   // Set up network intercepts
-  await page.route('**/widgets/668ca52ada8fb/draft?wid=668ca52ada8fb&limit=25&page=1&filter_id=10695', route => {
+  await page.route("**/widgets/668ca52ada8fb/draft?wid=668ca52ada8fb&limit=25&page=1&filter_id=10695", route => {
     // Allow the request to continue normally
     route.continue()
   })
 
-  await page.route('**/widgets/668ca52ada8fb/tiles?wid=668ca52ada8fb&limit=25&page=1&filter_id=10695', route => {
-    // Allow the request to continue normally  
+  await page.route("**/widgets/668ca52ada8fb/tiles?wid=668ca52ada8fb&limit=25&page=1&filter_id=10695", route => {
+    // Allow the request to continue normally
     route.continue()
   })
 
@@ -51,21 +51,22 @@ export async function waitAndDisableImages(page: Page): Promise<void> {
   await page.waitForTimeout(8000)
 
   // Execute script to hide images and add red borders
-  await page.evaluate((widgetId) => {
+  await page.evaluate(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const widget = (window as any).ugc.getWidgetBySelector()
     if (widget && widget.sdk) {
-      const tiles = widget.sdk.querySelectorAll('.tile')
+      const tiles = widget.sdk.querySelectorAll(".tile")
       tiles.forEach((tile: HTMLElement) => {
-        tile.style.cssText = ''
-        tile.style.border = '1px solid red'
+        tile.style.cssText = ""
+        tile.style.border = "1px solid red"
       })
 
-      const images = widget.sdk.querySelectorAll('.ugc-tile img')
+      const images = widget.sdk.querySelectorAll(".ugc-tile img")
       images.forEach((image: HTMLElement) => {
-        image.style.visibility = 'hidden'
+        image.style.visibility = "hidden"
       })
     }
-  }, WIDGET_ID)
+  })
 }
 
 /**
@@ -81,7 +82,7 @@ export function getFirstTile(page: Page, widgetType: string): Locator {
  */
 export function getExpandedTile(page: Page): Locator {
   const shadowRoot = page.locator(`#${WIDGET_ID}`)
-  return shadowRoot.locator('expanded-tiles')
+  return shadowRoot.locator("expanded-tiles")
 }
 
 /**
@@ -98,8 +99,8 @@ export async function widgetSnapshot(page: Page, widgetType: string): Promise<vo
  * Handle uncaught exceptions (similar to Cypress cy.on('uncaught:exception'))
  */
 export function setupUncaughtExceptionHandler(page: Page): void {
-  page.on('pageerror', (error) => {
-    // Log the error but don't fail the test
-    console.warn('Page error (continuing test):', error.message)
+  page.on("pageerror", () => {
+    // Log the error but don't fail the test - similar to Cypress behavior
+    // Error details are available in Playwright's built-in reporting
   })
 }

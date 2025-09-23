@@ -32,7 +32,6 @@
       "dist/", 
       "*.d.ts",
       "jest.config.js",
-      "cypress.config.js",
       "playwright.config.ts",
       "esbuild.js",
       "serverless.ts",
@@ -46,6 +45,15 @@
         },
         "parserOptions": {
           "project": true
+        }
+      },
+      {
+        "files": ["./tests/e2e/**/*.ts", "./playwright.config.ts"],
+        "rules": {
+          "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+          "playwright/no-wait-for-timeout": "warn",
+          "playwright/no-force-option": "warn",
+          "playwright/expect-expect": "off"
         }
       }
     ]
