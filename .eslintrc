@@ -9,7 +9,7 @@
       "plugin:promise/recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:eslint-plugin-css/recommended",
-      "plugin:cypress/recommended"
+      "plugin:playwright/recommended"
     ],
     "parserOptions": {
       "ecmaVersion": 12,
@@ -33,6 +33,7 @@
       "*.d.ts",
       "jest.config.js",
       "cypress.config.js",
+      "playwright.config.ts",
       "esbuild.js",
       "serverless.ts",
       "src/libs/express.ts"

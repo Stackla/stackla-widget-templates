@@ -4,6 +4,8 @@ node_modules
 cypress/videos
 cypress/screenshots
 cypress/downloads
+test-results/
+playwright-report/
 *.d.ts
 *.map
 .serverless
