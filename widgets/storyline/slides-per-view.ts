@@ -12,7 +12,7 @@ export function getSlidesPerView(
     inline_tile_size: tileSizeString
   } = sdk.getStyleConfig()
 
-  const tileSize = getTileWidthBySizeString(tileSizeString).replace("px", "")
+  const tileSize = getTileWidthBySizeString(tileSizeString ?? "medium").replace("px", "")
   const tileSizeWithMargin = Number(tileSize) - 30
   const slidesPerView = Math.ceil(screenWidth / tileSizeWithMargin)
 
