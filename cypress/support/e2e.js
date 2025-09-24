@@ -49,12 +49,12 @@ Cypress.Commands.add("waitAndDisableImages", () => {
 Cypress.Commands.add("visitWidget", widgetType => {
   cy.intercept(
     "POST",
-    "http://localhost:4002/development/widgets/668ca52ada8fb/draft?wid=668ca52ada8fb&limit=25&page=1&filter_id=10695"
+    "http://localhost:4002/development/widgets/668ca52ada8fb/draft?wid=668ca52ada8fb&limit=25&page=1"
   ).as("getWidget")
 
   cy.intercept(
     "GET",
-    "http://localhost:4002/development/widgets/668ca52ada8fb/tiles?wid=668ca52ada8fb&limit=25&page=1&filter_id=10695"
+    "http://localhost:4002/development/widgets/668ca52ada8fb/tiles?wid=668ca52ada8fb&limit=25&page=1"
   ).as("getTiles")
 
   cy.visit(`http://localhost:4002/preview?widgetType=${widgetType}`)

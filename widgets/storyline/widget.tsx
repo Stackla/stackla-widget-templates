@@ -15,6 +15,7 @@ const tileSizeSettings = {
 
 loadWidget(sdk, {
   features: {
+    addNewTilesAutomatically: false,
     handleLoadMore: false,
     tileSizeSettings,
     cssVariables: {
