@@ -98,7 +98,7 @@ export async function getContent(widgetType: string, retry = 0): Promise<Preview
     throw new Error(`Failed to get content, exiting after 10 retries, widgetType: ${widgetType}`)
   }
 
-  const rootDir = path.resolve(__dirname, `../../../../../dist/${widgetType}`)
+  const rootDir = path.resolve(process.cwd(), `dist/${widgetType}`)
 
   const layout = `${rootDir}/layout.hbs`
   const tile = `${rootDir}/tile.hbs`
