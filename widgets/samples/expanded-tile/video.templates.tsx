@@ -64,7 +64,7 @@ export function UgcVideoTemplate({
   return (
     <video
       style={{
-        display: "none"
+        visibility: "hidden"
       }}
       muted={true}
       tileid={tile.id}
