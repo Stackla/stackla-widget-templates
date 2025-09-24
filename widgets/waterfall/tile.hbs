@@ -1,28 +1,28 @@
 {{#tile class="grid-item"}}
-  <div class="tile">
+  <div class="tile" aria-label="User generated content">
     <div class="tile-top">
       <div class="tile-loading"></div>
       <div class="icon-section">
         <div class="top-section">
           {{#each attrs}}
           {{#ifequals this "instagram.reel"}}
-          <div class="content-icon icon-reel"></div>
+          <div class="content-icon icon-reel" aria-label="Instagram Reel content"></div>
           {{/ifequals}}
           {{#ifequals this "youtube.short"}}
-          <div class="content-icon icon-youtube-short"></div>
+          <div class="content-icon icon-youtube-short" aria-label="YouTube Shorts content"></div>
           {{/ifequals}}
           {{/each}}
           {{#ifHasProductTags this}}
-          <div class="shopping-icon icon-products"></div>
+          <div class="shopping-icon icon-products" aria-label="Shoppable content"></div>
           {{/ifHasProductTags}}
         </div>
         <div class="center-section">
           {{#ifequals media "video"}}
-              <div class="icon-play"></div>
+              <div class="icon-play" aria-label="Play video"></div>
           {{/ifequals}}
         </div>
         <div class="bottom-section">
-          <div class="network-icon icon-{{source}}"></div>
+          <div class="network-icon icon-{{source}}" aria-label="Content from {{source}}"></div>
         </div>
       </div>
       <div class="tile-image-wrapper">
@@ -32,26 +32,26 @@
           {{#lazy image "120"}}{{/lazy}}
         {{/ifAutoPlayVideo}}
         <div class="swiper-lazy-preloader"></div>
-        <shopspot-icon widgetId="{{options.wid}}" tile-id="{{id}}" />
+        <shopspot-icon widgetId="{{options.wid}}" tile-id="{{id}}" aria-label="Shopping options" />
       </div>
     </div>
     <div class="tile-bottom">
       <div class="tile-bottom-container">
         {{#if tags_extended}}
-        <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" mode="swiper" context="waterfall-inline" navigation-arrows="true" theme="light"></tile-tags>
+        <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" mode="swiper" context="waterfall-inline" navigation-arrows="true" theme="light" aria-label="Content tags"></tile-tags>
         {{/if}}
-        <div class="description">
+        <div class="description" aria-label="Content description">
             {{#if name}}
-            <div class="user-name">{{name}}</div>
+            <div class="user-name" aria-label="Author name">{{name}}</div>
             {{/if}}
             {{#if user}}
-            <div class="user-handle">@{{user}}</div>
+            <div class="user-handle" aria-label="Author handle">@{{user}}</div>
             {{/if}}
             <div class="tile-share-content">
-              <time-phrase widgetId="{{options.wid}}" source-created-at="{{source_created_at}}"></time-phrase>
-              <share-menu widgetId="{{options.wid}}" tile-id="{{id}}" theme="light"></share-menu>
+              <time-phrase widgetId="{{options.wid}}" source-created-at="{{source_created_at}}" aria-label="Content time"></time-phrase>
+              <share-menu widgetId="{{options.wid}}" tile-id="{{id}}" theme="light" aria-label="Share menu"></share-menu>
             </div>
-            <div class="caption">
+            <div class="caption" aria-label="Caption">
               <div class="caption-paragraph">{{message}}</div>
             </div>
         </div>
