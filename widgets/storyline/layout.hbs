@@ -1,13 +1,13 @@
-<div class="swiper-inline-story-button-prev swiper-button-prev btn-lg">
+<div class="swiper-inline-story-button-prev swiper-button-prev btn-lg" aria-label="Previous content item">
 	<span class="swiper-nav-icon icon-prev-circle" />
 </div>
-<div class="track swiper story-inline swiper-inline" style="display:none;">
-	<div class="swiper-wrapper ugc-tiles">
+<div class="track swiper story-inline swiper-inline" style="display:none;" aria-label="Content storyline">
+	<div class="swiper-wrapper ugc-tiles" aria-label="Storyline items">
 		{{#tiles}}
 		{{>tpl-tile options=../options}}
 		{{/tiles}}
 	</div>
 </div>
-<div class="swiper-inline-story-button-next swiper-button-next btn-lg">
+<div class="swiper-inline-story-button-next swiper-button-next btn-lg" aria-label="Next content item">
 	<span class="swiper-nav-icon icon-next-circle" />
 </div>

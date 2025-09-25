@@ -1,11 +1,11 @@
-<div class="ugc-tiles __inline storypage-inline">
+<div class="ugc-tiles __inline storypage-inline" aria-label="Content storypage">
     {{#tiles}}
     {{>tpl-tile options=../options}}
     {{/tiles}}
 </div>
-<div id="direct-uploader-form" class="hidden">
-    <div class="overlay"></div>
-    <div class="form-container">
-        <direct-uploader />
+<div id="direct-uploader-form" class="hidden" aria-label="Direct uploader form container">
+    <div class="overlay" aria-label="Form overlay"></div>
+    <div class="form-container" aria-label="Form content">
+        <direct-uploader aria-label="Direct uploader component" />
     </div>
 </div>
