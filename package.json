@@ -52,7 +52,7 @@
     "concurrently": "^9.2.0",
     "copy-webpack-plugin": "^12.0.2",
     "cypress": "^13.17.0",
-    "cypress-split": "^1.24.20",
+    "cypress-split": "^1.24.23",
     "cypress-visual-regression": "^5.2.2",
     "dotenv": "^16.4.5",
     "esbuild": "^0.24.2",
