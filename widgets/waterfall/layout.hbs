@@ -1,8 +1,8 @@
-<div id="widget-container" class="hidden-container">
-    <div class="ugc-tiles grid waterfall-inline">
+<div id="widget-container" class="hidden-container" aria-label="Waterfall widget container">
+    <div class="ugc-tiles grid waterfall-inline" aria-label="Content waterfall">
         {{#tiles}}
         {{>tpl-tile options=../options}}
         {{/tiles}}
     </div>
-    <load-more widgetId="{{options.wid}}"/>
+    <load-more widgetId="{{options.wid}}" aria-label="Load more content"/>
 </div>

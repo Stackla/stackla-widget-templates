@@ -1,22 +1,22 @@
 {{#tile class="swiper-slide" }}
-<div class="tile">
-  <div class="tile-loading"></div>
-  <div class="icon-section hidden">
+<div class="tile" aria-label="User generated content">
+  <div class="tile-loading" aria-label="Loading media"></div>
+  <div class="icon-section hidden" aria-label="Content indicators">
     <div class="top-section">
       {{#if options.config.tile_options.show_products}}
         {{#ifHasProductTags this}}
-        <div class="shopping-icon icon-products-bg {{options.config.style.inline_tile_size}}"></div>
+        <div class="shopping-icon icon-products-bg {{options.config.style.inline_tile_size}}" aria-label="Shoppable content"></div>
         {{/ifHasProductTags}}
       {{/if}}
     </div>
     <div class="center-section">
-      <div class="network-icon icon-{{source}}"></div>
+      <div class="network-icon icon-{{source}}" aria-label="Content from {{source}}"></div>
     </div>
   </div>
-  <div class="tile-image-wrapper">
+  <div class="tile-image-wrapper" aria-label="Media container">
     <div class="story-overlay"></div>
     {{#lazy image_thumbnail_url }}{{/lazy}}
-    <div class="swiper-lazy-preloader"></div>
+    <div class="swiper-lazy-preloader" aria-label="Loading indicator"></div>
   </div>
 </div>
 {{/tile}}

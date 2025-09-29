@@ -1,13 +1,24 @@
-<div class="track swiper carousel-inline swiper-inline" style="display:none;">
-	<div class="swiper-wrapper ugc-tiles">
-		{{#tiles}}
-		{{>tpl-tile options=../options}}
-		{{/tiles}}
-	</div>
+<div class="track swiper carousel-inline swiper-inline"
+     role="group"
+     aria-label="Content carousel"
+     aria-roledescription="carousel">
+  <div class="swiper-wrapper ugc-tiles" role="group" aria-label="Carousel items">
+    {{#tiles}}
+    {{>tpl-tile options=../options}}
+    {{/tiles}}
+  </div>
 </div>
-<div class="swiper-inline-carousel-button-prev swiper-button-prev btn-lg">
-	<span class="swiper-nav-icon icon-prev-circle" />
+
+<div class="swiper-inline-carousel-button-prev swiper-button-prev btn-lg"
+        aria-label="Previous content item">
+  <span class="swiper-nav-icon icon-prev-circle"
+        aria-hidden="true"
+        role="img"></span>
 </div>
-<div class="swiper-inline-carousel-button-next swiper-button-next btn-lg">
-	<span class="swiper-nav-icon icon-next-circle" />
+
+<div class="swiper-inline-carousel-button-next swiper-button-next btn-lg"
+        aria-label="Next content item">
+  <span class="swiper-nav-icon icon-next-circle"
+        aria-hidden="true"
+        role="img"></span>
 </div>

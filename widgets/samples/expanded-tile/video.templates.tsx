@@ -20,7 +20,9 @@ function getVideoData(tile: Tile) {
     }
   }
 
-  throw new Error("Failed to find video data")
+  console.error("Failed to find video data")
+
+  return
 }
 
 export function handlePauseAutoplay(swiperId: string) {
@@ -52,12 +54,17 @@ export function UgcVideoTemplate({
   swiperId: string
   controls?: boolean
 }) {
-  const { url, width, height, mime } = getVideoData(tile)
+  const videoData = getVideoData(tile)
+  if (!videoData) {
+    return <></>
+  }
+
+  const { url, width, height, mime } = videoData
 
   return (
     <video
       style={{
-        display: "none"
+        visibility: "hidden"
       }}
       muted={true}
       tileid={tile.id}

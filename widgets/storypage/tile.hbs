@@ -1,40 +1,40 @@
 {{#tile data-hash=@index class="grid-item"}}
   {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
-    <div class="tile">
+    <div class="tile" aria-label="User generated content video">
       {{playVideo this "100%" "100%"}}
     </div>
   {{else}}
-    <div class="tile" data-background-image="{{image_thumbnail_url}}">
-      <div class="direct-uploader-load-more">
-        <div class="direct-uploader-container">
+    <div class="tile" data-background-image="{{image_thumbnail_url}}" aria-label="User generated content">
+      <div class="direct-uploader-load-more" aria-label="Direct uploader entry">
+        <div class="direct-uploader-container" aria-label="Direct uploader CTA">
           <div>
-            <span class="icon-picture"></span>
+            <span class="icon-picture" aria-label="Open uploader"></span>
             <p>View all</p>
           </div>
         </div>
       </div>
-      <div class="icon-section">
+      <div class="icon-section" aria-label="Content indicators">
         <div class="top-section">
           {{#each attrs}}
             {{#ifequals this "instagram.reel"}}
-              <div class="content-icon icon-reel"></div>
+              <div class="content-icon icon-reel" aria-label="Instagram Reel content"></div>
             {{/ifequals}}
           {{/each}}
           {{#ifHasProductTags this}}
-            <div class="shopping-icon icon-products"></div>
+            <div class="shopping-icon icon-products" aria-label="Shoppable content"></div>
           {{/ifHasProductTags}}
         </div>
         <div class="center-section">
           {{#ifequals media "video"}}
-            <div class="icon-play"></div>
+            <div class="icon-play" aria-label="Play video"></div>
           {{/ifequals}}
         </div>
         <div class="bottom-section">
-          <tile-tags widgetId="{{options.wid}}" variant="dark" tile-id="{{id}}" mode="swiper" context="storypage-inline"></tile-tags>
-          <div class="network-icon icon-{{source}}"></div>
+          <tile-tags widgetId="{{options.wid}}" variant="dark" tile-id="{{id}}" mode="swiper" context="storypage-inline" aria-label="Content tags"></tile-tags>
+          <div class="network-icon icon-{{source}}" aria-label="Content from {{source}}"></div>
         </div>
 
-        <shopspot-icon tile-id="{{id}}" widgetId="{{options.wid}}"></shopspot-icon>
+        <shopspot-icon tile-id="{{id}}" widgetId="{{options.wid}}" aria-label="Shopping options"></shopspot-icon>
       </div>
     </div>
   {{/ifAutoPlayVideo}}

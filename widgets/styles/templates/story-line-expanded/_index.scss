@@ -16,7 +16,7 @@ expanded-tiles {
   }
 
   .story-expanded {
-    max-width: 500px;
+    max-width: 100%;
 
     @media (max-width: 1024px) {
       max-width: 100%;
@@ -221,6 +221,7 @@ expanded-tiles:not(:empty) {
             tile-content {
               flex: 1;
               z-index: 20;
+              max-height: 10%;
             }
 
             .bottom-section {
@@ -263,7 +264,9 @@ expanded-tiles:not(:empty) {
                   margin: 0;
                   padding: 0;
                   z-index: 10;
+                  object-fit: cover;
                   height: 100% !important;
+                  aspect-ratio: 16/9;
                 }
               }
 

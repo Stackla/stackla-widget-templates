@@ -1,33 +1,33 @@
 {{#tile class="grid-item"}}
   {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
-    <div class="tile">
+    <div class="tile" aria-label="User generated content video">
       {{playVideo this "100%" "100%"}}
     </div>
   {{else}}
-    <div class="tile" data-background-image="{{image}}">
+    <div class="tile" data-background-image="{{image}}" aria-label="User generated content">
       <img style="display: none;" src="{{image}}" alt="{{name}}" />
       <div class="icon-section">
         <div class="top-section">
           {{#each attrs}}
             {{#ifequals this "instagram.reel"}}
-              <div class="content-icon icon-reel"></div>
+              <div class="content-icon icon-reel" aria-label="Instagram Reel content"></div>
             {{/ifequals}}
           {{/each}}
           {{#ifHasProductTags this}}
-            <div class="shopping-icon icon-products"></div>
+            <div class="shopping-icon icon-products" aria-label="Shoppable content"></div>
           {{/ifHasProductTags}}
         </div>
         <div class="center-section">
           {{#ifequals media "video"}}
-            <div class="icon-play"></div>
+            <div class="icon-play" aria-label="Play video"></div>
           {{/ifequals}}
         </div>
         <div class="bottom-section">
-          <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" variant="dark" mode="swiper" context="grid-inline"></tile-tags>
-          <div class="network-icon icon-{{source}}"></div>
+          <tile-tags widgetId="{{options.wid}}" tile-id="{{id}}" variant="dark" mode="swiper" context="grid-inline" aria-label="Content tags"></tile-tags>
+          <div class="network-icon icon-{{source}}" aria-label="Content from {{source}}"></div>
         </div>
 
-        <shopspot-icon widgetId="{{options.wid}}" tile-id={{id}} />
+        <shopspot-icon widgetId="{{options.wid}}" tile-id={{id}} aria-label="Shopping options" />
       </div>
     </div>
   {{/ifAutoPlayVideo}}
