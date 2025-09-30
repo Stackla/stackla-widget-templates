@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test"
+import { Page, Locator, expect } from "@playwright/test"
 
 export const WIDGET_ID = "ugc-widget-668ca52ada8fb"
 
@@ -31,68 +31,40 @@ export async function visitWidget(page: Page, widgetType: string): Promise<void>
 
   // Navigate to the widget page
   await page.goto(`/preview?widgetType=${widgetType}`)
-
-  // Wait for the widget to be present
-  await page.locator(`#${WIDGET_ID}`).waitFor({ timeout: 10000 })
-
-  // Wait for tiles to load
-  const shadowRoot = page.locator(`#${WIDGET_ID}`)
-  await shadowRoot.locator(getUgcTileSelectorByWidgetType(widgetType)).first().waitFor({ timeout: 10000 })
-
-  // Wait and disable images for consistent testing
-  await waitAndDisableImages(page)
 }
 
-/**
- * Wait and disable images for consistent visual testing
- */
-export async function waitAndDisableImages(page: Page): Promise<void> {
-  // Wait for content to load
-  await page.waitForTimeout(8000)
-
-  // Execute script to hide images and add red borders
-  await page.evaluate(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const widget = (window as any).ugc.getWidgetBySelector()
-    if (widget && widget.sdk) {
-      const tiles = widget.sdk.querySelectorAll(".tile")
-      tiles.forEach((tile: HTMLElement) => {
-        tile.style.cssText = ""
-        tile.style.border = "1px solid red"
-      })
-
-      const images = widget.sdk.querySelectorAll(".ugc-tile img")
-      images.forEach((image: HTMLElement) => {
-        image.style.visibility = "hidden"
-      })
-    }
-  })
+async function getWidget(page: Page) {
+  return page.locator(WIDGET_ID)
 }
 
 /**
  * Get the first tile for a given widget type
  */
-export function getFirstTile(page: Page, widgetType: string): Locator {
-  const shadowRoot = page.locator(`#${WIDGET_ID}`)
-  return shadowRoot.locator(getUgcTileSelectorByWidgetType(widgetType)).first()
+export async function getFirstTile(page: Page, widgetType: string): Promise<Locator> {
+  const shadowRoot = await getWidget(page)
+  const firstTile = shadowRoot.locator(`${getUgcTileSelectorByWidgetType(widgetType)}`)
+  await expect(firstTile.first()).toHaveAttribute("expanded-listener", "true")
+
+  return firstTile.first()
 }
 
 /**
  * Get the expanded tile element
  */
-export function getExpandedTile(page: Page): Locator {
-  const shadowRoot = page.locator(`#${WIDGET_ID}`)
-  return shadowRoot.locator("expanded-tiles")
-}
+export async function getExpandedTile(page: Page): Promise<Locator> {
+  const shadowRoot = await getWidget(page)
 
-/**
- * Take a widget snapshot (screenshot)
- */
-export async function widgetSnapshot(page: Page, widgetType: string): Promise<void> {
-  await page.screenshot({
-    path: `test-results/screenshots/${widgetType}-widget.png`,
-    fullPage: false
-  })
+  const expandedTile = shadowRoot.locator("expanded-tiles")
+
+  await page.pause()
+
+  const firstExpandedTile = expandedTile.locator(".swiper-slide").first()
+
+  // wait for tile to have swiper-slide-fully-visible class
+  await expect(firstExpandedTile).toBeVisible()
+  await expect(firstExpandedTile).toHaveClass(/swiper-slide-fully-visible/)
+
+  return expandedTile.first()
 }
 
 /**

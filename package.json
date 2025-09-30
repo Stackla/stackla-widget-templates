@@ -14,7 +14,7 @@
     "lint:fix": "npm run eslint -- --fix && npm run stylelint -- --fix",
     "test": "jest --passWithNoTests",
     "test:e2e": "playwright test",
-    "pw:debug": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
     "pw:run": "playwright test",
     "test:playwright": "playwright test",
     "test:playwright:debug": "playwright test --ui",
@@ -35,7 +35,18 @@
   },
   "license": "MIT",
   "optionalDependencies": {
-    "@esbuild/linux-x64": "^0.23.1"
+    "@esbuild/linux-x64": "^0.23.1",
+    "@swc/core": "^1.13.5",
+    "@swc/core-darwin-arm64": "^1.13.20",
+    "@swc/core-darwin-x64": "^1.13.20",
+    "@swc/core-linux-arm-gnueabihf": "^1.13.20",
+    "@swc/core-linux-arm64-gnu": "^1.13.20",
+    "@swc/core-linux-arm64-musl": "^1.13.20",
+    "@swc/core-linux-x64-gnu": "^1.13.20",
+    "@swc/core-linux-x64-musl": "^1.13.20",
+    "@swc/core-win32-arm64-msvc": "^1.13.20",
+    "@swc/core-win32-ia32-msvc": "^1.13.20",
+    "@swc/core-win32-x64-msvc": "^1.13.20"
   },
   "devDependencies": {
     "@happy-dom/jest-environment": "^18.0.1",
