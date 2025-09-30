@@ -12,7 +12,7 @@
     "stylelint": "stylelint **/*.scss",
     "lint": "npm run eslint && npm run stylelint",
     "lint:fix": "npm run eslint -- --fix && npm run stylelint -- --fix",
-    "test": "jest --passWithNoTests",
+    "test": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:debug": "playwright test --debug",
     "pw:run": "playwright test",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@happy-dom/jest-environment": "^18.0.1",
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "^1.55.1",
     "@stackla/eslint-config": "^1.0.0",
     "@stackla/handlebars": "^0.1.10",
     "@stackla/jest-config": "^1.0.6",
@@ -94,7 +94,8 @@
     "svg-sprite": "^2.0.4",
     "swc-loader": "^0.2.6",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@stackla/widget-utils": "workspace:*",
