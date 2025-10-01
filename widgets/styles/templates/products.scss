@@ -37,6 +37,7 @@
     flex-direction: column;
     border-top: 1px solid #F4F4F4;
     padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   @keyframes skeleton-loading {
@@ -211,12 +212,16 @@
       }
     }
 
-    .swiper-exp-product-recs-button-prev.swiper-button-prev {
+
+
+    .swiper-button-prev {
       left: 0;
+      height: 100% !important;
     }
 
-    .swiper-exp-product-recs-button-next.swiper-button-next {
+    .swiper-button-next {
       right: 0;
+      height: 100% !important;
     }
   }
 
