@@ -116,7 +116,7 @@ expanded-tiles:not(:empty) {
 
         .swiper-slide.ugc-tile {
           align-items: flex-start;
-          height: 100%;
+          height: auto;
 
           @include media-queries.breakpoint(mobile) {
             width: 100% !important;
@@ -351,7 +351,7 @@ expanded-tiles:not(:empty) {
 
         .panel-right-wrapper {
           display: flex;
-          overflow: hidden auto;
+          overflow: visible;
           scrollbar-width: none;
           width: 100vw;
         }

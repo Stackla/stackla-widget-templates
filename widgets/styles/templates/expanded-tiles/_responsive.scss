@@ -27,8 +27,8 @@
       .panel {
         grid-template-columns: 1fr;
         width: 100%;
-        max-height: unset;
-        overflow: hidden;
+        max-height: 100dvh;
+        overflow: scroll;
 
         .panel-left,
         .panel-right {
