@@ -98,7 +98,7 @@
           .panel {
             min-height: 100vh;
             grid-template-columns: minmax(100%, 1fr) !important;
-            grid-template-rows: auto !important;
+            grid-template-rows: 1fr 1fr !important;
 
             .panel-right {
               overflow: visible;

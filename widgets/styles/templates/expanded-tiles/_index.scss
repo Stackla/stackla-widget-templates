@@ -172,7 +172,6 @@ expanded-tiles:not(:empty) {
       background: var(--expanded-tiles-background);
       border-radius: var(--expanded-tile-border-radius);
       grid-template-columns: minmax(0, dimens.$panel-left-width-lg) minmax(0, dimens.$panel-right-width-lg);
-      grid-template-rows: 1fr;
 
       .panel-left {
         min-height: 300px;
@@ -187,6 +186,10 @@ expanded-tiles:not(:empty) {
         color: colors.$panel-txt;
         max-width: dimens.$panel-left-width-lg;
 
+        @include media-queries.breakpoint(mobile) {
+          max-height: 375px;
+        }
+
         &:has(> .video-content) {
           align-items: stretch;
         }
@@ -196,10 +199,6 @@ expanded-tiles:not(:empty) {
           position: relative;
           height: 100%;
           width: 100%;
-          
-          @include media-queries.breakpoint(mobile) {
-            max-height: 375px;
-          }
 
           .image-wrapper-inner {
             display: flex;
