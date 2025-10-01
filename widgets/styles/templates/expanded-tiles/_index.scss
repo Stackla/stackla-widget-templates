@@ -133,6 +133,11 @@ expanded-tiles:not(:empty) {
             position: absolute;
             inset: 0;
 
+            @include media-queries.breakpoint(mobile) {
+              display: none;
+            }
+
+
             &.blurred {
               filter: blur(20px);
             }
@@ -191,6 +196,10 @@ expanded-tiles:not(:empty) {
           position: relative;
           height: 100%;
           width: 100%;
+          
+          @include media-queries.breakpoint(mobile) {
+            max-height: 375px;
+          }
 
           .image-wrapper-inner {
             display: flex;
@@ -353,7 +362,7 @@ expanded-tiles:not(:empty) {
           display: flex;
           overflow: visible;
           scrollbar-width: none;
-          width: 100vw;
+          width: 100%;
         }
 
         .content-wrapper {

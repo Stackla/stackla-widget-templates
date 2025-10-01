@@ -124,10 +124,10 @@ export function ProductImages({
             )}
           </div>
         </div>
-        <div class="swiper-exp-product-recs-button-prev swiper-button-prev">
+        <div class="swiper-exp-product-recs-button-prev swiper-button-prev" aria-label="Previous product image">
           <span class="swiper-nav-icon icon-prev" />
         </div>
-        <div class="swiper-exp-product-recs-button-next swiper-button-next">
+        <div class="swiper-exp-product-recs-button-next swiper-button-next" aria-label="Next product image">
           <span class="swiper-nav-icon icon-next" />
         </div>
       </div>
