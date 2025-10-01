@@ -56,8 +56,6 @@ export async function getExpandedTile(page: Page): Promise<Locator> {
 
   const expandedTile = shadowRoot.locator("expanded-tiles")
 
-  await page.pause()
-
   const firstExpandedTile = expandedTile.locator(".swiper-slide").first()
 
   // wait for tile to have swiper-slide-fully-visible class

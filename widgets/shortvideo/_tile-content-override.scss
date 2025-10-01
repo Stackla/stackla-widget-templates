@@ -8,6 +8,7 @@ expanded-tiles {
   @include tc.tile-content-styles {
     .panel-inactive {
       tile-content {
+        width: 100%;
         place-self: flex-end center;
         grid-row: span 2;
         margin-bottom: 20%;
