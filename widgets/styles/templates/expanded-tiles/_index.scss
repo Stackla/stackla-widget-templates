@@ -362,6 +362,7 @@ expanded-tiles:not(:empty) {
           overflow: visible;
           scrollbar-width: none;
           width: 100%;
+          box-sizing: border-box;
         }
 
         .content-wrapper {
