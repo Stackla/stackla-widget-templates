@@ -2,14 +2,9 @@ import { Page, expect } from "@playwright/test"
 import { clickFirstWidgetTile } from "../actions/widgets"
 import { createExpandedTileLocator } from "../locators/expanded-tile.locator"
 
-/**
- * Test expanded tile functionality
- */
 export async function shouldExpandTile(page: Page, widgetType: string): Promise<void> {
-  // Click on the first tile
   await clickFirstWidgetTile(page, widgetType)
 
-  // Check that body has overflow hidden when expanded tile is open
   const body = page.locator("body")
   await expect(body).toHaveCSS("overflow", "hidden")
 
