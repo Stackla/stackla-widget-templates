@@ -1,17 +1,12 @@
 import { test } from "@playwright/test"
-import { visitWidget, setupUncaughtExceptionHandler } from "../helpers/widget-helpers"
 import { shouldExpandTile } from "../helpers/expanded-tile-helpers"
 import { shouldLoadShareMenu } from "../helpers/share-menu-helpers"
 import { shouldNavigateProducts } from "../shared-tests/products"
+import { describeUgcTest } from "../helpers/ugc-test.helpers"
 
 const WIDGET_TYPE = "carousel"
 
-test.describe("Should test the carousel", () => {
-  test.beforeEach(async ({ page }) => {
-    setupUncaughtExceptionHandler(page)
-    await visitWidget(page, WIDGET_TYPE)
-  })
-
+describeUgcTest(WIDGET_TYPE, async () => {
   test("Should expand tile", async ({ page }) => {
     await shouldExpandTile(page, WIDGET_TYPE)
   })
