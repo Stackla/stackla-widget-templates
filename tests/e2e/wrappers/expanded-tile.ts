@@ -21,7 +21,7 @@ export async function createExpandedTileWrapper(page: Page): Promise<ExpandedTil
   const firstTile = expandedTile.locator(".ugc-tile").first()
   const secondTile = expandedTile.locator(".ugc-tile").nth(1)
 
-  if (!firstTile || !secondTile) {
+  if (!firstTile.count() || !secondTile.count()) {
     throw new Error("Expanded tile or its tiles are not available")
   }
 
