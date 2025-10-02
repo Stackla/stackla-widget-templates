@@ -12,6 +12,12 @@ export async function shouldExpandTile(page: Page, widgetType: string): Promise<
   // Check that body has overflow hidden when expanded tile is open
   const body = page.locator("body")
   await expect(body).toHaveCSS("overflow", "hidden")
+
+  const expandedTile = await createExpandedTileWrapper(page)
+  const firstExpandedTile = await expandedTile.getTile(0)
+
+  await expect(firstExpandedTile).toBeVisible()
+  await expect(firstExpandedTile).toHaveClass(/swiper-slide-fully-visible/)
 }
 
 export async function shouldNavigateExpandedTile(page: Page): Promise<void> {

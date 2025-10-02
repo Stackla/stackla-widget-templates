@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from "playwright/test"
+import { Locator, Page } from "playwright/test"
 import { getWidget } from "../helpers/widget-helpers"
 
 export interface ExpandedTileTileWrapper {
@@ -13,12 +13,6 @@ export async function getExpandedTile(page: Page): Promise<Locator> {
   const shadowRoot = await getWidget(page)
 
   const expandedTile = shadowRoot.locator("expanded-tiles")
-
-  const firstExpandedTile = expandedTile.locator(".swiper-slide").first()
-
-  await expect(firstExpandedTile).toBeVisible()
-  await expect(firstExpandedTile).toHaveClass(/swiper-slide-fully-visible/)
-
   return expandedTile.first()
 }
 
