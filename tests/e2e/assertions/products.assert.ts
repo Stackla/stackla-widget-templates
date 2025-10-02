@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test"
-import { shouldExpandTile } from "../helpers/expanded-tile-helpers"
+import { shouldExpandTile } from "./expanded-tile.assert"
 
 export async function expectAddToCartRequest(page: Page) {
   return page.waitForResponse(resp => resp.url().includes("cart/add.js"))
@@ -8,9 +8,9 @@ export async function expectAddToCartRequest(page: Page) {
 export async function shouldNavigateProducts(page: Page, widgetType: string): Promise<void> {
   await shouldExpandTile(page, widgetType)
 
-  const leftArrow = page.getByLabel("Previous product image").locator("span")
+  const leftArrow = page.getByLabel("Previous product image").locator("span").first()
 
-  const rightArrow = page.getByLabel("Next product image").locator("span")
+  const rightArrow = page.getByLabel("Next product image").locator("span").first()
 
   await page.getByLabel("View product: Kathmandu 1").first().waitFor({ state: "visible" })
   await rightArrow.click()
@@ -35,10 +35,10 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
   // Click the third image to check that the image is visible when clicked
   await page.getByLabel("Product image container: 43").getByRole("img", { name: "Product image" }).click()
   await page.getByLabel("View product: Kathmandu 3").first().waitFor({ state: "visible" })
-  await page.getByLabel("Product details: Kathmandu 3").getByText("another pair").waitFor({ state: "visible" })
+  await page.getByLabel("Product details: Kathmandu 3").getByText("another pair").first().waitFor({ state: "visible" })
 
   // Click the first image to check that the image is visible when clicked
-  await page.getByLabel("Product image container: 41").getByRole("img", { name: "Product image" }).click()
+  await page.getByLabel("Product image container: 41").getByRole("img", { name: "Product image" }).first().click()
   await page.getByLabel("View product: Kathmandu 1").first().waitFor({ state: "visible" })
   await page.getByText("You should look for shoes").waitFor({ state: "visible" })
 

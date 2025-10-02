@@ -33,6 +33,6 @@
     "jsxFragmentFactory": "createFragment",
     "types": ["node", "jest"]
   },
-  "include": ["widgets/**/*.ts", "widgets/**/*.tsx"],
+  "include": ["widgets/**/*.ts", "widgets/**/*.tsx", "tests/e2e/**/*.ts", "tests/e2e/**/*.tsx"],
   "exclude": ["widget-utils"]
 }

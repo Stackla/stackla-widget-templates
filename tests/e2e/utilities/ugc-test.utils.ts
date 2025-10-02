@@ -1,4 +1,4 @@
-import { setupUncaughtExceptionHandler, visitWidget } from "./widget-helpers"
+import { setupUncaughtExceptionHandler, visitWidget } from "./widget.utils"
 import { test } from "@playwright/test"
 
 export async function describeUgcTest(widgetType: string, testClosure: () => void) {

@@ -27,3 +27,10 @@ http://localhost:4003/preview?widgetType=carousel
 Congratulations! You are now ready to start developing your first widget. 
 
 Lets get started.
+
+## Test structure
+We use Playwright for end to end testing. You can find the tests in the `tests/e2e` folder.
+Tests are organized into:
+- `assertions`: Reusable assertions that can be shared across multiple tests.
+- `locators`: Locators for different components in the widget. These are encapsulated in closures for better reusability.
+- `utilities`: General utility functions for setting up tests and common operations.
