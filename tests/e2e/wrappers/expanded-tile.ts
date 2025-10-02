@@ -16,7 +16,6 @@ export async function getExpandedTile(page: Page): Promise<Locator> {
 
   const firstExpandedTile = expandedTile.locator(".swiper-slide").first()
 
-  // wait for tile to have swiper-slide-fully-visible class
   await expect(firstExpandedTile).toBeVisible()
   await expect(firstExpandedTile).toHaveClass(/swiper-slide-fully-visible/)
 
