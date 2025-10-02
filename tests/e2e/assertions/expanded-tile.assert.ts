@@ -1,6 +1,6 @@
 import { Page, expect } from "@playwright/test"
 import { clickFirstWidgetTile } from "../actions/widgets"
-import { createExpandedTileWrapper } from "../wrappers/expanded-tile"
+import { createExpandedTileLocator } from "../locators/expanded-tile.locator"
 
 /**
  * Test expanded tile functionality
@@ -13,7 +13,7 @@ export async function shouldExpandTile(page: Page, widgetType: string): Promise<
   const body = page.locator("body")
   await expect(body).toHaveCSS("overflow", "hidden")
 
-  const expandedTile = await createExpandedTileWrapper(page)
+  const expandedTile = await createExpandedTileLocator(page)
   const firstExpandedTile = await expandedTile.getTile(0)
 
   await expect(firstExpandedTile).toBeVisible()
@@ -21,7 +21,7 @@ export async function shouldExpandTile(page: Page, widgetType: string): Promise<
 }
 
 export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
-  const expandedTile = await createExpandedTileWrapper(page)
+  const expandedTile = await createExpandedTileLocator(page)
 
   let activeSlide = await expandedTile.getCurrentTile()
   await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(0))

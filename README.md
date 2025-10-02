@@ -32,5 +32,5 @@ Lets get started.
 We use Playwright for end to end testing. You can find the tests in the `tests/e2e` folder.
 Tests are organized into:
 - `assertions`: Reusable assertions that can be shared across multiple tests.
-- `wrappers`: Helper classes to interact with specific components of the widget (e.g., expanded tiles, share menu).
-- `helpers`: General helper functions for setting up tests and common operations.
+- `locators`: Locators for different components in the widget. These are encapsulated in closures for better reusability.
+- `utilities`: General utility functions for setting up tests and common operations.

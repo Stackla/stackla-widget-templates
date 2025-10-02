@@ -2,7 +2,7 @@ import { test } from "@playwright/test"
 import { shouldExpandTile, shouldNavigateExpandedTile } from "../assertions/expanded-tile.assert"
 import { shouldLoadShareMenu } from "../assertions/share-menu.assert"
 import { shouldNavigateProducts } from "../assertions/products.assert"
-import { describeUgcTest } from "../helpers/ugc-test.helpers"
+import { describeUgcTest } from "../utilities/ugc-test.utils"
 
 const WIDGET_TYPE = "nightfall"
 

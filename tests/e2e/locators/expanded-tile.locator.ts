@@ -1,5 +1,5 @@
 import { Locator, Page } from "playwright/test"
-import { getWidget } from "../helpers/widget-helpers"
+import { getWidget } from "../utilities/widget.utils"
 
 export interface ExpandedTileTileWrapper {
   getCurrentTile: () => Promise<Locator>
@@ -16,7 +16,7 @@ export async function getExpandedTile(page: Page): Promise<Locator> {
   return expandedTile.first()
 }
 
-export async function createExpandedTileWrapper(page: Page): Promise<ExpandedTileTileWrapper> {
+export async function createExpandedTileLocator(page: Page): Promise<ExpandedTileTileWrapper> {
   const expandedTile = await getExpandedTile(page)
   const firstTile = expandedTile.locator(".ugc-tile").first()
   const secondTile = expandedTile.locator(".ugc-tile").nth(1)
