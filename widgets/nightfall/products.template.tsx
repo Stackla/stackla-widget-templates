@@ -65,7 +65,11 @@ export function ProductDetails({ sdk, product, tile }: { sdk: Sdk; product: TagE
   const itemActive = id == selectedProductId ? "stacklapopup-products-item-active" : ""
 
   return (
-    <div className={`stacklapopup-products-item-content ${itemActive}`} data-tag-id={id} data-custom-url={custom_url}>
+    <div
+      className={`stacklapopup-products-item-content ${itemActive}`}
+      data-tag-id={id}
+      data-custom-url={custom_url}
+      aria-label={`Product details: ${product.tag ?? id}`}>
       <div className="stacklapopup-products-item-description-wrapper">{descriptionContent}</div>
       <ProductCTA sdk={sdk} product={product} tile={tile}></ProductCTA>
     </div>
@@ -92,8 +96,10 @@ export function ProductWrapper({
           )}
           <div
             className={`stacklapopup-products-item ${is_cross_seller ? "cross-seller" : ""} ${id == selectedProductId ? "stacklapopup-products-item-active" : ""}`}
-            data-tag-id={id}>
+            data-tag-id={id}
+            aria-label={`Product image container: ${id}`}>
             <img
+              alt="Product image"
               loading="lazy"
               class="stacklapopup-products-item-image"
               src={image_small_url}
