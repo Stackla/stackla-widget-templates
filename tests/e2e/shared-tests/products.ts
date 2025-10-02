@@ -6,8 +6,6 @@ export async function expectAddToCartRequest(page: Page) {
 }
 
 export async function shouldNavigateProducts(page: Page, widgetType: string): Promise<void> {
-  await page.reload()
-
   await shouldExpandTile(page, widgetType)
 
   const leftArrow = page.getByLabel("Previous product image").locator("span")
