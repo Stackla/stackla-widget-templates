@@ -1,15 +1,15 @@
 import { test } from "@playwright/test"
-import { shouldExpandTile, shouldNavigateExpandedTile } from "../helpers/expanded-tile-helpers"
-import { shouldLoadShareMenu } from "../helpers/share-menu-helpers"
-import { shouldNavigateProducts } from "../shared-tests/products"
+import { shouldExpandTile, shouldNavigateExpandedTile } from "../assertions/expanded-tile.assert"
+import { shouldLoadShareMenu } from "../assertions/share-menu-assert"
+import { shouldNavigateProducts } from "../assertions/products.assert"
 import { describeUgcTest } from "../helpers/ugc-test.helpers"
 
 const WIDGET_TYPE = "nightfall"
 
 describeUgcTest(WIDGET_TYPE, async () => {
   test("Should expand tile", async ({ page }) => {
-    const expandedTile = await shouldExpandTile(page, WIDGET_TYPE)
-    await shouldNavigateExpandedTile(expandedTile)
+    await shouldExpandTile(page, WIDGET_TYPE)
+    await shouldNavigateExpandedTile(page)
   })
 
   test("Should expand tile and move products left and right", async ({ page }) => {

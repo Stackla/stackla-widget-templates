@@ -33,7 +33,7 @@ export async function visitWidget(page: Page, widgetType: string): Promise<void>
   await page.goto(`/preview?widgetType=${widgetType}`)
 }
 
-async function getWidget(page: Page) {
+export async function getWidget(page: Page) {
   return page.locator(WIDGET_ID)
 }
 
@@ -46,23 +46,6 @@ export async function getFirstTile(page: Page, widgetType: string): Promise<Loca
   await expect(firstTile.first()).toHaveAttribute("expanded-listener", "true")
 
   return firstTile.first()
-}
-
-/**
- * Get the expanded tile element
- */
-export async function getExpandedTile(page: Page): Promise<Locator> {
-  const shadowRoot = await getWidget(page)
-
-  const expandedTile = shadowRoot.locator("expanded-tiles")
-
-  const firstExpandedTile = expandedTile.locator(".swiper-slide").first()
-
-  // wait for tile to have swiper-slide-fully-visible class
-  await expect(firstExpandedTile).toBeVisible()
-  await expect(firstExpandedTile).toHaveClass(/swiper-slide-fully-visible/)
-
-  return expandedTile.first()
 }
 
 /**

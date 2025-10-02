@@ -1,6 +1,6 @@
 import { Page, expect } from "@playwright/test"
-import { getExpandedTile } from "./widget-helpers"
 import { clickFirstWidgetTile } from "../actions/widgets"
+import { createExpandedTileWrapper } from "../wrappers/expanded-tile"
 
 /**
  * Test share menu functionality
@@ -9,8 +9,10 @@ export async function shouldLoadShareMenu(page: Page, widgetType: string): Promi
   // Click on the first tile
   await clickFirstWidgetTile(page, widgetType)
 
+  const expandedTileWrapper = await createExpandedTileWrapper(page)
+
   // Click on the share button
-  const expandedTile = await getExpandedTile(page)
+  const expandedTile = await expandedTileWrapper.get()
   const shareButton = expandedTile.locator(".share-button").first()
   await expect(shareButton).toBeVisible()
   await shareButton.click()
