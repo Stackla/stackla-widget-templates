@@ -6,6 +6,8 @@ export async function expectAddToCartRequest(page: Page) {
 }
 
 export async function shouldNavigateProducts(page: Page, widgetType: string): Promise<void> {
+  await page.reload()
+
   await shouldExpandTile(page, widgetType)
 
   const leftArrow = page.getByLabel("Previous product image").locator("span")
@@ -35,7 +37,7 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
   // Click the third image to check that the image is visible when clicked
   await page.getByLabel("Product image container: 43").getByRole("img", { name: "Product image" }).click()
   await page.getByLabel("View product: Kathmandu 3").first().waitFor({ state: "visible" })
-  await page.getByLabel("Product details: Kathmandu 3").getByText("another pair").waitFor({ state: "visible" })
+  await page.getByLabel("Product details: Kathmandu 3").getByText("another pair").first().waitFor({ state: "visible" })
 
   // Click the first image to check that the image is visible when clicked
   await page.getByLabel("Product image container: 41").getByRole("img", { name: "Product image" }).click()
