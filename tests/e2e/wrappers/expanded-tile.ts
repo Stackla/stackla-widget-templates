@@ -3,10 +3,8 @@ import { getWidget } from "../helpers/widget-helpers"
 
 export interface ExpandedTileTileWrapper {
   getCurrentTile: () => Promise<Locator>
-  getFirstTile: () => Promise<Locator>
-  getSecondTile: () => Promise<Locator>
-  getFirstTileId: () => Promise<string>
-  getSecondTileId: () => Promise<string>
+  getTile: (index: number) => Locator
+  getTileId: (index: number) => Promise<string>
   locate: (location: string) => Locator
   get: () => Locator
 }
@@ -40,17 +38,12 @@ export async function createExpandedTileWrapper(page: Page): Promise<ExpandedTil
     getCurrentTile: async () => {
       return expandedTile.locator(".ugc-tile.swiper-slide-active").first()
     },
-    getFirstTile: async () => {
-      return expandedTile.locator(".ugc-tile").first()
+    getTile(index: number) {
+      return expandedTile.locator(".ugc-tile").nth(index)
     },
-    getSecondTile: async () => {
-      return expandedTile.locator(".ugc-tile").nth(1)
-    },
-    getFirstTileId: async () => {
-      return (await firstTile.getAttribute("data-id")) ?? ""
-    },
-    getSecondTileId: async () => {
-      return (await secondTile.getAttribute("data-id")) ?? ""
+    getTileId: async (index: number) => {
+      const tile = expandedTile.locator(".ugc-tile").nth(index)
+      return (await tile.getAttribute("data-id")) ?? ""
     }
   }
 }

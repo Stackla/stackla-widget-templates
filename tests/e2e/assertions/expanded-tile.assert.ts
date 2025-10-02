@@ -18,14 +18,14 @@ export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileWrapper(page)
 
   let activeSlide = await expandedTile.getCurrentTile()
-  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getFirstTileId())
+  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(0))
 
   const rightArrow = expandedTile.get().getByAltText("Next arrow")
   await rightArrow.click()
 
   activeSlide = await expandedTile.getCurrentTile()
 
-  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getSecondTileId())
+  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(1))
   await expect(activeSlide).toHaveClass(/swiper-slide-active/)
 
   // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -35,5 +35,5 @@ export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   await leftArrow.click()
 
   activeSlide = expandedTile.get().locator(".ugc-tile.swiper-slide-active").first()
-  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getFirstTileId())
+  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(0))
 }
