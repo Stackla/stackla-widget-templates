@@ -36,7 +36,7 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
       await shouldNavigateProducts(page, widgetType)
     })
 
-    test.only("Should have videos in expanded tiles", async ({ page }) => {
+    test("Should have videos in expanded tiles", async ({ page }) => {
       await shouldHaveVideo(page, widgetType)
       await shouldNotHaveVideo(page, widgetType)
     })
