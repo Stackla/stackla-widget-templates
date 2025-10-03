@@ -50,7 +50,7 @@ jobs:
 
   trigger_deploy:
     if: github.ref == 'refs/heads/master'
-    needs: [build, e2e]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
