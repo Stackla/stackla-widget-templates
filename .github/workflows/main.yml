@@ -47,6 +47,9 @@ jobs:
         run: npm test
   playwright-run:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -64,18 +67,18 @@ jobs:
         run: |
           result=$(uuidgen)
           echo "uuid=$result" >> $GITHUB_OUTPUT
-      - name: Run Playwright tests
-        run: npm run test:playwright
+      - name: Run Playwright tests (sharded)
+        run: npm run test:playwright -- --shard=${{ matrix.shard }}/3
       - name: Upload Playwright artifact
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: playwright-report-${{ steps.uuid-gen.outputs.uuid }}
+          name: playwright-report-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
           path: playwright-report/
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ steps.uuid-gen.outputs.uuid }}
+          name: test-results-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
           path: test-results/
           if-no-files-found: ignore
   trigger_deploy:
