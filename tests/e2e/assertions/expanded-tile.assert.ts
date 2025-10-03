@@ -40,20 +40,6 @@ export async function shouldHaveCorrectInitialTile(expandedTile: ExpandedTileLoc
   await shouldBeActiveWithId(expandedTile, firstTileId)
 }
 
-export async function shouldHaveVideo(expandedTile: ExpandedTileLocator, shouldBeVisible: boolean): Promise<void> {
-  const currentTile = await expandedTile.getCurrentTile()
-  const playIcon = currentTile.locator(".play-icon").first()
-  const video = currentTile.locator("video").first()
-
-  if (shouldBeVisible) {
-    await expect(playIcon).toBeVisible()
-    await expect(video).toBeVisible()
-  } else {
-    await expect(playIcon).toBeHidden()
-    await expect(video).toBeHidden()
-  }
-}
-
 export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileLocator(page)
   await shouldHaveCorrectInitialTile(expandedTile)
@@ -61,17 +47,39 @@ export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   await shouldNavigatePrevious(expandedTile)
 }
 
-export async function shouldCheckTileForVideo(page: Page, tileIndex: number, shouldShow: boolean): Promise<void> {
+export async function shouldHaveTimestamps(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
-  const tile = await expandedTile.getTile(tileIndex)
+  const currentTile = await expandedTile.getCurrentTile()
+  await currentTile.getByLabel("19 months ago").first().isVisible()
+}
 
+export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
+  const expandedTile = await createExpandedTileLocator(page)
+  const currentTile = expandedTile.locate('[data-id="6545848428436e47075464d0"]').first()
+  const avatarUrl = currentTile.locator(".avatar-link")
+  await expect(avatarUrl).toHaveAttribute("href", "https://www.youtube.com/watch?v=OE-h6V5UGvU")
+  await expect(avatarUrl.locator("img").first()).toHaveAttribute(
+    "src",
+    "https://pbs.twimg.com/profile_images/1622733237771710464/0o90Yi6i_normal.jpg"
+  )
+}
+
+export async function shouldHaveVideo(page: Page): Promise<void> {
+  const expandedTile = await createExpandedTileLocator(page)
+  const tile = expandedTile.locate('[data-media="video"]').first()
   const playIcon = tile.locator(".play-icon").first()
   const video = tile.locator("video").first()
-  if (shouldShow) {
-    await expect(playIcon).toBeVisible()
-    await expect(video).toBeVisible()
-  } else {
-    await expect(playIcon).toBeHidden()
-    await expect(video).toBeHidden()
-  }
+  await expect(playIcon).toHaveCount(1)
+  await expect(video).toHaveCount(1)
+}
+
+export async function shouldNotHaveVideo(page: Page): Promise<void> {
+  const expandedTile = await createExpandedTileLocator(page)
+  const tile = expandedTile.locate('[data-media="image"]').first()
+  const playIcon = tile.locator(".play-icon").first()
+  const video = tile.locator("video").first()
+  await expect(playIcon).toHaveCount(0)
+  await expect(video).toHaveCount(0)
 }
