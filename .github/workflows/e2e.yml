@@ -1,0 +1,46 @@
+name: Playwright E2E Tests
+
+on:
+    workflow_call:
+        inputs:
+            uuid:
+                required: false
+                type: string
+    workflow_dispatch:
+
+jobs:
+    playwright-run:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                shard: [1, 2, 3]
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  submodules: recursive
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 20
+            - name: Install dependencies
+              run: npm install
+            - name: Install Playwright Browsers
+              run: npx playwright install --with-deps chromium
+            - name: Get uuid
+              id: uuid-gen
+              run: |
+                  result=$(uuidgen)
+                  echo "uuid=$result" >> $GITHUB_OUTPUT
+            - name: Run Playwright tests (sharded)
+              run: npm run test:playwright -- --shard=${{ matrix.shard }}/3
+            - name: Upload Playwright artifact
+              uses: actions/upload-artifact@v4
+              if: failure()
+              with:
+                  name: playwright-report-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
+                  path: playwright-report/
+                  if-no-files-found: ignore
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: test-results-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
+                  path: test-results/
+                  if-no-files-found: ignore
