@@ -40,9 +40,29 @@ export async function shouldHaveCorrectInitialTile(expandedTile: ExpandedTileLoc
   await shouldBeActiveWithId(expandedTile, firstTileId)
 }
 
+export async function shouldHaveVideo(expandedTile: ExpandedTileLocator, shouldBeVisible: boolean): Promise<void> {
+  const currentTile = await expandedTile.getCurrentTile()
+  const playIcon = currentTile.locator(".play-icon").first()
+  const video = currentTile.locator("video").first()
+
+  if (shouldBeVisible) {
+    await expect(playIcon).toBeVisible()
+    await expect(video).toBeVisible()
+  } else {
+    await expect(playIcon).toBeHidden()
+    await expect(video).toBeHidden()
+  }
+}
+
 export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileLocator(page)
   await shouldHaveCorrectInitialTile(expandedTile)
+  // First item is an image, so play icon should not be visible
+  await shouldHaveVideo(expandedTile, false)
+  // Navigate to next item, which is an video
   await shouldNavigateNext(expandedTile)
+  await shouldHaveVideo(expandedTile, true)
+  // Navigate back to first item, which is an image
   await shouldNavigatePrevious(expandedTile)
+  await shouldHaveVideo(expandedTile, false)
 }

@@ -1,4 +1,3 @@
-/* eslint-disable playwright/no-wait-for-timeout */
 import { Locator, Page } from "playwright/test"
 import { getWidget } from "../utilities/widget.utils"
 
