@@ -1,6 +1,7 @@
 import { Page, expect } from "@playwright/test"
 import { clickFirstWidgetTile } from "../actions/widgets"
 import { createExpandedTileLocator, ExpandedTileLocator } from "../locators/expanded-tile.locator"
+import { WidgetType } from "../../../packages/widget-utils/dist/esm/types/Widget"
 
 export async function shouldExpandTile(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
@@ -40,20 +41,6 @@ export async function shouldHaveCorrectInitialTile(expandedTile: ExpandedTileLoc
   await shouldBeActiveWithId(expandedTile, firstTileId)
 }
 
-export async function shouldHaveVideo(expandedTile: ExpandedTileLocator, shouldBeVisible: boolean): Promise<void> {
-  const currentTile = await expandedTile.getCurrentTile()
-  const playIcon = currentTile.locator(".play-icon").first()
-  const video = currentTile.locator("video").first()
-
-  if (shouldBeVisible) {
-    await expect(playIcon).toBeVisible()
-    await expect(video).toBeVisible()
-  } else {
-    await expect(playIcon).toBeHidden()
-    await expect(video).toBeHidden()
-  }
-}
-
 export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileLocator(page)
   await shouldHaveCorrectInitialTile(expandedTile)
@@ -61,17 +48,43 @@ export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   await shouldNavigatePrevious(expandedTile)
 }
 
-export async function shouldCheckTileForVideo(page: Page, tileIndex: number, shouldShow: boolean): Promise<void> {
+export async function shouldHaveTimestamps(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
-  const tile = await expandedTile.getTile(tileIndex)
+  const currentTile = await expandedTile.getCurrentTile()
+  await currentTile.getByLabel("19 months ago").first().isVisible()
+}
+
+export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
+  const expandedTile = await createExpandedTileLocator(page)
+  const currentTile = await expandedTile.getTile(5)
+  const avatarUrl = currentTile.locator(".avatar-link")
+  await expect(avatarUrl).toHaveAttribute("href", "https://twitter.com/1708713249204817920/status/1856623620271009870")
+  await expect(avatarUrl.locator("img").first()).toHaveAttribute(
+    "src",
+    "https://pbs.twimg.com/profile_images/1708713429945798656/DPeCtkRh_normal.jpg"
+  )
+}
+
+export async function shouldHaveVideo(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
+  const expandedTile = await createExpandedTileLocator(page)
+  const tile = await expandedTile.getTile(5)
 
   const playIcon = tile.locator(".play-icon").first()
   const video = tile.locator("video").first()
-  if (shouldShow) {
-    await expect(playIcon).toBeVisible()
-    await expect(video).toBeVisible()
-  } else {
-    await expect(playIcon).toBeHidden()
-    await expect(video).toBeHidden()
-  }
+  await expect(playIcon).toBeVisible()
+  await expect(video).toBeVisible()
+}
+
+export async function shouldNotHaveVideo(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
+  const expandedTile = await createExpandedTileLocator(page)
+  const tile = await expandedTile.getTile(0)
+
+  const playIcon = tile.locator(".play-icon").first()
+  const video = tile.locator("video").first()
+  await expect(playIcon).toBeHidden()
+  await expect(video).toBeHidden()
 }
