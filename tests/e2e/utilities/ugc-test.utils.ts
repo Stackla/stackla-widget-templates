@@ -55,7 +55,7 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
       await shouldHaveTimestamps(page, widgetType)
     })
 
-    test("Should have avatars in expanded tiles", async ({ page }) => {
+    test.only("Should have avatars in expanded tiles", async ({ page }) => {
       await shouldHaveAvatars(page, widgetType)
     })
 

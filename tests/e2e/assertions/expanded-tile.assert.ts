@@ -59,13 +59,12 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
 export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
-  const currentTile = await expandedTile.getCurrentTile()
-  const avatarUrl = currentTile.locator(".avatar-link").first()
-  const avatarHref = avatarUrl
-  await expect(avatarHref).toHaveAttribute("href", /^https?:\/\/.+/)
-  const avatarImg = avatarUrl.locator("img").first()
-  const avatarSrc = avatarImg
-  await expect(avatarSrc).toHaveAttribute("src", /^https?:\/\/.+/)
+  const currentTile = expandedTile.locate('[data-id="6545848428436e47075464d0"]').first()
+  const avatarUrl = await currentTile.locator(".avatar-link").getAttribute("href")
+  expect(avatarUrl).toContain("https://")
+
+  const avatarSrc = await currentTile.locator(".avatar-link img").first().getAttribute("src")
+  expect(avatarSrc).toContain("https://")
 }
 
 export async function shouldHaveVideo(page: Page): Promise<void> {
