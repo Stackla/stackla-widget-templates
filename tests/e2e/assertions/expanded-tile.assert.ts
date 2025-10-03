@@ -1,7 +1,6 @@
 import { Page, expect } from "@playwright/test"
 import { clickFirstWidgetTile } from "../actions/widgets"
 import { createExpandedTileLocator, ExpandedTileLocator } from "../locators/expanded-tile.locator"
-import { WidgetType } from "../../../packages/widget-utils/dist/esm/types/Widget"
 
 export async function shouldExpandTile(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
