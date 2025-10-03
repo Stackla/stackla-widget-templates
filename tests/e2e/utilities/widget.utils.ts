@@ -43,6 +43,7 @@ export async function getWidget(page: Page) {
 export async function getFirstTile(page: Page, widgetType: string): Promise<Locator> {
   const shadowRoot = await getWidget(page)
   const firstTile = shadowRoot.locator(`${getUgcTileSelectorByWidgetType(widgetType)}`)
+
   await expect(firstTile.first()).toHaveAttribute("expanded-listener", "true")
 
   return firstTile.first()
