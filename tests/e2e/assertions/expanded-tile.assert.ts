@@ -51,7 +51,9 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
   await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
   const currentTile = await expandedTile.getCurrentTile()
-  await expect(currentTile.getByLabel(/^\d+\s+(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\s+ago$/i).first()).toBeVisible()
+  await expect(
+    currentTile.getByLabel(/^\d+\s+(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\s+ago$/i).first()
+  ).toBeVisible()
 }
 
 export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {
@@ -59,12 +61,12 @@ export async function shouldHaveAvatars(page: Page, widgetType: string): Promise
   const expandedTile = await createExpandedTileLocator(page)
   const currentTile = await expandedTile.getCurrentTile()
   const avatarUrl = currentTile.locator(".avatar-link").first()
-  const avatarHref = await avatarUrl.getAttribute("href")
-  expect(avatarHref).toBeTruthy()
+  const avatarHref = avatarUrl
+  await expect(avatarHref).toHaveAttribute("href")
   expect(avatarHref).toMatch(/^https?:\/\/.+/)
   const avatarImg = avatarUrl.locator("img").first()
-  const avatarSrc = await avatarImg.getAttribute("src")
-  expect(avatarSrc).toBeTruthy()
+  const avatarSrc = avatarImg
+  await expect(avatarSrc).toHaveAttribute("src")
   expect(avatarSrc).toMatch(/^https?:\/\/.+/)
 }
 
