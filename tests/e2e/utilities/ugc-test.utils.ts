@@ -37,9 +37,13 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
       await shouldNavigateProducts(page, widgetType)
     })
 
-    test("Should have videos in expanded tiles", async ({ page }) => {
+    test("Should have videos in video expanded tiles", async ({ page }) => {
       await clickFirstWidgetTile(page, widgetType)
       await shouldHaveVideo(page)
+    })
+
+    test("Should not have videos in image expanded tiles", async ({ page }) => {
+      await clickFirstWidgetTile(page, widgetType)
       await shouldNotHaveVideo(page)
     })
 
