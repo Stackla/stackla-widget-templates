@@ -3,7 +3,7 @@ name: Release
 run-name: Release to ${{ inputs.environment || 'staging' }} by @${{ github.actor }}
 
 env:
-    GH_TOKEN: ${{ github.token }}
+  GH_TOKEN: ${{ github.token }}
 
 permissions:
   id-token: write
@@ -14,13 +14,17 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to run deployment in'
+        description: "Environment to run deployment in"
         type: environment
         required: true
         default: staging
 
 jobs:
+  e2e:
+    uses: ./.github/workflows/e2e.yml
+
   deploy:
+    needs: [e2e]
     environment: ${{ inputs.environment }}
     env:
       NODE_AUTH_TOKEN: ${{secrets.STACKLA_BOT_GITHUB_TOKEN}}
