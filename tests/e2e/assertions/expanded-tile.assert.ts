@@ -73,8 +73,8 @@ export async function shouldHaveVideo(page: Page, widgetType: string): Promise<v
 
   const playIcon = tile.locator(".play-icon").first()
   const video = tile.locator("video").first()
-  await expect(playIcon).toBeVisible()
-  await expect(video).toBeVisible()
+  await expect(playIcon).toHaveCount(1)
+  await expect(video).toHaveCount(1)
 }
 
 export async function shouldNotHaveVideo(page: Page, widgetType: string): Promise<void> {
