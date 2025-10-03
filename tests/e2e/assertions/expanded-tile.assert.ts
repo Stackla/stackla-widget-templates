@@ -62,12 +62,10 @@ export async function shouldHaveAvatars(page: Page, widgetType: string): Promise
   const currentTile = await expandedTile.getCurrentTile()
   const avatarUrl = currentTile.locator(".avatar-link").first()
   const avatarHref = avatarUrl
-  await expect(avatarHref).toHaveAttribute("href")
-  expect(avatarHref).toMatch(/^https?:\/\/.+/)
+  await expect(avatarHref).toHaveAttribute("href", /^https?:\/\/.+/)
   const avatarImg = avatarUrl.locator("img").first()
   const avatarSrc = avatarImg
-  await expect(avatarSrc).toHaveAttribute("src")
-  expect(avatarSrc).toMatch(/^https?:\/\/.+/)
+  await expect(avatarSrc).toHaveAttribute("src", /^https?:\/\/.+/)
 }
 
 export async function shouldHaveVideo(page: Page): Promise<void> {
