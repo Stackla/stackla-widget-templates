@@ -57,33 +57,29 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
 export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
-  const currentTile = await expandedTile.getTile(5)
+  const currentTile = expandedTile.locate('[data-id="6545848428436e47075464d0"]').first()
   const avatarUrl = currentTile.locator(".avatar-link")
-  await expect(avatarUrl).toHaveAttribute("href", "https://twitter.com/1708713249204817920/status/1856623620271009870")
+  await expect(avatarUrl).toHaveAttribute("href", "https://www.youtube.com/watch?v=OE-h6V5UGvU")
   await expect(avatarUrl.locator("img").first()).toHaveAttribute(
     "src",
-    "https://pbs.twimg.com/profile_images/1708713429945798656/DPeCtkRh_normal.jpg"
+    "https://pbs.twimg.com/profile_images/1622733237771710464/0o90Yi6i_normal.jpg"
   )
 }
 
-export async function shouldHaveVideo(page: Page, widgetType: string): Promise<void> {
-  await clickFirstWidgetTile(page, widgetType)
+export async function shouldHaveVideo(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileLocator(page)
-  const tile = await expandedTile.getTile(5)
-
+  const tile = expandedTile.locate('[data-media="video"]').first()
   const playIcon = tile.locator(".play-icon").first()
   const video = tile.locator("video").first()
   await expect(playIcon).toHaveCount(1)
   await expect(video).toHaveCount(1)
 }
 
-export async function shouldNotHaveVideo(page: Page, widgetType: string): Promise<void> {
-  await clickFirstWidgetTile(page, widgetType)
+export async function shouldNotHaveVideo(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileLocator(page)
-  const tile = await expandedTile.getTile(0)
-
+  const tile = expandedTile.locate('[data-media="image"]').first()
   const playIcon = tile.locator(".play-icon").first()
   const video = tile.locator("video").first()
-  await expect(playIcon).toBeHidden()
-  await expect(video).toBeHidden()
+  await expect(playIcon).toHaveCount(0)
+  await expect(video).toHaveCount(0)
 }

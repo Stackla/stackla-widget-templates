@@ -1,3 +1,4 @@
+import { clickFirstWidgetTile } from "../actions/widgets"
 import {
   shouldExpandTile,
   shouldHaveAvatars,
@@ -37,8 +38,9 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
     })
 
     test("Should have videos in expanded tiles", async ({ page }) => {
-      await shouldHaveVideo(page, widgetType)
-      await shouldNotHaveVideo(page, widgetType)
+      await clickFirstWidgetTile(page, widgetType)
+      await shouldHaveVideo(page)
+      await shouldNotHaveVideo(page)
     })
 
     test("Should load share icons", async ({ page }) => {
