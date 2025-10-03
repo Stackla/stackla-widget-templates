@@ -1,6 +1,6 @@
 import { Page, expect } from "@playwright/test"
 import { clickFirstWidgetTile } from "../actions/widgets"
-import { createExpandedTileLocator } from "../locators/expanded-tile.locator"
+import { createExpandedTileLocator, ExpandedTileLocator } from "../locators/expanded-tile.locator"
 
 export async function shouldExpandTile(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
@@ -13,28 +13,36 @@ export async function shouldExpandTile(page: Page, widgetType: string): Promise<
 
   await expect(firstExpandedTile).toBeVisible()
   await expect(firstExpandedTile).toHaveClass(/swiper-slide-fully-visible/)
+  await expect(firstExpandedTile).toHaveClass(/swiper-slide-active/)
+}
+
+export async function shouldBeActiveWithId(expandedTile: ExpandedTileLocator, expectedId: string): Promise<void> {
+  const activeSlide = await expandedTile.getCurrentTile()
+  await expect(activeSlide).toHaveAttribute("data-id", expectedId)
+  await expect(activeSlide).toHaveClass(/swiper-slide-active/)
+  await expect(activeSlide).toHaveClass(/swiper-slide-fully-visible/)
+}
+
+export async function shouldNavigateNext(expandedTile: ExpandedTileLocator): Promise<void> {
+  const secondTileId = await expandedTile.getTileId(1)
+  await expandedTile.navigateNext()
+  await shouldBeActiveWithId(expandedTile, secondTileId)
+}
+
+export async function shouldNavigatePrevious(expandedTile: ExpandedTileLocator): Promise<void> {
+  const firstTileId = await expandedTile.getTileId(0)
+  await expandedTile.navigatePrevious()
+  await shouldBeActiveWithId(expandedTile, firstTileId)
+}
+
+export async function shouldHaveCorrectInitialTile(expandedTile: ExpandedTileLocator): Promise<void> {
+  const firstTileId = await expandedTile.getTileId(0)
+  await shouldBeActiveWithId(expandedTile, firstTileId)
 }
 
 export async function shouldNavigateExpandedTile(page: Page): Promise<void> {
   const expandedTile = await createExpandedTileLocator(page)
-
-  let activeSlide = await expandedTile.getCurrentTile()
-  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(0))
-
-  const rightArrow = expandedTile.get().getByAltText("Next arrow")
-  await rightArrow.click()
-
-  activeSlide = await expandedTile.getCurrentTile()
-
-  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(1))
-  await expect(activeSlide).toHaveClass(/swiper-slide-active/)
-
-  // eslint-disable-next-line playwright/no-wait-for-timeout
-  await expandedTile.get().page().waitForTimeout(500)
-
-  const leftArrow = expandedTile.get().getByAltText("Previous arrow")
-  await leftArrow.click()
-
-  activeSlide = expandedTile.get().locator(".ugc-tile.swiper-slide-active").first()
-  await expect(activeSlide).toHaveAttribute("data-id", await expandedTile.getTileId(0))
+  await shouldHaveCorrectInitialTile(expandedTile)
+  await shouldNavigateNext(expandedTile)
+  await shouldNavigatePrevious(expandedTile)
 }
