@@ -14,24 +14,50 @@ jobs:
         strategy:
             matrix:
                 shard: [1, 2, 3]
+
         steps:
             - uses: actions/checkout@v2
               with:
                   submodules: recursive
+
+            - name: Cache node modules
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.npm
+                      node_modules
+                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-npm-
+
+            - name: Cache Playwright browsers
+              id: playwright-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-playwright-
+
             - uses: actions/setup-node@v1
               with:
                   node-version: 20
+
             - name: Install dependencies
               run: npm install
+
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps chromium
+
             - name: Get uuid
               id: uuid-gen
               run: |
                   result=$(uuidgen)
                   echo "uuid=$result" >> $GITHUB_OUTPUT
+
             - name: Run Playwright tests (sharded)
               run: npm run test:playwright -- --shard=${{ matrix.shard }}/3
+
             - name: Upload Playwright artifact
               uses: actions/upload-artifact@v4
               if: failure()
@@ -39,6 +65,7 @@ jobs:
                   name: playwright-report-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
                   path: playwright-report/
                   if-no-files-found: ignore
+
             - uses: actions/upload-artifact@v4
               with:
                   name: test-results-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
