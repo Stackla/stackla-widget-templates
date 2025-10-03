@@ -47,8 +47,8 @@ jobs:
         run: npm test
 
   e2e:
-    needs: build
     uses: ./.github/workflows/e2e.yml
+
   trigger_deploy:
     if: github.ref == 'refs/heads/master'
     needs: [build, e2e]
