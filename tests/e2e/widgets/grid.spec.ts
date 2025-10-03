@@ -3,11 +3,13 @@ import { shouldExpandTile, shouldNavigateExpandedTile } from "../assertions/expa
 import { shouldLoadShareMenu } from "../assertions/share-menu.assert"
 import { shouldNavigateProducts } from "../assertions/products.assert"
 import { describeUgcTest } from "../utilities/ugc-test.utils"
+import { componentsShouldLoad } from "../assertions/widget.assert"
 
 const WIDGET_TYPE = "grid"
 
 describeUgcTest(WIDGET_TYPE, async () => {
   test("Should expand tile", async ({ page }) => {
+    await componentsShouldLoad(page)
     await shouldExpandTile(page, WIDGET_TYPE)
     await shouldNavigateExpandedTile(page)
   })
