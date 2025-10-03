@@ -43,7 +43,6 @@ export async function getWidget(page: Page) {
 export async function getFirstTile(page: Page, widgetType: string): Promise<Locator> {
   const shadowRoot = await getWidget(page)
   const firstTile = shadowRoot.locator(`${getUgcTileSelectorByWidgetType(widgetType)}`)
-  await firstTile.first().locator("img").first().waitFor({ state: "visible", timeout: 10000 })
 
   await expect(firstTile.first()).toHaveAttribute("expanded-listener", "true")
 
