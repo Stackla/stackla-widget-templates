@@ -51,7 +51,7 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
   await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
   const currentTile = await expandedTile.getCurrentTile()
-  await currentTile.getByLabel("19 months ago").first().isVisible()
+  await expect(currentTile.getByLabel(/^\d+\s+(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\s+ago$/i).first()).toBeVisible()
 }
 
 export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {
