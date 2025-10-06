@@ -105,6 +105,6 @@
     "happy-dom": "^14.12.3",
     "hbs": "^4.2.0",
     "serverless-hooks-plugin": "^1.1.0",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^4.0.0"
   }
 }
