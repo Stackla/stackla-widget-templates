@@ -60,7 +60,7 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
       await shouldHaveAvatars(page, widgetType)
     })
 
-    test.only("Should successfully click CTA button and be redirected", async ({ page }) => {
+    test("Should successfully click CTA button and be redirected", async ({ page }) => {
       await shouldHaveProductButtonWithValidURL(page, widgetType)
     })
 
