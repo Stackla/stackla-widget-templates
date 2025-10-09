@@ -11,42 +11,26 @@ import tiles from "../../tests/fixtures/tiles"
 import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
 import { Request, Response } from 'express';
+import { PreviewContent, IDraftRequest } from "./interfaces"
 
-export function getDomain(isDev: boolean) {
-  if (isDev) {
+export function getDomain(env = process.env.APP_ENV) {
+  if (env === "development") {
     return "http://localhost:4002/development"
   }
 
-  if (process.env.APP_ENV === "testing") {
+  if (env === "testing") {
     return `${STAGING_UI_URL}/external-testing`
   }
 
-  if (process.env.APP_ENV === "production") {
+  if (env === "production") {
     return STAGING_UI_URL
   }
 
-  return `${STAGING_UI_URL}/local`
-}
-
-export interface IDraftRequest {
-  custom_templates: {
-    layout: {
-      template: string
-    }
-    tile: {
-      template: string
-    }
+  if (env === "pipeline") {
+    return "http://localhost:4003"
   }
-  custom_css: string
-  custom_js: string
-  widgetOptions: typeof widgetOptions
-}
 
-type PreviewContent = {
-  layoutCode: string
-  tileCode: string
-  cssCode: string
-  jsCode: string
+  return `${STAGING_UI_URL}/local`
 }
 
 const expressApp = express()
@@ -92,6 +76,14 @@ expressApp.use("/preview", (req : Request, res : Response, next) => {
     next()
   }
 })
+
+export function determineEnvironment(req: Request) {
+  if (req.query.dev === "true") {
+    return "development"
+  }
+
+  return process.env.APP_ENV || "production"
+}
 
 export async function getContent(widgetType: string, retry = 0): Promise<PreviewContent> {
   if (retry > 10) {
@@ -177,17 +169,17 @@ function mutateStylesForCustomWidgets(widgetType: string) {
 
   switch (widgetType) {
     case "nightfall":
-      widgetOptionsMutated.style.text_tile_background = "000000"
-      widgetOptionsMutated.style.text_tile_font_color = "fff"
-      widgetOptionsMutated.style.text_tile_user_name_font_color = "fff"
-      widgetOptionsMutated.style.cta_btn_background = "fff"
-      widgetOptionsMutated.style.cta_btn_font_color = "000000"
-      widgetOptionsMutated.style.text_tile_user_name_font_color = "fff"
+      widgetOptionsMutated.style!.text_tile_background = "000000"
+      widgetOptionsMutated.style!.text_tile_font_color = "fff"
+      widgetOptionsMutated.style!.text_tile_user_name_font_color = "fff"
+      widgetOptionsMutated.style!.cta_btn_background = "fff"
+      widgetOptionsMutated.style!.cta_btn_font_color = "000000"
+      widgetOptionsMutated.style!.text_tile_user_name_font_color = "fff"
       // @TODO: Peng to add cta_background_color and cta_font_color
       break
     case "slider":
-      widgetOptionsMutated.style.text_tile_background = "000000"
-      widgetOptionsMutated.style.text_tile_user_name_font_color = "fff"
+      widgetOptionsMutated.style!.text_tile_background = "000000"
+      widgetOptionsMutated.style!.text_tile_user_name_font_color = "fff"
       break
   }
 
@@ -284,7 +276,7 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions),
-    domain: getDomain(req.query.dev === "true"),
+    domain: getDomain(determineEnvironment(req)),
     wid: req.query.wid ?? "668ca52ada8fb",
     ...(await getContent(widgetType))
   })
@@ -299,7 +291,7 @@ expressApp.get("/multi-preview", async (req : Request, res: Response) => {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions),
-    domain: getDomain(req.query.dev === "true"),
+    domain: getDomain(determineEnvironment(req)),
     ...(await getContent(widgetType))
   })
 })
@@ -312,7 +304,7 @@ expressApp.get("/staging", async (req : Request, res : Response) => {
     widgetRequest: JSON.stringify(widgetRequest),
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions.config),
-    domain: getDomain(req.query.dev === "true"),
+    domain: getDomain(determineEnvironment(req)),
     ...(await getContent(widgetType))
   })
 })
