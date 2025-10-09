@@ -2,6 +2,7 @@ import { clickFirstWidgetTile } from "../actions/widgets"
 import {
   shouldExpandTile,
   shouldHaveAvatars,
+  shouldHaveDescription,
   shouldHaveProductButtonWithValidURL,
   shouldHaveTimestamps,
   shouldHaveVideo,
@@ -62,6 +63,10 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
 
     test("Should successfully click CTA button and be redirected", async ({ page }) => {
       await shouldHaveProductButtonWithValidURL(page, widgetType)
+    })
+
+    test("Should have description loading correctly when tile is expanded", async ({ page }) => {
+      await shouldHaveDescription(page, widgetType)
     })
 
     testClosure && testClosure()
