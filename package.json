@@ -13,7 +13,7 @@
     "lint": "npm run eslint && npm run stylelint",
     "lint:fix": "npm run eslint -- --fix && npm run stylelint -- --fix",
     "test": "vitest run --passWithNoTests",
-    "start:pipeline": "APP_ENV=pipeline cd ../ && npm run start",
+    "start:pipeline": "APP_ENV=pipeline cd ../ && npm run start:server",
     "test:e2e:pipeline": "npx concurrently \"npm run start:pipeline\" \"npm run test:e2e\"",
     "test:e2e": "playwright test",
     "test:e2e:debug": "playwright test --debug",
