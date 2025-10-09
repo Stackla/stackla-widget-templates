@@ -14,6 +14,7 @@ const plugins = [
 const getPort = () => {
   switch (env) {
     case "development":
+    case "pipeline":
       return 4003;
     case "testing":
       return 4002;
@@ -52,7 +53,7 @@ const config = {
     esbuild: {
       otherExternal: ["hbs"]
     },
-    hooks: process.env.APP_ENV == 'testing' ? [] : defaultHooks
+    hooks: process.env.APP_ENV == 'testing' || process.env.APP_ENV === 'pipeline' ? [] : defaultHooks
   },
   package: {
     include: ["views/**/*", "dist/**/*", "build/**/*"],
