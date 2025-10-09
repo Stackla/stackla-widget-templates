@@ -100,3 +100,35 @@ export async function shouldNotHaveVideo(page: Page): Promise<void> {
   await expect(playIcon).toHaveCount(0)
   await expect(video).toHaveCount(0)
 }
+
+export async function shouldHaveDescription(page: Page, widgetType: string): Promise<void> {
+  await clickFirstWidgetTile(page, widgetType)
+  const expandedTile = await createExpandedTileLocator(page)
+  const currentTile = await expandedTile.getCurrentTile()
+
+  // Check that the description container exists
+  const descriptionContainer = currentTile.locator(".description").first()
+  await expect(descriptionContainer).toBeVisible()
+
+  // Check that either caption or timephrase content is present
+  const caption = currentTile.locator(".caption .caption-paragraph").first()
+  const timephrase = currentTile.locator("time-phrase").first()
+
+  // At least one of caption or timephrase should be visible if description is rendered
+  const captionExists = (await caption.count()) > 0
+  const timephraseExists = (await timephrase.count()) > 0
+
+  // Verify that the description content is actually loaded
+  if (captionExists) {
+    await expect(caption).toBeVisible()
+    // Check that the caption has actual text content (not empty)
+    await expect(caption).toHaveText(/.+/)
+  }
+
+  if (timephraseExists) {
+    await expect(timephrase).toBeVisible()
+  }
+
+  // At least one should exist for the description to be considered properly loaded
+  expect(captionExists || timephraseExists).toBeTruthy()
+}
