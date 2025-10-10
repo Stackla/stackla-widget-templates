@@ -14,8 +14,8 @@ import { Request, Response } from 'express';
 import { PreviewContent, IDraftRequest } from "./interfaces"
 
 export function getDomain(env = process.env.APP_ENV) {
-  if (env === "development") {
-    return "http://localhost:4002/development"
+  if (env === "local" || env == "development") {
+    return `${STAGING_UI_URL}/local`;
   }
 
   if (env === "testing") {
@@ -27,7 +27,7 @@ export function getDomain(env = process.env.APP_ENV) {
   }
 
   if (env === "pipeline") {
-    return "http://localhost:4003"
+    return "http://localhost:4002"
   }
 
   return `${STAGING_UI_URL}/local`
