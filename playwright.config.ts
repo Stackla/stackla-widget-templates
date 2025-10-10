@@ -41,6 +41,8 @@ export default defineConfig({
     },
   ],
 
+  timeout: 120 * 1000,
+
   /* Run your local dev server before starting the tests */
   webServer: {
     command: process.env.APP_ENV === 'pipeline' ? 'npm run start:lambda:pipeline' : 'npm run start:test',

@@ -10,7 +10,7 @@ export async function componentsShouldLoad(page: Page): Promise<void> {
     "tile-content.js",
     "shopspots.js",
     "expanded-tiles.js",
-    "google-analytics.js"
+    "google-analytics.js",
   ]
 
   // wait for get requests for each component
@@ -21,4 +21,6 @@ export async function componentsShouldLoad(page: Page): Promise<void> {
       })
     )
   )
+
+  await page.waitForLoadState("networkidle")
 }
