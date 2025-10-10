@@ -44,10 +44,10 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
   await page.getByText("You should look for shoes").waitFor({ state: "visible" })
 
   // Click on an add to cart product
-  for (let i = 0; i <= 4; i++) await rightArrow.click()
+  for (let i = 0; i <= 3; i++) await rightArrow.click()
 
   await Promise.all([
     expectAddToCartRequest(page),
-    page.getByLabel("Product details: Nosto Rec: Pure City").getByTestId("ugc-add-to-cart-button").click()
+    page.getByLabel('Product details: Kathmandu 5').getByTestId('ugc-add-to-cart-button').click()
   ])
 }

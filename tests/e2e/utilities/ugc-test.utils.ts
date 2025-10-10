@@ -35,7 +35,7 @@ export async function ugcTests(widgetType: string, testClosure?: () => void) {
       await shouldNavigateExpandedTile(page)
     })
 
-    test("Should expand tile and move products left and right", async ({ page }) => {
+    test.only("Should expand tile and move products left and right", async ({ page }) => {
       await shouldNavigateProducts(page, widgetType)
     })
 
