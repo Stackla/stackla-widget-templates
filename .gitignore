@@ -15,3 +15,4 @@ dist/*
 !dist/samples/
 dist/assets/spritemaps/*
 meta.json
+dist/assets/widget-core
