@@ -2,7 +2,7 @@ export default `
 const apiSetting = {
   server: 'https://connect.staging.nosto.com',
   account: 'shopify-64671154416',
-  site: 'http://localhost:4002/development',
+  site: '/development',
   subDomain: '',
   anyDomain: false,
   searchQueryParam: '',
@@ -99,7 +99,7 @@ const products = {
           name: 'Nosto Rec: Pure City Vintage Leather Saddle',
           description:
             'This is a demonstration store. You can purchase products like this from Pure Fix Cycles. Theres nothing like the comfort and class of a leather saddle. Whether you’re popping out to the bar or in the middle of a tweed ride, with this saddle youll be floating on a stylish cloud of cow.',
-          url: 'http://localhost:4002/development/products/pure-city-vintage-leather-saddle?nosto=ugc-widget-recommendation-1',
+          url: '/development/products/pure-city-vintage-leather-saddle?nosto=ugc-widget-recommendation-1',
           categories: ['Saddle'],
           product_id: '7972151427312',
           price: 90,
@@ -180,7 +180,7 @@ const products = {
           name: 'Nosto Rec: Contrast Felted Sweater in Black',
           description:
             'A tight rib-knit pullover is made resplendent with a brush of white felted wool embedded firmly in the knit. Gorgeous to behold the Contrast Felted Sweater is exactly the kind of fabrication that Ter et Bantine is known for. Color Black. 100% Virgin Wool. Lana is wearing an Italian 42.',
-          url: 'http://localhost:4002/development/products/contrast-felted-sweater-black?nosto=ugc-widget-recommendation-1',
+          url: '/development/products/contrast-felted-sweater-black?nosto=ugc-widget-recommendation-1',
           categories: ["women's knitwear"],
           product_id: '7972181344496',
           price: 698,
@@ -261,7 +261,7 @@ const products = {
           name: 'Nosto Rec: Desna Dress',
           description:
             'The Nosto Rec: Desna Dress is an excellent seasonal piece. Layering is optional with its lightweight , barely sheer body-con shape. Skirt reaches knee-length. Sew-in slip. Crew neckline. Color Black. 100% Pima Cotton. Made in the U.S.A.',
-          url: 'http://localhost:4002/development/products/desna-dress?nosto=ugc-widget-recommendation-1',
+          url: '/development/products/desna-dress?nosto=ugc-widget-recommendation-1',
           categories: ["women's dresses"],
           product_id: '7972239900912',
           price: 188,
@@ -352,7 +352,7 @@ const products = {
             name: 'Nosto Rec: Pure City Vintage Leather Saddle',
             description:
               'This is a demonstration store. You can purchase products like this from Pure Fix Cycles. There’s nothing like the comfort and class of a leather saddle. Whether you’re popping out to the bar or in the middle of a tweed ride, with this saddle youll be floating on a stylish cloud of cow.',
-            url: 'http://localhost:4002/development/products/pure-city-vintage-leather-saddle?nosto=ugc-widget-recommendation-1',
+            url: '/development/products/pure-city-vintage-leather-saddle?nosto=ugc-widget-recommendation-1',
             categories: ['Saddle'],
             product_id: '7972151427312',
             price: 90,
@@ -433,7 +433,7 @@ const products = {
             name: 'Nosto Rec: Contrast Felted Sweater in Black',
             description:
               'A tight rib-knit pullover is made resplendent with a brush of white felted wool embedded firmly in the knit. Gorgeous to behold the Contrast Felted Sweater is exactly the kind of fabrication that Ter et Bantine is known for. Color Black. 100% Virgin Wool. Lana is wearing an Italian 42.',
-            url: 'http://localhost:4002/development/products/contrast-felted-sweater-black?nosto=ugc-widget-recommendation-1',
+            url: '/development/products/contrast-felted-sweater-black?nosto=ugc-widget-recommendation-1',
             categories: ["women's knitwear"],
             product_id: '7972181344496',
             price: 698,
@@ -514,7 +514,7 @@ const products = {
             name: 'Nosto Rec: Desna Dress',
             description:
               'The Nosto Rec: Desna Dress is an excellent seasonal piece. Layering is optional with its lightweight , barely sheer body-con shape. Skirt reaches knee-length. Sew-in slip. Crew neckline. Color Black. 100% Pima Cotton. Made in the U.S.A.',
-            url: 'http://localhost:4002/development/products/desna-dress?nosto=ugc-widget-recommendation-1',
+            url: '/development/products/desna-dress?nosto=ugc-widget-recommendation-1',
             categories: ["women's dresses"],
             product_id: '7972239900912',
             price: 188,
