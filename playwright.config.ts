@@ -44,7 +44,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: process.env.APP_ENV === 'pipeline' ? 'npm run start:lambda:pipeline' : 'npm run start:test',
-    url: 'http://localhost:4003/preview?widgetType=carousel',
+    url: process.env.APP_ENV === 'pipeline' ? 'http://localhost:4003/preview?widgetType=carousel' : 'http://localhost:4002/preview?widgetType=carousel',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },
