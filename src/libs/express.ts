@@ -27,7 +27,7 @@ export function getDomain(env = process.env.APP_ENV) {
   }
 
   if (env === "pipeline") {
-    return "http://localhost:4002"
+    return "http://localhost:4003/assets/widget-core"
   }
 
   return `${STAGING_UI_URL}/local`
