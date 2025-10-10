@@ -48,6 +48,6 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
 
   await Promise.all([
     expectAddToCartRequest(page),
-    page.getByLabel('Product details: Kathmandu 5').getByTestId('ugc-add-to-cart-button').click()
+    page.getByLabel("Product details: Kathmandu 5").getByTestId("ugc-add-to-cart-button").click()
   ])
 }
