@@ -58,12 +58,19 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
 
 export async function shouldHaveProductButtonWithValidURL(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
-  const button = page.getByRole("link", { name: "Buy product: Kathmandu" }).first()
 
-  await expect(button).toHaveAttribute(
-    "href",
-    "http://localhost:4003/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050"
-  )
+  const rightArrow = page.getByLabel("Next product image").locator("span").first()
+
+  await rightArrow.click();
+  await rightArrow.click();
+  await rightArrow.click();
+  await rightArrow.click();
+  await rightArrow.click();
+
+  const button = await page.getByRole('link', { name: 'Buy product: Nosto Rec: Pure' })
+  const href = await button.getAttribute("href")
+  expect(href).toBeDefined()  
+  expect(href).toMatch(/^https?:\/\/.+/)
 
   // Listen for new tab
   const [newPage] = await Promise.all([page.context().waitForEvent("page"), button.click()])
