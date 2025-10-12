@@ -11,8 +11,8 @@ export interface IDraftRequest {
   }
   customCSS: string
   customJS: string
-  widgetOptions: typeof widgetOptions,
-  widgetType: string;
+  widgetOptions: typeof widgetOptions
+  widgetType: string
 }
 
 export type PreviewContent = {
