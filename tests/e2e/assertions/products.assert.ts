@@ -12,8 +12,10 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
 
   const rightArrow = page.getByLabel("Next product image").locator("span").first()
 
-  await page.getByLabel("Product images carousel").first().locator('.swiper').first().waitFor({ state: "attached" })
-  await expect(page.getByLabel("Product images carousel").first().locator('.swiper').first()).toHaveClass(/swiper-initialized/)
+  await page.getByLabel("Product images carousel").first().locator(".swiper").first().waitFor({ state: "attached" })
+  await expect(page.getByLabel("Product images carousel").first().locator(".swiper").first()).toHaveClass(
+    /swiper-initialized/
+  )
 
   await page.getByLabel("View product: Kathmandu 1").first().waitFor({ state: "visible" })
   await rightArrow.click()
