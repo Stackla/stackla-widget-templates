@@ -58,11 +58,11 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
 
 export async function shouldHaveProductButtonWithValidURL(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
-  const button = page.getByRole("link", { name: "Buy product: Kathmandu" }).first()
+  const button = page.getByRole("link", { name: "Buy product: Kathmandu 1" }).first()
 
   await expect(button).toHaveAttribute(
     "href",
-    "http://localhost:4003/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050"
+    "/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050"
   )
 
   // Listen for new tab

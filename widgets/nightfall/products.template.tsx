@@ -122,7 +122,9 @@ export function ProductImages({
   return (
     <>
       {products.length > 3 ? <div class="recommendations-text">see recommendations</div> : <></>}
-      <div class={`stacklapopup-product-images-wrapper ${products.length <= 3 ? "arrows-hidden" : ""}`}>
+      <div
+        aria-label="Product images carousel"
+        class={`stacklapopup-product-images-wrapper ${products.length <= 3 ? "arrows-hidden" : ""}`}>
         <div className={`swiper swiper-expanded-product-recs stacklapopup-products`}>
           <div class="swiper-wrapper">
             {selectedProduct && (

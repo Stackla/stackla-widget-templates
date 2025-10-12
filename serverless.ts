@@ -14,6 +14,7 @@ const plugins = [
 const getPort = () => {
   switch (env) {
     case "development":
+    case "pipeline":
       return 4003;
     case "testing":
       return 4002;
@@ -21,6 +22,27 @@ const getPort = () => {
       return 80;
   }
 };
+
+const getHooks = (env: string) => {
+  switch (env) {
+    case "testing":
+      return {};
+    case "development":
+      return {};
+    case "pipeline":
+      return {
+        "before:package:initialize": [`npm run build:${env}`],
+        "before:offline:start:init": [`npm run build:${env}`]
+      };
+    default:
+      return {
+        "before:package:initialize":
+          "npm run build:${sls:stage} && npm run build:local && npm run build:external-testing && npm run generate:docs",
+        "before:offline:start:init":
+          "npm run build:${sls:stage} && npm run build:local && npm run build:external-testing && npm run build:development && npm run generate:docs"
+      };
+  }
+}
 
 const config = {
   service: "widget-templates",
@@ -52,7 +74,7 @@ const config = {
     esbuild: {
       otherExternal: ["hbs"]
     },
-    hooks: process.env.APP_ENV == 'testing' ? [] : defaultHooks
+    hooks: getHooks(process.env.APP_ENV || "development")
   },
   package: {
     include: ["views/**/*", "dist/**/*", "build/**/*"],

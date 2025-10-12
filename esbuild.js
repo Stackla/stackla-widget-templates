@@ -168,6 +168,7 @@ async function buildAll() {
       case "testing":
         return TEST_SERVER
       case "development":
+      case "pipeline":
         return DEV_SERVER
       default:
         return "http://localhost:5006"
@@ -183,6 +184,7 @@ async function buildAll() {
       case "testing":
         return TEST_SERVER
       case "development":
+      case "pipeline":
         return DEV_SERVER
       default:
         return "http://localhost:5006"
