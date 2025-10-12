@@ -12,6 +12,7 @@ import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
 import { Request, Response } from 'express';
 import { PreviewContent, IDraftRequest } from "./interfaces"
+import apicache from 'apicache';
 
 export function getDomain(env = process.env.APP_ENV) {
   if (env === "local" || env == "development") {
@@ -43,10 +44,13 @@ if (process.env.APP_ENV == "staging" || process.env.APP_ENV == "production") {
   })
 }
 
+const cache = apicache.middleware;
+
 expressApp.engine("hbs", Handlebars.__express)
 expressApp.set("view engine", "hbs")
 expressApp.use(cors())
 expressApp.use(cookieParser())
+expressApp.use(cache('5 minutes'));
 
 createMockRoutes(expressApp)
 
