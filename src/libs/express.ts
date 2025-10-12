@@ -12,9 +12,6 @@ import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
 import { Request, Response } from 'express';
 import { PreviewContent, IDraftRequest } from "./interfaces"
-import apicache from 'apicache';
-
-const cache = apicache.middleware;
 
 export function getDomain(env = process.env.APP_ENV) {
   if (env === "local" || env == "development") {
@@ -37,7 +34,6 @@ export function getDomain(env = process.env.APP_ENV) {
 }
 
 const expressApp = express()
-expressApp.use(cache('5 minutes'));
 expressApp.use(express.static("dist", { redirect: false }))
 expressApp.use((_req, res, next) => {
   res.set("Cache-Control", ["public, max-age=300"])
