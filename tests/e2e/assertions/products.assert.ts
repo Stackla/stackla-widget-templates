@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test"
+import { Page, expect } from "@playwright/test"
 import { shouldExpandTile } from "./expanded-tile.assert"
 
 export async function expectAddToCartRequest(page: Page) {
@@ -11,6 +11,9 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
   const leftArrow = page.getByLabel("Previous product image").locator("span").first()
 
   const rightArrow = page.getByLabel("Next product image").locator("span").first()
+
+  await page.getByLabel("Product images carousel").first().locator('.swiper').first().waitFor({ state: "attached" })
+  await expect(page.getByLabel("Product images carousel").first().locator('.swiper').first()).toHaveClass(/swiper-initialized/)
 
   await page.getByLabel("View product: Kathmandu 1").first().waitFor({ state: "visible" })
   await rightArrow.click()
@@ -44,10 +47,10 @@ export async function shouldNavigateProducts(page: Page, widgetType: string): Pr
   await page.getByText("You should look for shoes").waitFor({ state: "visible" })
 
   // Click on an add to cart product
-  for (let i = 0; i <= 3; i++) await rightArrow.click()
+  for (let i = 0; i <= 4; i++) await rightArrow.click()
 
   await Promise.all([
     expectAddToCartRequest(page),
-    page.getByLabel("Product details: Kathmandu 5").getByTestId("ugc-add-to-cart-button").click()
+    page.getByLabel("Product details: Nosto Rec: Pure City").getByTestId("ugc-add-to-cart-button").click()
   ])
 }

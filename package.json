@@ -13,7 +13,7 @@
     "lint": "npm run eslint && npm run stylelint",
     "lint:fix": "npm run eslint -- --fix && npm run stylelint -- --fix",
     "test": "vitest run --passWithNoTests",
-    "test:e2e:pipeline": "APP_ENV=pipeline playwright test --shard=$SHARD/3",
+    "test:e2e:pipeline": "APP_ENV=pipeline playwright test --debug --shard=$SHARD/3",
     "test:e2e": "playwright test",
     "test:e2e:debug": "playwright test --debug",
     "pw:run": "playwright test",
