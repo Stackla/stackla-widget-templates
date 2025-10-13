@@ -102,6 +102,7 @@
   },
   "dependencies": {
     "@stackla/widget-utils": "workspace:*",
+    "apicache": "^1.6.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",

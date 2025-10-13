@@ -12,6 +12,7 @@ import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
 import fs from "fs"
 import { Request, Response } from 'express';
 import { PreviewContent, IDraftRequest } from "./interfaces"
+import apicache from 'apicache';
 
 export function getDomain(env = process.env.APP_ENV) {
   if (env === "local" || env == "development") {
@@ -34,15 +35,13 @@ export function getDomain(env = process.env.APP_ENV) {
 }
 
 const expressApp = express()
+const cache = apicache.middleware;
 expressApp.use(express.static("dist", { redirect: false }))
-
-if (process.env.APP_ENV == "staging" || process.env.APP_ENV == "production") {
-  expressApp.use((_req, res, next) => {
-    res.set("Cache-Control", ["public, max-age=3600"])
-    next()
-  })
-}
-
+expressApp.use((_req, res, next) => {
+  res.set("Cache-Control", ["public, max-age=300"])
+  next()
+})
+expressApp.use(cache("5 minutes"));
 expressApp.engine("hbs", Handlebars.__express)
 expressApp.set("view engine", "hbs")
 expressApp.use(cors())
@@ -50,32 +49,6 @@ expressApp.use(cookieParser())
 
 createMockRoutes(expressApp)
 
-expressApp.use((req, res, next) => {
-  const host = req.headers.host || "http://localhost:4003"
-  const port = host.split(":")[1]
-  if (req.hostname === "127.0.0.1") {
-    res.redirect(301, `http://localhost:${port}${req.originalUrl}`)
-    return
-  }
-
-  const dependentPaths = ["/widgets/668ca52ada8fb", "/widgets/668ca52ada8fb/rendered/tiles"]
-  if (dependentPaths.includes(req.path) && !req.cookies.widgetType) {
-    res.status(400).send("widgetType cookie is not available")
-    return
-  }
-
-  next()
-})
-
-expressApp.use("/preview", (req : Request, res : Response, next) => {
-  const widgetType = req.query.widgetType
-  if (!widgetType) {
-    res.status(400).send("widgetType query parameter is required")
-  } else {
-    res.cookie("widgetType", widgetType, { maxAge: 360000 })
-    next()
-  }
-})
 
 export function determineEnvironment(req: Request) {
   if (req.query.dev === "true") {
@@ -85,11 +58,7 @@ export function determineEnvironment(req: Request) {
   return process.env.APP_ENV || "production"
 }
 
-export async function getContent(widgetType: string, retry = 0): Promise<PreviewContent> {
-  if (retry > 10) {
-    throw new Error(`Failed to get content, exiting after 10 retries, widgetType: ${widgetType}`)
-  }
-
+export async function getContent(widgetType: string) : Promise<PreviewContent> {
   const rootDir = path.resolve(__dirname, `../../../../../dist/${widgetType}`)
 
   const layout = `${rootDir}/layout.hbs`
@@ -97,8 +66,7 @@ export async function getContent(widgetType: string, retry = 0): Promise<Preview
   const css = `${rootDir}/widget.css`
   const js = `${rootDir}/widget.js`
 
-  try {
-    return {
+  return {
       layoutCode: readFileSync(layout, "utf8"),
       tileCode: readFileSync(tile, "utf8"),
       cssCode: readFileSync(css, "utf8"),
@@ -109,12 +77,6 @@ export async function getContent(widgetType: string, retry = 0): Promise<Preview
         .replace(/\r/g, "\\r")
         .replace(/\t/g, "\\t")
     }
-  } catch (e) {
-    console.error(e)
-    await new Promise(resolve => setTimeout(resolve, 3000))
-
-    return getContent(widgetType, retry + 1)
-  }
 }
 
 async function getHTML(content: PreviewContent, request: Request) {
@@ -207,22 +169,6 @@ expressApp.post("/development/widgets/:wid/draft", async (req, res) => {
   })
 })
 
-expressApp.get("/development/widgets/:wid", async (req, res) => {
-  const content = await getContent(req.cookies.widgetType as string)
-
-  const widgetOptionsMutated = mutateStylesForCustomWidgets(req.cookies.widgetType as string)
-
-  res.json({
-    html: await getHTML(content, req),
-    customCSS: content.cssCode,
-    customJS: content.jsCode,
-    widgetOptions: widgetOptionsMutated,
-    merchantId: "shopify-64671154416",
-    stackId: 1451,
-    tileCount: tiles.length
-  })
-})
-
 expressApp.get("/development/widgets/:wid/tiles", async (req, res) => {
   if (req.query.after_id) {
     res.send(getTilesToRender(req).slice(0, 1).map(tile => ({
@@ -241,8 +187,8 @@ expressApp.get("/development/widgets/:wid/tiles/:tid", async (req, res) => {
 })
 
 expressApp.get("/development/widgets/:wid/rendered/tiles", async (req, res) => {
-  const widgetType = req.cookies.widgetType as string
-  const tileHtml = await getHTML(await getContent(widgetType), req)
+  const content = await getContent(req.query.widgetType as string);
+  const tileHtml = await getHTML(content, req)
 
   if (req.query.after_id) {
     res.json(tileHtml.slice(0, 1).map(tile => {
@@ -278,14 +224,13 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
     widgetOptions: JSON.stringify(widgetOptions),
     domain: getDomain(determineEnvironment(req)),
     wid: req.query.wid ?? "668ca52ada8fb",
-    ...(await getContent(widgetType))
+    ...(await getContent(req.query.widgetType as string))
   })
 })
 
 expressApp.get("/multi-preview", async (req : Request, res: Response) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
-  const dev = req.query.dev
 
   res.render("multi-preview", {
     widgetRequest: JSON.stringify(widgetRequest),
