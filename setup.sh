@@ -4,7 +4,7 @@ git submodule init
 git submodule update --remote --recursive
 echo "Installing dependencies..."
 npm install
-run: npx playwright install --with-deps chromium
+npx playwright install --with-deps chromium
 echo "Adding Stackla widget templates as a remote..."
 git remote add stackla-origin https://github.com/Stackla/stackla-widget-templates
 git fetch stackla-origin
