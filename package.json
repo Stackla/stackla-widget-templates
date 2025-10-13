@@ -52,7 +52,7 @@
     "@swc/core-win32-x64-msvc": "^1.13.20"
   },
   "devDependencies": {
-    "@happy-dom/jest-environment": "^18.0.1",
+    "@happy-dom/jest-environment": "^20.0.0",
     "@playwright/test": "^1.55.1",
     "@stackla/eslint-config": "^1.0.0",
     "@stackla/handlebars": "^0.1.10",
