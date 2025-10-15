@@ -50,11 +50,7 @@ expressApp.use(cookieParser())
 createMockRoutes(expressApp)
 
 
-export function determineEnvironment(req: Request) {
-  if (req.query.dev === "true") {
-    return "development"
-  }
-
+export function determineEnvironment() {
   return process.env.APP_ENV || "production"
 }
 
