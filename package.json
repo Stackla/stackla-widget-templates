@@ -58,7 +58,6 @@
     "@stackla/handlebars": "^0.1.10",
     "@stackla/jest-config": "^1.0.6",
     "@types/cookie-parser": "^1.4.7",
-    "@types/express": "^5.0.0",
     "@types/glidejs__glide": "^3.6.5",
     "@types/jest": "^29.5.13",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -103,10 +102,6 @@
   "dependencies": {
     "@hono/node-server": "^1.19.5",
     "@stackla/widget-utils": "workspace:*",
-    "apicache": "^1.6.3",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "express": "^4.21.2",
     "happy-dom": "^14.12.3",
     "hbs": "^4.2.0",
     "hono": "^4.9.12",

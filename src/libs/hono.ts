@@ -67,7 +67,7 @@ app.use("/*", async (c, next) => {
 // Create mock routes function that works with Hono
 createMockRoutes(app)
 
-export function determineEnvironment(c: { req: { query: () => Record<string, any> } }) {
+export function determineEnvironment(c: { req: { query: () => Record<string, string | string[]> } }) {
   const query = c.req.query()
   if (query.dev === "true") {
     return "development"
@@ -99,7 +99,10 @@ export async function getContent(widgetType: string): Promise<PreviewContent> {
 
 async function getHTML(
   content: PreviewContent,
-  request: { query: Record<string, any>; cookies?: Record<string, string> }
+  request: {
+    query: Record<string, string | string[]>
+    cookies?: Record<string, string>
+  }
 ) {
   return getAndRenderTiles(
     {
@@ -121,27 +124,27 @@ async function getHTML(
 
 // Route handlers
 app.get("/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050.js", c => {
-  const fileData = fs.readFileSync(path.resolve("./mock/atc-laptop.json"), "utf-8")
+  const fileData = fs.readFileSync(path.resolve("src/tests/mock/atc-laptop.json"), "utf-8")
   return c.json(JSON.parse(fileData))
 })
 
 app.get("/development/products/samsung-98-qn90d-neo-qled-4k-smart-tv-2024.js", c => {
-  const fileData = fs.readFileSync(path.resolve("./mock/atc-tv.json"), "utf-8")
+  const fileData = fs.readFileSync(path.resolve("src/tests/mock/atc-tv.json"), "utf-8")
   return c.json(JSON.parse(fileData))
 })
 
 app.get("/development/products/contrast-felted-sweater-black.js", c => {
-  const fileData = fs.readFileSync(path.resolve("./mock/contrast-felted-sweater-black.json"), "utf-8")
+  const fileData = fs.readFileSync(path.resolve("src/tests/mock/contrast-felted-sweater-black.json"), "utf-8")
   return c.json(JSON.parse(fileData))
 })
 
 app.get("/development/products/desna-dress.js", c => {
-  const fileData = fs.readFileSync(path.resolve("./mock/desna-dress.json"), "utf-8")
+  const fileData = fs.readFileSync(path.resolve("src/tests/mock/desna-dress.json"), "utf-8")
   return c.json(JSON.parse(fileData))
 })
 
 app.get("/development/products/pure-city-vintage-leather-saddle.js", c => {
-  const fileData = fs.readFileSync(path.resolve("./mock/pure-city-vintage-leather-saddle.json"), "utf-8")
+  const fileData = fs.readFileSync(path.resolve("src/tests/mock/pure-city-vintage-leather-saddle.json"), "utf-8")
   return c.json(JSON.parse(fileData))
 })
 
@@ -155,7 +158,6 @@ function mutateStylesForCustomWidgets(widgetType: string) {
       widgetOptionsMutated.style!.text_tile_user_name_font_color = "fff"
       widgetOptionsMutated.style!.cta_btn_background = "fff"
       widgetOptionsMutated.style!.cta_btn_font_color = "000000"
-      widgetOptionsMutated.style!.text_tile_user_name_font_color = "fff"
       // @TODO: Peng to add cta_background_color and cta_font_color
       break
     case "slider":
@@ -242,7 +244,7 @@ app.get("/development/stackla/cs/image/disable", async c => {
 })
 
 // Helper function to render templates with Hono context
-async function renderTemplate(template: string, data: Record<string, any>): Promise<string> {
+async function renderTemplate(template: string, data: Record<string, unknown>): Promise<string> {
   return new Promise((resolve, reject) => {
     Handlebars.renderFile(
       path.join(__dirname, "../../../views", template + ".hbs"),

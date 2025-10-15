@@ -191,8 +191,6 @@ export const createMockRoutes = (app: Express | Hono) => {
   } else {
     // Express implementation (existing code)
     const expressApp = app as Express
-    // Express implementation (existing code)
-    const expressApp = app as Express
 
     expressApp.get("/development/stackla/cs/image/disable", (_req, res) => {
       res.json({ success: true })
