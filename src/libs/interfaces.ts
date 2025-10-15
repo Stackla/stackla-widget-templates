@@ -9,6 +9,8 @@ export interface IDraftRequest {
       template: string
     }
   }
+  custom_css: string
+  custom_js: string
   customCSS: string
   customJS: string
   widgetOptions: typeof widgetOptions

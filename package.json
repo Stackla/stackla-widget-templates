@@ -101,6 +101,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@hono/node-server": "^1.19.5",
     "@stackla/widget-utils": "workspace:*",
     "apicache": "^1.6.3",
     "cookie-parser": "^1.4.7",
@@ -108,6 +109,7 @@
     "express": "^4.21.2",
     "happy-dom": "^14.12.3",
     "hbs": "^4.2.0",
+    "hono": "^4.9.12",
     "serverless-hooks-plugin": "^1.1.0",
     "serverless-http": "^3.2.0"
   }

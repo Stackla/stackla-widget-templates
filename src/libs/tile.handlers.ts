@@ -1,9 +1,14 @@
-import type { Request } from "express"
 import tiles from "../../tests/fixtures/tiles"
-import type { IDraftRequest } from "./express"
+import type { IDraftRequest } from "./interfaces"
 import { renderHTMLWithTemplates, renderTilesWithTemplate } from "@stackla/widget-utils/handlebars"
 
-export function getTilesToRender(req: Request) {
+// Generic request interface that works with both Express and Hono
+interface GenericRequest {
+  query: Record<string, string | string[]>
+  cookies?: Record<string, string>
+}
+
+export function getTilesToRender(req: GenericRequest) {
   const page = (req.query.page ?? 0) as number
   const limit = (req.query.limit ?? 25) as number
   const startIndex = limit * (page - 1)
