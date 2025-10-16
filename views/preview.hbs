@@ -6,14 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Widget Preview</title>
   <!-- IMP: Please don't modify the port below. We don't need this file fetched from local server as we don't do any changes in this file here -->
-  <script type="text/javascript" src="{{domain}}/core.js?widgetType={{{widgetType}}}"></script>
+  <script type="module">
+    import { init } from "{{domain}}/core.esm.js?widgetType={{{widgetType}}}";
+    window.ugc = window.ugc || {};
+    window.ugc.init = init;
+  </script>
 </head>
 
 <body style="margin: 0;">
   <div id="container" style="width: 80%; margin: 0 auto;">
     <div id="ugc-widget" data-wid="{{{wid}}}"></div>
   </div>
-  <script> 
+  <script type="module">
     const cssTemplate = `{{{cssCode}}}`;
     const layoutTemplate = `{{{layoutCode}}}`;
     const tileTemplate = `{{{tileCode}}}`;
@@ -44,8 +48,9 @@
       "limit": 25,
       "page": 1
     };
-    const widget = new window.ugc.widget(widgetParams);
-    widget.init();
+    import("{{domain}}/core.esm.js?widgetType={{{widgetType}}}").then(({ init }) => {
+      init(widgetParams);
+    });
   </script>
 </body>
 
