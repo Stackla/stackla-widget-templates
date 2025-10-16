@@ -55,7 +55,7 @@ export function determineEnvironment() {
 }
 
 export async function getContent(widgetType: string) : Promise<PreviewContent> {
-  const rootDir = path.resolve(__dirname, `../../../../../dist/${widgetType}`)
+  const rootDir = path.resolve(process.cwd(), `dist/${widgetType}`)
 
   const layout = `${rootDir}/layout.hbs`
   const tile = `${rootDir}/tile.hbs`
