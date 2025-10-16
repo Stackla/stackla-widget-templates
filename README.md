@@ -583,10 +583,6 @@ npm run build:utils
 npm run build
 ```
 
-## 📄 License
-
-MIT License - See LICENSE file for details
-
 ## 🙏 Acknowledgments
 
 Developed and maintained by the Stackla (Nosto) team and community contributors.
