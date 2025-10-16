@@ -76,7 +76,6 @@
     "eslint-plugin-promise": "^6.2.0",
     "glob": "^11.0.0",
     "jest-environment-jsdom": "^29.7.0",
-    "jiti": "^2.6.0",
     "nock": "^14.0.10",
     "playwright": "^1.55.0",
     "postcss": "^8.4.49",
