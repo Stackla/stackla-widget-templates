@@ -1,6 +1,6 @@
 # Stackla Widget Templates
 
-A TypeScript-based framework for building customizable, embeddable User Generated Content (UGC) widgets with multiple display layouts. Deploy as serverless AWS Lambda functions to showcase social media content across your digital properties.
+A TypeScript-based framework for building customizable, embeddable User Generated Content (UGC) widgets with multiple display layouts. Build for standalone deployment or AWS Lambda functions to showcase social media content across your digital properties.
 
 ## 🌟 Overview
 
@@ -8,7 +8,7 @@ Stackla Widget Templates provides a robust development environment for creating 
 
 - **Build Custom Widgets**: Create unique UGC displays using pre-built templates or start from scratch
 - **Multiple Layouts**: Choose from carousel, grid, masonry, waterfall, and more
-- **Serverless Architecture**: Deploy as AWS Lambda functions for optimal performance
+- **Flexible Deployment**: Run standalone or deploy to AWS Lambda for scalability
 - **Accessibility First**: WCAG 2.1 AA compliant with comprehensive accessibility features
 - **TypeScript-Powered**: Fully typed for better developer experience and code quality
 
@@ -299,7 +299,6 @@ stackla-widget-templates/
 ├── esbuild.js                 # Custom build configuration
 ├── package.json               # Project dependencies and scripts
 ├── playwright.config.ts       # Playwright configuration
-├── serverless.ts              # AWS Serverless configuration (optional)
 ├── setup.sh                   # Setup automation script
 ├── tsconfig.json              # TypeScript configuration
 └── vitest.config.ts           # Vitest test configuration
@@ -402,17 +401,20 @@ test('widget displays correctly', async ({ page }) => {
 
 ### AWS Lambda Deployment
 
-The project can be deployed to AWS Lambda using the optional Serverless Framework integration (requires serverless packages to be installed):
+For AWS Lambda deployments, the built assets can be deployed to S3 and served via CloudFront or API Gateway:
 
 ```bash
-# Deploy to staging (requires serverless packages)
-npx sls deploy --stage staging
+# Build for target environment
+npm run build:staging
 
-# Deploy to production  
-npx sls deploy --stage production
+# Deploy assets to S3
+aws s3 sync dist/ s3://your-bucket/templates/staging/widgets/
+
+# Or use the GitHub Actions release workflow
+# This will build and deploy automatically
 ```
 
-**Note**: For development, you can run the standalone server without any AWS or serverless dependencies using `npm run server`.
+**Note**: The project no longer uses Serverless Framework. For development, use the standalone server with `npm run server`.
 
 ### CI/CD Pipeline
 
@@ -425,11 +427,11 @@ npx sls deploy --stage production
 2. **release.yml** - Deployment
    - Trigger: Manual workflow dispatch
    - Environments: staging, production
-   - Steps: E2E Tests → Build for Environment → Deploy to AWS (if serverless.ts exists) → Sync Assets to S3
+   - Steps: E2E Tests → Build Widget Utils → Build for Environment → Sync Assets to S3 → Sentry Release
 
 ### Build Process
 
-The new build system uses `build.js` which mimics the serverless hooks structure:
+The build system uses `build.js` which provides a hooks-based structure similar to the previous serverless configuration:
 
 ```bash
 # Run build with hooks for production
@@ -439,6 +441,8 @@ npm run build
 APP_ENV=staging npm run build:staging
 ```
 
+Build hooks execute environment-specific build steps, ensuring all dependencies are built in the correct order.
+
 ### Manual Deployment
 
 For manual deployments:
@@ -447,11 +451,11 @@ For manual deployments:
 # Build for target environment
 npm run build:staging
 
-# Deploy via Serverless Framework (optional)
-npx sls deploy --stage staging --region us-west-1
-
-# Or sync assets directly to S3
+# Sync assets to S3
 aws s3 sync dist/ s3://your-bucket/widgets/
+
+# Or deploy to your own hosting infrastructure
+# The dist/ folder contains all built assets
 ```
 
 ## ♿ Accessibility
@@ -544,10 +548,10 @@ npm run test:e2e       # Run E2E tests
 
 ### External Resources
 
-- [Serverless Framework Docs](https://www.serverless.com/framework/docs/)
 - [Playwright Documentation](https://playwright.dev/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [ESBuild Documentation](https://esbuild.github.io/)
+- [Express.js Documentation](https://expressjs.com/)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 
 ## 🐛 Troubleshooting

@@ -39,6 +39,8 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm install
+      - name: Build widget-utils
+        run: npm run build:utils
       - uses: ./.github/workflows/aws
         with:
           aws-region: ${{ vars.AWS_REGION }}
@@ -46,15 +48,6 @@ jobs:
         env:
           APP_ENV: ${{ inputs.environment }}
         run: npm run build:${{ inputs.environment }}
-      - name: Deploy serverless (if needed)
-        env:
-          APP_ENV: ${{ inputs.environment }}
-        run: |
-          if [ -f "serverless.ts" ]; then
-            npx sls deploy --stage ${{ inputs.environment }} --region ${{ vars.AWS_REGION }}
-          else
-            echo "Serverless configuration not found, skipping serverless deploy"
-          fi
       - name: Release to S3
         shell: bash
         run: |
