@@ -36,7 +36,7 @@ Stackla Widget Templates provides a robust development environment for creating 
 - **Build System**: ESBuild with custom configuration
 - **Styling**: SCSS with PostCSS processing
 - **Templates**: Handlebars
-- **Framework**: AWS Serverless Framework
+- **Server**: Standalone Express server (development) / AWS Lambda (production)
 - **Testing**: Playwright (E2E), Vitest (unit tests)
 - **Package Management**: npm workspaces
 
@@ -181,9 +181,9 @@ npm run build:utils:dev      # Development build
 
 | Environment | Port | Command |
 |------------|------|---------|
-| Development | 4003 | `npm run start` |
-| Testing | 4002 | `npm run start:test` |
-| Pipeline | 4003 | `npm run start:lambda:pipeline` |
+| Development | 4003 | `npm run start` or `npm run server` |
+| Testing | 4002 | `npm run start:test` or `npm run server:test` |
+| Pipeline | 4003 | `npm run server:pipeline` |
 
 ### Code Quality
 
@@ -294,10 +294,12 @@ stackla-widget-templates/
 ├── .stylelintrc.json          # Stylelint configuration
 ├── ACCESSIBILITY_IMPLEMENTATION_GUIDE.md  # Accessibility guide
 ├── ACCESSIBILITY_QUICK_REFERENCE.md      # Quick accessibility reference
+├── build.js                    # Build orchestration script with hooks
+├── dev-server.js              # Standalone development server
 ├── esbuild.js                 # Custom build configuration
 ├── package.json               # Project dependencies and scripts
 ├── playwright.config.ts       # Playwright configuration
-├── serverless.ts              # AWS Serverless configuration
+├── serverless.ts              # AWS Serverless configuration (optional)
 ├── setup.sh                   # Setup automation script
 ├── tsconfig.json              # TypeScript configuration
 └── vitest.config.ts           # Vitest test configuration
@@ -400,15 +402,17 @@ test('widget displays correctly', async ({ page }) => {
 
 ### AWS Lambda Deployment
 
-The project uses Serverless Framework for deployment:
+The project can be deployed to AWS Lambda using the optional Serverless Framework integration (requires serverless packages to be installed):
 
 ```bash
-# Deploy to staging
-sls deploy --stage staging
+# Deploy to staging (requires serverless packages)
+npx sls deploy --stage staging
 
 # Deploy to production  
-sls deploy --stage production
+npx sls deploy --stage production
 ```
+
+**Note**: For development, you can run the standalone server without any AWS or serverless dependencies using `npm run server`.
 
 ### CI/CD Pipeline
 
@@ -416,20 +420,24 @@ sls deploy --stage production
 
 1. **main.yml** - Continuous Integration
    - Triggers: PRs and pushes to master
-   - Steps: Build → Lint → Type Check → Test → E2E Tests
+   - Steps: Build Widget Utils → Build → Lint → Type Check → Test → E2E Tests
    
 2. **release.yml** - Deployment
    - Trigger: Manual workflow dispatch
    - Environments: staging, production
-   - Steps: E2E Tests → Build → Deploy to AWS → Sync Assets to S3
+   - Steps: E2E Tests → Build for Environment → Deploy to AWS (if serverless.ts exists) → Sync Assets to S3
 
-### Deployment Configuration
+### Build Process
 
-Defined in `serverless.ts`:
-- Lambda function configuration
-- API Gateway setup
-- Deployment bucket settings
-- Environment-specific variables
+The new build system uses `build.js` which mimics the serverless hooks structure:
+
+```bash
+# Run build with hooks for production
+npm run build
+
+# Build for specific environment
+APP_ENV=staging npm run build:staging
+```
 
 ### Manual Deployment
 
@@ -439,11 +447,11 @@ For manual deployments:
 # Build for target environment
 npm run build:staging
 
-# Deploy via Serverless Framework
-sls deploy --stage staging --region us-west-1
+# Deploy via Serverless Framework (optional)
+npx sls deploy --stage staging --region us-west-1
 
-# View deployment info
-sls info --stage staging
+# Or sync assets directly to S3
+aws s3 sync dist/ s3://your-bucket/widgets/
 ```
 
 ## ♿ Accessibility
