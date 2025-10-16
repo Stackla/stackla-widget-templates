@@ -165,6 +165,27 @@ expressApp.post("/development/widgets/:wid/draft", async (req, res) => {
   })
 })
 
+expressApp.get("/development/widgets/:wid/draft", async (req, res) => {
+  const widgetType = req.query.widgetType as string || req.cookies.widgetType as string
+  const content = await getContent(widgetType)
+  const widgetOptionsMutated = mutateStylesForCustomWidgets(widgetType)
+
+  res.send({
+    html: "",
+    customCSS: content.cssCode,
+    customJS: content.jsCode,
+    customTemplates: {
+      layout: content.layoutCode,
+      tile: content.tileCode
+    },
+    widgetOptions: widgetOptionsMutated,
+    stackId: 1451,
+    merchantId: "shopify-64671154416",
+    tileCount: tiles.length,
+    enabled: 1
+  })
+})
+
 expressApp.get("/development/widgets/:wid/tiles", async (req, res) => {
   if (req.query.after_id) {
     res.send(getTilesToRender(req).slice(0, 1).map(tile => ({
