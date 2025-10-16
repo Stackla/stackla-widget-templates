@@ -8,8 +8,22 @@
 // Use jiti to load TypeScript files
 const jiti = require('jiti')(__filename);
 
-const expressApp = jiti("./src/libs/express.ts").default;
+// Load the express app, handling both default and named exports
+const expressModule = jiti("./src/libs/express.ts");
+const expressApp =
+  (typeof expressModule === "function" && typeof expressModule.listen === "function")
+    ? expressModule
+    : (expressModule && typeof expressModule.default === "function" && typeof expressModule.default.listen === "function")
+      ? expressModule.default
+      : null;
 
+if (!expressApp) {
+  console.error(
+    "\n❌ Failed to load Express app from './src/libs/express.ts'.\n" +
+    "Make sure the module exports an Express app either as a default export or as a named export.\n"
+  );
+  process.exit(1);
+}
 const env = process.env.APP_ENV || "development";
 const NODE_ENV = process.env.NODE_ENV || "development";
 
