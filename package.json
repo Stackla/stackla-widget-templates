@@ -23,7 +23,6 @@
     "start:test": "APP_ENV=testing npx concurrently \"npm run watch:test\" \"npm run server:test\"",
     "test:build": "APP_ENV=testing node ./esbuild.js",
     "build": "APP_ENV=production node ./build.js",
-    "build:all": "APP_ENV=production node ./build.js",
     "build:production": "APP_ENV=production node ./esbuild.js",
     "build:staging": "APP_ENV=staging node ./esbuild.js",
     "build:development": "APP_ENV=development node ./esbuild.js",
