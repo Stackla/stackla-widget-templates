@@ -20,7 +20,7 @@ Stackla Widget Templates provides a robust development environment for creating 
 - [Development Workflow](#-development-workflow)
 - [Available Widgets](#-available-widgets)
 - [Project Structure](#-project-structure)
-- [Configuration](#%EF%B8%8F-configuration)
+- [Configuration](#-configuration)
 - [Testing](#-testing)
 - [Deployment](#-deployment)
 - [Accessibility](#-accessibility)
