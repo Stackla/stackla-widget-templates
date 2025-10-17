@@ -1,0 +1,48 @@
+// Common widget styles mixin
+// This file consolidates duplicate styling code that appears across multiple widgets.
+// Use this mixin in widget _styles.scss files to avoid code duplication.
+
+@forward "pkg:swiper/swiper-bundle.css";
+@use "fonts";
+@forward "icons";
+@forward "loading";
+@forward "tile-overlay";
+@forward "@styles/templates/expanded-tiles";
+@forward "@styles/templates/swiper-overrides";
+@use "inline";
+@use "@styles/templates/tags";
+@use "@styles/templates/load-more";
+@use "@styles/templates/tile-content" as tc;
+@use "@styles/templates/shopspot-icon" as sicon;
+@use "@styles/templates/time-phrase" as tphrase;
+@use "@styles/templates/share-menu" as smenu;
+@use "icon-sections" as is;
+@use "expanded-swiper" as es;
+
+// Mixin that applies all common widget styles
+// Usage: @include common-widget-styles.apply-common-styles('.widget-inline');
+@mixin apply-common-styles($widget-class) {
+  #{$widget-class},
+  expanded-tiles {
+    @include is.icon-sections-styles;
+    @include sicon.shopspot-icon-styles;
+    @include tphrase.time-phrase-styles;
+    @include smenu.share-menu-styles;
+    @include tags.tile-tags-styles;
+    @include tc.tile-content-styles;
+    @include es.swiper-expanded-styles;
+  }
+}
+
+// Mixin for widgets that don't use expanded swiper
+@mixin apply-common-styles-without-swiper($widget-class) {
+  #{$widget-class},
+  expanded-tiles {
+    @include is.icon-sections-styles;
+    @include sicon.shopspot-icon-styles;
+    @include tphrase.time-phrase-styles;
+    @include smenu.share-menu-styles;
+    @include tags.tile-tags-styles;
+    @include tc.tile-content-styles;
+  }
+}

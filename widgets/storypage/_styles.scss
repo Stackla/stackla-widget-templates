@@ -1,27 +1,2 @@
-@forward "pkg:swiper/swiper-bundle.css";
-@use "@styles/partials/fonts";
-@forward "@styles/partials/icons";
-@forward "@styles/partials/loading";
-@forward "@styles/partials/tile-overlay";
-@forward "@styles/templates/expanded-tiles";
-@forward "@styles/templates/swiper-overrides";
-@use "@styles/templates/tags";
-@use "@styles/templates/load-more";
-@use "@styles/templates/tile-content" as tc;
-@use "@styles/templates/shopspot-icon" as sicon;
-@use "@styles/templates/time-phrase" as tphrase;
-@use "@styles/templates/share-menu" as smenu;
-@use "@styles/partials/icon-sections" as is;
-@use "@styles/partials/expanded-swiper" as es;
-@use "@styles/partials/inline";
-
-.storypage-inline,
-expanded-tiles {
-  @include is.icon-sections-styles;
-  @include sicon.shopspot-icon-styles;
-  @include tphrase.time-phrase-styles;
-  @include smenu.share-menu-styles;
-  @include tags.tile-tags-styles;
-  @include tc.tile-content-styles;
-  @include es.swiper-expanded-styles;
-}
+@use "@styles/partials/common-widget-styles" as common;
+@include common.apply-common-styles('.storypage-inline');
