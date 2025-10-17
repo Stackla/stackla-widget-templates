@@ -2,6 +2,11 @@
 
 This directory contains shared SCSS utilities to eliminate code duplication across widgets.
 
+## Files
+
+- `_common-widget-styles.scss` - Shared mixin for common widget styles
+- `_variables.scss` - Centralized SCSS variables for all static values
+
 ## Common Widget Styles Mixin
 
 The `_common-widget-styles.scss` file provides reusable mixins that consolidate styling patterns used across multiple widgets.
@@ -117,6 +122,7 @@ If you're creating a new widget or updating an existing one:
 3. Replace the common mixin includes with `@include common.apply-common-styles('.your-widget-inline');`
 4. Keep any widget-specific imports/forwards before the include
 5. Add any custom styles after the include
+6. **Use variables from `@styles/partials/variables`** for any static values instead of hardcoded numbers
 
 **Before:**
 ```scss
@@ -137,4 +143,54 @@ expanded-tiles {
 @use "@styles/partials/common-widget-styles" as common;
 
 @include common.apply-common-styles('.my-widget-inline');
+```
+
+## SCSS Variables
+
+The `_variables.scss` file contains all static values used in common widget utilities as meaningful variable names. This improves maintainability and consistency across widgets.
+
+### Available Variables
+
+**Swiper Breakpoints:**
+- `$swiper-breakpoint-mobile`: 0
+- `$swiper-breakpoint-tablet`: 537px
+- `$swiper-breakpoint-desktop`: 952px
+
+**Swiper Slides Per View:**
+- `$swiper-slides-mobile`: 1
+- `$swiper-slides-tablet`: 3
+- `$swiper-slides-desktop`: 7
+
+**Icon Sizes:**
+- `$icon-size-small`: 24px
+- `$icon-size-medium`: 26px
+- `$icon-size-large`: 34px
+- `$icon-size-xlarge`: 40px
+
+**Spacing:**
+- `$container-margin`: 20px
+- `$nosto-container-margin`: 20px
+- `$icon-placement-top/bottom/left/right`: 8px - 8.67px
+
+**Other:**
+- `$inline-tile-border-radius`: 5px
+- `$story-border-radius`: 50%
+- `$loading-icon-width/height`: 30px
+- `$play-icon-width/height`: 50px
+- And more...
+
+### Usage Example
+
+```scss
+@use "@styles/partials/variables" as vars;
+
+.my-widget {
+  margin: vars.$container-margin;
+  border-radius: vars.$inline-tile-border-radius;
+  
+  .icon {
+    width: vars.$icon-size-medium;
+    height: vars.$icon-size-medium;
+  }
+}
 ```

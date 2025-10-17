@@ -46,6 +46,8 @@ After analyzing all 11+ widgets in the repository, we identified two major areas
   - `apply-common-styles($widget-class)` - for widgets with swiper
   - `apply-common-styles-without-swiper($widget-class)` - for widgets without swiper
 
+**Also Created**: `widgets/styles/partials/_variables.scss` - A centralized SCSS variables file containing all static values (breakpoints, sizes, spacing, etc.) as meaningful variable names instead of magic numbers.
+
 **Usage Example**:
 ```scss
 @use "@styles/partials/common-widget-styles" as common;
@@ -69,6 +71,8 @@ After analyzing all 11+ widgets in the repository, we identified two major areas
 - `initializeInlineSwiper()` function with parameterized configuration
 - All common swiper initialization logic
 - Shared helper functions for loading, navigation, and observation
+
+**Also Created**: `widgets/utils/constants.ts` - A centralized TypeScript constants file containing all static values (breakpoints, slide counts, intervals, etc.) as meaningful constant names instead of magic numbers.
 
 **Usage Example**:
 ```typescript
@@ -140,9 +144,12 @@ All changes have been validated through:
 
 ### Created
 - `widgets/styles/partials/_common-widget-styles.scss`
+- `widgets/styles/partials/_variables.scss` - SCSS variables for static values
 - `widgets/utils/inline-swiper.loader.ts`
+- `widgets/utils/constants.ts` - TypeScript constants for static values
 - `widgets/styles/README.md`
 - `widgets/utils/README.md`
+- `DEDUPLICATION_SUMMARY.md`
 
 ### Modified
 - `widgets/carousel/_styles.scss`

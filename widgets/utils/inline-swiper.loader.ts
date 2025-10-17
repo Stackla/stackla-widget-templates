@@ -14,6 +14,22 @@ import {
 import type { Swiper } from "swiper"
 import { enableTileImages, loadAllUnloadedTiles } from "@stackla/widget-utils/libs"
 import { EVENT_LOAD_MORE } from "@stackla/widget-utils/events"
+import {
+  SWIPER_BREAKPOINT_MOBILE,
+  SWIPER_BREAKPOINT_TABLET,
+  SWIPER_BREAKPOINT_DESKTOP,
+  SWIPER_SLIDES_MOBILE,
+  SWIPER_SLIDES_TABLET,
+  SWIPER_SLIDES_DESKTOP,
+  SWIPER_LOADING_CHECK_INTERVAL,
+  SWIPER_INITIAL_SLIDE,
+  SWIPER_DEFAULT_SLIDES_PER_VIEW,
+  SWIPER_DEFAULT_GRAB_CURSOR,
+  SWIPER_DEFAULT_ALLOW_TOUCH_MOVE,
+  SWIPER_DEFAULT_MOUSEWHEEL,
+  SWIPER_DEFAULT_KEYBOARD_ENABLED,
+  SWIPER_DEFAULT_KEYBOARD_ONLY_IN_VIEWPORT
+} from "./constants"
 
 export interface InlineSwiperConfig {
   /** Widget name (e.g., 'carousel', 'shortvideo', 'storyline') */
@@ -61,25 +77,25 @@ function initializeSwiperForInlineTiles(config: InlineSwiperConfig) {
     nextButton: `swiper-inline-${config.widgetName}-button-next`,
     paramsOverrides: {
       loop: initialLoop,
-      slidesPerView: "auto",
-      grabCursor: true,
-      allowTouchMove: false,
-      mousewheel: true,
+      slidesPerView: SWIPER_DEFAULT_SLIDES_PER_VIEW,
+      grabCursor: SWIPER_DEFAULT_GRAB_CURSOR,
+      allowTouchMove: SWIPER_DEFAULT_ALLOW_TOUCH_MOVE,
+      mousewheel: SWIPER_DEFAULT_MOUSEWHEEL,
       breakpointsBase: "container",
       breakpoints: {
-        0: {
-          slidesPerView: 1
+        [SWIPER_BREAKPOINT_MOBILE]: {
+          slidesPerView: SWIPER_SLIDES_MOBILE
         },
-        537: {
-          slidesPerView: 3
+        [SWIPER_BREAKPOINT_TABLET]: {
+          slidesPerView: SWIPER_SLIDES_TABLET
         },
-        952: {
-          slidesPerView: 7
+        [SWIPER_BREAKPOINT_DESKTOP]: {
+          slidesPerView: SWIPER_SLIDES_DESKTOP
         }
       },
       keyboard: {
-        enabled: true,
-        onlyInViewport: false
+        enabled: SWIPER_DEFAULT_KEYBOARD_ENABLED,
+        onlyInViewport: SWIPER_DEFAULT_KEYBOARD_ONLY_IN_VIEWPORT
       },
       on: {
         reachEnd: () => {
@@ -87,7 +103,7 @@ function initializeSwiperForInlineTiles(config: InlineSwiperConfig) {
         },
         beforeInit: (swiper: Swiper) => {
           enableLoadedTiles(sdk)
-          swiper.slideToLoop(0, 0, false)
+          swiper.slideToLoop(SWIPER_INITIAL_SLIDE, SWIPER_INITIAL_SLIDE, false)
         },
         afterInit: (swiper: Swiper) => {
           setSwiperLoadingStatus(sdk, swiperId, true)
@@ -95,7 +111,7 @@ function initializeSwiperForInlineTiles(config: InlineSwiperConfig) {
         },
         activeIndexChange: (swiper: Swiper) => {
           if (swiper.navigation.prevEl) {
-            if (swiper.realIndex === 0 && isSwiperLoading(sdk, swiperId)) {
+            if (swiper.realIndex === SWIPER_INITIAL_SLIDE && isSwiperLoading(sdk, swiperId)) {
               disablePrevNavigation(swiper)
             } else {
               enablePrevNavigation(swiper)
@@ -127,7 +143,7 @@ async function loadTilesAsync(swiper: Swiper, sdk: Sdk, swiperId: string) {
 function updateLoadingStateInterval(swiperElem: HTMLElement, sdk: Sdk, swiperId: string) {
   const intervalId = setInterval(function () {
     const elements = swiperElem.querySelectorAll<HTMLElement>(".swiper-slide:has(.icon-section.hidden)")
-    if (elements.length === 0) {
+    if (elements.length === SWIPER_INITIAL_SLIDE) {
       clearInterval(intervalId)
       updateSwiperInstance(sdk, swiperId, swiperData => {
         swiperData.isLoading = false
@@ -141,7 +157,7 @@ function updateLoadingStateInterval(swiperElem: HTMLElement, sdk: Sdk, swiperId:
       })
       refreshSwiper(sdk, swiperId)
     }
-  }, 200)
+  }, SWIPER_LOADING_CHECK_INTERVAL)
 }
 
 function enablePrevNavigation(swiper: Swiper) {

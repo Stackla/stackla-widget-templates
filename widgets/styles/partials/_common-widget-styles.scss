@@ -2,6 +2,7 @@
 // This file consolidates duplicate styling code that appears across multiple widgets.
 // Use this mixin in widget _styles.scss files to avoid code duplication.
 
+@use "variables" as vars;
 @forward "pkg:swiper/swiper-bundle.css";
 @use "fonts";
 @forward "icons";

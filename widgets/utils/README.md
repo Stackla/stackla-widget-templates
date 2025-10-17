@@ -2,6 +2,11 @@
 
 This directory contains shared TypeScript utilities to reduce code duplication across widgets.
 
+## Files
+
+- `inline-swiper.loader.ts` - Shared utility for inline swiper initialization
+- `constants.ts` - Centralized constants for all static values
+
 ## Inline Swiper Loader
 
 The `inline-swiper.loader.ts` file provides a reusable utility for initializing inline swiper components across carousel and shortvideo widgets.
@@ -130,3 +135,53 @@ Consider consolidating additional common patterns:
 - Expanded tile swiper initialization
 - Product swiper configuration
 - Story swiper variations (where appropriate)
+
+## TypeScript Constants
+
+The `constants.ts` file contains all static values used in widget utilities as meaningful constant names. This improves maintainability and consistency across widgets.
+
+### Available Constants
+
+**Swiper Breakpoints:**
+- `SWIPER_BREAKPOINT_MOBILE`: 0
+- `SWIPER_BREAKPOINT_TABLET`: 537
+- `SWIPER_BREAKPOINT_DESKTOP`: 952
+
+**Swiper Slides Per View:**
+- `SWIPER_SLIDES_MOBILE`: 1
+- `SWIPER_SLIDES_TABLET`: 3
+- `SWIPER_SLIDES_DESKTOP`: 7
+
+**Swiper Configuration:**
+- `SWIPER_LOADING_CHECK_INTERVAL`: 200 (milliseconds)
+- `SWIPER_INITIAL_SLIDE`: 0
+- `SWIPER_DEFAULT_LOOP`: false
+- `SWIPER_DEFAULT_GRAB_CURSOR`: true
+- `SWIPER_DEFAULT_ALLOW_TOUCH_MOVE`: false
+- `SWIPER_DEFAULT_MOUSEWHEEL`: true
+- `SWIPER_DEFAULT_KEYBOARD_ENABLED`: true
+- `SWIPER_DEFAULT_KEYBOARD_ONLY_IN_VIEWPORT`: false
+- `SWIPER_DEFAULT_SLIDES_PER_VIEW`: "auto"
+
+### Usage Example
+
+```typescript
+import {
+  SWIPER_BREAKPOINT_TABLET,
+  SWIPER_SLIDES_TABLET,
+  SWIPER_LOADING_CHECK_INTERVAL
+} from "../utils/constants"
+
+// Use constants instead of magic numbers
+if (screenWidth >= SWIPER_BREAKPOINT_TABLET) {
+  showSlides(SWIPER_SLIDES_TABLET)
+}
+
+setInterval(checkLoading, SWIPER_LOADING_CHECK_INTERVAL)
+```
+
+**Benefits:**
+- **Centralized Configuration**: All magic numbers in one place
+- **Type Safety**: Constants are typed and IDE-friendly
+- **Easy Updates**: Change once, apply everywhere
+- **Self-Documenting**: Meaningful names explain purpose
