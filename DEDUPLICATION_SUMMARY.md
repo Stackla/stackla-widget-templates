@@ -154,13 +154,13 @@ All changes have been validated through:
 - `widgets/storypage/_styles.scss`
 - `widgets/nightfall/_styles.scss`
 - `widgets/blankcanvas/_styles.scss`
-- `widgets/shortvideo/_styles.scss` (added comment)
-- `widgets/storyline/_styles.scss` (added comment)
 - `widgets/shortvideo/inline-shortvideo-swiper.loader.ts`
 
+### Modified (Comments Only)
+- `widgets/shortvideo/_styles.scss` - Added comment explaining custom overrides
+- `widgets/storyline/_styles.scss` - Added comment explaining custom overrides
+
 ### Unchanged (Special Cases)
-- `widgets/shortvideo/_styles.scss` - Has custom style overrides
-- `widgets/storyline/_styles.scss` - Has custom style overrides
 - `widgets/storyline/inline-story-swiper.loader.ts` - Has custom ResizeObserver implementation
 
 ## Recommendations for Future Work
@@ -177,4 +177,4 @@ All changes have been validated through:
 
 ## Conclusion
 
-This deduplication effort successfully eliminated over 450 lines of duplicate code (91% reduction) while improving code maintainability, consistency, and documentation. The shared utilities are well-documented and ready for use in existing and future widgets.
+This deduplication effort successfully eliminated approximately 498 lines of duplicate code (91% reduction) while improving code maintainability, consistency, and documentation. The shared utilities are well-documented and ready for use in existing and future widgets.
