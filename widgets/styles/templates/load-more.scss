@@ -1,7 +1,8 @@
 @use "sass:string";
 @use "@styles/partials/media-queries";
+@use "@styles/partials/variables" as vars;
 
-$load-more-margin: 20px;
+$load-more-margin: vars.$container-margin;
 
 // style placeholder
 load-more {
