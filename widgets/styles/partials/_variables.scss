@@ -1,0 +1,134 @@
+// Common Widget Variables
+// This file contains all static values used in common widget utilities as meaningful variable names.
+// Use these variables instead of hardcoded values to improve maintainability and consistency.
+
+// ============================================================================
+// Swiper Breakpoints
+// ============================================================================
+
+// Breakpoint for mobile devices (portrait phones)
+$swiper-breakpoint-mobile: 0;
+
+// Breakpoint for tablet devices (landscape phones, portrait tablets)
+$swiper-breakpoint-tablet: 537px;
+
+// Breakpoint for desktop devices (landscape tablets, desktops)
+$swiper-breakpoint-desktop: 952px;
+
+// ============================================================================
+// Swiper Slides Per View
+// ============================================================================
+
+// Number of slides visible on mobile devices
+$swiper-slides-mobile: 1;
+
+// Number of slides visible on tablet devices
+$swiper-slides-tablet: 3;
+
+// Number of slides visible on desktop devices
+$swiper-slides-desktop: 7;
+
+// ============================================================================
+// Swiper Loading State
+// ============================================================================
+
+// Polling interval (in milliseconds) for checking if swiper loading is complete
+$swiper-loading-check-interval: 200;
+
+// ============================================================================
+// Icon Sizes
+// ============================================================================
+
+// Standard icon size for small icons
+$icon-size-small: 24px;
+
+// Standard icon size for medium icons
+$icon-size-medium: 26px;
+
+// Standard icon size for large icons
+$icon-size-large: 34px;
+
+// Standard icon size for extra large icons
+$icon-size-xlarge: 40px;
+
+// ============================================================================
+// Spacing and Margins
+// ============================================================================
+
+// Standard margin for container elements
+$container-margin: 20px;
+
+// Standard margin for nosto UGC container (used in swiper)
+$nosto-container-margin: 20px;
+
+// ============================================================================
+// Icon Placement
+// ============================================================================
+
+// Top placement for icons in tile sections
+$icon-placement-top: 8px;
+
+// Bottom placement for icons in tile sections
+$icon-placement-bottom: 8px;
+
+// Left placement for icons in tile sections
+$icon-placement-left: 8.67px;
+
+// Right placement for icons in tile sections
+$icon-placement-right: 8.67px;
+
+// ============================================================================
+// Navigation Button Sizes
+// ============================================================================
+
+// Width of swiper navigation buttons
+$swiper-nav-button-width: 40px;
+
+// Height of swiper navigation buttons
+$swiper-nav-button-height: 40px;
+
+// ============================================================================
+// Border Radius
+// ============================================================================
+
+// Standard border radius for inline tiles
+$inline-tile-border-radius: 5px;
+
+// Border radius for circular elements (story tiles)
+$story-border-radius: 50%;
+
+// ============================================================================
+// Loading Indicators
+// ============================================================================
+
+// Width of loading spinner icon
+$loading-icon-width: 30px;
+
+// Height of loading spinner icon
+$loading-icon-height: 30px;
+
+// ============================================================================
+// Video Play Icon
+// ============================================================================
+
+// Width of video play icon
+$play-icon-width: 50px;
+
+// Height of video play icon
+$play-icon-height: 50px;
+
+// ============================================================================
+// Dimensions (Percentages)
+// ============================================================================
+
+// Full width (100%)
+$full-width: 100%;
+
+// Full height (100%)
+$full-height: 100%;
+
+// Tile width for medium/small screens
+$tile-width-md: 95%;
+
+// Tile height for medium/small screens
+$tile-height-md: 100%;

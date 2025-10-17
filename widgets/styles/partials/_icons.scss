@@ -1,31 +1,33 @@
+@use "variables" as vars;
+
 .widget-icon {
   display: block;
 }
 
 .close {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-image: url("assets/svg/close-black.svg");
   background-repeat: no-repeat;
 }
 
 .close-white {
-  width: 26px;
-  height: 26px;
+  width: vars.$icon-size-medium;
+  height: vars.$icon-size-medium;
   background-image: url("assets/svg/close-white.svg");
   background-repeat: no-repeat;
 }
 
 .story-close-white {
-  width: 26px;
-  height: 26px;
+  width: vars.$icon-size-medium;
+  height: vars.$icon-size-medium;
   background-image: url("assets/svg/story-close-white.svg");
   background-repeat: no-repeat;
 }
 
 .chevron-left {
-  width: 40px;
-  height: 40px;
+  width: vars.$icon-size-xlarge;
+  height: vars.$icon-size-xlarge;
   background-image: url("assets/svg/chevron-left.svg");
   background-repeat: no-repeat;
 }
@@ -38,8 +40,8 @@
 }
 
 .chevron-right {
-  width: 40px;
-  height: 40px;
+  width: vars.$icon-size-xlarge;
+  height: vars.$icon-size-xlarge;
   background-image: url("assets/svg/chevron-right.svg");
   background-repeat: no-repeat;
 }
@@ -67,8 +69,8 @@
 }
 
 .icon-instagram-share {
-  width: 34px;
-  height: 34px;
+  width: vars.$icon-size-large;
+  height: vars.$icon-size-large;
   background-size: contain;
   background-image: url("assets/svg/instagram-share.svg");
   background-repeat: no-repeat;
@@ -77,12 +79,12 @@
 .icon-x-share {
   align-items: center;
   background-color: #000;
-  border-radius: 50%;
+  border-radius: vars.$story-border-radius;
   display: flex;
   justify-content: center;
-  height: 34px;
+  height: vars.$icon-size-large;
   position: relative;
-  width: 34px;
+  width: vars.$icon-size-large;
 }
 
 .icon-x-share::after {
@@ -96,24 +98,24 @@
 }
 
 .icon-linkedin-share {
-  width: 34px;
-  height: 34px;
+  width: vars.$icon-size-large;
+  height: vars.$icon-size-large;
   background-size: contain;
   background-image: url("assets/svg/linkedin-share.svg");
   background-repeat: no-repeat;
 }
 
 .icon-facebook-share {
-  width: 34px;
-  height: 34px;
+  width: vars.$icon-size-large;
+  height: vars.$icon-size-large;
   background-size: contain;
   background-image: url("assets/svg/facebook-share.svg");
   background-repeat: no-repeat;
 }
 
 .icon-pinterest-share {
-  width: 34px;
-  height: 34px;
+  width: vars.$icon-size-large;
+  height: vars.$icon-size-large;
   background-size: contain;
   background-image: url("assets/svg/pinterest-share.svg");
   background-repeat: no-repeat;
@@ -128,24 +130,24 @@
 }
 
 .chevron-up {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-size: contain;
   background-image: url("assets/svg/chevron-up.svg");
   background-repeat: no-repeat;
 }
 
 .chevron-down {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-size: contain;
   background-image: url("assets/svg/chevron-down.svg");
   background-repeat: no-repeat;
 }
 
 .back-arrow {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-size: contain;
   background-image: url("assets/svg/back-arrow.svg");
   background-repeat: no-repeat;
@@ -291,8 +293,8 @@
 .icon-products-bg,
 .icon-products-bg.large,
 .icon-products-bg.medium {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-size: contain;
   background-image: url("assets/svg/products-bg.svg");
   background-repeat: no-repeat;
@@ -516,8 +518,8 @@
 }
 
 .icon-prev-circle {
-  width: 40px;
-  height: 40px;
+  width: vars.$icon-size-xlarge;
+  height: vars.$icon-size-xlarge;
   background-size: contain;
   background-image: url("assets/svg/prev-circle.svg");
   background-repeat: no-repeat;
@@ -540,8 +542,8 @@
 }
 
 .icon-next-circle {
-  width: 40px;
-  height: 40px;
+  width: vars.$icon-size-xlarge;
+  height: vars.$icon-size-xlarge;
   background-size: contain;
   background-image: url("assets/svg/next-circle.svg");
   background-repeat: no-repeat;
@@ -573,8 +575,8 @@
 }
 
 .icon-tag {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-size: contain;
   background-image: url("assets/svg/tag.svg");
   background-repeat: no-repeat;
@@ -650,8 +652,8 @@
 }
 
 .down-arrow-thin {
-  width: 24px;
-  height: 24px;
+  width: vars.$icon-size-small;
+  height: vars.$icon-size-small;
   background-size: contain;
   background-image: url("assets/svg/down-arrow-thin.svg");
   background-repeat: no-repeat;
