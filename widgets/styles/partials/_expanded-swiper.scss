@@ -1,4 +1,6 @@
-$nosto-container-margin: 20px;
+@use "variables" as vars;
+
+$nosto-container-margin: vars.$nosto-container-margin;
 
 %swiper-expanded-ph {
   .swiper-expanded-button-next,
@@ -7,8 +9,8 @@ $nosto-container-margin: 20px;
     bottom: 0;
     display: flex;
         align-items: center;
-        height: 100% !important;
-        width: 40px !important;
+        height: vars.$full-height !important;
+        width: vars.$swiper-nav-button-width !important;
     }
 }
 
