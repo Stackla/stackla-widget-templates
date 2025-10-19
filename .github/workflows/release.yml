@@ -54,7 +54,6 @@ jobs:
           aws s3 sync dist/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.environment }}/widgets/
       - name: Sentry Release
         uses: getsentry/action-release@v1
-        if: ${{ secrets.SENTRY_AUTH_TOKEN != '' }}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: "stackla"
