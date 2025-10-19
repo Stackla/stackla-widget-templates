@@ -56,4 +56,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: trigger deploy
-        run: gh workflow run release --ref master -F environment=staging
+        run: gh workflow run release.yml --ref master -F environment=staging
