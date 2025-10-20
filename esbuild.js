@@ -152,7 +152,7 @@ async function buildAll() {
     }
   }
 
-  const TEST_SERVER = "http://localhost:4002/development"
+  const TEST_SERVER = "http://localhost:4003/development"
   const DEV_SERVER = "http://localhost:4003/development"
 
   const getWidgetEndpoint = () => {

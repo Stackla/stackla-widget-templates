@@ -15,9 +15,8 @@ const getPort = () => {
   switch (env) {
     case "development":
     case "pipeline":
-      return 4003;
     case "testing":
-      return 4002;
+      return 4003;
     default:
       return 80;
   }
