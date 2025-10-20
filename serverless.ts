@@ -38,15 +38,14 @@ const getHooks = (env: string) => {
       return {
         "before:package:initialize": [
           "npm run build:${sls:stage}",
-          "npm run build:local",
+          "npm run build:staging",
           "npm run build:external-testing",
           "npm run generate:docs"
         ],
         "before:offline:start:init": [
           "npm run build:${sls:stage}",
-          "npm run build:local",
+          "npm run build:staging",
           "npm run build:external-testing",
-          "npm run build:development",
           "npm run generate:docs"
         ]
       };
