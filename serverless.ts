@@ -24,32 +24,14 @@ const getPort = () => {
 };
 
 const getHooks = (env: string) => {
-  switch (env) {
-    case "testing":
-      return {};
-    case "development":
-      return {};
-    case "pipeline":
-      return {
-        "before:package:initialize": [`npm run build:${env}`],
-        "before:offline:start:init": [`npm run build:${env}`]
-      };
-    default:
-      return {
-        "before:package:initialize": [
-          "npm run build:${sls:stage}",
-          "npm run build:staging",
-          "npm run build:external-testing",
-          "npm run generate:docs"
-        ],
-        "before:offline:start:init": [
-          "npm run build:${sls:stage}",
-          "npm run build:staging",
-          "npm run build:external-testing",
-          "npm run generate:docs"
-        ]
-      };
-  }
+    return {
+      "before:package:initialize": [
+        `npm run build:${env}`,
+      ],
+      "before:offline:start:init": [
+        `npm run build:${env}`,
+      ]
+    };
 }
 
 const config = {
