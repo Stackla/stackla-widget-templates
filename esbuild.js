@@ -20,6 +20,7 @@ const getTemplatesEndpoint = () => {
     case "production":
       return "https://templates.stackla.com"
     case "staging":
+    case "testing":
       return "https://templates.teaser.stackla.com"
     case "development":
       return "http://localhost:4003"
