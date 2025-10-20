@@ -182,7 +182,7 @@ npm run build:utils:dev      # Development build
 | Environment | Port | Command |
 |------------|------|---------|
 | Development | 4003 | `npm run start` |
-| Testing | 4002 | `npm run start:test` |
+| Testing | 4003 | `npm run start:test` |
 | Pipeline | 4003 | `npm run start:lambda:pipeline` |
 
 ### Code Quality
@@ -324,7 +324,7 @@ export APP_ENV=pipeline     # CI/CD pipeline
 | Production | `https://templates.stackla.com` |
 | Staging | `https://templates.teaser.stackla.com` |
 | Development | `http://localhost:4003` |
-| Testing | `http://localhost:4002` |
+| Testing | `http://localhost:4003` |
 
 ### TypeScript Configuration
 
@@ -388,7 +388,7 @@ import { widgetLocators } from './locators/widget.locators';
 import { assertWidgetLoaded } from './assertions/widget.assertions';
 
 test('widget displays correctly', async ({ page }) => {
-  await page.goto('http://localhost:4002/preview?widgetType=carousel');
+  await page.goto('http://localhost:4003/preview?widgetType=carousel');
   await assertWidgetLoaded(page);
   
   const tiles = widgetLocators(page).tiles;
@@ -570,7 +570,7 @@ git submodule update --remote --recursive
 # Kill process using port 4003
 lsof -ti:4003 | xargs kill -9
 
-# Or use different environment (port 4002)
+# Or use different environment (port 4003)
 npm run start:test
 ```
 

@@ -51,12 +51,11 @@ npm run build
 # Start development server (localhost:4003)
 npm run start
 
-# Start test server (localhost:4002) 
+# Start test server (localhost:4003) 
 npm run start:test
 
 # Preview widgets at:
 # http://localhost:4003/preview?widgetType=carousel
-# http://localhost:4002/preview?widgetType=carousel (test mode)
 ```
 
 ### Building and Testing
@@ -229,7 +228,7 @@ widgets/[widget-name]/
 - Production: `https://templates.stackla.com`
 - Staging: `https://templates.teaser.stackla.com`  
 - Development: `http://localhost:4003`
-- Testing: `http://localhost:4002`
+- Testing: `http://localhost:4003`
 
 ## Validation and Testing
 

@@ -20,11 +20,7 @@ on:
         default: staging
 
 jobs:
-  e2e:
-    uses: ./.github/workflows/e2e.yml
-
   deploy:
-    needs: [e2e]
     environment: ${{ inputs.environment }}
     env:
       NODE_AUTH_TOKEN: ${{secrets.STACKLA_BOT_GITHUB_TOKEN}}

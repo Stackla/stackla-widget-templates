@@ -25,6 +25,7 @@
     "build": "APP_ENV=production node ./esbuild.js",
     "build:production": "APP_ENV=production node ./esbuild.js",
     "build:staging": "APP_ENV=staging node ./esbuild.js",
+    "build:testing": "APP_ENV=testing node ./esbuild.js",
     "build:development": "APP_ENV=development node ./esbuild.js",
     "build:pipeline": "APP_ENV=pipeline node ./esbuild.js",
     "watch": "APP_ENV=development node ./esbuild.js --watch",

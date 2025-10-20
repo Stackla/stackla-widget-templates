@@ -20,12 +20,9 @@ const getTemplatesEndpoint = () => {
     case "production":
       return "https://templates.stackla.com"
     case "staging":
+    case "testing":
       return "https://templates.teaser.stackla.com"
     case "development":
-      return "http://localhost:4003"
-    case "testing":
-      return "http://localhost:4002"
-    default:
       return "http://localhost:4003"
   }
 }
@@ -156,7 +153,7 @@ async function buildAll() {
     }
   }
 
-  const TEST_SERVER = "http://localhost:4002/development"
+  const TEST_SERVER = "http://localhost:4003/development"
   const DEV_SERVER = "http://localhost:4003/development"
 
   const getWidgetEndpoint = () => {
