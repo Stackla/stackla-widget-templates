@@ -388,7 +388,7 @@ import { widgetLocators } from './locators/widget.locators';
 import { assertWidgetLoaded } from './assertions/widget.assertions';
 
 test('widget displays correctly', async ({ page }) => {
-  await page.goto('http://localhost:4002/preview?widgetType=carousel');
+  await page.goto('http://localhost:4003/preview?widgetType=carousel');
   await assertWidgetLoaded(page);
   
   const tiles = widgetLocators(page).tiles;

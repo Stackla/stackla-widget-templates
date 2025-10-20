@@ -56,7 +56,6 @@ npm run start:test
 
 # Preview widgets at:
 # http://localhost:4003/preview?widgetType=carousel
-# http://localhost:4002/preview?widgetType=carousel (test mode)
 ```
 
 ### Building and Testing
