@@ -330,6 +330,20 @@ export APP_ENV=pipeline     # CI/CD pipeline
 
 The development server provides several Handlebars (HBS) template endpoints for testing and previewing widgets. All endpoints are available when running the development server (`npm run start`).
 
+#### Endpoint Quick Reference
+
+| Endpoint | Method | Purpose | Template |
+|----------|--------|---------|----------|
+| `/preview` | GET | Primary widget development and preview | `views/preview.hbs` |
+| `/dev` | GET | Development mode with widget-ui | `views/dev.hbs` |
+| `/docker` | GET | Docker environment preview | `views/docker.hbs` |
+| `/multi-preview` | GET | Multiple widget instances | `views/multi-preview.hbs` |
+| `/staging` | GET | Staging environment preview | `views/staging.hbs` |
+| `/development/widgets/:wid/draft` | POST | Draft widget configuration | N/A (API) |
+| `/development/widgets/:wid/tiles` | GET | Unrendered tile data | N/A (API) |
+| `/development/widgets/:wid/tiles/:tid` | GET | Single tile data | N/A (API) |
+| `/development/widgets/:wid/rendered/tiles` | GET | Rendered tile HTML | N/A (API) |
+
 #### Preview Endpoints
 
 These endpoints render complete HTML pages for widget preview and testing:
