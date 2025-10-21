@@ -8,14 +8,16 @@ import { getAndRenderTiles, getTilesToRender, renderTemplates } from "./tile.han
 import widgetOptions from "../../tests/fixtures/widget.options"
 import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
-import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
+import { createMockRoutes } from "../../tests/libs/developer"
 import fs from "fs"
 import { Request, Response } from 'express';
 import { PreviewContent, IDraftRequest } from "./interfaces"
 import apicache from 'apicache';
 
+export const STAGING_UI_URL = "https://widget-ui.teaser.stackla.com"
+
 export function getDomain(env = process.env.APP_ENV) {
-  if (env === "local" || env == "development") {
+  if (env === "local" || env === "development") {
     return `${STAGING_UI_URL}/local`;
   }
 
@@ -205,14 +207,6 @@ expressApp.get("/development/stackla/cs/image/disable", async (req, res) => {
 expressApp.get("/preview", async (req : Request, res: Response) => {
   const widgetRequest = req.query
   const widgetType = req.query.widgetType as string
-  const dev = req.query.dev
-
-  if (dev) {
-    if (!req.query.wid) {
-      res.status(400).send("wid query parameter is required. Please search through widget list to find the id you wish to use")
-      return;
-    }
-  }
 
   res.render("preview", {
     widgetRequest: JSON.stringify(widgetRequest),
@@ -223,6 +217,46 @@ expressApp.get("/preview", async (req : Request, res: Response) => {
     ...(await getContent(req.query.widgetType as string))
   })
 })
+
+// Register dev route
+expressApp.get("/dev", async (req : Request, res: Response) => {
+  const widgetRequest = req.query
+  const widgetType = req.query.widgetType as string
+  if (!req.query.wid) {
+    res.status(400).send("wid query parameter is required. Please search through widget list to find the id you wish to use")
+    return;
+  }
+
+  res.render("dev", {
+    widgetRequest: JSON.stringify(widgetRequest),
+    widgetType,
+    widgetOptions: JSON.stringify(widgetOptions),
+    domain: getDomain(determineEnvironment(req)),
+    wid: req.query.wid ?? "668ca52ada8fb",
+    ...(await getContent(req.query.widgetType as string))
+  })
+})
+
+// Register docker route
+expressApp.get("/docker", async (req : Request, res: Response) => {
+  const widgetRequest = req.query
+  const widgetType = req.query.widgetType as string
+  if (!req.query.wid) {
+    res.status(400).send("wid query parameter is required. Please search through widget list to find the id you wish to use")
+    return;
+  }
+
+  res.render("docker", {
+    widgetRequest: JSON.stringify(widgetRequest),
+    widgetType,
+    widgetOptions: JSON.stringify(widgetOptions),
+    domain: getDomain(determineEnvironment(req)),
+    wid: req.query.wid ?? "668ca52ada8fb",
+    ...(await getContent(req.query.widgetType as string))
+  })
+})
+
+
 
 expressApp.get("/multi-preview", async (req : Request, res: Response) => {
   const widgetRequest = req.query
@@ -246,6 +280,7 @@ expressApp.get("/staging", async (req : Request, res : Response) => {
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions.config),
     domain: getDomain(determineEnvironment(req)),
+    wid: req.query.wid ?? "668ca52ada8fb",
     ...(await getContent(widgetType))
   })
 })

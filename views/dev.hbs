@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Preview</title>
+</head>
+
+<body style="margin: 0;">
+  <div id="container" style="width: 80%; margin: 0 auto;">
+    <div id="ugc-widget" data-wid="{{{wid}}}"></div>
+  </div>
+  <script type="module">
+    const cssTemplate = `{{{cssCode}}}`;
+    const layoutTemplate = `{{{layoutCode}}}`;
+    const tileTemplate = `{{{tileCode}}}`;
+    const jsTemplate = "{{{jsCode}}}";
+    const widgetOptions = `{{{widgetOptions}}}`;
+    const widgetType = `{{{widgetType}}}`;
+
+    var stackWidgetCustomData = {};
+    const widgetParams = {
+      "widgetType": widgetType,
+      "draft": {
+        "enabled": 1,
+        "guid": "{{{wid}}}",
+        "enabled": 1,
+        "custom_css": cssTemplate,
+        "custom_js": jsTemplate,
+        "custom_templates": {
+          "layout": {
+            "template": layoutTemplate,
+          },
+          "tile": {
+            "template": tileTemplate,
+          },
+        },
+        "widgetOptions": widgetOptions,
+      },
+      "wid": "{{{wid}}}",
+      "limit": 25,
+      "page": 1
+    };
+    import("http://localhost:4002/development/core.esm.js?widgetType={{{widgetType}}}").then(({ init }) => {
+      init(widgetParams);
+    });
+  </script>
+</body>
+
+</html>
