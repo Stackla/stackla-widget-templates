@@ -8,15 +8,22 @@ import { getAndRenderTiles, getTilesToRender, renderTemplates } from "./tile.han
 import widgetOptions from "../../tests/fixtures/widget.options"
 import cookieParser from "cookie-parser"
 import tiles from "../../tests/fixtures/tiles"
-import { createMockRoutes, STAGING_UI_URL } from "../../tests/libs/developer"
+import { createMockRoutes } from "../../tests/libs/developer"
 import fs from "fs"
 import { Request, Response } from 'express';
 import { PreviewContent, IDraftRequest } from "./interfaces"
 import apicache from 'apicache';
 
+export const STAGING_UI_URL = "https://widget-ui.teaser.stackla.com"
+
 export function getDomain(env = process.env.APP_ENV) {
-  if (env === "local" || env == "development") {
+  if (env === "local") {
     return `${STAGING_UI_URL}/local`;
+  }
+
+  // This environment is built specifically for UGC Engineers, it allows access to ugc-widgets core.
+  if (env === "development") {
+    return "http://localhost:4002/development"
   }
 
   if (env === "testing") {
@@ -246,6 +253,7 @@ expressApp.get("/staging", async (req : Request, res : Response) => {
     widgetType,
     widgetOptions: JSON.stringify(widgetOptions.config),
     domain: getDomain(determineEnvironment(req)),
+    wid: req.query.wid ?? "668ca52ada8fb",
     ...(await getContent(widgetType))
   })
 })
