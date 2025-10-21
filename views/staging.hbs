@@ -5,12 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Widget Preview</title>
-  <!-- IMP: Please don't modify the port below. We don't need this file fetched from local server as we don't do any changes in this file here -->
-  <script type="module">
-    import { init } from "{{domain}}/core.esm.js?widgetType={{{widgetType}}}";
-    window.ugc = window.ugc || {};
-    window.ugc.init = init;
-  </script>
 </head>
 
 <body style="margin: 0;">
@@ -45,7 +39,7 @@
       "limit": 25,
       "page": 1
     };
-    import("{{domain}}/core.esm.js?widgetType={{{widgetType}}}").then(({ init }) => {
+    import("http://localhost:4002/development/core.esm.js?widgetType={{{widgetType}}}").then(({ init }) => {
       init(widgetParams);
     });
   </script>
