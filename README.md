@@ -326,6 +326,338 @@ export APP_ENV=pipeline     # CI/CD pipeline
 | Development | `http://localhost:4003` |
 | Testing | `http://localhost:4003` |
 
+### Available HBS Endpoints
+
+The development server provides several Handlebars (HBS) template endpoints for testing and previewing widgets. All endpoints are available when running the development server (`npm run start`).
+
+#### Preview Endpoints
+
+These endpoints render complete HTML pages for widget preview and testing:
+
+##### 1. `/preview` - Widget Preview (Primary Development Endpoint)
+**Purpose**: Main endpoint for widget development and testing. Renders widgets with custom templates, CSS, and JS.
+
+**Method**: `GET`
+
+**Query Parameters**:
+- `widgetType` (required) - The type of widget to preview (e.g., `carousel`, `grid`, `masonry`, `waterfall`)
+- `wid` (optional) - Widget ID, defaults to `668ca52ada8fb`
+
+**Example Usage**:
+```bash
+# Preview carousel widget
+http://localhost:4003/preview?widgetType=carousel
+
+# Preview grid widget with custom ID
+http://localhost:4003/preview?widgetType=grid&wid=custom-widget-id
+```
+
+**Response**: Full HTML page with embedded widget using custom layout and tile templates from `dist/{widgetType}/`
+
+**Template Used**: `views/preview.hbs`
+
+---
+
+##### 2. `/dev` - Development Mode Preview
+**Purpose**: Preview widgets in development mode with connection to widget-ui at `localhost:4002`.
+
+**Method**: `GET`
+
+**Query Parameters**:
+- `widgetType` (required) - Widget type to preview
+- `wid` (required) - Widget ID (no default, will return 400 error if missing)
+
+**Example Usage**:
+```bash
+# Preview carousel in dev mode
+http://localhost:4003/dev?widgetType=carousel&wid=668ca52ada8fb
+```
+
+**Response**: HTML page connecting to local widget-ui development server at `http://localhost:4002`
+
+**Template Used**: `views/dev.hbs`
+
+**Note**: Requires widget-ui development server running on port 4002
+
+---
+
+##### 3. `/docker` - Docker Environment Preview
+**Purpose**: Preview widgets in Docker container environment with widget-ui connection.
+
+**Method**: `GET`
+
+**Query Parameters**:
+- `widgetType` (required) - Widget type to preview
+- `wid` (required) - Widget ID (no default, will return 400 error if missing)
+
+**Example Usage**:
+```bash
+# Preview widget in Docker environment
+http://localhost:4003/docker?widgetType=waterfall&wid=668ca52ada8fb
+```
+
+**Response**: HTML page connecting to widget-ui at `http://localhost:4002/docker/`
+
+**Template Used**: `views/docker.hbs`
+
+---
+
+##### 4. `/multi-preview` - Multiple Widget Preview
+**Purpose**: Preview multiple instances of the same widget on a single page for testing multi-widget scenarios.
+
+**Method**: `GET`
+
+**Query Parameters**:
+- `widgetType` (required) - Widget type to preview
+
+**Example Usage**:
+```bash
+# Preview multiple carousel widgets on one page
+http://localhost:4003/multi-preview?widgetType=carousel
+```
+
+**Response**: HTML page with two widget instances (IDs: `668ca52ada8fb` and `1234`)
+
+**Template Used**: `views/multi-preview.hbs`
+
+**Use Case**: Testing widget behavior when multiple instances exist on the same page
+
+---
+
+##### 5. `/staging` - Staging Environment Preview
+**Purpose**: Preview widgets as they would appear in staging environment with staging widget-ui.
+
+**Method**: `GET`
+
+**Query Parameters**:
+- `widgetType` (required) - Widget type to preview
+- `wid` (optional) - Widget ID, defaults to `668ca52ada8fb`
+
+**Example Usage**:
+```bash
+# Preview in staging mode
+http://localhost:4003/staging?widgetType=grid&wid=custom-id
+```
+
+**Response**: HTML page connecting to staging widget-ui
+
+**Template Used**: `views/staging.hbs`
+
+---
+
+#### API Endpoints
+
+These endpoints provide JSON responses for widget data and rendered templates:
+
+##### 6. `/development/widgets/:wid/draft` - Draft Widget Data
+**Purpose**: Retrieve complete widget configuration including HTML, CSS, JS, and options.
+
+**Method**: `POST`
+
+**URL Parameters**:
+- `wid` - Widget ID
+
+**Request Body** (JSON):
+```json
+{
+  "draft": {
+    "customCSS": "/* custom styles */",
+    "customJS": "// custom scripts",
+    "layoutTemplate": "<div>...</div>",
+    "tileTemplate": "<div>...</div>"
+  }
+}
+```
+
+**Response** (JSON):
+```json
+{
+  "html": ["<div>tile1</div>", "<div>tile2</div>"],
+  "customCSS": "/* styles */",
+  "customJS": "// scripts",
+  "widgetOptions": {...},
+  "stackId": 1451,
+  "merchantId": "shopify-64671154416",
+  "tileCount": 25,
+  "enabled": 1
+}
+```
+
+**Example Usage**:
+```bash
+curl -X POST http://localhost:4003/development/widgets/test123/draft \
+  -H "Content-Type: application/json" \
+  -H "Cookie: widgetType=carousel" \
+  -d '{"draft": {...}}'
+```
+
+**Note**: Requires `widgetType` cookie to be set
+
+---
+
+##### 7. `/development/widgets/:wid/tiles` - Widget Tiles Data
+**Purpose**: Get tile data for a widget (unrendered JSON data).
+
+**Method**: `GET`
+
+**URL Parameters**:
+- `wid` - Widget ID
+
+**Query Parameters**:
+- `after_id` (optional) - Get tiles after this ID (for pagination/infinite scroll)
+
+**Response** (JSON Array):
+```json
+[
+  {
+    "id": "65e16a0b5d7e676caec68f03",
+    "source": "instagram",
+    "caption": "Sample caption",
+    "media": {...},
+    ...
+  }
+]
+```
+
+**Example Usage**:
+```bash
+# Get all tiles
+http://localhost:4003/development/widgets/test123/tiles
+
+# Get tiles after ID (pagination)
+http://localhost:4003/development/widgets/test123/tiles?after_id=123
+```
+
+---
+
+##### 8. `/development/widgets/:wid/tiles/:tid` - Single Tile Data
+**Purpose**: Get data for a specific tile by ID.
+
+**Method**: `GET`
+
+**URL Parameters**:
+- `wid` - Widget ID
+- `tid` - Tile ID
+
+**Response** (JSON Object):
+```json
+{
+  "id": "65e16a0b5d7e676caec68f03",
+  "source": "instagram",
+  "caption": "Sample caption",
+  "media": {...},
+  ...
+}
+```
+
+**Example Usage**:
+```bash
+http://localhost:4003/development/widgets/test123/tiles/65e16a0b5d7e676caec68f03
+```
+
+---
+
+##### 9. `/development/widgets/:wid/rendered/tiles` - Rendered Tile HTML
+**Purpose**: Get rendered HTML for tiles using widget's Handlebars templates.
+
+**Method**: `GET`
+
+**URL Parameters**:
+- `wid` - Widget ID
+
+**Query Parameters**:
+- `widgetType` (required) - Widget type (determines which templates to use)
+- `after_id` (optional) - Get tiles after this ID (for pagination)
+
+**Response** (JSON Array of HTML strings):
+```json
+[
+  "<div class=\"tile\" data-id=\"65e16a0b5d7e676caec68f03\">...</div>",
+  "<div class=\"tile\" data-id=\"65e16a0b5d7e676caec68f04\">...</div>"
+]
+```
+
+**Example Usage**:
+```bash
+# Get all rendered tiles
+http://localhost:4003/development/widgets/test123/rendered/tiles?widgetType=carousel
+
+# Get next tile for infinite scroll
+http://localhost:4003/development/widgets/test123/rendered/tiles?widgetType=carousel&after_id=123
+```
+
+---
+
+#### Mock Product Endpoints
+
+For testing Add-to-Cart (ATC) functionality, the following mock product endpoints are available:
+
+##### `/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050.js`
+**Response**: Gaming laptop product data (JSON)
+
+##### `/development/products/samsung-98-qn90d-neo-qled-4k-smart-tv-2024.js`
+**Response**: TV product data (JSON)
+
+##### `/development/products/contrast-felted-sweater-black.js`
+**Response**: Sweater product data (JSON)
+
+##### `/development/products/desna-dress.js`
+**Response**: Dress product data (JSON)
+
+##### `/development/products/pure-city-vintage-leather-saddle.js`
+**Response**: Saddle product data (JSON)
+
+**Example Usage**:
+```bash
+http://localhost:4003/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050.js
+```
+
+---
+
+#### Testing Endpoint
+
+##### `/development/stackla/cs/image/disable`
+**Purpose**: Mock endpoint for testing image disable functionality.
+
+**Method**: `GET`
+
+**Response** (JSON):
+```json
+{
+  "success": true
+}
+```
+
+---
+
+### Quick Reference: Common Use Cases
+
+**1. Develop a new widget:**
+```bash
+npm run start
+# Visit: http://localhost:4003/preview?widgetType=your-widget
+```
+
+**2. Test widget with multiple instances:**
+```bash
+# Visit: http://localhost:4003/multi-preview?widgetType=carousel
+```
+
+**3. Test infinite scroll/load more:**
+```bash
+# Get initial tiles
+http://localhost:4003/development/widgets/test/rendered/tiles?widgetType=waterfall
+
+# Get next batch
+http://localhost:4003/development/widgets/test/rendered/tiles?widgetType=waterfall&after_id=last-tile-id
+```
+
+**4. Debug widget in dev mode with widget-ui:**
+```bash
+# Start widget-ui on port 4002 (separate project)
+# Then visit: http://localhost:4003/dev?widgetType=carousel&wid=668ca52ada8fb
+```
+
 ### TypeScript Configuration
 
 Custom JSX configuration in `tsconfig.json`:

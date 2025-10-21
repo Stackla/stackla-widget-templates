@@ -1,7 +1,7 @@
 const { pathToFileURL } = require("node:url")
 const postcssUrl = require("postcss-url")
 const postcss = require("postcss")
-const SVGSpriter = require('svg-sprite');
+const SVGSpriter = require("svg-sprite")
 
 function startWebSocketServer() {
   const { spawn } = require("node:child_process")
@@ -39,54 +39,56 @@ const postcssPlugins = [
 ]
 
 const config = {
-    shape: {
-      transform: ['svgo'],
-    },
-    mode: {
-        css: {
-            dest: ".",
-            prefix: ".icon-%s",
-            dimensions: true,
-            render: {
-                css: true
-            },
-            bust: false,
-            sprite: `${getTemplatesEndpoint()}/assets/spritemaps/icons.svg`
-        }
-    },
+  shape: {
+    transform: ["svgo"]
+  },
+  mode: {
+    css: {
+      dest: ".",
+      prefix: ".icon-%s",
+      dimensions: true,
+      render: {
+        css: true
+      },
+      bust: false,
+      sprite: `${getTemplatesEndpoint()}/assets/spritemaps/icons.svg`
+    }
+  }
 }
 
-const spriter = new SVGSpriter(config);
+const spriter = new SVGSpriter(config)
 
 async function transformSvgFolderToSprite() {
-  const fs = require('fs')
-  const path = require('path')
-  const { promisify } = require('util')
+  const fs = require("fs")
+  const path = require("path")
+  const { promisify } = require("util")
   const readdir = promisify(fs.readdir)
   const readFile = promisify(fs.readFile)
   const writeFile = promisify(fs.writeFile)
   const mkdir = promisify(fs.mkdir)
 
-  const svgFolder = 'dist/assets/svg';
+  const svgFolder = "dist/assets/svg"
   const svgFiles = await readdir(svgFolder)
 
-  await Promise.all(svgFiles.map(async svgFile => {
-      if (!svgFile.endsWith('.svg')) {
-          return
+  await Promise.all(
+    svgFiles.map(async svgFile => {
+      if (!svgFile.endsWith(".svg")) {
+        return
       }
 
       const svgPath = path.join(svgFolder, svgFile)
-      const svgContent = await readFile(svgPath, 'utf-8')
+      const svgContent = await readFile(svgPath, "utf-8")
       spriter.add(svgPath, svgFile, svgContent)
-  }));
+    })
+  )
 
-  const { result } = await spriter.compileAsync();
+  const { result } = await spriter.compileAsync()
 
-  const spriteFolder = path.join(__dirname, 'dist/assets/spritemaps')
+  const spriteFolder = path.join(__dirname, "dist/assets/spritemaps")
   await mkdir(spriteFolder, { recursive: true })
-    
-  await writeFile(path.join(spriteFolder, 'icons.svg'), result.css.sprite.contents)
-  await writeFile(path.join(spriteFolder, 'icons.css'), result.css.css.contents)
+
+  await writeFile(path.join(spriteFolder, "icons.svg"), result.css.sprite.contents)
+  await writeFile(path.join(spriteFolder, "icons.css"), result.css.css.contents)
 }
 
 async function buildAll() {
@@ -101,7 +103,7 @@ async function buildAll() {
   const isWatch = process.argv.includes("--watch")
   const isDevelopment = env === "development" || env === "staging"
 
-  await transformSvgFolderToSprite();
+  await transformSvgFolderToSprite()
 
   const preAndPostBuild = {
     name: "preAndPost",
@@ -199,8 +201,9 @@ async function buildAll() {
     },
     treeShaking: true,
     banner: {
-      js: env == "development"
-        ? `(() => {
+      js:
+        env == "development"
+          ? `(() => {
       const ws = new WebSocket("ws://localhost:3001");
       ws.onmessage = () => {
         setTimeout(() => {
@@ -208,7 +211,7 @@ async function buildAll() {
         }, 1000);
       };
     })();`
-        : ``
+          : ``
     },
     define: {
       WIDGET_ENDPOINT: JSON.stringify(getWidgetEndpoint()),
@@ -277,7 +280,7 @@ async function buildAllWithErrorHandling(retries = 0) {
   }
 
   try {
-    if (args && (args.includes('widget-utils') || args.includes('--watch'))) {
+    if (args && (args.includes("widget-utils") || args.includes("--watch"))) {
       await buildUtils()
     }
     console.log(`Building... for ${process.env.APP_ENV}`)
