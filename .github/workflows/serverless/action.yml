@@ -54,6 +54,7 @@ runs:
       shell: bash
       run: |
         aws s3 sync dist/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.stage }}/widgets/
+        aws s3 sync assets/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.stage }}/widgets/assets/
     - name: Sentry Release
       uses: getsentry/action-release@v1
       if: inputs.sentry-auth-token != ''

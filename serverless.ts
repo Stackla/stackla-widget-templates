@@ -66,7 +66,7 @@ const config = {
     hooks: getHooks(process.env.APP_ENV || "development")
   },
   package: {
-    include: ["views/**/*", "dist/**/*", "build/**/*"],
+    include: ["views/**/*", "dist/**/*", "build/**/*", "assets/**/*"],
     exclude: ["node_modules/**/*"]
   },
   functions: {

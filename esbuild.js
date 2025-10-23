@@ -67,7 +67,7 @@ async function transformSvgFolderToSprite() {
   const writeFile = promisify(fs.writeFile)
   const mkdir = promisify(fs.mkdir)
 
-  const svgFolder = 'dist/assets/svg';
+  const svgFolder = 'assets/svg';
   const svgFiles = await readdir(svgFolder)
 
   await Promise.all(svgFiles.map(async svgFile => {

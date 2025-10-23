@@ -10,9 +10,4 @@ server
 .vscode/settings.json
 .DS_Store
 dist/*
-!dist/assets/
-!dist/fonts/
-!dist/samples/
-dist/assets/spritemaps/*
 meta.json
-dist/assets/widget-core
