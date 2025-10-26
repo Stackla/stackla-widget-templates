@@ -76,10 +76,20 @@ export async function shouldHaveAvatars(page: Page, widgetType: string): Promise
   await clickFirstWidgetTile(page, widgetType)
   const expandedTile = await createExpandedTileLocator(page)
   const currentTile = expandedTile.locate('[data-id="6545848428436e47075464d0"]').first()
-  const avatarUrl = await currentTile.locator(".avatar-link").getAttribute("href")
+
+  // Wait for the tile to be available in the DOM before accessing its elements
+  await expect(currentTile).toBeAttached({ timeout: 10000 })
+
+  const avatarLink = currentTile.locator(".avatar-link")
+  await expect(avatarLink).toBeVisible({ timeout: 10000 })
+
+  const avatarUrl = await avatarLink.getAttribute("href")
   expect(avatarUrl).toContain("https://")
 
-  const avatarSrc = await currentTile.locator(".avatar-link img").first().getAttribute("src")
+  const avatarImg = currentTile.locator(".avatar-link img").first()
+  await expect(avatarImg).toBeVisible({ timeout: 10000 })
+
+  const avatarSrc = await avatarImg.getAttribute("src")
   expect(avatarSrc).toContain("https://")
 }
 
