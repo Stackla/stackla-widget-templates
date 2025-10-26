@@ -58,7 +58,19 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
 
 export async function shouldHaveProductButtonWithValidURL(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
+  
+  // Wait for the expanded tile to be visible and active
+  const expandedTile = await createExpandedTileLocator(page)
+  const currentTile = await expandedTile.getCurrentTile()
+  await expect(currentTile).toBeVisible()
+  
+  // Wait for the products component to load and render
+  const productsComponent = currentTile.locator("ugc-products").first()
+  await expect(productsComponent).toBeVisible()
+  
+  // Wait for the product button to be rendered
   const button = page.getByRole("link", { name: "Buy product: Kathmandu 1" }).first()
+  await expect(button).toBeVisible()
 
   await expect(button).toHaveAttribute(
     "href",
