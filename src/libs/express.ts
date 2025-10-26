@@ -39,6 +39,7 @@ export function getDomain(env = process.env.APP_ENV) {
 const expressApp = express()
 const cache = apicache.middleware;
 expressApp.use(express.static("dist", { redirect: false }))
+expressApp.use("/assets", express.static("assets", { redirect: false }))
 expressApp.use((_req, res, next) => {
   res.set("Cache-Control", ["public, max-age=300"])
   next()
