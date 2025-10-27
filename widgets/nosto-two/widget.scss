@@ -3,7 +3,7 @@
 @use "@styles/clients/nosto/dimens" as dimens;
 @use "../libs/nosto/variables";
 @use "./responsive/mobile";
-@use "./components/expanded-tile";
+@use "@styles/templates/nosto-expanded-tile";
 @use "@styles/clients/nosto/inline";
 @use "@styles/clients/nosto/expanded";
 
