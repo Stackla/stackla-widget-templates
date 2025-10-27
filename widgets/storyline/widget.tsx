@@ -3,8 +3,11 @@ import { Sdk } from "types"
 declare const sdk: Sdk
 
 import { loadWidget } from "@stackla/widget-utils"
-import { ExpandedTilesTemplate } from "./templates/expanded-tile.template"
-import { ProductsTemplate } from "./templates/products.template"
+import ProductsTemplate from "../libs/vertical-expanded-tiles/products.template"
+import { InlineProductsTemplate } from "../libs/vertical-expanded-tiles/inline-products.template"
+import { TileContentTemplate } from "../libs/vertical-expanded-tiles/tile-content.template"
+import { config } from "../libs/vertical-expanded-tiles/config"
+import { StoryExpandedTiles } from "../libs/vertical-expanded-tiles/base.template"
 import { initializeSwiperForInlineStoryTiles, onTilesUpdated } from "./inline-story-swiper.loader"
 
 // dimensions from Figma design
@@ -27,9 +30,12 @@ loadWidget(sdk, {
     onTilesUpdated: [onTilesUpdated]
   },
   templates: {
-    "expanded-tiles": ExpandedTilesTemplate,
-    "ugc-products": ProductsTemplate
-  }
+    "expanded-tiles": StoryExpandedTiles,
+    "ugc-products": ProductsTemplate,
+    "inline-products": InlineProductsTemplate,
+    "tile-content": TileContentTemplate
+  },
+  config
 })
 
 initializeSwiperForInlineStoryTiles()

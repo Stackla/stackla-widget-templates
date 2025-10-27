@@ -1,3 +1,5 @@
+@forward "../libs/vertical-expanded-tiles/styles/variables";
+@forward "../libs/vertical-expanded-tiles/styles/expanded-tiles";
 @use "styles";
 @use "@styles/partials/media-queries";
 @use "dimens";
@@ -23,17 +25,6 @@
 
 .hidden {
   display: none;
-}
-
-expanded-tiles {
-  .story-expanded {
-    max-width: 800px;
-
-    @media (max-width: 1024px) {
-      max-width: 100%;
-      width: 100%;
-    }
-  }
 }
 
 @include media-queries.breakpoint(mobile) {

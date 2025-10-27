@@ -1,9 +1,8 @@
 @use "sass:string";
 @use "./inline-dimens" as dimens;
-@use "variables" as vars;
 
 %grid-styles-ph {
-  width: vars.$full-width;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
 

@@ -45,10 +45,6 @@ expanded-tiles:not(:empty) {
   max-height: dimens.$height-lg;
   position: relative;
 
-  .ugc-tiles {
-    height: auto !important;
-  }
-
   .play-icon {
     z-index: 9;
     display: inline-block;
@@ -97,13 +93,31 @@ expanded-tiles:not(:empty) {
     padding-left: 16px;
 
     // TODO: change to a variable that is used for .swiper .swiper-slide too
-    border-radius: 5px 5px 0 0;
+    border-radius: 0;
     width: 100%;
   }
 
   .expanded-tile-wrapper {
     --swiper-navigation-top-offset: calc(50% - 20px);
+    --container-max-width: 100%;
+    --container-max-height: 100%;
 
+    @include media-queries.breakpoint(mobile) {
+      & {
+        --container-max-width: 100%;
+        --container-max-height: 100%;
+      }
+    }
+
+    @include media-queries.breakpoint(tablet) {
+      & {
+        --container-max-width: 100%;
+        --container-max-height: 100%;
+      }
+    }
+
+    max-height: var(--container-max-height);
+    max-width: var(--container-max-width);
     display: flex;
     place-items: center;
     width: 100vw;
@@ -111,20 +125,9 @@ expanded-tiles:not(:empty) {
 
     .swiper {
       .swiper-wrapper {
-        max-width: dimens.$container-max-width-lg;
-        max-height: dimens.$container-max-height-lg;
-
         .swiper-slide.ugc-tile {
-          height: 100%;
           align-items: flex-start;
-
-          @include media-queries.breakpoint(mobile) {
-            width: 100% !important;
-          }
-
-          @include media-queries.breakpoint(tablet) {
-            width: 100% !important;
-          }
+          height: fit-content;
 
           div.image-filler {
             background-position: top;
@@ -132,11 +135,7 @@ expanded-tiles:not(:empty) {
             background-size: cover;
             position: absolute;
             inset: 0;
-
-            @include media-queries.breakpoint(mobile) {
-              display: none;
-            }
-
+            filter: brightness(0.9);
 
             &.blurred {
               filter: blur(20px);
@@ -148,8 +147,8 @@ expanded-tiles:not(:empty) {
 
     @include media-queries.breakpoint(tablet) {
       .exit {
-        right: 8px !important;
-        top: 13px !important;
+        top: 20px;
+        right: 20px;
       }
     }
 
@@ -172,6 +171,7 @@ expanded-tiles:not(:empty) {
       background: var(--expanded-tiles-background);
       border-radius: var(--expanded-tile-border-radius);
       grid-template-columns: minmax(0, dimens.$panel-left-width-lg) minmax(0, dimens.$panel-right-width-lg);
+      grid-template-rows: 1fr;
 
       .panel-left {
         min-height: 300px;
@@ -185,10 +185,6 @@ expanded-tiles:not(:empty) {
         position: relative;
         color: colors.$panel-txt;
         max-width: dimens.$panel-left-width-lg;
-
-        @include media-queries.breakpoint(mobile) {
-          max-height: 375px;
-        }
 
         &:has(> .video-content) {
           align-items: stretch;
@@ -225,24 +221,26 @@ expanded-tiles:not(:empty) {
             }
 
             .video-content {
-              display: flex;
+              width: 100%;
+              height: 100%;
               flex-grow: 1;
               border: none;
-              margin: 0;
-              padding: 0;
-              z-index: 1;
-              object-fit: contain;
-              height: 100% !important;
+              align-items: stretch;
+              justify-content: stretch;
+              position: absolute;
+              overflow: hidden;
+              scrollbar-width: none;
+              display: flex !important;
+              object-fit: cover !important;
             }
           }
         }
 
         video {
+          filter: brightness(0.8);
           display: flex;
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          z-index: 10;
           position: relative;
         }
 
@@ -359,10 +357,9 @@ expanded-tiles:not(:empty) {
 
         .panel-right-wrapper {
           display: flex;
-          overflow: visible;
+          overflow: hidden auto;
           scrollbar-width: none;
-          width: 100%;
-          box-sizing: border-box;
+          width: 100vw;
         }
 
         .content-wrapper {

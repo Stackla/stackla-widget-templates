@@ -1,6 +1,6 @@
 @use "@styles/partials/media-queries";
-@use "../libs/nosto/variables";
-@use "../story-line-expanded/dimens";
+@use "../libs/vertical-expanded-tiles/variables";
+@use './dimens';
 
 expanded-tiles:not(:empty) {
   min-width: dimens.$width;

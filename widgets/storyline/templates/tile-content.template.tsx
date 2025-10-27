@@ -108,11 +108,7 @@ function UserInfoTemplate(props: UserInfoTemplateProps) {
   const tileAvatar = (
     <span class="avatar-wrapper">
       <a class="avatar-link" href={"javascript:void(0)"}>
-        <img
-          loading="lazy"
-          src={avatar ?? "https://clients.stackla.com/assets/clients/nosto/svg/nosto.svg"}
-          onerror={`this.src = "https://clients.stackla.com/assets/clients/nosto/svg/nosto.svg";`}
-        />
+        <img loading="lazy" src={avatar} />
       </a>
     </span>
   )
