@@ -1,7 +1,4 @@
-@forward "../libs/vertical-expanded-tiles/styles/variables";
 @forward "../libs/vertical-expanded-tiles/styles/expanded-tiles";
-
 @use "styles" as carouselStyles;
 @use "@styles/partials/media-queries";
 @use "dimens";
-@use "./expanded-tile";

@@ -48,7 +48,7 @@ export function ProductTagsSwiperTemplate({ tile, navArrows, prevIcon }: SwiperT
         </div>
 
         <div class="swiper swiper-inline-products">
-          <div class="swiper-inline-products-wapper swiper-wrapper">
+          <div class="swiper-inline-products-wrapper swiper-wrapper">
             {products.map(product => (
               <div class="tile-product swiper-slide">
                 <div class="tile-product-left-panel">

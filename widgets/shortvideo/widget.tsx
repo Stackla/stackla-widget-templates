@@ -32,7 +32,7 @@ loadWidget(sdk, {
     "inline-products": InlineProductsTemplate,
     "tile-content": TileContentTemplate
   },
-  ...config
+  config
 })
 
 sdk.querySelector(".track")?.style.removeProperty("display")

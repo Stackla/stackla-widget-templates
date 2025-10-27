@@ -88,6 +88,7 @@
     content: none;
   }
 }
+
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) add-to-cart} {
