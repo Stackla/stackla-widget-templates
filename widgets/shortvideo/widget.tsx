@@ -4,9 +4,11 @@ declare const sdk: Sdk
 
 import { loadWidget } from "@stackla/widget-utils"
 import { initializeInlineSwiperListeners } from "./inline-shortvideo-swiper.loader"
-import { ExpandedTilesTemplate } from "@widgets/storyline/templates/expanded-tile.template"
-import { ProductsTemplate } from "@widgets/storyline/templates/products.template"
-
+import ProductsTemplate from "../libs/vertical-expanded-tiles/products.template"
+import { InlineProductsTemplate } from "../libs/vertical-expanded-tiles/inline-products.template"
+import { TileContentTemplate } from "../libs/vertical-expanded-tiles/tile-content.template"
+import { config } from "../libs/vertical-expanded-tiles/config"
+import { StoryExpandedTiles } from "../libs/vertical-expanded-tiles/base.template"
 loadWidget(sdk, {
   features: {
     handleLoadMore: false,
@@ -25,9 +27,12 @@ loadWidget(sdk, {
     }
   },
   templates: {
-    "expanded-tiles": ExpandedTilesTemplate,
-    "ugc-products": ProductsTemplate
-  }
+    "expanded-tiles": StoryExpandedTiles,
+    "ugc-products": ProductsTemplate,
+    "inline-products": InlineProductsTemplate,
+    "tile-content": TileContentTemplate
+  },
+  ...config
 })
 
 sdk.querySelector(".track")?.style.removeProperty("display")
