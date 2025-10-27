@@ -4,7 +4,6 @@
 @forward "@styles/partials/loading";
 @forward "inline-tile";
 @forward "@styles/partials/tile-overlay";
-@forward "@styles/templates/expanded-tiles";
 @forward "@styles/templates/swiper-overrides";
 @use "story-line-expanded/index" as storyline;
 @use "@styles/templates/tile-content" as tc;
@@ -14,7 +13,6 @@
 @use "icon-sections-override";
 @use "tile-content-override";
 @use "@styles/templates/tags";
-@use "@styles/partials/expanded-swiper" as es;
 @use "@styles/partials/inline";
 @use "@styles/partials/icon-sections" as is;
 
@@ -25,5 +23,4 @@ expanded-tiles {
   @include tphrase.time-phrase-styles;
   @include smenu.share-menu-styles;
   @include tags.tile-tags-styles;
-  @include es.swiper-expanded-styles;
 }

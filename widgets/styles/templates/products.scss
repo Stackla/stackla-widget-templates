@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "sass:string";
 
-// style placeholder
+@mixin products-styles($parent: null) {
 %product-styles-ph {
   $border-active: #9f9f9f;
   $tide: #b4b2af;
@@ -320,7 +320,6 @@
   }
 }
 
-@mixin products-styles($parent: null) {
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) ugc-products} {

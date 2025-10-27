@@ -1,6 +1,7 @@
 @use "sass:string";
 
-%add-to-cart-styles-ph {
+@mixin add-to-cart-styles($parent: null) {
+  %add-to-cart-styles-ph {
   .ugc-add-to-cart-button {
     align-content: center;
     border-radius: 0;
@@ -87,8 +88,6 @@
     content: none;
   }
 }
-
-@mixin add-to-cart-styles($parent: null) {
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) add-to-cart} {
