@@ -1,0 +1,32 @@
+{{#tile class="swiper-slide" }}
+  <div class="tile">
+    {{#ifequals media "video"}}
+      {{#unless options.config.tile_options.auto_play_video }}
+        <div class="tile-loading"></div>
+      {{/unless}}
+    {{/ifequals}}
+    <div class="icon-section hidden">
+      <div class="top-section">
+        {{#if carousel_children.length}}
+          <div class="content-icon icon-carousel-grouping"></div>
+        {{/if}}
+        {{#ifequals media "video"}}
+          <div class="content-icon icon-video"></div>
+        {{/ifequals}}
+      </div>
+      <div class="bottom-section">
+        <div class="user-handle"></div>
+        <div class="icon-lookup"></div>
+      </div>
+    </div>
+    <div class="tile-image-wrapper">
+      {{#ifAutoPlayVideo media options.config.tile_options.auto_play_video }}
+        {{playVideo this "100%" "100%"}}
+      {{else}}
+        <shopspot-icon widgetId="{{options.wid}}" tile-id="{{id}}"></shopspot-icon>
+        {{#lazy image_thumbnail_url }}{{/lazy}}
+      {{/ifAutoPlayVideo}}
+      <div class="swiper-lazy-preloader"></div>
+    </div>
+  </div>
+{{/tile}}

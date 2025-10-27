@@ -1,0 +1,144 @@
+@use "dimens";
+
+$track-margin-small-screen: 0px 20px;
+$track-margin-large-screen: 0px 50px;
+
+:host {
+  transition: ease all 0.5s;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+    
+#nosto-ugc-container {
+    --header-padding: 0px;
+
+    background-color: var(--widget-background);
+    display: flex;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+
+    .icon-section {
+      z-index: 20;
+      display: flex;
+      position: absolute;
+      height: 100%;
+      bottom: 6px;
+  
+      .bottom-section {
+        display: flex;
+        align-items: center;
+
+        tile-tags {
+          margin-left: 5px;
+        }
+  
+        .user-handle {
+          line-height: 1.5;
+          font-size: var(--inline-user-handle);
+          max-width: 70%;
+          text-overflow: ellipsis;
+          text-wrap: nowrap;
+          overflow: hidden;
+          color: #FFF;
+          font-weight: 500;
+          vertical-align: middle;
+          text-transform: uppercase;
+          padding-left: 10px;
+        }
+      }
+  
+      .icon-lookup {
+        margin-left: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url("data:image/svg+xml,%3Csvg width='112' height='113' viewBox='0 0 112 113' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_217_21835)'%3E%3Cpath d='M56 4.70644C84.784 4.70644 108.192 28.1144 108.192 56.8984C108.192 85.6824 84.784 109.09 56 109.09C27.216 109.09 3.808 85.6824 3.808 56.8984C3.808 28.1144 27.216 4.70644 56 4.70644ZM56 0.898438C25.0656 0.898438 0 25.964 0 56.8984C0 87.8328 25.0656 112.898 56 112.898C86.9344 112.898 112 87.8328 112 56.8984C112 25.964 86.9344 0.898438 56 0.898438Z' fill='white'/%3E%3Cpath d='M60.3457 74.8164C72.6426 74.8164 82.6113 64.8477 82.6113 52.5508C82.6113 40.2538 72.6426 30.2852 60.3457 30.2852C48.0487 30.2852 38.0801 40.2538 38.0801 52.5508C38.0801 64.8477 48.0487 74.8164 60.3457 74.8164Z' stroke='white' stroke-width='3.808' stroke-miterlimit='10'/%3E%3Cpath d='M29.4111 83.486L44.5983 68.2988' stroke='white' stroke-width='3.808' stroke-miterlimit='10'/%3E%3Cpath d='M72.5309 42.246L71.7693 41.4844L68.9917 44.262L69.7309 45.0236C73.8973 49.2124 73.8973 55.9996 69.7309 60.1884L68.9917 60.95L71.7693 63.7276L72.5309 62.966C78.2429 57.254 78.2429 47.9356 72.5309 42.2236V42.246Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_217_21835'%3E%3Crect width='112' height='112' fill='white' transform='translate(0 0.898438)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+        width: var(--lookup-icon-size);
+        height: var(--lookup-icon-size);
+        margin-right: 12px;
+      }
+    }
+  
+    .ugc-tile {
+      border-radius: 0;
+  
+      .tile .tile-image-wrapper {
+        img {
+          border-radius: 0;
+        }
+      } 
+    }
+
+    .nosto-header {
+      padding: var(--header-padding);
+
+      h2 {
+        margin-top: 12px;
+        margin-bottom: var(--title-margin-bottom);
+        font-size: var(--title-size);
+        line-height: var(--title-line-height);
+      }
+    
+      p {
+        margin-top: 0;
+        margin-bottom: var(--description-margin-bottom);
+        font-size: var(--description-size);
+        line-height: var(--description-line-height);
+      }
+    }
+
+    @media (max-width: 767px) {
+      & {
+        --header-padding: 0px 17px;
+        --description-margin-bottom: 5px;
+      }
+    }
+  
+    @media (min-width: 768px) {
+      & {
+          --header-padding: 0px 0px;
+          --description-margin-bottom: 10px;
+
+          max-width: 750px;
+
+          .track {
+            margin: $track-margin-small-screen;
+          }
+      }
+    }
+
+    @media (min-width: 992px) {
+      & {
+          max-width: 970px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      & {
+          max-width: 1170px;
+      }
+    }
+
+    @media (min-width: 1370px) {
+      & {
+          width: 100%;
+          max-width: 1920px;
+
+          .track {
+            margin: $track-margin-large-screen;
+          }
+      }
+    }
+    
+    .track {
+      flex-direction: column;
+
+      .ugc-tiles {
+          padding-top: 5px;
+      }
+    }
+}

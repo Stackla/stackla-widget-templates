@@ -1,0 +1,12 @@
+<div class="track swiper carousel-inline swiper-inline" style="display:none;">
+	<div class="custom-widget-header">
+		<h2 class="custom-widget-title">AS SEEN ON YOU</h2>
+    	<p class="custom-widget-subline center">Check out our communities fave fits</p>
+	</div>
+	<div class="swiper-wrapper ugc-tiles">
+		<div class="swiper-scrollbar"></div>
+		{{#tiles}}
+		{{>tpl-tile options=../options}}
+		{{/tiles}}
+	</div>
+</div>

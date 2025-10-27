@@ -1,0 +1,64 @@
+@use "sass:map";
+@use "@styles/partials/media-queries";
+@use "@styles/clients/nosto/dimens" as dimens;
+
+#nosto-ugc-container {
+  .ugc-tile {
+    max-width: 367px !important;
+    user-select: none;
+    border-radius: var(--inline-tile-border-radius);
+    position: relative;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -ms-user-drag: none;
+
+    * {
+      user-select: none;
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      -ms-user-drag: none;
+      
+    }
+
+    .tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      .tile-image-wrapper {
+        display: flex;
+        width: 100%;
+
+        img {
+          aspect-ratio: 4/5;
+          width: 100%;
+          object-fit: cover;
+          overflow: hidden;
+          border-radius: dimens.$inline-tile-border-radius;
+          position: relative;
+          opacity: 1;
+          object-position: var(--image-position);
+        }
+
+        video {
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .icon-play {
+    width: dimens.$play-icon_width;
+    height: dimens.$play-icon_height;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="15" fill="%23BCBBBC"/><path d="M19.5 14.1336C20.1667 14.5185 20.1667 15.4808 19.5 15.8657L13.5 19.3298C12.8333 19.7147 12 19.2335 12 18.4637L12 11.5355C12 10.7657 12.8333 10.2846 13.5 10.6695L19.5 14.1336Z" fill="black"/></svg>');
+    background-size: contain;
+  }
+}

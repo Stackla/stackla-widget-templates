@@ -1,0 +1,21 @@
+@use "@styles/partials/media-queries";
+@use "../dimens";
+
+@include media-queries.breakpoint(mobile) {
+  #nosto-ugc-container {
+    height: auto;
+
+    .carousel-inline.swiper-inline {
+      width: dimens.$swiper-container-width-md !important;
+    }
+
+    .tile {
+      width: dimens.$tile-width-md !important;
+      height: dimens.$tile-height-md !important;
+
+      .icon-section {
+        width: dimens.$tile-width-md;
+      }
+    }
+  }
+}

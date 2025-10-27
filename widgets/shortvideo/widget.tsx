@@ -4,7 +4,8 @@ declare const sdk: Sdk
 
 import { loadWidget } from "@stackla/widget-utils"
 import { initializeInlineSwiperListeners } from "./inline-shortvideo-swiper.loader"
-import { StoryExpandedTiles } from "@widgets/storyline/templates/base.template"
+import { ExpandedTilesTemplate } from "@widgets/storyline/templates/expanded-tile.template"
+import { ProductsTemplate } from "@widgets/storyline/templates/products.template"
 
 loadWidget(sdk, {
   features: {
@@ -24,7 +25,8 @@ loadWidget(sdk, {
     }
   },
   templates: {
-    "expanded-tiles": StoryExpandedTiles
+    "expanded-tiles": ExpandedTilesTemplate,
+    "ugc-products": ProductsTemplate
   }
 })
 
