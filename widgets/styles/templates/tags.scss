@@ -85,7 +85,7 @@
     content: "";
   }
 
-  .tile-tags-wrapper {
+  .tile-tags-wapper {
     flex-direction: column;
     width: 100%;
 
@@ -98,7 +98,7 @@
     }
   }
 
-  .tile-tags-wrapper .tile-tag,
+  .tile-tags-wapper .tile-tag,
   .swiper-tags .swiper-slide {
     display: inline-flex;
     background: var(--tile-tag-background, '#D6D4D5');

@@ -1,16 +1,12 @@
-@use "variables" as vars;
-
-$nosto-container-margin: vars.$nosto-container-margin;
+$nosto-container-margin: 20px;
 
 %swiper-expanded-ph {
-  .swiper-expanded-button-next,
-  .swiper-expanded-button-prev {
-    top: 0;
-    bottom: 0;
-    display: flex;
+    .swiper-button-next,
+    .swiper-button-prev {
+        top: 0;
+        bottom: 0;
+        display: flex;
         align-items: center;
-        height: vars.$full-height !important;
-        width: vars.$swiper-nav-button-width !important;
     }
 }
 

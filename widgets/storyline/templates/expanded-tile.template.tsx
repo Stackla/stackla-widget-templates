@@ -9,9 +9,6 @@ export function ExpandedTilesTemplate() {
 
   return (
     <div class="expanded-tile-wrapper">
-      <a class="exit" href="javascript:void(0);">
-        <span class="widget-icon close-cross"></span>
-      </a>
       <BackArrowIcon />
       <div class="swiper swiper-expanded">
         <div class="swiper-wrapper ugc-tiles">

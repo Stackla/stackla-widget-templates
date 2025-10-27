@@ -11,3 +11,4 @@ server
 .DS_Store
 dist/*
 meta.json
+**/nosto-two-archive

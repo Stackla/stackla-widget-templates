@@ -1,24 +1,36 @@
 @use "@styles/templates/tile-content" as tc;
 
-.story-inline {
+.carousel-inline {
   @include tc.tile-content-styles;
 }
 
 expanded-tiles {
   @include tc.tile-content-styles {
+    .user-name {
+      font-weight: var(--username-font-weight) !important;
+      font-size: var(--username-font-size) !important;
+    }
+
     .panel-inactive {
       tile-content {
-        width: 100%;
         place-self: flex-end center;
         grid-row: span 2;
         margin-bottom: 20%;
+
+        * {
+          user-select: none;
+          -webkit-user-drag: none;
+          -khtml-user-drag: none;
+          -moz-user-drag: none;
+          -o-user-drag: none;
+        }
 
         .tile-content-wrapper .user-info {
           gap: 20px;
 
           .user-link .user-name {
             color: #4a4a4a;
-            font-size: 20px;
+            font-size: clamp(20px, vw, 67.63px);
           }
 
           .avatar-wrapper img {

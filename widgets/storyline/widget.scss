@@ -1,6 +1,46 @@
 @use "styles" as carouselStyles;
 @use "@styles/partials/media-queries";
 @use "dimens";
+@use "./expanded-tile";
+
+:host {
+    --color-primary: #000;
+    --color-secondary: rgb(50 45 45 / 80%);
+    --color-white: #fff;
+    --color-grey: #8D8D8D;
+    --title-font-size: 16px;
+    --paragraph-font-size: 15px;
+    --paragraph-font-weight-small: 300;
+    --paragraph-font-weight-normal: 400;
+    --paragraph-font-weight-medium: 500;
+    --paragraph-font-weight-bold: 700;
+    --font-default: helveticaneueltpro, sans-serif;
+    --product-title-font-size: clamp(0.875rem, 1vw, 1rem);
+    --quick-add-font-size: clamp(1.2rem, 1vw, 1.5rem);
+    --quick-add-variant-button-font-size: calc(var(--quick-add-font-size) * 0.8);
+    --color-atc-button-border: #D9D9D9;
+    --atc-variant-font-size: calc(var(--paragraph-font-size) * 0.8);
+    --inline-user-handle: 14px;
+    --lookup-icon-size: 36px;
+    --title-line-height: 1.1;
+    --title-margin-bottom: 5px;
+    --description-size: 14px;
+    --description-line-height: 1.4286;
+    --description-margin-bottom: 10px;
+    --username-font-weight: 700;
+    --username-font-size: clamp(1.5rem, 1vw, 3rem);
+    --user-handle-font-size: clamp(0.875rem, 1vw, 1.25rem);
+    --user-handle-font-weight: 300;
+    --title-size: 20px;
+
+    @media (min-width: 1370px) {
+        --title-size: 28px;
+    }
+
+    .font-grey {
+        color: var(--color-grey) !important;
+    }
+}
 
 expanded-tiles {
   .swiper-3d {
@@ -15,6 +55,54 @@ expanded-tiles {
       width: 100%;
     }
   }
+  
+
+:host {
+  transition: ease all 0.5s;
+}
+
+shopspot-icon {
+  display: none;
+}
+
+.swiper-expanded-button-prev, .swiper-expanded-button-next {
+  .chevron-left {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%20138%20138%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20x%3D%220.603516%22%20y%3D%220.741699%22%20width%3D%22137.133%22%20height%3D%22137.133%22%20rx%3D%2226.2995%22%20fill%3D%22black%22%20fill-opacity%3D%220.8%22/%3E%3Ccircle%20cx%3D%2250.7195%22%20cy%3D%2250.7195%22%20r%3D%2249.7626%22%20transform%3D%22matrix(4.37114e-08%201%201%20-4.37114e-08%2017.5117%2017.0009)%22%20stroke%3D%22white%22%20stroke-width%3D%221.91394%22/%3E%3Cpath%20d%3D%22M68.8376%2087.0444L68.8376%2049.0044M68.8376%2049.0044L57.3652%2060.4768M68.8376%2049.0044L79.1024%2059.873%22%20stroke%3D%22white%22%20stroke-width%3D%223.82789%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E");
+  }
+
+  .chevron-right {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%20138%20138%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20x%3D%220.603516%22%20y%3D%220.810059%22%20width%3D%22137.133%22%20height%3D%22137.133%22%20rx%3D%2226.2995%22%20fill%3D%22black%22%20fill-opacity%3D%220.8%22/%3E%3Ccircle%20cx%3D%2250.7195%22%20cy%3D%2250.7195%22%20r%3D%2249.7626%22%20transform%3D%22matrix(4.37114e-08%20-1%20-1%20-4.37114e-08%20118.949%20121.035)%22%20stroke%3D%22white%22%20stroke-width%3D%221.91394%22/%3E%3Cpath%20d%3D%22M67.6233%2050.9922L67.6233%2089.0322M67.6233%2089.0322L79.0957%2077.5598M67.6233%2089.0322L57.3585%2078.1636%22%20stroke%3D%22white%22%20stroke-width%3D%223.82789%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E");
+  }
+
+  &.swiper-button-disabled {
+    .chevron-left, .chevron-right {
+      opacity: 0.3;
+    }
+  }
+}
+
+.icon-story-video-pause {
+    width: 35px !important;
+    height: 35px !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M150.005 0.000144958C67.2921 0.000144958 0.00219727 67.29 0.00219727 150.003C0.00219727 232.716 67.2921 300 150.005 300C232.718 300 300.002 232.71 300.002 150.003C300.002 67.296 232.712 0.000144958 150.005 0.000144958ZM150.005 288.986C73.369 288.986 11.0162 226.639 11.0162 150.003C11.0162 73.3669 73.369 11.0142 150.005 11.0142C226.641 11.0142 288.988 73.3669 288.988 150.003C288.988 226.639 226.641 288.986 150.005 288.986Z' fill='white'/%3E%3Cpath d='M134.672 89.895H105.415V208.716H134.672V89.895Z' fill='white'/%3E%3Cpath d='M191.385 89.895H162.128V208.716H191.385V89.895Z' fill='white'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+}
+
+.icon-story-video-play {
+  width: 35px !important;
+  height: 35px !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M150.005 0.000144958C67.2921 0.000144958 0.00219727 67.29 0.00219727 150.003C0.00219727 232.716 67.2921 300 150.005 300C232.718 300 300.002 232.71 300.002 150.003C300.002 67.296 232.712 0.000144958 150.005 0.000144958ZM150.005 288.986C73.369 288.986 11.0162 226.639 11.0162 150.003C11.0162 73.3669 73.369 11.0142 150.005 11.0142C226.641 11.0142 288.988 73.3669 288.988 150.003C288.988 226.639 226.641 288.986 150.005 288.986Z' fill='white'/%3E%3Cpath d='M197.325 145.147C200.621 147.543 200.621 152.457 197.325 154.853L132.528 201.962C128.562 204.846 123 202.013 123 197.109L123 102.891C123 97.9873 128.562 95.1543 132.528 98.0376L197.325 145.147Z' fill='white'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: center !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
 }
 
 #nosto-ugc-container {
@@ -22,7 +110,7 @@ expanded-tiles {
   background-color: var(--widget-background);
   display: flex;
   place-items: center;
-  margin: dimens.$nosto-container-margin auto;
+  margin: 20px auto;
   height: calc(var(--tile-size) + 50px);
 
   .hidden {

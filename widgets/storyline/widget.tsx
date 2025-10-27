@@ -3,9 +3,12 @@ import { Sdk } from "types"
 declare const sdk: Sdk
 
 import { loadWidget } from "@stackla/widget-utils"
-import { ExpandedTilesTemplate } from "./templates/expanded-tile.template"
-import { ProductsTemplate } from "./templates/products.template"
+import ProductsTemplate from "@widgets/nosto-two/templates/products.template"
 import { initializeSwiperForInlineStoryTiles, onTilesUpdated } from "./inline-story-swiper.loader"
+import { InlineProductsTemplate } from "@widgets/nosto-two/templates/inline-products.template"
+import { TileContentTemplate } from "@widgets/nosto-two/templates/tile-content.template"
+import { config } from "../nosto-two/config"
+import { StoryExpandedTiles } from "@widgets/nosto-two/templates/base.template"
 
 // dimensions from Figma design
 const tileSizeSettings = {
@@ -27,9 +30,12 @@ loadWidget(sdk, {
     onTilesUpdated: [onTilesUpdated]
   },
   templates: {
-    "expanded-tiles": ExpandedTilesTemplate,
-    "ugc-products": ProductsTemplate
-  }
+    "expanded-tiles": StoryExpandedTiles,
+    "ugc-products": ProductsTemplate,
+    "inline-products": InlineProductsTemplate,
+    "tile-content": TileContentTemplate
+  },
+  config
 })
 
 initializeSwiperForInlineStoryTiles()

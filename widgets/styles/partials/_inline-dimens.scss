@@ -1,9 +1,13 @@
-@use "variables" as vars;
+// inline tile border radius
+$inline-tile-border-radius: 5px;
 
-// Re-export variables from centralized variables file for backward compatibility
-$inline-tile-border-radius: vars.$inline-tile-border-radius;
-$story-border-radius: vars.$story-border-radius;
-$play-icon-width: vars.$play-icon-width;
-$play-icon-height: vars.$play-icon-height;
-$loading-width: vars.$loading-icon-width;
-$loading-height: vars.$loading-icon-height;
+// story border radius override
+$story-border-radius: 50%;
+
+// video play icon
+$play-icon-width: 50px;
+$play-icon-height: 50px;
+
+// tile loading icon
+$loading-width: 30px;
+$loading-height: 30px;

@@ -44,7 +44,7 @@
 
 @include media-queries.breakpoint(mobile) {
   .swiper .swiper-wrapper {
-    max-height: 100vh;
+    max-height: 100dvh;
   }
 }
 

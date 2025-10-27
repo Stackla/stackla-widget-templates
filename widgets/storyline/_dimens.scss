@@ -1,4 +1,32 @@
 @forward "@styles/partials/inline-dimens";
 
-// nosto-ugc-container styles
-$nosto-container-margin: 20px;
+// swiper element width for large screens
+$swiper-container-width-lg: 100%;
+
+// swiper slide / tile width for medium/small screens
+$tile-width-md: 100%;
+$tile-height-md: 100%;
+
+// swiper element width for medium/small screens
+$swiper-container-width-md: auto;
+
+$width: 100%;
+$height: 100%;
+$panel-left-width-lg: 517px;
+$panel-right-width-lg: 363px;
+$panel-padding: 10px;
+
+// back arrow icon used in smaller screens (md)
+$back-icon-height: 56px;
+$container-max-width-lg: 895px;
+$container-max-height-lg: 750px;
+
+// responsiveness dimensions
+$tablet-panel-top-width-upper-limit: 643px;
+$breakpoint-mob-max-width: 576px;
+$breakpoint-tab-min-width: 577px;
+$breakpoint-tab-max-width: 992px;
+
+// video play icon
+$play-icon-width: 50px;
+$play-icon-height: 50px;

@@ -18,17 +18,14 @@
   #variant-container p,
   #variant-container p span {
     color: #333;
-
-    // TODO: import font
-    // font-family: "Open Sans";
     font-size: 12px;
-    font-weight: 400;
     padding: 0;
   }
 
   #variant-container div:not(.ugc-add-to-cart-sizepicker .ugc-add-to-cart-sizepicker-btn) {
     flex-direction: row;
-    align-items: baseline;
+    max-width: none;
+    align-items: center;
   }
 
   #variant-container div p::after {
@@ -50,27 +47,10 @@
     padding: 0;
     padding: 8px 0;
   }
-
-  #variant-container p {
-    margin: 18px 0 8px;
-  }
-
+  
   .ugc-add-to-cart-colorpicker {
     display: flex;
     gap: 12px;
-  }
-
-  .ugc-add-to-cart-colorpicker-ring {
-    height: 24px;
-    width: 24px;
-    margin: 0;
-  }
-
-  .ugc-add-to-cart-colorpicker-inner {
-    width: 15.6px;
-    height: 15.6px;
-    left: 24.5%;
-    top: 24%;
   }
 
   .ugc-add-to-cart-sizepicker {
@@ -81,12 +61,8 @@
   .ugc-add-to-cart-sizepicker-btn {
     border-radius: 0;
     cursor: pointer;
-
-    // TODO: import font
-    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-weight: 400;
-    height: 34px;
     margin: 0;
   }
 
@@ -100,6 +76,11 @@
     color: #b9b9b9;
     cursor: not-allowed;
     text-decoration: line-through;
+  }
+
+  .ugc-add-to-cart-sizepicker-span-button {
+    line-height: 22px;
+    font-weight: bold;
   }
 
   .ugc-add-to-cart-sizepicker-btn:not([enabled="true"])::before {

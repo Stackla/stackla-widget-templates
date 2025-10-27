@@ -1,16 +1,15 @@
 @use "sass:string";
-@use "variables" as vars;
 
 %icon-sections-styles-ph {
-  $icon-placement-top: vars.$icon-placement-top;
-  $icon-placement-bottom: vars.$icon-placement-bottom;
-  $icon-placement-left: vars.$icon-placement-left;
-  $icon-placement-right: vars.$icon-placement-right;
+  $icon-placement-top: 8px;
+  $icon-placement-bottom: 8px;
+  $icon-placement-left: 8.67px;
+  $icon-placement-right: 8.67px;
 
   display: flex;
   position: absolute;
-  width: vars.$full-width;
-  height: vars.$full-height;
+  width: 100%;
+  height: 100%;
 
   .top-section,
   .bottom-section {
@@ -18,7 +17,7 @@
     position: absolute;
     justify-content: space-between;
     z-index: 1;
-    width: vars.$full-width;
+    width: 100%;
     align-items: flex-end;
     flex-direction: row;
   }
@@ -52,9 +51,9 @@
     display: flex;
     z-index: 1;
     justify-content: center;
-    width: vars.$full-width;
+    width: 100%;
     align-items: center;
-    height: vars.$full-height;
+    height: 100%;
   }
 }
 

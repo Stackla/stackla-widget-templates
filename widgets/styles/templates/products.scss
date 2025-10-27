@@ -36,8 +36,6 @@
     display: flex;
     flex-direction: column;
     border-top: 1px solid #F4F4F4;
-    padding-top: 16px;
-    padding-bottom: 16px;
   }
 
   @keyframes skeleton-loading {
@@ -102,7 +100,6 @@
 
   .stacklapopup-product-images-wrapper {
     display: flex;
-    margin-top: 24px;
     position: relative;
 
     &::-webkit-scrollbar {
@@ -133,8 +130,8 @@
       }
 
       .swiper-slide.stacklapopup-product-wrapper {
-        width: 84.9px !important;
-        height: 110px !important;
+        width: 84.9px;
+        height: 110px;
         position: relative;
         cursor: pointer;
         display: inline-block;
@@ -157,13 +154,11 @@
 
           &.stacklapopup-products-item-active {
             img {
-              border: 0.5px solid $border-active;
               opacity: 1;
             }
           }
 
           .stacklapopup-products-item-image {
-            opacity: 0.4;
             border-radius: 3px;
             display: flex;
             align-items: center;
@@ -212,16 +207,12 @@
       }
     }
 
-
-
     .swiper-exp-product-recs-button-prev.swiper-button-prev {
       left: 0;
-      height: 100%;
     }
 
     .swiper-exp-product-recs-button-next.swiper-button-next {
       right: 0;
-      height: 100%;
     }
   }
 
@@ -234,11 +225,11 @@
     }
 
     .stacklapopup-products-item-button-wrap {
-      all: unset;
       position: relative;
       width: 100%;
 
       .stacklapopup-products-item-button {
+        margin-bottom: 10px;
         display: inline-block;
         font-weight: 500;
         line-height: 14px;
@@ -271,7 +262,6 @@
         font-size: 12px;
         font-weight: 300;
         line-height: 160%;
-        text-overflow: ellipsis;
         overflow-y: scroll;
         display: -webkit-box;
         margin: 10px 0 16px;
