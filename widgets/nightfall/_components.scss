@@ -1,117 +1,117 @@
 #nosto-ugc-container {
-    time-phrase {
-        display: var(--timephrase-display-inline);
-        align-items: center;
+  time-phrase {
+    display: var(--timephrase-display-inline);
+    align-items: center;
+  }
+
+  share-menu {
+    display: var(--share-icon-display-inline);
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+
+    .share-socials-popup-wrapper {
+      position: fixed;
+      background: none !important;
     }
 
-    share-menu {
-        display: var(--share-icon-display-inline);
-        margin-top: 5px;
-        margin-left: 5px;
-        margin-right: 5px;
-        
-        .share-socials-popup-wrapper {
-            position: fixed;
-            background: none !important;
-        }
-
-        .panel-overlay-active {
-            inset: 0;
-        }
-
-        .popup-text {
-            color: white;
-        }
-
-        .share-socials-popup {
-            background-color: black;
-        }
-
-        .icon-email-share {
-            background: url('assets/svg/email-share-yellow.svg') no-repeat;
-            height: 33px;
-        }
+    .panel-overlay-active {
+      inset: 0;
     }
+
+    .popup-text {
+      color: white;
+    }
+
+    .share-socials-popup {
+      background-color: black;
+    }
+
+    .icon-email-share {
+      background: url("assets/svg/email-share-yellow.svg") no-repeat;
+      height: 33px;
+    }
+  }
 }
 
 expanded-tiles {
-    --expanded-tiles-background: #000;
+  --expanded-tiles-background: #000;
 
-    ugc-products {
-        .stacklapopup-products-item-price {
-            --product-price-font-color: #fff;
-        }
-
-        .stacklapopup-products-item-title {
-            --product-title-font-color: #fff;
-        }
-
-        .stacklapopup-products-item-description {
-            --product-description-font-color: #fff;
-
-            scrollbar-color: white black !important;
-        }
-        
-        .recommendations-text {
-            color: #fff !important;
-        }
-
-        add-to-cart {
-            .ugc-add-to-cart-colorpicker-text * {
-                color: white !important;
-            }
-
-            .ugc-add-to-cart-colorpicker-text {
-                color: white !important;
-            }
-
-            .ugc-add-to-cart-other-variant-selector {
-                color: white !important;
-            }
-
-            .ugc-add-to-cart-sizepicker-btn[selected="true"] {
-                border: 1px solid white !important;
-                background-color: white !important;
-
-                span {
-                    color: black !important;
-                }
-            }
-
-            #variant-container {
-                p {
-                    color: white !important;
-                }
-
-                p span {
-                    color: white !important;
-                }
-
-                color: white !important;
-            }
-            
-           .ugc-add-to-cart-colorpicker-ring span {
-                &::after {
-                    background-color: white !important;
-                }
-            }
-
-            .ugc-add-to-cart-sizepicker {
-                margin-top: 10px;
-
-            }
-
-            .ugc-add-to-cart-sizepicker-btn {
-                background-color: black !important;
-            }
-        }
+  ugc-products {
+    .stacklapopup-products-item-price {
+      --product-price-font-color: #fff;
     }
+
+    .stacklapopup-products-item-title {
+      --product-title-font-color: #fff;
+    }
+
+    .stacklapopup-products-item-description {
+      --product-description-font-color: #fff;
+
+      scrollbar-color: white black !important;
+    }
+
+    .recommendations-text {
+      color: #fff !important;
+    }
+
+    add-to-cart {
+      .ugc-add-to-cart-colorpicker-text * {
+        color: white !important;
+      }
+
+      .ugc-add-to-cart-colorpicker-text {
+        color: white !important;
+      }
+
+      .ugc-add-to-cart-other-variant-selector {
+        color: white !important;
+      }
+
+      .ugc-add-to-cart-sizepicker-btn[selected="true"] {
+        border: 1px solid white !important;
+        background-color: white !important;
+
+        span {
+          color: black !important;
+        }
+      }
+
+      #variant-container {
+        p {
+          color: white !important;
+        }
+
+        p span {
+          color: white !important;
+        }
+
+        color: white !important;
+      }
+
+      .ugc-add-to-cart-colorpicker-ring span {
+        &::after {
+          background-color: white !important;
+        }
+      }
+
+      .ugc-add-to-cart-sizepicker {
+        margin-top: 10px;
+      }
+
+      .ugc-add-to-cart-sizepicker-btn {
+        background-color: black !important;
+      }
+    }
+  }
 }
 
 expanded-tiles tile-content {
-    width: 100%;
+  width: 100%;
 
-    .user-handle, .user-link {
-        color: white;
-    }
+  .user-handle,
+  .user-link {
+    color: white;
+  }
 }

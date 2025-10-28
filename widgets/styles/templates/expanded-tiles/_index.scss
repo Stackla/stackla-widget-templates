@@ -19,7 +19,7 @@ html {
   padding: 0 !important;
   max-width: 100% !important;
   max-height: 100% !important;
-  border:0 !important;
+  border: 0 !important;
 }
 
 expanded-tiles {
@@ -67,7 +67,7 @@ expanded-tiles:not(:empty) {
     justify-content: center;
     align-items: center;
   }
-  
+
   @include media-queries.breakpoint(mobile) {
     .expanded-tile-header {
       .close-white {
@@ -322,7 +322,7 @@ expanded-tiles:not(:empty) {
             gap: 4px;
             border-radius: 25px;
             opacity: 0.7;
-            background-color: #FFF;
+            background-color: #fff;
             cursor: pointer;
 
             &.collapsed {
@@ -330,7 +330,7 @@ expanded-tiles:not(:empty) {
             }
 
             .expand-control-label {
-              color: #201C1F;
+              color: #201c1f;
               font-size: 12px;
               font-style: normal;
               font-weight: 500;
@@ -374,9 +374,9 @@ expanded-tiles:not(:empty) {
             height: 100%;
             width: 100%;
 
-              @include media-queries.breakpoint(mobile) {
-                align-items: center;
-              }
+            @include media-queries.breakpoint(mobile) {
+              align-items: center;
+            }
 
             .tile-tags {
               display: var(--tags-display-expanded);

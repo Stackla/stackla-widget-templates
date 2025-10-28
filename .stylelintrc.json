@@ -2,7 +2,7 @@
   "extends": ["stylelint-config-standard-scss", "stylelint-prettier/recommended"],
   "plugins": ["stylelint-scss"],
   "rules": {
-    "prettier/prettier": null,
+    "prettier/prettier": true,
     "declaration-no-important": null,
     "no-empty-source": null,
     "selector-class-pattern": null,

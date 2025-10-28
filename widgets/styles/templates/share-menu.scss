@@ -16,10 +16,9 @@
     z-index: 20;
 
     &::backdrop {
-      background: rgb(0 0 0 / 80%); 
+      background: rgb(0 0 0 / 80%);
       backdrop-filter: blur(5px);
     }
-
 
     .panel-overlay {
       display: none;

@@ -86,11 +86,13 @@
     display: grid;
     gap: var(--margin);
     margin-bottom: var(--margin);
-    grid-template-areas:  "large large small1 small2"
+    grid-template-areas:
+      "large large small1 small2"
       "large large small3 small4";
 
     @include media-queries.breakpoint(mobile) {
-      grid-template-areas: "large large"
+      grid-template-areas:
+        "large large"
         "small1 small2"
         "small3 small4";
     }
@@ -101,54 +103,54 @@
   }
 
   .ugc-tile {
-      $total-padding: 20px;
+    $total-padding: 20px;
 
-      box-sizing: border-box;
-      border-radius: var(--inline-tile-border-radius);
-      overflow: hidden;
-      
-      &:not(.processed) {
-        display: none;
+    box-sizing: border-box;
+    border-radius: var(--inline-tile-border-radius);
+    overflow: hidden;
+
+    &:not(.processed) {
+      display: none;
+    }
+
+    &.large {
+      grid-area: large;
+
+      @include media-queries.breakpoint(tablet) {
+        aspect-ratio: 1 / 1;
+        width: #{calc(50vw - var(--margin) * 2)};
       }
 
-      &.large {
-        grid-area: large;
+      @include media-queries.breakpoint(mobile) {
+        aspect-ratio: 1 / 1;
+        width: #{calc(100vw - var(--margin) * 2)};
+      }
+    }
 
-        @include media-queries.breakpoint(tablet) {
-          aspect-ratio: 1 / 1;
-          width: #{calc(50vw - var(--margin) * 2)};
-        }
-
-        @include media-queries.breakpoint(mobile) {
-          aspect-ratio: 1 / 1;
-          width: #{calc(100vw - var(--margin) * 2)};
-        }
+    &.small {
+      @include media-queries.breakpoint(mobile) {
+        aspect-ratio: 1 / 1;
       }
 
-      &.small {
-        @include media-queries.breakpoint(mobile) {
-          aspect-ratio: 1 / 1;
-        }
+      @include media-queries.breakpoint(tablet) {
+        aspect-ratio: 1 / 1;
+      }
 
-        @include media-queries.breakpoint(tablet) {
-          aspect-ratio: 1 / 1;
-        }
+      &.small1 {
+        grid-area: small1;
+      }
 
-        &.small1 {
-          grid-area: small1;
-        }
+      &.small2 {
+        grid-area: small2;
+      }
 
-        &.small2 {
-          grid-area: small2;
-        }
+      &.small3 {
+        grid-area: small3;
+      }
 
-        &.small3 {
-          grid-area: small3;
-        }
-
-        &.small4 {
-          grid-area: small4;
-        }
+      &.small4 {
+        grid-area: small4;
+      }
     }
   }
 

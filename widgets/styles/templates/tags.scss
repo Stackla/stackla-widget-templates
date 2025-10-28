@@ -5,7 +5,7 @@
 %tags-styles-ph {
   --swiper-navigation-sides-offset: 0;
   --swiper-navigation-top-offset: 3px;
-  
+
   align-items: center;
   display: var(--tags-display-inline);
   position: relative;
@@ -13,7 +13,7 @@
   width: 100%;
 
   .swiper-slide {
-      height: 100% !important;
+    height: 100% !important;
   }
 
   &[context="expanded"] {
@@ -101,7 +101,7 @@
   .tile-tags-wrapper .tile-tag,
   .swiper-tags .swiper-slide {
     display: inline-flex;
-    background: var(--tile-tag-background, '#D6D4D5');
+    background: var(--tile-tag-background, "#D6D4D5");
     border-radius: 3px;
     font-size: 10px;
     font-style: normal;

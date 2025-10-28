@@ -1,61 +1,61 @@
 @use "@styles/partials/media-queries";
 
 #nosto-ugc-container {
+  .ugc-tile {
+    cursor: pointer;
+    max-width: 50vw;
+
+    .video-content {
+      display: flex;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    tile-tags {
+      .swiper-wrapper {
+        align-items: center;
+      }
+    }
+
+    .icon-play {
+      top: 43%;
+      left: 0;
+      right: 0;
+      margin: auto;
+      position: absolute;
+    }
+
+    .fallback-image {
+      object-fit: cover;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    iframe {
+      border: 0 !important;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+  }
+
+  @include media-queries.breakpoint(tablet) {
     .ugc-tile {
-        cursor: pointer;
-        max-width: 50vw;
-
-        .video-content {
-            display: flex;
-            object-fit: cover;
-            object-position: top;
-        }
-
-        tile-tags {
-            .swiper-wrapper {
-                align-items: center;
-            }
-        }
-
-        .icon-play {
-            top: 43%;
-            left: 0;
-            right: 0;
-            margin: auto;
-            position: absolute;
-        }
-
-        .fallback-image {
-            object-fit: cover;
-            width: 100%;
-            aspect-ratio: 1 / 1;
-        }
-
-        iframe {
-            border: 0 !important;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
-        }
-        
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
-        }
+      max-width: 100vw;
     }
+  }
 
-    @include media-queries.breakpoint(tablet) {
-        .ugc-tile {
-            max-width: 100vw;
-        }
+  @include media-queries.breakpoint(mobile) {
+    .ugc-tile {
+      max-width: 100vw;
     }
-
-    @include media-queries.breakpoint(mobile) {
-        .ugc-tile {
-            max-width: 100vw;
-        }
-    }
+  }
 }

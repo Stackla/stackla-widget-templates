@@ -1,7 +1,7 @@
 @use "../partials/inline-dimens" as dimens;
 
 %loading {
-  &{
+  & {
     border-radius: 50% !important;
     animation: spin 2s linear infinite;
     position: absolute;
