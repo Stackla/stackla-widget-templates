@@ -6,21 +6,6 @@
   transition: ease all 0.5s;
 }
 
-#nosto-ugc-container {
-  background-color: var(--widget-background);
-  display: flex;
-  place-items: center;
-  margin: dimens.$nosto-container-margin;
-  width: calc(100% - (dimens.$nosto-container-margin * 2));
-  height: var(--tile-size);
-
-  .icon-section {
-    display: flex;
-    position: absolute;
-    height: 100%;
-  }
-}
-
 .hidden {
   display: none;
 }
@@ -50,6 +35,19 @@
 }
 
 #nosto-ugc-container {
+  background-color: var(--widget-background);
+  display: flex;
+  place-items: center;
+  margin: dimens.$nosto-container-margin;
+  width: calc(100% - (dimens.$nosto-container-margin * 2));
+  height: var(--tile-size);
+
+  .icon-section {
+    display: flex;
+    position: absolute;
+    height: 100%;
+  }
+
   .ugc-tile {
     position: relative;
     min-width: var(--tile-width) !important;

@@ -95,14 +95,6 @@ expanded-tiles:not(:empty) {
     }
 
     .swiper {
-      @include media-queries.breakpoint(mobile) {
-        max-height: 100%;
-      }
-    
-      @include media-queries.breakpoint(tablet) {
-        max-height: 100%;
-      }
-
       .swiper-wrapper .swiper-slide .panel-active inline-products {
         height: auto !important;
         bottom: 5px !important;
