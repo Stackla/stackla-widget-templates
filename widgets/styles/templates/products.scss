@@ -1,8 +1,7 @@
 @use "sass:map";
 @use "sass:string";
 
-@mixin products-styles($parent: null) {
-  %product-styles-ph {
+@mixin products-styles() {
     $border-active: #9f9f9f;
     $tide: #b4b2af;
     $black: #000;
@@ -313,23 +312,5 @@
         position: unset;
       }
     }
-  }
-
-  // if parent selector is supplied use it
-  @if $parent {
-    #{string.unquote($parent) ugc-products} {
-      @extend %product-styles-ph;
-
-      // any style overrides
-      @content;
-    }
-  } @else {
-    // dynamically determine the parent selector if available
-    #{if(&, "& ugc-products", "ugc-products")} {
-      @extend %product-styles-ph;
-
-      // any style overrides
-      @content;
-    }
-  }
+  
 }
