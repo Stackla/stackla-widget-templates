@@ -144,7 +144,7 @@
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) tile-tags} {
-      @extend %tags-styles-ph;
+      @extend %tags-styles-ph !optional;
 
       // any style overrides
       @content;
@@ -152,7 +152,7 @@
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& tile-tags", "tile-tags")} {
-      @extend %tags-styles-ph;
+      @extend %tags-styles-ph !optional;
 
       // any style overrides
       @content;

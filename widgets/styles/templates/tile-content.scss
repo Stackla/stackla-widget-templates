@@ -216,12 +216,12 @@
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) tile-content} {
-      @extend %tile-content-styles-ph;
+      @extend %tile-content-styles-ph !optional;
     }
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& tile-content", "tile-content")} {
-      @extend %tile-content-styles-ph;
+      @extend %tile-content-styles-ph !optional;
     }
   }
   @content;

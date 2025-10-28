@@ -334,7 +334,7 @@
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) ugc-products} {
-      @extend %product-styles-ph;
+      @extend %product-styles-ph !optional;
 
       // any style overrides
       @content;
@@ -342,7 +342,7 @@
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& ugc-products", "ugc-products")} {
-      @extend %product-styles-ph;
+      @extend %product-styles-ph !optional;
 
       // any style overrides
       @content;

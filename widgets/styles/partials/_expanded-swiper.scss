@@ -15,7 +15,7 @@ $nosto-container-margin: vars.$nosto-container-margin;
 }
 
 @mixin swiper-expanded-styles() {
-  @extend %swiper-expanded-ph;
+  @extend %swiper-expanded-ph !optional;
   @content;
 }
 

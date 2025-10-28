@@ -18,7 +18,7 @@
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) time-phrase} {
-      @extend %time-phrase-styles-ph;
+      @extend %time-phrase-styles-ph !optional;
 
       // any style overrides
       @content;
@@ -26,7 +26,7 @@
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& time-phrase", "time-phrase")} {
-      @extend %time-phrase-styles-ph;
+      @extend %time-phrase-styles-ph !optional;
 
       // any style overrides
       @content;

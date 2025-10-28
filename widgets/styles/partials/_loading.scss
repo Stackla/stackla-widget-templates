@@ -18,5 +18,5 @@
 
 .tile > .tile-loading,
 .loading {
-  @extend %loading;
+  @extend %loading !optional;
 }
