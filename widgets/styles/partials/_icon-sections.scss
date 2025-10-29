@@ -61,11 +61,11 @@
 @mixin icon-sections-styles($parent: null) {
   @if $parent {
     #{string.unquote($parent) ".icon-section"} {
-      @extend %icon-sections-styles-ph;
+      @extend %icon-sections-styles-ph !optional;
     }
   } @else {
     #{if(&, "& .icon-section", ".icon-section")} {
-      @extend %icon-sections-styles-ph;
+      @extend %icon-sections-styles-ph !optional;
     }
   }
   @content;

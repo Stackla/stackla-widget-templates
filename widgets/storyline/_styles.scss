@@ -4,10 +4,7 @@
 @forward "@styles/partials/loading";
 @forward "inline-tile";
 @forward "@styles/partials/tile-overlay";
-@forward "@styles/templates/expanded-tiles";
 @forward "@styles/templates/swiper-overrides";
-@use "@styles/partials/inline";
-@use "@styles/templates/story-line-expanded";
 @use "@styles/templates/tile-content" as tc;
 @use "@styles/templates/shopspot-icon" as sicon;
 @use "@styles/templates/time-phrase" as tphrase;
@@ -15,14 +12,18 @@
 @use "icon-sections-override";
 @use "tile-content-override";
 @use "@styles/templates/tags";
-@use "@styles/partials/expanded-swiper" as es;
+@use "@styles/partials/inline";
+@use "@styles/partials/icon-sections" as is;
 
-// Custom styles for storyline - note: uses overrides instead of standard icon-sections and tile-content
+html {
+  background: var(--widget-background);
+}
+
 .story-inline,
+.carousel-inline,
 expanded-tiles {
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;
   @include smenu.share-menu-styles;
   @include tags.tile-tags-styles;
-  @include es.swiper-expanded-styles;
 }

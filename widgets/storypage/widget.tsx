@@ -7,6 +7,7 @@ declare const sdk: ISdk
 
 loadWidget(sdk, {
   features: {
+    addNewTilesAutomatically: false,
     handleLoadMore: false,
     tileSizeSettings: tileSettings
   },

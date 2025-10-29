@@ -2,7 +2,52 @@
 @use "@styles/partials/media-queries";
 @use "dimens";
 
+:host {
+  transition: ease all 0.5s;
+}
+
+.hidden {
+  display: none;
+}
+
+@include media-queries.breakpoint(mobile) {
+  #nosto-ugc-container {
+    height: auto;
+
+    .shortvideo-inline.swiper-inline {
+      width: dimens.$swiper-container-width-md !important;
+
+      .swiper-slide {
+        width: 100% !important;
+      }
+    }
+
+    .tile {
+      min-width: dimens.$tile-width-md !important;
+      width: dimens.$tile-width-md !important;
+      height: dimens.$tile-height-md !important;
+
+      .icon-section {
+        width: dimens.$tile-width-md;
+      }
+    }
+  }
+}
+
 #nosto-ugc-container {
+  background-color: var(--widget-background);
+  display: flex;
+  place-items: center;
+  margin: dimens.$nosto-container-margin;
+  width: calc(100% - (dimens.$nosto-container-margin * 2));
+  height: var(--tile-size);
+
+  .icon-section {
+    display: flex;
+    position: absolute;
+    height: 100%;
+  }
+
   .ugc-tile {
     position: relative;
     min-width: var(--tile-width) !important;

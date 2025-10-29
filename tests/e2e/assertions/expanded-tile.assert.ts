@@ -58,18 +58,26 @@ export async function shouldHaveTimestamps(page: Page, widgetType: string): Prom
 
 export async function shouldHaveProductButtonWithValidURL(page: Page, widgetType: string): Promise<void> {
   await clickFirstWidgetTile(page, widgetType)
-  const button = page.getByRole("link", { name: "Buy product: Kathmandu 1" }).first()
 
-  await expect(button).toHaveAttribute(
-    "href",
-    "/development/products/asus-tuf-f15-15-6-fhd-144hz-gaming-laptop-1tbgeforce-rtx-3050"
-  )
+  //data-testid="ugc-add-to-cart-button"
+  const button = page.getByTestId("ugc-add-to-cart-button").first()
 
-  // Listen for new tab
-  const [newPage] = await Promise.all([page.context().waitForEvent("page"), button.click()])
+  await page.pause()
 
-  // Wait for the new page to load
-  await newPage.waitForLoadState()
+  // Wait for the POST request after clicking the button
+  const [request] = await Promise.all([
+    page.waitForRequest(
+      req =>
+        req.url().includes("/cart/add.js") &&
+        req.method() === "POST" &&
+        req.postData() === JSON.stringify({ items: [{ id: 39531616370889, quantity: 1 }] })
+    ),
+    button.click()
+  ])
+
+  expect(request.url()).toContain("/cart/add.js")
+  expect(request.method()).toBe("POST")
+  expect(request.postData()).toBe(JSON.stringify({ items: [{ id: 39531616370889, quantity: 1 }] }))
 }
 
 export async function shouldHaveAvatars(page: Page, widgetType: string): Promise<void> {

@@ -71,7 +71,7 @@
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) shopspot-icon} {
-      @extend %shopspot-icon-styles-ph;
+      @extend %shopspot-icon-styles-ph !optional;
 
       // any style overrides
       @content;
@@ -79,7 +79,7 @@
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& shopspot-icon", "shopspot-icon")} {
-      @extend %shopspot-icon-styles-ph;
+      @extend %shopspot-icon-styles-ph !optional;
 
       // any style overrides
       @content;

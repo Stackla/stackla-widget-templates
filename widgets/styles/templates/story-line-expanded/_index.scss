@@ -111,15 +111,14 @@ expanded-tiles:not(:empty) {
     }
 
     .story-progress-wrapper {
+      top: -5px !important;
       box-sizing: border-box;
       z-index: 50;
       width: 100%;
       display: flex;
       padding: 2px;
       justify-content: center;
-      margin-top: 15px;
       position: absolute;
-      top: 10px;
 
       .story-autoplay-progress {
         display: flex;
@@ -550,10 +549,6 @@ expanded-tiles:not(:empty) {
 
   .story-expanded {
     overflow-y: hidden !important;
-  }
-
-  .story-progress-wrapper {
-    top: -5px !important;
   }
 
   .story-controls {

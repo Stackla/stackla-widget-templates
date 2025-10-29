@@ -26,11 +26,11 @@
 @mixin grid-styles($parent: null) {
   @if $parent {
     #{string.unquote($parent) ".grid"} {
-      @extend %grid-styles-ph;
+      @extend %grid-styles-ph !optional;
     }
   } @else {
     #{if(&, "&.grid", ".grid")} {
-      @extend %grid-styles-ph;
+      @extend %grid-styles-ph !optional;
     }
   }
 }

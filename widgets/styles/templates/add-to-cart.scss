@@ -111,7 +111,7 @@
   // if parent selector is supplied use it
   @if $parent {
     #{string.unquote($parent) add-to-cart} {
-      @extend %add-to-cart-styles-ph;
+      @extend %add-to-cart-styles-ph !optional;
 
       // any style overrides
       @content;
@@ -119,7 +119,7 @@
   } @else {
     // dynamically determine the parent selector if available
     #{if(&, "& add-to-cart", "add-to-cart")} {
-      @extend %add-to-cart-styles-ph;
+      @extend %add-to-cart-styles-ph !optional;
 
       // any style overrides
       @content;
