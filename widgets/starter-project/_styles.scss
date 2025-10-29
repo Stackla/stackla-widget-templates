@@ -14,8 +14,7 @@
 @use "@styles/partials/icon-sections" as is;
 @use "@styles/partials/expanded-swiper" as es;
 
-.grid-inline,
-expanded-tiles {
+.grid-inline {
   @include is.icon-sections-styles;
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;

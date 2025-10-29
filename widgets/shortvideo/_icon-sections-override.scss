@@ -3,17 +3,3 @@
 .shortvideo-inline {
   @include is.icon-sections-styles;
 }
-
-expanded-tiles {
-  @include is.icon-sections-styles {
-    .icon-section {
-      bottom: 0;
-    }
-
-    &:has(tile-content:not(:empty)) {
-      .icon-section {
-        height: calc(100% - 75px);
-      }
-    }
-  }
-}
