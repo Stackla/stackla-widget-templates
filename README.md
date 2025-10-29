@@ -230,7 +230,6 @@ The repository includes multiple pre-built widget templates:
 | **Waterfall** | Vertical scrolling infinite feed | Lazy loading, infinite scroll |
 | **Quadrant** | Four-quadrant display | Sectioned content areas |
 | **Storyline** | Linear story progression | Sequential content display |
-| **Storypage** | Full-page stories | Immersive story experience |
 | **Shortvideo** | Video-focused widget | Video playback, mobile-optimized |
 | **Nightfall** | Dark-themed widget | Night mode styling |
 | **Blankcanvas** | Starter template | Minimal starting point for custom widgets |

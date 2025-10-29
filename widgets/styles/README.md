@@ -105,7 +105,6 @@ The `apply-common-styles` mixin includes:
 - masonry
 - waterfall
 - quadrant
-- storypage
 - nightfall
 - blankcanvas
 
