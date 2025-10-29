@@ -15,7 +15,9 @@
     {
       "files": "*.scss",
       "options": {
-        "parser": "scss"
+        "parser": "scss",
+        "tabWidth": 2,
+        "useTabs": false
       }
     }
   ]

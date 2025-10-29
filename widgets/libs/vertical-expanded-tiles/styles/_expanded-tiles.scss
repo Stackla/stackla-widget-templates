@@ -5,6 +5,7 @@
 @use "@styles/templates/share-menu" as smenu;
 @use "@styles/templates/tags" as tags;
 @use "@styles/partials/expanded-swiper" as es;
+@use "@styles/templates/tile-content" as tc;
 @use "@styles/templates/add-to-cart";
 @use "@styles/templates/products";
 @use "@styles/partials/media-queries";
@@ -622,6 +623,44 @@ expanded-tiles:not(:empty) {
 }
 
 expanded-tiles:not(:empty) {
+@include tc.tile-content-styles {
+    .user-name {
+      font-weight: var(--username-font-weight) !important;
+      font-size: var(--username-font-size) !important;
+    }
+
+    .panel-inactive {
+      tile-content {
+        place-self: flex-end center;
+        grid-row: span 2;
+        margin-bottom: 20%;
+
+        * {
+          user-select: none;
+          -webkit-user-drag: none;
+          -khtml-user-drag: none;
+          -moz-user-drag: none;
+          -o-user-drag: none;
+        }
+
+        .tile-content-wrapper .user-info {
+          gap: 20px;
+
+          .user-link .user-name {
+            color: #4a4a4a;
+            font-size: clamp(20px, vw, 67.63px);
+          }
+
+          .avatar-wrapper img {
+            width: 100px;
+            height: 100px;
+            opacity: 0.3;
+          }
+        }
+      }
+    }
+  }
+
   min-width: dimens.$width;
 
   .swiper-3d {

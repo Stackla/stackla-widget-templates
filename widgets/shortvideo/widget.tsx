@@ -11,6 +11,7 @@ import { config } from "../libs/vertical-expanded-tiles/config"
 import { StoryExpandedTiles } from "../libs/vertical-expanded-tiles/base.template"
 loadWidget(sdk, {
   features: {
+    addNewTilesAutomatically: false,
     handleLoadMore: false,
     tileSizeSettings: {
       small: "203px",

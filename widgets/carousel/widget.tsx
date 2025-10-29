@@ -7,6 +7,7 @@ import { initializeInlineSwiperListeners } from "./inline-carousel-swiper.loader
 
 loadWidget(sdk, {
   features: {
+    addNewTilesAutomatically: false,
     handleLoadMore: false,
     cssVariables: {
       "--navigation-arrow-display": sdk.isPaginationEnabled() && !sdk.isScrollWidget() ? "flex" : "none"
