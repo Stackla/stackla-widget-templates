@@ -15,8 +15,7 @@
 @use "@styles/templates/tags";
 
 // Custom styles for shortvideo - note: uses overrides instead of standard icon-sections and tile-content
-.shortvideo-inline,
-expanded-tiles {
+.shortvideo-inline {
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;
   @include smenu.share-menu-styles;

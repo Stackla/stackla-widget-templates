@@ -20,8 +20,7 @@ html {
 }
 
 .story-inline,
-.carousel-inline,
-expanded-tiles {
+.carousel-inline {
   @include sicon.shopspot-icon-styles;
   @include tphrase.time-phrase-styles;
   @include smenu.share-menu-styles;

@@ -3,31 +3,3 @@
 .shortvideo-inline {
   @include tc.tile-content-styles;
 }
-
-expanded-tiles {
-  @include tc.tile-content-styles {
-    .panel-inactive {
-      tile-content {
-        width: 100%;
-        place-self: flex-end center;
-        grid-row: span 2;
-        margin-bottom: 20%;
-
-        .tile-content-wrapper .user-info {
-          gap: 20px;
-
-          .user-link .user-name {
-            color: #4a4a4a;
-            font-size: 20px;
-          }
-
-          .avatar-wrapper img {
-            width: 100px;
-            height: 100px;
-            opacity: 0.3;
-          }
-        }
-      }
-    }
-  }
-}
