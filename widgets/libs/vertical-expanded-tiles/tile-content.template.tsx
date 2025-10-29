@@ -108,7 +108,21 @@ function UserInfoTemplate(props: UserInfoTemplateProps) {
   const tileAvatar = (
     <span class="avatar-wrapper">
       <a class="avatar-link" href={"javascript:void(0)"}>
-        <img loading="lazy" src={avatar} />
+        <img
+          loading="lazy"
+          src={avatar}
+          style={{ display: "none" }}
+          onLoad={e => {
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            const currentTarget: HTMLImageElement | null = e.currentTarget as HTMLImageElement
+            currentTarget.style.display = ""
+          }}
+          onError={e => {
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            const currentTarget: HTMLImageElement | null = e.currentTarget as HTMLImageElement
+            currentTarget.style.display = "none"
+          }}
+        />
       </a>
     </span>
   )
