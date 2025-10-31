@@ -3,7 +3,7 @@
  * Consolidates duplicate swiper initialization code used across carousel, shortvideo, and storyline widgets
  */
 
-import { Sdk } from "types"
+import { ISdk } from "types"
 import {
   initializeSwiper,
   refreshSwiper,
@@ -41,7 +41,7 @@ export interface InlineSwiperConfig {
   /** Whether to enable loop initially (default: false) */
   initialLoop?: boolean
   /** SDK instance */
-  sdk: Sdk
+  sdk: ISdk
 }
 
 /**
@@ -123,13 +123,13 @@ function initializeSwiperForInlineTiles(config: InlineSwiperConfig) {
   })
 }
 
-function enableLoadedTiles(sdk: Sdk) {
+function enableLoadedTiles(sdk: ISdk) {
   sdk
     .querySelectorAll<HTMLElement>(".ugc-tiles > .ugc-tile[style*='display: none']")
     ?.forEach((tileElement: HTMLElement) => (tileElement.style.display = ""))
 }
 
-async function loadTilesAsync(swiper: Swiper, sdk: Sdk, swiperId: string) {
+async function loadTilesAsync(swiper: Swiper, sdk: ISdk, swiperId: string) {
   const observer = registerObserver(swiper)
 
   loadAllUnloadedTiles(sdk)
@@ -140,7 +140,7 @@ async function loadTilesAsync(swiper: Swiper, sdk: Sdk, swiperId: string) {
   updateLoadingStateInterval(swiper.el, sdk, swiperId)
 }
 
-function updateLoadingStateInterval(swiperElem: HTMLElement, sdk: Sdk, swiperId: string) {
+function updateLoadingStateInterval(swiperElem: HTMLElement, sdk: ISdk, swiperId: string) {
   const intervalId = setInterval(function () {
     const elements = swiperElem.querySelectorAll<HTMLElement>(".swiper-slide:has(.icon-section.hidden)")
     if (elements.length === SWIPER_INITIAL_SLIDE) {

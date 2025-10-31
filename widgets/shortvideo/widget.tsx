@@ -1,15 +1,11 @@
-import { Sdk } from "types"
+import { ISdk } from "types"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
-import { loadWidget } from "@stackla/widget-utils"
+import { loadWidget, MyWidgetSettings } from "@stackla/widget-utils"
 import { initializeInlineSwiperListeners } from "./inline-shortvideo-swiper.loader"
-import ProductsTemplate from "../libs/vertical-expanded-tiles/products.template"
-import { InlineProductsTemplate } from "../libs/vertical-expanded-tiles/inline-products.template"
-import { TileContentTemplate } from "../libs/vertical-expanded-tiles/tile-content.template"
-import { config } from "../libs/vertical-expanded-tiles/config"
-import { StoryExpandedTiles } from "../libs/vertical-expanded-tiles/base.template"
-loadWidget(sdk, {
+
+const config: MyWidgetSettings = {
   features: {
     addNewTilesAutomatically: false,
     handleLoadMore: false,
@@ -27,14 +23,14 @@ loadWidget(sdk, {
       "--navigation-arrow-display": sdk.isPaginationEnabled() && !sdk.isScrollWidget() ? "flex" : "none"
     }
   },
-  templates: {
-    "expanded-tiles": StoryExpandedTiles,
-    "ugc-products": ProductsTemplate,
-    "inline-products": InlineProductsTemplate,
-    "tile-content": TileContentTemplate
-  },
-  config
-})
+  config: {
+    expandedTile: {
+      expanded_tile_variant: "vertical"
+    }
+  }
+}
+
+loadWidget(sdk, config)
 
 sdk.querySelector(".track")?.style.removeProperty("display")
 

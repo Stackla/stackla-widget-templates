@@ -1,4 +1,4 @@
-import { Sdk } from "types"
+import { ISdk } from "types"
 import {
   initializeSwiper,
   refreshSwiper,
@@ -9,7 +9,7 @@ import {
 import type { Swiper } from "swiper"
 import { enableTileImages, loadAllUnloadedTiles } from "@stackla/widget-utils/libs"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 const ids = new Set<string>()
 
 export function initializeInlineSwiperListeners() {

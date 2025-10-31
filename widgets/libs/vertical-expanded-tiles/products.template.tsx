@@ -1,9 +1,9 @@
 import { createElement, createFragment } from "@stackla/widget-utils/jsx"
-import type { IProductsComponent, Sdk, TagExtended, Tile, ISdk } from "@stackla/widget-utils/types"
+import type { IProductsComponent, TagExtended, Tile, ISdk } from "@stackla/widget-utils/types"
 
 declare const sdk: ISdk
 
-export function ProductCTA({ product }: { sdk: Sdk; product: TagExtended; tile: Tile }) {
+export function ProductCTA({ product }: { sdk: ISdk; product: TagExtended; tile: Tile }) {
   const { custom_url, target, availability, cta_text = "Buy Now" } = product
 
   return (
@@ -15,7 +15,7 @@ export function ProductCTA({ product }: { sdk: Sdk; product: TagExtended; tile: 
   )
 }
 
-export function ProductDetails({ sdk, product, tile }: { sdk: Sdk; product: TagExtended; tile: Tile }) {
+export function ProductDetails({ sdk, product, tile }: { sdk: ISdk; product: TagExtended; tile: Tile }) {
   const selectedProduct = sdk.getSelectedProduct()
   const selectedProductId = selectedProduct ? selectedProduct.id : null
   const { custom_url, id } = product
@@ -99,7 +99,7 @@ export function ProductImages({
   )
 }
 
-export default function ProductsTemplate(sdk: Sdk, component?: IProductsComponent) {
+export default function ProductsTemplate(sdk: ISdk, component?: IProductsComponent) {
   const tileId = component && component.getTileId()
 
   if (!tileId) {

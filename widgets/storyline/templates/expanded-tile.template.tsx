@@ -1,6 +1,6 @@
 import { ISdk } from "@stackla/widget-utils"
 import { createElement } from "@stackla/widget-utils/jsx"
-import { StoryExpandedTile } from "./tile.template"
+import { VerticalExpandedTile } from "./tile.template"
 
 declare const sdk: ISdk
 
@@ -18,7 +18,7 @@ export function ExpandedTilesTemplate() {
               data-id={tile.id}
               data-yt-id={tile.youtube_id || ""}
               data-tiktok-id={tile.tiktok_id || ""}>
-              <StoryExpandedTile sdk={sdk} tile={tile} />
+              <VerticalExpandedTile sdk={sdk} tile={tile} />
             </div>
           ))}
         </div>

@@ -1,16 +1,16 @@
 import { createElement, createFragment } from "@stackla/widget-utils/jsx"
-import { Sdk, TagExtended, Tile } from "@stackla/widget-utils"
+import { ISdk, TagExtended, Tile } from "@stackla/widget-utils"
 
 type SwiperTemplateProps = {
   tile: Tile
   navArrows: boolean
   prevIcon: string
   nextIcon: string
-  sdk: Sdk
+  sdk: ISdk
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function InlineProductsTemplate(sdk: Sdk, component: any) {
+export function InlineProductsTemplate(sdk: ISdk, component: any) {
   if (!component.tile) {
     return <></>
   }
