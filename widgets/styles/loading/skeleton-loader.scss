@@ -3,6 +3,7 @@
     0% {
       background-position: -200px 0;
     }
+
     100% {
       background-position: calc(200px + 100%) 0;
     }
@@ -10,7 +11,7 @@
 
   .skeleton-loader {
     &:not(.transitioned) {
-        background: linear-gradient(90deg, #f0f0f0 0px, #f8f8f8 40px, #f0f0f0 80px);
+        background: linear-gradient(90deg, #f0f0f0 0, #f8f8f8 40px, #f0f0f0 80px);
         background-size: 200px 100%;
         animation: skeleton-loading 1.5s ease-in-out infinite;
         border-radius: 4px;
