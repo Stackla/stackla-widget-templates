@@ -3,7 +3,6 @@
 
 // style placeholder
 %product-styles-ph {
-  $border-active: #9f9f9f;
   $tide: #b4b2af;
   $black: #000;
   $white: #fff;
@@ -157,7 +156,6 @@
 
           &.stacklapopup-products-item-active {
             img {
-              border: 0.5px solid $border-active;
               opacity: 1;
             }
           }

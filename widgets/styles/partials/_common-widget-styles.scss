@@ -20,6 +20,7 @@
 @use "icon-sections" as is;
 @use "expanded-swiper" as es;
 
+
 // Mixin that applies all common widget styles
 // Usage: @include common-widget-styles.apply-common-styles('.widget-inline');
 @mixin apply-common-styles($widget-class) {

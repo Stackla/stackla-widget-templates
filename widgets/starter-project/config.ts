@@ -71,7 +71,8 @@ export const config: {
     // Whether to show the add to cart
     show_add_to_cart: true,
     // Whether to show the carousel grouping
-    show_carousel_grouping: true
+    show_carousel_grouping: true,
+    expanded_tile_variant: "horizontal"
   },
   inlineTile: {
     // Whether to show the navigation options of the tile

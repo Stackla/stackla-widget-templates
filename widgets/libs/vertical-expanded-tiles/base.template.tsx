@@ -1,5 +1,5 @@
 import type { ISdk } from "@stackla/widget-utils"
-import { StoryExpandedTile } from "./tile.template"
+import { VerticalExpandedTile } from "./tile.template"
 import { createElement } from "@stackla/widget-utils"
 
 export function StoryExpandedTiles(sdk: ISdk) {
@@ -8,7 +8,7 @@ export function StoryExpandedTiles(sdk: ISdk) {
   const navigationArrowsEnabled = show_nav
 
   return (
-    <div class="expanded-tile-wrapper" variation="story">
+    <div class="expanded-tile-wrapper" variation="vertical">
       <div class="swiper swiper-expanded story-expanded">
         <div class="align-center">
           <div class="swiper-expanded-button-wrapper">
@@ -31,7 +31,7 @@ export function StoryExpandedTiles(sdk: ISdk) {
               data-id={tile.id}
               data-yt-id={tile.youtube_id || ""}
               data-tiktok-id={tile.tiktok_id || ""}>
-              <StoryExpandedTile sdk={sdk} tile={tile} />
+              <VerticalExpandedTile sdk={sdk} tile={tile} />
             </div>
           ))}
         </div>

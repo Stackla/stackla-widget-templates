@@ -1,4 +1,4 @@
-import type { Sdk, TagExtended, IProductsComponent, Tile } from "@stackla/widget-utils"
+import type { ISdk, TagExtended, IProductsComponent, Tile } from "@stackla/widget-utils"
 import { createElement, createFragment } from "@stackla/widget-utils/jsx"
 
 export function ProductHeader({ product }: { product: TagExtended }) {
@@ -26,7 +26,7 @@ export function ProductHeader({ product }: { product: TagExtended }) {
   )
 }
 
-export function ProductCTA({ sdk, product, tile }: { sdk: Sdk; product: TagExtended; tile: Tile }) {
+export function ProductCTA({ sdk, product, tile }: { sdk: ISdk; product: TagExtended; tile: Tile }) {
   const { custom_url, target, availability, cta_text = "Buy Now", currency, id } = product
   const addToCart = sdk.getLoadedComponents().includes("add-to-cart")
   const parentNodeId = sdk.getNodeId()
@@ -54,7 +54,7 @@ export function ProductCTA({ sdk, product, tile }: { sdk: Sdk; product: TagExten
   )
 }
 
-export function ProductDetails({ sdk, product, tile }: { sdk: Sdk; product: TagExtended; tile: Tile }) {
+export function ProductDetails({ sdk, product, tile }: { sdk: ISdk; product: TagExtended; tile: Tile }) {
   const selectedProduct = sdk.getSelectedProduct()
   const selectedProductId = selectedProduct ? selectedProduct.id : null
   const { custom_url, description = "Buy Now", id } = product
@@ -135,7 +135,7 @@ export function ProductImages({
   )
 }
 
-export default function ProductsTemplate(sdk: Sdk, component: IProductsComponent) {
+export default function ProductsTemplate(sdk: ISdk, component: IProductsComponent) {
   const tileId = component.getTileId()
   const tile = sdk.getTileById(tileId)
   const selectedProductState = sdk.getSelectedProduct()

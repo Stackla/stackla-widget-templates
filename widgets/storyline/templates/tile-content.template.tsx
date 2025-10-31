@@ -1,5 +1,5 @@
 import { createElement, createFragment } from "@stackla/widget-utils/jsx"
-import { ISdk, Sdk, Tile } from "@stackla/widget-utils"
+import { ISdk, Tile } from "@stackla/widget-utils"
 
 type RenderConfig = {
   renderUserInfo: boolean
@@ -19,7 +19,7 @@ type UserInfoTemplateProps = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function TileContentTemplate(sdk: Sdk, component: any) {
+export function TileContentTemplate(sdk: ISdk, component: any) {
   const tileId = component.getTileId()
   const tile = sdk.getTileById(tileId)
   const renderConfig = component.renderConfig

@@ -1,8 +1,8 @@
-import { loadWidget, Sdk } from "@stackla/widget-utils"
+import { loadWidget, ISdk } from "@stackla/widget-utils"
 import { loadWaterfallLayout } from "../waterfall/waterfall.lib"
 import ProductsTemplate from "./products.template"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
 loadWidget(sdk, {
   callbacks: {

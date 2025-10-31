@@ -103,7 +103,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@stackla/widget-utils": "workspace:*",
+    "@stackla/widget-utils": "^4.1.2",
     "apicache": "^1.6.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

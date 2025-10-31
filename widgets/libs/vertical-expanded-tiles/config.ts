@@ -1,6 +1,6 @@
-import type { Sdk, UserConfig } from "@stackla/widget-utils"
+import type { ISdk, UserConfig } from "@stackla/widget-utils"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
 const tilesLength = sdk.querySelectorAll(".ugc-tile")?.length ?? 0
 

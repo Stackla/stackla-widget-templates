@@ -1,4 +1,4 @@
-import type { Sdk, Tile, ITileContentComponent, ISdk } from "@stackla/widget-utils"
+import type { ISdk, Tile, ITileContentComponent } from "@stackla/widget-utils"
 import { createElement, createFragment } from "@stackla/widget-utils/jsx"
 
 type RenderConfig = {
@@ -20,7 +20,7 @@ type UserInfoTemplateProps = {
 
 declare const sdk: ISdk
 
-export function TileContentTemplate(sdk: Sdk, component: ITileContentComponent) {
+export function TileContentTemplate(sdk: ISdk, component: ITileContentComponent) {
   const tileId = component.getTileId()
   const tile = sdk.getTileById(tileId)
   const renderConfig = component.renderConfig
