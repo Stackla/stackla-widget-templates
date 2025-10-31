@@ -1,7 +1,7 @@
-import { Sdk } from "types"
+import { ISdk } from "types"
 import { initializeInlineSwiper } from "../utils/inline-swiper.loader"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
 export function initializeInlineSwiperListeners() {
   initializeInlineSwiper({

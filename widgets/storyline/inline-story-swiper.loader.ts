@@ -1,4 +1,4 @@
-import { Sdk } from "types"
+import { ISdk } from "types"
 import {
   initializeSwiper,
   refreshSwiper,
@@ -11,7 +11,7 @@ import { enableTileImages, loadAllUnloadedTiles } from "@stackla/widget-utils/li
 import { EVENT_LOAD_MORE } from "@stackla/widget-utils/events"
 import { getSlidesPerView } from "./slides-per-view"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
 export function initializeSwiperForInlineStoryTiles() {
   const { inline_tile_size } = sdk.getStyleConfig()

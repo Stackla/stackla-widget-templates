@@ -1,14 +1,9 @@
-import { Sdk } from "types"
+import { ISdk } from "types"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
-import { loadWidget } from "@stackla/widget-utils"
-import ProductsTemplate from "../libs/vertical-expanded-tiles/products.template"
-import { InlineProductsTemplate } from "../libs/vertical-expanded-tiles/inline-products.template"
-import { TileContentTemplate } from "../libs/vertical-expanded-tiles/tile-content.template"
-import { config } from "../libs/vertical-expanded-tiles/config"
-import { StoryExpandedTiles } from "../libs/vertical-expanded-tiles/base.template"
 import { initializeSwiperForInlineStoryTiles, onTilesUpdated } from "./inline-story-swiper.loader"
+import { loadWidget, MyWidgetSettings } from "@stackla/widget-utils"
 
 // dimensions from Figma design
 const tileSizeSettings = {
@@ -17,7 +12,7 @@ const tileSizeSettings = {
   large: "150px"
 }
 
-loadWidget(sdk, {
+const config: MyWidgetSettings = {
   features: {
     addNewTilesAutomatically: false,
     handleLoadMore: false,
@@ -28,15 +23,10 @@ loadWidget(sdk, {
   },
   callbacks: {
     onTilesUpdated: [onTilesUpdated]
-  },
-  templates: {
-    "expanded-tiles": StoryExpandedTiles,
-    "ugc-products": ProductsTemplate,
-    "inline-products": InlineProductsTemplate,
-    "tile-content": TileContentTemplate
-  },
-  config
-})
+  }
+}
+
+loadWidget(sdk, config)
 
 initializeSwiperForInlineStoryTiles()
 

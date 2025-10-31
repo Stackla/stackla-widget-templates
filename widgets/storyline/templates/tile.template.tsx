@@ -39,7 +39,7 @@ export function StoryControls({ video }: { video: boolean }) {
   )
 }
 
-export function StoryExpandedTile({ tile }: ExpandedTileProps) {
+export function VerticalExpandedTile({ tile }: ExpandedTileProps) {
   const { show_shopspots, show_products, show_timestamp } = sdk.getExpandedTileConfig()
 
   const shopspotEnabled = sdk.isComponentLoaded("shopspots") && show_shopspots && !!tile.hotspots?.length

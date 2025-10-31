@@ -172,7 +172,7 @@ The `_variables.scss` file contains all static values used in common widget util
 - `$icon-placement-top/bottom/left/right`: 8px - 8.67px
 
 **Other:**
-- `$inline-tile-border-radius`: 5px
+- `common.$inline-tile-border-radius`: 5px
 - `$story-border-radius`: 50%
 - `$loading-icon-width/height`: 30px
 - `$play-icon-width/height`: 50px
@@ -185,7 +185,7 @@ The `_variables.scss` file contains all static values used in common widget util
 
 .my-widget {
   margin: vars.$container-margin;
-  border-radius: vars.$inline-tile-border-radius;
+  border-radius: vars.common.$inline-tile-border-radius;
   
   .icon {
     width: vars.$icon-size-medium;

@@ -1,7 +1,7 @@
-import { Sdk } from "types"
+import { ISdk } from "types"
 import { getTileWidthBySizeString } from "@stackla/widget-utils"
 
-declare const sdk: Sdk
+declare const sdk: ISdk
 
 export function getSlidesPerView(
   screenWidth: number = sdk.querySelector("#nosto-ugc-container")?.clientWidth ?? 0
