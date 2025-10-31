@@ -1,6 +1,7 @@
 const { pathToFileURL } = require("node:url")
 const postcssUrl = require("postcss-url")
 const postcss = require("postcss")
+const cssnano = require("cssnano")
 const SVGSpriter = require('svg-sprite');
 
 function startWebSocketServer() {
@@ -29,16 +30,31 @@ const getTemplatesEndpoint = () => {
   }
 }
 
-const postcssPlugins = [
-  postcssUrl({
-    url: asset => {
-      if (asset.url.includes("assets/")) {
-        return `${getTemplatesEndpoint()}/${asset.url}`
+const getPostcssPlugins = (env) => {
+  const plugins = [
+    postcssUrl({
+      url: asset => {
+        if (asset.url.includes("assets/")) {
+          return `${getTemplatesEndpoint()}/${asset.url}`
+        }
+        return asset.url
       }
-      return asset.url
-    }
-  })
-]
+    })
+  ]
+
+  // Add cssnano for production and staging builds
+  if (env === "production" || env === "staging") {
+    plugins.push(cssnano({
+      preset: ['default', {
+        discardComments: {
+          removeAll: true
+        }
+      }]
+    }))
+  }
+
+  return plugins
+}
 
 const config = {
     shape: {
@@ -146,7 +162,7 @@ async function buildAll() {
 
           const combined = `${result.css.toString()}`
 
-          const postCssResult = await postcss(postcssPlugins).process(combined, { from: item.relative() })
+          const postCssResult = await postcss(getPostcssPlugins(env)).process(combined, { from: item.relative() })
           const postCssCombined = postCssResult.css
 
           fs.writeFileSync(`dist/${item.parent.name}/widget.css`, postCssCombined)
