@@ -23,11 +23,6 @@ const config: MyWidgetSettings = {
   },
   callbacks: {
     onTilesUpdated: [onTilesUpdated]
-  },
-  config: {
-    expandedTile: {
-      expanded_tile_variant: "vertical"
-    }
   }
 }
 

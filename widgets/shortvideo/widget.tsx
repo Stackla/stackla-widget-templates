@@ -22,11 +22,6 @@ const config: MyWidgetSettings = {
     cssVariables: {
       "--navigation-arrow-display": sdk.isPaginationEnabled() && !sdk.isScrollWidget() ? "flex" : "none"
     }
-  },
-  config: {
-    expandedTile: {
-      expanded_tile_variant: "vertical"
-    }
   }
 }
 
