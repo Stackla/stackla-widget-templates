@@ -62,8 +62,6 @@ export async function shouldHaveProductButtonWithValidURL(page: Page, widgetType
   //data-testid="ugc-add-to-cart-button"
   const button = page.getByTestId("ugc-add-to-cart-button").first()
 
-  await page.pause()
-
   // Wait for the POST request after clicking the button
   const [request] = await Promise.all([
     page.waitForRequest(
