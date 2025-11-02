@@ -29,7 +29,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
       show_cross_sellers: true,
       show_add_to_cart: true,
       show_carousel_grouping: false,
-      expanded_tile_variant: "horizontal"
+      expanded_tile_variant: "vertical"
     },
     tile_options: {
       show_comments: true,

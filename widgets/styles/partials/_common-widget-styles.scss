@@ -19,7 +19,7 @@
 @use "@styles/templates/share-menu" as smenu;
 @use "icon-sections" as is;
 @use "expanded-swiper" as es;
-
+@use "../libs/vertical-expanded-tiles/styles/expanded-tiles";
 
 // Mixin that applies all common widget styles
 // Usage: @include common-widget-styles.apply-common-styles('.widget-inline');

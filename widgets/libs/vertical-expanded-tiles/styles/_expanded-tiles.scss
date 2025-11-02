@@ -16,7 +16,7 @@ html {
   background: var(--widget-background);
 }
 
-expanded-tiles[variation="story"] {
+expanded-tiles[variation="vertical"] {
   --expanded-tiles-background: #fff;
 
   @include sicon.shopspot-icon-styles;
@@ -80,7 +80,7 @@ shopspot-icon {
   @include es.swiper-expanded-styles;
 }
 
-expanded-tiles[variation="story"]:not(:empty) {
+expanded-tiles[variation="vertical"]:not(:empty) {
   :host {
     transition: ease all 0.5s;
   }
@@ -883,7 +883,7 @@ expanded-tiles[variation="story"]:not(:empty) {
 }
 
 @include media-queries.breakpoint(mobile) { 
-  expanded-tiles[variation="story"]:not(:empty) {
+  expanded-tiles[variation="vertical"]:not(:empty) {
     height: 100dvh !important;
 
     iframe {
