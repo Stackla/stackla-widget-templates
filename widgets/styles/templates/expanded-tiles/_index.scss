@@ -50,7 +50,7 @@ expanded-tiles:not(:empty) {
   }
 
   .play-icon {
-    z-index: 9;
+    z-index: 1;
     display: inline-block;
     width: dimens.$play-icon-width;
     height: dimens.$play-icon-height;
