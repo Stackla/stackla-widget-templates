@@ -12,13 +12,13 @@ export function EmbedYoutube({ tileId, videoId, onLoad, swiperId }: EmbedYoutube
 
   return (
     <iframe
-      loading="lazy"
       id={`yt-frame-${tileId}-${videoId}`}
       tileid={tileId}
       class="video-content"
       frameborder="0"
-      enablejsapi="1"
       onload={onLoad}
+      title="YouTube video player"
+      aria-label="YouTube video player"
       srcdoc={contentElement.innerHTML}></iframe>
   )
 }
@@ -26,11 +26,12 @@ export function EmbedYoutube({ tileId, videoId, onLoad, swiperId }: EmbedYoutube
 function loadYoutubeIframeContent(tileId: string, videoId: string, swiperId: string) {
   const scriptId = `yt-script-${tileId}-${videoId}`
   const playerId = `yt-player-${tileId}-${videoId}`
+  const frameId = `yt-frame-${tileId}-${videoId}`
   return (
     <html>
       <head>
         <script id={scriptId} src="https://www.youtube.com/iframe_api"></script>
-        <script>{loadYoutubePlayerAPI(playerId, videoId, swiperId)}</script>
+        <script>{loadYoutubePlayerAPI(playerId, videoId, swiperId, frameId)}</script>
         <style>{`
           body {
             margin: 0;
@@ -53,17 +54,19 @@ function loadYoutubeIframeContent(tileId: string, videoId: string, swiperId: str
   )
 }
 
-export function loadYoutubePlayerAPI(playerId: string, videoId: string, swiperId: string) {
+export function loadYoutubePlayerAPI(playerId: string, videoId: string, swiperId: string, frameId: string) {
   return `
   let player;
-  let swiper = parent.window.ugc.swiperContainer["${swiperId}"];
-  const instance = swiper?.instance;
+
+  function getSwiperInstance() {
+    return parent.window.ugc.swiperContainer?.["${swiperId}"]?.instance;
+  }
 
   function onPlayerStateChange(event) {
-    instance?.autoplay?.stop();
+    getSwiperInstance()?.autoplay?.stop();
     if (event.data === YT.PlayerState.ENDED) {
-      instance?.autoplay?.start();
-      instance?.slideNext();
+      getSwiperInstance()?.autoplay?.start();
+      getSwiperInstance()?.slideNext();
     }
   }
 
@@ -75,9 +78,7 @@ export function loadYoutubePlayerAPI(playerId: string, videoId: string, swiperId
       playerVars: {
         autoplay: 0,
         controls: 1,
-        modestbranding: 1,
         rel: 0,
-        enablejsapi: 1,
         playsinline: 1,
       },
       events: {
@@ -86,10 +87,6 @@ export function loadYoutubePlayerAPI(playerId: string, videoId: string, swiperId
         onError: errorHandler
       }
     });
-  }
-
-  function onYouTubeIframeAPIReady() {
-    loadPlayer();
   }
 
   function errorHandler(e) {
@@ -109,18 +106,21 @@ export function loadYoutubePlayerAPI(playerId: string, videoId: string, swiperId
   }
 
   function observeVisibility() {
-    const observer = new IntersectionObserver((entries) => {
+    const outerIframe = parent.document.getElementById("${frameId}");
+    if (!outerIframe) return;
+
+    const observer = new parent.IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           play();
         } else {
           pause();
-          instance?.autoplay?.start();
+          getSwiperInstance()?.autoplay?.start();
         }
       });
     }, { threshold: 0.5 });
 
-    observer.observe(document.body);
+    observer.observe(outerIframe);
   }
 
   window.onYouTubeIframeAPIReady = () => {
