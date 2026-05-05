@@ -1,0 +1,37 @@
+# .github/workflows/stale-branches.yml
+
+name: Stale Branches
+
+on:
+    schedule:
+        - cron: '0 6 * * 1'
+    workflow_dispatch:
+
+permissions:
+    issues: write
+    contents: write
+    pull-requests: read
+
+jobs:
+    stale_branches:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Stale Branches
+              uses: crs-k/stale-branches@v8.2.2
+              with:
+                  repo-token: '${{ secrets.GITHUB_TOKEN }}'
+                  days-before-stale: 180
+                  days-before-delete: 360
+                  comment-updates: false
+                  max-issues: 20
+                  tag-committer: false
+                  stale-branch-label: 'stale branch 🗑️'
+                  compare-branches: 'info'
+                  rate-limit: false
+                  pr-check: true
+                  dry-run: false
+                  ignore-issue-interaction: true
+                  include-protected-branches: false
+                  include-ruleset-branches: false
+                  ignore-commit-messages: ''
+                  ignore-committers: ''
