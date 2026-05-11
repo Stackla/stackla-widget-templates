@@ -45,7 +45,7 @@
     "@swc/core-darwin-x64": "^1.13.20",
     "@swc/core-linux-arm-gnueabihf": "^1.13.20",
     "@swc/core-linux-arm64-gnu": "^1.13.20",
-    "@swc/core-linux-arm64-musl": "^1.13.20",
+    "@swc/core-linux-arm64-musl": "^1.15.33",
     "@swc/core-linux-x64-gnu": "^1.13.20",
     "@swc/core-linux-x64-musl": "^1.13.20",
     "@swc/core-win32-arm64-msvc": "^1.13.20",
