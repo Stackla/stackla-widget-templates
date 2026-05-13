@@ -844,6 +844,7 @@ expanded-tiles[variation="vertical"]:not(:empty) {
         box-sizing: border-box;
         z-index: 11;
         top: 10px;
+        pointer-events: none;
 
         .share-menu-timephrase-wrapper {
           display: none !important;
@@ -852,12 +853,17 @@ expanded-tiles[variation="vertical"]:not(:empty) {
         .user-info .user-link {
           gap: 0.6rem;
           line-height: 16px;
+          pointer-events: auto;
 
           .user-handle {
             color: var(--color-white) !important;
             font-size: var(--user-handle-font-size);
             font-weight: var(--user-handle-font-weight);
           }
+        }
+
+        .avatar-link {
+          pointer-events: auto;
         }
       }
     }
