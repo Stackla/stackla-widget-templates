@@ -3,6 +3,7 @@ name: Release
 run-name: Release to ${{ inputs.environment || 'staging' }} by @${{ github.actor }}
 
 env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
   GH_TOKEN: ${{ github.token }}
 
 permissions:
