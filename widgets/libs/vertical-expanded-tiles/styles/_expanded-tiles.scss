@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "vertical-dimens" as dimens;
+@use "dimens" as dimens;
 @use "@styles/templates/shopspot-icon" as sicon;
 @use "@styles/templates/time-phrase" as tphrase;
 @use "@styles/templates/share-menu" as smenu;
@@ -9,7 +9,8 @@
 @use "@styles/templates/add-to-cart";
 @use "@styles/templates/products";
 @use "@styles/partials/media-queries";
-@forward "./vertical-variables";
+@forward "./variables";
+@forward "@styles/templates/expanded-tiles";
 
 html {
   background: var(--widget-background);

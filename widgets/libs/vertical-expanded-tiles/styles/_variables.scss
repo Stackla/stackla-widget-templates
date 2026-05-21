@@ -1,0 +1,38 @@
+:host {
+    --color-primary: #000;
+    --color-secondary: rgb(50 45 45 / 80%);
+    --color-white: #fff;
+    --color-grey: #8D8D8D;
+    --title-font-size: 16px;
+    --paragraph-font-size: 15px;
+    --paragraph-font-weight-small: 300;
+    --paragraph-font-weight-normal: 400;
+    --paragraph-font-weight-medium: 500;
+    --paragraph-font-weight-bold: 700;
+    --font-default: helveticaneueltpro, sans-serif;
+    --product-title-font-size: clamp(0.875rem, 1vw, 1rem);
+    --quick-add-font-size: clamp(1.2rem, 1vw, 1.5rem);
+    --quick-add-variant-button-font-size: calc(var(--quick-add-font-size) * 0.8);
+    --color-atc-button-border: #D9D9D9;
+    --atc-variant-font-size: calc(var(--paragraph-font-size) * 0.8);
+    --inline-user-handle: 14px;
+    --lookup-icon-size: 36px;
+    --title-line-height: 1.1;
+    --title-margin-bottom: 5px;
+    --description-size: 14px;
+    --description-line-height: 1.4286;
+    --description-margin-bottom: 10px;
+    --username-font-weight: 700;
+    --username-font-size: clamp(1.5rem, 1vw, 3rem);
+    --user-handle-font-size: clamp(0.875rem, 1vw, 1.25rem);
+    --user-handle-font-weight: 300;
+    --title-size: 20px;
+
+    @media (min-width: 1370px) {
+        --title-size: 28px;
+    }
+
+    .font-grey {
+        color: var(--color-grey) !important;
+    }
+}
