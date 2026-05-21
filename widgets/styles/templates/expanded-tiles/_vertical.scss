@@ -9,8 +9,7 @@
 @use "@styles/templates/add-to-cart";
 @use "@styles/templates/products";
 @use "@styles/partials/media-queries";
-@forward "./variables";
-@forward "@styles/templates/expanded-tiles";
+@forward "./vertical-variables";
 
 html {
   background: var(--widget-background);
