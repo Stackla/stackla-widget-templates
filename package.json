@@ -39,7 +39,7 @@
   },
   "license": "MIT",
   "optionalDependencies": {
-    "@esbuild/linux-x64": "^0.23.1",
+    "@esbuild/linux-x64": "^0.28.0",
     "@swc/core": "^1.13.5",
     "@swc/core-darwin-arm64": "^1.13.20",
     "@swc/core-darwin-x64": "^1.13.20",
