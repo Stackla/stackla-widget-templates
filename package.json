@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@happy-dom/jest-environment": "^18.0.1",
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.60.0",
     "@stackla/eslint-config": "^1.0.0",
     "@stackla/handlebars": "^0.1.10",
     "@stackla/jest-config": "^1.0.6",
