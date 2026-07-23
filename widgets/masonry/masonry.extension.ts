@@ -1,7 +1,13 @@
-import { ISdk } from "@stackla/widget-utils"
+import { ISdk, getTileSize } from "@stackla/widget-utils"
 
 let screenWidth = 0
 let previousWidthHandled = 0
+const rowsPerPageAppliedFor = new WeakSet<ISdk>()
+
+const MIN_TILE_WIDTH = 150
+const TILE_WIDTH_RANGE = 200
+const MAX_TILE_WIDTH = MIN_TILE_WIDTH + TILE_WIDTH_RANGE
+const DEFAULT_ROWS_PER_PAGE = 2
 
 export function handleTileImageRendered(sdk: ISdk, tileId?: string) {
   if (!tileId) {
@@ -104,11 +110,64 @@ function resizeTiles(ugcTiles: HTMLElement[]) {
 
   ugcTiles.forEach((tile: HTMLElement) => {
     const randomFlexGrow = Math.random() * 2 + 1
-    const randomWidth = Math.random() * 200 + 150
+    const randomWidth = Math.random() * TILE_WIDTH_RANGE + MIN_TILE_WIDTH
 
     tile.style.flex = `${randomFlexGrow} 1 auto`
     tile.style.width = `${randomWidth}px`
     tile.setAttribute("width-set", "true")
     tile.setAttribute("set-for-width", screenWidth.toString())
   })
+}
+
+export function calculateRowsPerPageLimit(
+  containerWidth: number,
+  gap: number,
+  rowsPerPage: number,
+  tileHeight: number
+) {
+  const minTilesPerRow = Math.max(1, Math.floor((containerWidth + gap) / (MAX_TILE_WIDTH + gap)))
+  const targetTileCount = minTilesPerRow * rowsPerPage
+  const clipHeight = rowsPerPage * tileHeight + (rowsPerPage - 1) * gap
+
+  return { targetTileCount, clipHeight }
+}
+
+export async function applyRowsPerPageLimit(sdk: ISdk) {
+  if (rowsPerPageAppliedFor.has(sdk)) {
+    return
+  }
+
+  const { enable_custom_tiles_per_page, custom_tile_per_page_type, rows_per_page, margin } = sdk.getStyleConfig()
+
+  if (!enable_custom_tiles_per_page || custom_tile_per_page_type !== "rows") {
+    return
+  }
+
+  const ugcContainer = sdk.querySelector("#nosto-ugc-container")
+  const containerWidth = ugcContainer?.clientWidth ?? 0
+
+  if (containerWidth === 0) {
+    return
+  }
+
+  rowsPerPageAppliedFor.add(sdk)
+
+  const rowsPerPage = parseInt(rows_per_page ?? "", 10) || DEFAULT_ROWS_PER_PAGE
+  const gap = Number(margin) || 0
+  const tileHeight = parseFloat(getTileSize(sdk))
+
+  const { targetTileCount, clipHeight } = calculateRowsPerPageLimit(containerWidth, gap, rowsPerPage, tileHeight)
+
+  sdk.setVisibleTilesCount(targetTileCount)
+  await sdk.loadTilesUntilVisibleTilesCount()
+
+  // addWidgetCustomStyles injects a <style> tag above the shadow DOM (light DOM), so it can
+  // never reach elements inside this widget's shadow root - it never actually hid anything here.
+  // Style the shadow-root elements directly instead.
+  const gridElement = sdk.querySelector<HTMLElement>("#nosto-ugc-container .grid")
+  gridElement?.style.setProperty("max-height", `${clipHeight}px`, "important")
+  gridElement?.style.setProperty("overflow", "hidden", "important")
+
+  const loadMoreElement = sdk.querySelector("load-more")
+  loadMoreElement?.classList.add("hidden")
 }

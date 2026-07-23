@@ -1,11 +1,30 @@
 import { ISdk, loadWidget } from "@stackla/widget-utils"
-import { handleAllTileImageRendered, handleTileImageError, renderMasonryLayout } from "./masonry.extension"
+import {
+  applyRowsPerPageLimit,
+  handleAllTileImageRendered,
+  handleTileImageError,
+  renderMasonryLayout
+} from "./masonry.extension"
 
 declare const sdk: ISdk
 
 loadWidget(sdk, {
   callbacks: {
-    onTilesUpdated: [() => renderMasonryLayout(sdk)],
+    // onLoad (EVENT_LOAD) fires once right after initial JS execution + component loading -
+    // well before onTilesUpdated, which is only emitted later by fetchTiles() (load-more/search)
+    // or the 10s auto-refresh poller (tiles.service.ts createNewTilesInterval). Relying on
+    // onTilesUpdated alone meant rows mode didn't clip/hide load-more until that first poll tick.
+    onLoad: [
+      () => {
+        void applyRowsPerPageLimit(sdk)
+      }
+    ],
+    onTilesUpdated: [
+      () => {
+        void applyRowsPerPageLimit(sdk)
+        renderMasonryLayout(sdk)
+      }
+    ],
     onTileBgImgRenderComplete: [
       () => {
         handleAllTileImageRendered(sdk)

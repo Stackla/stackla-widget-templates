@@ -259,10 +259,15 @@ async function buildAll() {
   if (env == "development") {
     config.minify = false
     config.sourcemap = "linked"
+  }
 
-    if (isWatch && env == "development") {
-      startWebSocketServer()
-    }
+  // Any --watch invocation should rebuild on save and hot-reload the browser, regardless of
+  // which APP_ENV it targets. This was previously gated on `env == "development"` as well, so
+  // `npm run watch:test` (APP_ENV=testing) never started hot-reload-server.js's chokidar watcher -
+  // it ran exactly one build and then sat idle, so file saves were silently never rebuilt until
+  // the whole process was restarted.
+  if (isWatch) {
+    startWebSocketServer()
   }
 
   await esbuild.build(config)
