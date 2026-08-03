@@ -3,10 +3,15 @@ import {
   applyRowsPerPageLimit,
   handleAllTileImageRendered,
   handleTileImageError,
+  registerRowsPerLoadCalculator,
   renderMasonryLayout
 } from "./masonry.extension"
 
 declare const sdk: ISdk
+
+// Must run synchronously, before loadWidget/EVENT_JS_RENDERED, so tiles.service.ts already has
+// this formula by the time it resolves how many tiles to fetch for "rows" mode.
+registerRowsPerLoadCalculator(sdk)
 
 loadWidget(sdk, {
   callbacks: {
@@ -16,12 +21,12 @@ loadWidget(sdk, {
     // onTilesUpdated alone meant rows mode didn't clip/hide load-more until that first poll tick.
     onLoad: [
       () => {
-        void applyRowsPerPageLimit(sdk)
+        applyRowsPerPageLimit(sdk)
       }
     ],
     onTilesUpdated: [
       () => {
-        void applyRowsPerPageLimit(sdk)
+        applyRowsPerPageLimit(sdk)
         renderMasonryLayout(sdk)
       }
     ],

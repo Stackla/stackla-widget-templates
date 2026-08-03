@@ -61,7 +61,9 @@ export function handleTileImageError(sdk: ISdk, tileWithError: HTMLElement) {
     sdk.querySelectorAll<HTMLElement>(`.grid-item:is(${rowIdSelectors})`) ?? []
   ) as HTMLElement[]
 
-  resizeTiles(matchedGridItems)
+  const allTiles = Array.from(sdk.querySelectorAll<HTMLElement>(".grid-item") ?? [])
+
+  resizeTiles(matchedGridItems, allTiles)
 }
 
 export function renderMasonryLayout(sdk: ISdk, reset = false, resize = false) {
@@ -100,39 +102,86 @@ export function renderMasonryLayout(sdk: ISdk, reset = false, resize = false) {
             tile.getAttribute("width-set") !== "true" && tile.getAttribute("set-for-width") !== screenWidth.toString()
         )
 
-  resizeTiles(ugcTiles)
+  resizeTiles(ugcTiles, allTiles)
 }
 
-function resizeTiles(ugcTiles: HTMLElement[]) {
-  if (!ugcTiles || ugcTiles.length === 0) {
+function resizeTiles(tilesToResize: HTMLElement[], allTiles: HTMLElement[]) {
+  if (!tilesToResize || tilesToResize.length === 0) {
     return
   }
 
-  ugcTiles.forEach((tile: HTMLElement) => {
-    const randomFlexGrow = Math.random() * 2 + 1
+  tilesToResize.forEach((tile: HTMLElement) => {
     const randomWidth = Math.random() * TILE_WIDTH_RANGE + MIN_TILE_WIDTH
 
-    tile.style.flex = `${randomFlexGrow} 1 auto`
     tile.style.width = `${randomWidth}px`
     tile.setAttribute("width-set", "true")
     tile.setAttribute("set-for-width", screenWidth.toString())
   })
+
+  growTilesExceptLastRow(allTiles)
 }
 
-export function calculateRowsPerPageLimit(
-  containerWidth: number,
-  gap: number,
-  rowsPerPage: number,
-  tileHeight: number
-) {
-  const minTilesPerRow = Math.max(1, Math.floor((containerWidth + gap) / (MAX_TILE_WIDTH + gap)))
-  const targetTileCount = minTilesPerRow * rowsPerPage
-  const clipHeight = rowsPerPage * tileHeight + (rowsPerPage - 1) * gap
+// flex-grow stretches every tile in its wrapped row to fill the row's leftover space.
+// A trailing row with too few tiles to fill the container would have that space dumped
+// onto whichever tile lands there, blowing it far past MAX_TILE_WIDTH. Keep the last
+// (possibly partial) row at its assigned width instead, so it ends early rather than stretch.
+function growTilesExceptLastRow(tiles: HTMLElement[]) {
+  if (!tiles || tiles.length === 0) {
+    return
+  }
 
-  return { targetTileCount, clipHeight }
+  const rows = new Map<number, HTMLElement[]>()
+  tiles.forEach(tile => {
+    const rowTiles = rows.get(tile.offsetTop) ?? []
+    rowTiles.push(tile)
+    rows.set(tile.offsetTop, rowTiles)
+  })
+
+  const lastRowTop = Math.max(...rows.keys())
+
+  rows.forEach((rowTiles, rowTop) => {
+    const isLastRow = rowTop === lastRowTop
+    rowTiles.forEach(tile => {
+      const flexGrow = isLastRow ? 0 : Math.random() * 2 + 1
+      tile.style.flex = `${flexGrow} 1 auto`
+    })
+  })
 }
 
-export async function applyRowsPerPageLimit(sdk: ISdk) {
+// How many tiles are needed to fill `rowsPerPage` rows for masonry's own layout (random-width
+// bricks packed left to right). Registered with the core SDK via registerRowsPerLoadCalculator
+// so tiles.service.ts can resolve the right count in one place, instead of masonry recomputing
+// and re-triggering a second, separate tile load after the fact.
+export function calculateTilesPerRow(containerWidth: number, gap: number, rowsPerPage: number) {
+  const minTilesPerRow = Math.max(1, Math.floor((containerWidth + gap) / (MIN_TILE_WIDTH + gap)))
+  return minTilesPerRow * rowsPerPage
+}
+
+// How tall the clipped grid should be for `rowsPerPage` rows - purely a function of tile height,
+// row count and gap, independent of how many tiles actually end up loaded.
+export function calculateClipHeight(rowsPerPage: number, gap: number, tileHeight: number) {
+  return rowsPerPage * tileHeight + (rowsPerPage - 1) * gap
+}
+
+// Must run synchronously, before the widget's first tiles fetch (i.e. before EVENT_JS_RENDERED),
+// so tiles.service.ts already knows this formula by the time it needs to decide how many tiles
+// to load. See widget.tsx, where this is called at module top level for that reason.
+export function registerRowsPerLoadCalculator(sdk: ISdk) {
+  sdk.setRowsPerLoadCalculator(({ rowsPerPage, gap }) => {
+    const containerWidth = sdk.querySelector("#nosto-ugc-container")?.clientWidth ?? 0
+
+    if (containerWidth === 0) {
+      return rowsPerPage
+    }
+
+    return calculateTilesPerRow(containerWidth, gap, rowsPerPage)
+  })
+}
+
+// Applies the purely visual side of "rows" mode: clipping the grid to N rows tall and hiding
+// load-more. The tile count itself is decided once, centrally, by tiles.service.ts via the
+// calculator registered above - this no longer sets visible tile count or triggers any loads.
+export function applyRowsPerPageLimit(sdk: ISdk) {
   if (rowsPerPageAppliedFor.has(sdk)) {
     return
   }
@@ -143,10 +192,14 @@ export async function applyRowsPerPageLimit(sdk: ISdk) {
     return
   }
 
-  const ugcContainer = sdk.querySelector("#nosto-ugc-container")
-  const containerWidth = ugcContainer?.clientWidth ?? 0
+  // addWidgetCustomStyles injects a <style> tag above the shadow DOM (light DOM), so it can
+  // never reach elements inside this widget's shadow root - it never actually hid anything here.
+  // Style the shadow-root elements directly instead.
+  const gridElement = sdk.querySelector<HTMLElement>("#nosto-ugc-container .grid")
 
-  if (containerWidth === 0) {
+  if (!gridElement) {
+    // Grid isn't in the DOM yet - retry next time this is called (onLoad/onTilesUpdated)
+    // rather than giving up, since we haven't marked this sdk as done below.
     return
   }
 
@@ -155,18 +208,10 @@ export async function applyRowsPerPageLimit(sdk: ISdk) {
   const rowsPerPage = parseInt(rows_per_page ?? "", 10) || DEFAULT_ROWS_PER_PAGE
   const gap = Number(margin) || 0
   const tileHeight = parseFloat(getTileSize(sdk))
+  const clipHeight = calculateClipHeight(rowsPerPage, gap, tileHeight)
 
-  const { targetTileCount, clipHeight } = calculateRowsPerPageLimit(containerWidth, gap, rowsPerPage, tileHeight)
-
-  sdk.setVisibleTilesCount(targetTileCount)
-  await sdk.loadTilesUntilVisibleTilesCount()
-
-  // addWidgetCustomStyles injects a <style> tag above the shadow DOM (light DOM), so it can
-  // never reach elements inside this widget's shadow root - it never actually hid anything here.
-  // Style the shadow-root elements directly instead.
-  const gridElement = sdk.querySelector<HTMLElement>("#nosto-ugc-container .grid")
-  gridElement?.style.setProperty("max-height", `${clipHeight}px`, "important")
-  gridElement?.style.setProperty("overflow", "hidden", "important")
+  gridElement.style.setProperty("max-height", `${clipHeight}px`, "important")
+  gridElement.style.setProperty("overflow", "hidden", "important")
 
   const loadMoreElement = sdk.querySelector("load-more")
   loadMoreElement?.classList.add("hidden")
