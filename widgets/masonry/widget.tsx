@@ -18,16 +18,21 @@ loadWidget(sdk, {
     // onLoad (EVENT_LOAD) fires once right after initial JS execution + component loading -
     // well before onTilesUpdated, which is only emitted later by fetchTiles() (load-more/search)
     // or the 10s auto-refresh poller (tiles.service.ts createNewTilesInterval). Relying on
-    // onTilesUpdated alone meant rows mode didn't clip/hide load-more until that first poll tick.
+    // onTilesUpdated alone meant rows mode didn't hide load-more/excess tiles until that first
+    // poll tick, even though the initial tiles are already in the DOM by onLoad.
+    // renderMasonryLayout must run first in both callbacks: applyRowsPerPageLimit measures each
+    // tile's real (random-width) row via offsetTop, which only reflects reality once layout has
+    // actually positioned them.
     onLoad: [
       () => {
+        renderMasonryLayout(sdk)
         applyRowsPerPageLimit(sdk)
       }
     ],
     onTilesUpdated: [
       () => {
-        applyRowsPerPageLimit(sdk)
         renderMasonryLayout(sdk)
+        applyRowsPerPageLimit(sdk)
       }
     ],
     onTileBgImgRenderComplete: [
@@ -37,8 +42,7 @@ loadWidget(sdk, {
       }
     ],
     onTileBgImageError: [
-      event => {
-        const customEvent = event
+      customEvent => {
         const tileWithError = customEvent.detail.data.target as HTMLElement
         handleTileImageError(sdk, tileWithError)
       }

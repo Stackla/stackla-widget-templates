@@ -1,12 +1,10 @@
-import { ISdk, getTileSize } from "@stackla/widget-utils"
+import { ISdk } from "@stackla/widget-utils"
 
 let screenWidth = 0
 let previousWidthHandled = 0
-const rowsPerPageAppliedFor = new WeakSet<ISdk>()
 
 const MIN_TILE_WIDTH = 150
 const TILE_WIDTH_RANGE = 200
-const MAX_TILE_WIDTH = MIN_TILE_WIDTH + TILE_WIDTH_RANGE
 const DEFAULT_ROWS_PER_PAGE = 2
 
 export function handleTileImageRendered(sdk: ISdk, tileId?: string) {
@@ -152,15 +150,24 @@ function growTilesExceptLastRow(tiles: HTMLElement[]) {
 // bricks packed left to right). Registered with the core SDK via registerRowsPerLoadCalculator
 // so tiles.service.ts can resolve the right count in one place, instead of masonry recomputing
 // and re-triggering a second, separate tile load after the fact.
-export function calculateTilesPerRow(containerWidth: number, gap: number, rowsPerPage: number) {
+export function calculateApproxTilesPerRow(containerWidth: number, gap: number, rowsPerPage: number) {
   const minTilesPerRow = Math.max(1, Math.floor((containerWidth + gap) / (MIN_TILE_WIDTH + gap)))
   return minTilesPerRow * rowsPerPage
 }
 
-// How tall the clipped grid should be for `rowsPerPage` rows - purely a function of tile height,
-// row count and gap, independent of how many tiles actually end up loaded.
-export function calculateClipHeight(rowsPerPage: number, gap: number, tileHeight: number) {
-  return rowsPerPage * tileHeight + (rowsPerPage - 1) * gap
+// How many of `tiles` (already positioned by renderMasonryLayout, so offsetTop reflects their
+// real flex-wrapped row) fall within the first `rowsPerPage` rows. This is the exact count
+// sdk.setVisibleTilesCount() needs - unlike calculateApproxTilesPerRow (a pre-fetch worst-case
+// estimate), it's computed from the tiles' actual rendered widths/positions.
+export function calculateVisibleTileCountForRows(tiles: HTMLElement[], rowsPerPage: number) {
+  if (tiles.length === 0) {
+    return 0
+  }
+
+  const rowTops = [...new Set(tiles.map(tile => tile.offsetTop))].sort((a, b) => a - b)
+  const visibleRowTops = new Set(rowTops.slice(0, rowsPerPage))
+
+  return tiles.filter(tile => visibleRowTops.has(tile.offsetTop)).length
 }
 
 // Must run synchronously, before the widget's first tiles fetch (i.e. before EVENT_JS_RENDERED),
@@ -174,45 +181,39 @@ export function registerRowsPerLoadCalculator(sdk: ISdk) {
       return rowsPerPage
     }
 
-    return calculateTilesPerRow(containerWidth, gap, rowsPerPage)
+    return calculateApproxTilesPerRow(containerWidth, gap, rowsPerPage)
   })
 }
 
-// Applies the purely visual side of "rows" mode: clipping the grid to N rows tall and hiding
-// load-more. The tile count itself is decided once, centrally, by tiles.service.ts via the
-// calculator registered above - this no longer sets visible tile count or triggers any loads.
+// Applies "rows" mode by hiding every tile beyond what's needed to fill rowsPerPage rows, plus
+// hiding load-more. Must run after renderMasonryLayout, so tiles are already positioned and
+// their real (random-width) rows can be measured - tiles.service.ts's rowsPerLoadCalculator
+// only fetches a worst-case-sized batch up front; this trims it down to the exact count once
+// actual layout is known.
+//
+// Each load-more click bumps sdk.getPage(), and every extra page should reveal another
+// rowsPerPage rows on top of what's already shown (rows_per_page 2, page 2 -> 4 rows total) -
+// so the row target scales with the current page instead of staying fixed at rows_per_page.
 export function applyRowsPerPageLimit(sdk: ISdk) {
-  if (rowsPerPageAppliedFor.has(sdk)) {
-    return
-  }
-
-  const { enable_custom_tiles_per_page, custom_tile_per_page_type, rows_per_page, margin } = sdk.getStyleConfig()
+  const { enable_custom_tiles_per_page, custom_tile_per_page_type, rows_per_page } = sdk.getStyleConfig()
 
   if (!enable_custom_tiles_per_page || custom_tile_per_page_type !== "rows") {
     return
   }
 
-  // addWidgetCustomStyles injects a <style> tag above the shadow DOM (light DOM), so it can
-  // never reach elements inside this widget's shadow root - it never actually hid anything here.
-  // Style the shadow-root elements directly instead.
-  const gridElement = sdk.querySelector<HTMLElement>("#nosto-ugc-container .grid")
+  const allTiles = Array.from(sdk.querySelectorAll<HTMLElement>(".grid-item") ?? [])
 
-  if (!gridElement) {
-    // Grid isn't in the DOM yet - retry next time this is called (onLoad/onTilesUpdated)
-    // rather than giving up, since we haven't marked this sdk as done below.
+  if (allTiles.length === 0) {
+    // Tiles aren't rendered/positioned yet - retry next time this is called (onLoad/
+    // onTilesUpdated) rather than giving up, since we haven't marked this sdk as done below.
     return
   }
 
-  rowsPerPageAppliedFor.add(sdk)
-
   const rowsPerPage = parseInt(rows_per_page ?? "", 10) || DEFAULT_ROWS_PER_PAGE
-  const gap = Number(margin) || 0
-  const tileHeight = parseFloat(getTileSize(sdk))
-  const clipHeight = calculateClipHeight(rowsPerPage, gap, tileHeight)
+  const totalRowsForCurrentPage = rowsPerPage * sdk.getPage()
+  console.log("totalRowsForCurrentPage", totalRowsForCurrentPage)
+  const visibleTilesCount = calculateVisibleTileCountForRows(allTiles, totalRowsForCurrentPage)
+  console.log("Visible tiles count", visibleTilesCount)
 
-  gridElement.style.setProperty("max-height", `${clipHeight}px`, "important")
-  gridElement.style.setProperty("overflow", "hidden", "important")
-
-  const loadMoreElement = sdk.querySelector("load-more")
-  loadMoreElement?.classList.add("hidden")
+  sdk.setVisibleTilesCount(visibleTilesCount)
 }
