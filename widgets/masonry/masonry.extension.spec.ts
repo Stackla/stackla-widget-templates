@@ -45,7 +45,7 @@ function createMockSdk(
     getStyleConfig: () => style,
     getPage: () => currentPage,
     querySelector: (selector: string) => {
-      if (selector === ".grid") return grid
+      if (selector === ".ugc-tiles") return grid
       if (selector === "#nosto-ugc-container") return container
       if (selector === "load-more") return loadMoreElement
       return undefined
