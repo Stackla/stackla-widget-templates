@@ -15,8 +15,8 @@ const ROWS_STYLE = {
   inline_tile_size: "medium"
 }
 
-function makeTile(offsetTop: number) {
-  return { offsetTop } as unknown as HTMLElement
+function makeTile(width: number) {
+  return { style: { width: `${width}px` }, offsetWidth: width } as unknown as HTMLElement
 }
 
 function createMockSdk(style: Record<string, unknown>, containerWidth: number, tiles: HTMLElement[] = [], page = 1) {
@@ -27,7 +27,8 @@ function createMockSdk(style: Record<string, unknown>, containerWidth: number, t
 
   const mocks = {
     setRowsPerLoadCalculator: vi.fn(),
-    setVisibleTilesCount: vi.fn()
+    setVisibleTilesCount: vi.fn(),
+    hideTilesAfterNth: vi.fn()
   }
 
   const sdk = {
@@ -104,47 +105,58 @@ describe("registerRowsPerLoadCalculator", () => {
 })
 
 describe("calculateVisibleTileCountForRows", () => {
+  // container 1000, gap 10 -> a 400px basis fits 2 per row (400, 400+10+400=810; a 3rd would be 1220)
   test("returns 0 when there are no tiles", () => {
-    expect(calculateVisibleTileCountForRows([], 2)).toBe(0)
+    expect(calculateVisibleTileCountForRows([], 2, 1000, 10)).toBe(0)
+  })
+
+  test("returns 0 when rowsPerPage is not positive", () => {
+    expect(calculateVisibleTileCountForRows([makeTile(400)], 0, 1000, 10)).toBe(0)
   })
 
   test("counts only the tiles that fall within the first N rows", () => {
-    // row 0: 3 tiles, row 100: 2 tiles, row 200: 4 tiles - first 2 rows = 3 + 2 = 5
-    const tiles = [
-      makeTile(0),
-      makeTile(0),
-      makeTile(0),
-      makeTile(100),
-      makeTile(100),
-      makeTile(200),
-      makeTile(200),
-      makeTile(200),
-      makeTile(200)
-    ]
+    // row 0: [400, 400], row 1: [400, 400], row 2: [400] - first 2 rows = 4 tiles
+    const tiles = [makeTile(400), makeTile(400), makeTile(400), makeTile(400), makeTile(400)]
 
-    expect(calculateVisibleTileCountForRows(tiles, 2)).toBe(5)
+    expect(calculateVisibleTileCountForRows(tiles, 2, 1000, 10)).toBe(4)
   })
 
-  test("sorts rows by offsetTop instead of assuming DOM order", () => {
-    const tiles = [makeTile(200), makeTile(0), makeTile(0), makeTile(100)]
+  test("packs by width in DOM order, wrapping when the next basis overflows", () => {
+    // row 0: [263, 267, 206] = 263 + 10 + 267 + 10 + 206 = 756; a 4th (160) would be 926 <= 1000...
+    // so use widths that clearly break: row 0: [600, 350] = 960; 3rd (350) -> 1320 wraps to row 1
+    const tiles = [makeTile(600), makeTile(350), makeTile(350), makeTile(600)]
 
-    expect(calculateVisibleTileCountForRows(tiles, 1)).toBe(2)
+    expect(calculateVisibleTileCountForRows(tiles, 1, 1000, 10)).toBe(2)
+  })
+
+  test("keeps a tile wider than the container as the sole tile of its row", () => {
+    const tiles = [makeTile(1200), makeTile(400), makeTile(400)]
+
+    // row 0: [1200] (always fits as first), row 1: [400, 400]
+    expect(calculateVisibleTileCountForRows(tiles, 1, 1000, 10)).toBe(1)
+    expect(calculateVisibleTileCountForRows(tiles, 2, 1000, 10)).toBe(3)
   })
 
   test("returns every tile when rowsPerPage exceeds the number of rows present", () => {
-    const tiles = [makeTile(0), makeTile(0), makeTile(100)]
+    const tiles = [makeTile(400), makeTile(400), makeTile(400)]
 
-    expect(calculateVisibleTileCountForRows(tiles, 5)).toBe(3)
+    expect(calculateVisibleTileCountForRows(tiles, 5, 1000, 10)).toBe(3)
+  })
+
+  test("treats every tile as visible when the container has no measurable width", () => {
+    const tiles = [makeTile(400), makeTile(400), makeTile(400)]
+
+    expect(calculateVisibleTileCountForRows(tiles, 2, 0, 10)).toBe(3)
   })
 })
 
 describe("applyRowsPerPageLimit", () => {
   test("does nothing when custom_tile_per_page_type is not 'rows'", () => {
-    const { sdk, mocks } = createMockSdk({ ...ROWS_STYLE, custom_tile_per_page_type: "tiles" }, 1000, [makeTile(0)])
+    const { sdk, mocks } = createMockSdk({ ...ROWS_STYLE, custom_tile_per_page_type: "tiles" }, 1000, [makeTile(400)])
 
     applyRowsPerPageLimit(sdk)
 
-    expect(mocks.setVisibleTilesCount).not.toHaveBeenCalled()
+    expect(mocks.hideTilesAfterNth).not.toHaveBeenCalled()
   })
 
   test("no-ops while tiles aren't rendered/positioned yet, then applies once they are (matching the retry in widget.tsx)", () => {
@@ -152,65 +164,68 @@ describe("applyRowsPerPageLimit", () => {
 
     applyRowsPerPageLimit(sdk)
 
-    expect(mocks.setVisibleTilesCount).not.toHaveBeenCalled()
+    expect(mocks.hideTilesAfterNth).not.toHaveBeenCalled()
 
-    setGridItems([makeTile(0), makeTile(0), makeTile(100)])
+    // container 1000, gap 10 -> row 0: [400, 400], row 1: [400]; first 2 rows = all 3 tiles
+    setGridItems([makeTile(400), makeTile(400), makeTile(400)])
     applyRowsPerPageLimit(sdk)
 
-    expect(mocks.setVisibleTilesCount).toHaveBeenCalledWith(3)
+    expect(mocks.hideTilesAfterNth).toHaveBeenCalledWith(3)
   })
 
-  test("calls setVisibleTilesCount with the exact tile count needed for the configured rows", () => {
-    const tiles = [makeTile(0), makeTile(0), makeTile(0), makeTile(100), makeTile(100), makeTile(200)]
+  test("hides tiles after the exact tile count needed for the configured rows", () => {
+    // row 0: [400, 400], row 1: [400, 400], row 2: [400]; rows_per_page 2 -> 4 tiles
+    const tiles = [makeTile(400), makeTile(400), makeTile(400), makeTile(400), makeTile(400)]
     const { sdk, mocks } = createMockSdk(ROWS_STYLE, 1000, tiles)
 
     applyRowsPerPageLimit(sdk)
 
-    expect(mocks.setVisibleTilesCount).toHaveBeenCalledWith(5)
+    expect(mocks.hideTilesAfterNth).toHaveBeenCalledWith(4)
   })
 
   test("multiplies rows_per_page by the current load-more page, so page 2 shows twice as many rows", () => {
-    // rows_per_page 2, page 2 -> 4 rows worth of tiles: row 0 (2), row 100 (2), row 200 (2),
-    // row 300 (2) = 8 tiles: the row 400 tile is beyond the 4th row and stays hidden.
+    // rows_per_page 2, page 2 -> 4 rows. With 2 tiles per row that's 8 tiles: the 9th tile
+    // starts the 5th row and stays hidden.
     const tiles = [
-      makeTile(0),
-      makeTile(0),
-      makeTile(100),
-      makeTile(100),
-      makeTile(200),
-      makeTile(200),
-      makeTile(300),
-      makeTile(300),
+      makeTile(400),
+      makeTile(400),
+      makeTile(400),
+      makeTile(400),
+      makeTile(400),
+      makeTile(400),
+      makeTile(400),
+      makeTile(400),
       makeTile(400)
     ]
     const { sdk, mocks } = createMockSdk(ROWS_STYLE, 1000, tiles, 2)
 
     applyRowsPerPageLimit(sdk)
 
-    expect(mocks.setVisibleTilesCount).toHaveBeenCalledWith(8)
+    expect(mocks.hideTilesAfterNth).toHaveBeenCalledWith(8)
   })
 
   test("recomputes on every call so a later load-more page reveals more rows", () => {
-    const tiles = [makeTile(0), makeTile(0), makeTile(100), makeTile(100), makeTile(200), makeTile(200)]
+    // 6 tiles, 2 per row -> 3 rows. page 1 (2 rows) = 4 tiles, page 2 (4 rows) = all 6.
+    const tiles = [makeTile(400), makeTile(400), makeTile(400), makeTile(400), makeTile(400), makeTile(400)]
     const { sdk, mocks, setPage } = createMockSdk(ROWS_STYLE, 1000, tiles, 1)
 
     applyRowsPerPageLimit(sdk)
-    expect(mocks.setVisibleTilesCount).toHaveBeenLastCalledWith(4)
+    expect(mocks.hideTilesAfterNth).toHaveBeenLastCalledWith(4)
 
     setPage(2)
     applyRowsPerPageLimit(sdk)
-    expect(mocks.setVisibleTilesCount).toHaveBeenLastCalledWith(6)
+    expect(mocks.hideTilesAfterNth).toHaveBeenLastCalledWith(6)
   })
 
   test("applies independently for a second masonry widget instance on the same page", () => {
-    const tiles = [makeTile(0), makeTile(100)]
+    const tiles = [makeTile(400), makeTile(400)]
     const first = createMockSdk(ROWS_STYLE, 1000, tiles)
     const second = createMockSdk(ROWS_STYLE, 1000, tiles)
 
     applyRowsPerPageLimit(first.sdk)
     applyRowsPerPageLimit(second.sdk)
 
-    expect(first.mocks.setVisibleTilesCount).toHaveBeenCalledTimes(1)
-    expect(second.mocks.setVisibleTilesCount).toHaveBeenCalledTimes(1)
+    expect(first.mocks.hideTilesAfterNth).toHaveBeenCalledTimes(1)
+    expect(second.mocks.hideTilesAfterNth).toHaveBeenCalledTimes(1)
   })
 })

@@ -155,19 +155,67 @@ export function calculateApproxTilesPerRow(containerWidth: number, gap: number, 
   return minTilesPerRow * rowsPerPage
 }
 
-// How many of `tiles` (already positioned by renderMasonryLayout, so offsetTop reflects their
-// real flex-wrapped row) fall within the first `rowsPerPage` rows. This is the exact count
-// sdk.setVisibleTilesCount() needs - unlike calculateApproxTilesPerRow (a pre-fetch worst-case
-// estimate), it's computed from the tiles' actual rendered widths/positions.
-export function calculateVisibleTileCountForRows(tiles: HTMLElement[], rowsPerPage: number) {
-  if (tiles.length === 0) {
+// How many of `tiles` fall within the first `rowsPerPage` rows. Unlike calculateApproxTilesPerRow
+// (a pre-fetch worst-case estimate), this is the exact count sdk.hideTilesAfterNth() needs.
+//
+// It's derived from the tiles' assigned widths rather than offsetTop: resizeTiles sets each tile's
+// flex-basis via style.width, and the grid (.ugc-tiles: display:flex; flex-wrap:wrap; gap:--margin)
+// wraps to a new row as soon as the next basis + gap overflows the container. Replaying that packing
+// here reproduces the same row breaks without needing a real layout pass (offsetTop is 0 until the
+// browser has painted, and unavailable in tests), and matches wrapping since flex-grow only
+// redistributes leftover space within an already-decided row.
+export function calculateVisibleTileCountForRows(
+  tiles: HTMLElement[],
+  rowsPerPage: number,
+  containerWidth: number,
+  gap: number
+) {
+  if (tiles.length === 0 || rowsPerPage <= 0) {
     return 0
   }
 
-  const rowTops = [...new Set(tiles.map(tile => tile.offsetTop))].sort((a, b) => a - b)
-  const visibleRowTops = new Set(rowTops.slice(0, rowsPerPage))
+  // Without a real container width we can't tell where rows break, so treat every tile as visible.
+  if (containerWidth <= 0) {
+    return tiles.length
+  }
 
-  return tiles.filter(tile => visibleRowTops.has(tile.offsetTop)).length
+  let currentRow = 0
+  let rowWidth = 0
+  let visibleCount = 0
+
+  for (const tile of tiles) {
+    const tileWidth = getTileWidth(tile)
+
+    if (rowWidth === 0) {
+      // First tile of a row always fits, even if it's wider than the container on its own.
+      rowWidth = tileWidth
+    } else if (rowWidth + gap + tileWidth <= containerWidth) {
+      rowWidth += gap + tileWidth
+    } else {
+      // Next basis overflows: this tile wraps onto a fresh row.
+      currentRow++
+      if (currentRow >= rowsPerPage) {
+        break
+      }
+      rowWidth = tileWidth
+    }
+
+    visibleCount++
+  }
+
+  return visibleCount
+}
+
+// The flex-basis assigned by resizeTiles (style.width) is what drives wrapping - not offsetWidth,
+// which reflects the post-flex-grow rendered size. Fall back to the rendered width, then to the
+// minimum brick width, so a tile that hasn't been sized yet still contributes something sane.
+function getTileWidth(tile: HTMLElement): number {
+  const basis = parseFloat(tile.style?.width ?? "")
+  if (!Number.isNaN(basis) && basis > 0) {
+    return basis
+  }
+
+  return tile.offsetWidth || MIN_TILE_WIDTH
 }
 
 // Must run synchronously, before the widget's first tiles fetch (i.e. before EVENT_JS_RENDERED),
@@ -195,7 +243,7 @@ export function registerRowsPerLoadCalculator(sdk: ISdk) {
 // rowsPerPage rows on top of what's already shown (rows_per_page 2, page 2 -> 4 rows total) -
 // so the row target scales with the current page instead of staying fixed at rows_per_page.
 export function applyRowsPerPageLimit(sdk: ISdk) {
-  const { enable_custom_tiles_per_page, custom_tile_per_page_type, rows_per_page } = sdk.getStyleConfig()
+  const { enable_custom_tiles_per_page, custom_tile_per_page_type, rows_per_page, margin } = sdk.getStyleConfig()
 
   if (!enable_custom_tiles_per_page || custom_tile_per_page_type !== "rows") {
     return
@@ -209,11 +257,15 @@ export function applyRowsPerPageLimit(sdk: ISdk) {
     return
   }
 
+  const containerWidth = sdk.querySelector("#nosto-ugc-container")?.clientWidth ?? 0
+  const gap = parseFloat(margin ?? "") || 0
   const rowsPerPage = parseInt(rows_per_page ?? "", 10) || DEFAULT_ROWS_PER_PAGE
   const totalRowsForCurrentPage = rowsPerPage * sdk.getPage()
-  console.log("totalRowsForCurrentPage", totalRowsForCurrentPage)
-  const visibleTilesCount = calculateVisibleTileCountForRows(allTiles, totalRowsForCurrentPage)
-  console.log("Visible tiles count", visibleTilesCount)
+  const visibleTilesCount = calculateVisibleTileCountForRows(allTiles, totalRowsForCurrentPage, containerWidth, gap)
 
-  sdk.setVisibleTilesCount(visibleTilesCount)
+  // Hide the surplus tiles without touching the per-page fetch count: setVisibleTilesCount would
+  // overwrite tiles.service's visibleTilesCount (the load-more page size + basis for its buffer
+  // math), making each load-more request grow (page 1 -> 30, page 2 -> 60, ...). hideTilesAfterNth
+  // only adjusts visibility, so the fetch size set by the rows-per-load calculator stays constant.
+  sdk.hideTilesAfterNth(visibleTilesCount)
 }
