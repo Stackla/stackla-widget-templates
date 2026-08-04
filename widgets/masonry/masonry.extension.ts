@@ -7,6 +7,16 @@ const MIN_TILE_WIDTH = 150
 const TILE_WIDTH_RANGE = 200
 const DEFAULT_ROWS_PER_PAGE = 2
 
+// Bias the wrap replay slightly toward "wrap" so a tile that lands within a pixel of the container
+// edge starts the next row here instead of squeezing onto the current one. Our replay compares
+// float widths against an integer clientWidth, while the browser lays tiles out with fractional
+// widths and device-pixel rounding - on a near-exact boundary fit the browser can push a tile the
+// replay kept on row N down onto row N+1. Since those tiles fall inside visibleCount, they escape
+// hideTilesAfterNth and surface as a stray extra row of 1-2 tiles. Wrapping a hair early keeps them
+// hidden; the only cost is occasionally trimming the last tile of a genuinely full row, which
+// flex-grow stretches the remaining tiles to cover anyway.
+const ROW_FIT_TOLERANCE = 1
+
 export function handleTileImageRendered(sdk: ISdk, tileId?: string) {
   if (!tileId) {
     return
@@ -189,7 +199,7 @@ export function calculateVisibleTileCountForRows(
     if (rowWidth === 0) {
       // First tile of a row always fits, even if it's wider than the container on its own.
       rowWidth = tileWidth
-    } else if (rowWidth + gap + tileWidth <= containerWidth) {
+    } else if (rowWidth + gap + tileWidth <= containerWidth - ROW_FIT_TOLERANCE) {
       rowWidth += gap + tileWidth
     } else {
       // Next basis overflows: this tile wraps onto a fresh row.
@@ -257,7 +267,14 @@ export function applyRowsPerPageLimit(sdk: ISdk) {
     return
   }
 
-  const containerWidth = sdk.querySelector("#nosto-ugc-container")?.clientWidth ?? 0
+  // Measure the flex row itself (.grid), not #nosto-ugc-container. The container carries
+  // padding: var(--margin), so its clientWidth overstates the usable row width by 2x the margin;
+  // packing against that inflated width fits one extra tile per row that then wraps onto an unwanted
+  // extra row in the real layout. .grid has width:100% and no padding, so its clientWidth is exactly
+  // the content box the browser wraps within. Fall back to the container (still better than 0) if the
+  // grid element isn't queryable yet.
+  const containerWidth =
+    sdk.querySelector(".ugc-tiles")?.clientWidth ?? sdk.querySelector("#nosto-ugc-container")?.clientWidth ?? 0
   const gap = parseFloat(margin ?? "") || 0
   const rowsPerPage = parseInt(rows_per_page ?? "", 10) || DEFAULT_ROWS_PER_PAGE
   const totalRowsForCurrentPage = rowsPerPage * sdk.getPage()

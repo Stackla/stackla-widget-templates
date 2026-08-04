@@ -19,8 +19,18 @@ function makeTile(width: number) {
   return { style: { width: `${width}px` }, offsetWidth: width } as unknown as HTMLElement
 }
 
-function createMockSdk(style: Record<string, unknown>, containerWidth: number, tiles: HTMLElement[] = [], page = 1) {
+function createMockSdk(
+  style: Record<string, unknown>,
+  containerWidth: number,
+  tiles: HTMLElement[] = [],
+  page = 1,
+  // The flex row (.grid) sits inside #nosto-ugc-container's padding, so it's narrower. Defaults to
+  // the container width when unspecified, so existing tests that don't care about padding are
+  // unaffected.
+  gridWidth?: number
+) {
   const container = { clientWidth: containerWidth }
+  const grid = { clientWidth: gridWidth ?? containerWidth }
   const loadMoreElement = { classList: { add: vi.fn() } }
   let gridItems = tiles
   let currentPage = page
@@ -35,6 +45,7 @@ function createMockSdk(style: Record<string, unknown>, containerWidth: number, t
     getStyleConfig: () => style,
     getPage: () => currentPage,
     querySelector: (selector: string) => {
+      if (selector === ".grid") return grid
       if (selector === "#nosto-ugc-container") return container
       if (selector === "load-more") return loadMoreElement
       return undefined
@@ -137,6 +148,15 @@ describe("calculateVisibleTileCountForRows", () => {
     expect(calculateVisibleTileCountForRows(tiles, 2, 1000, 10)).toBe(3)
   })
 
+  test("wraps a tile that fills the container to the exact edge, so it doesn't leak into a shown row", () => {
+    // row 0: [495, 495] = 495 + 10 + 495 = 1000, exactly containerWidth. The browser rounds this
+    // boundary tile onto the next row, so the replay must too - otherwise it counts as visible and
+    // renders as a stray extra row. With rowsPerPage 1 only the first tile belongs to the page.
+    const tiles = [makeTile(495), makeTile(495)]
+
+    expect(calculateVisibleTileCountForRows(tiles, 1, 1000, 10)).toBe(1)
+  })
+
   test("returns every tile when rowsPerPage exceeds the number of rows present", () => {
     const tiles = [makeTile(400), makeTile(400), makeTile(400)]
 
@@ -215,6 +235,18 @@ describe("applyRowsPerPageLimit", () => {
     setPage(2)
     applyRowsPerPageLimit(sdk)
     expect(mocks.hideTilesAfterNth).toHaveBeenLastCalledWith(6)
+  })
+
+  test("packs against the .grid width, not the padded #nosto-ugc-container width", () => {
+    // #nosto-ugc-container has padding: var(--margin), so .grid is 2x margin narrower (1000 -> 980).
+    // 3 x 325 + 2 x 10 gap = 995: fits within the padded 1000 but overflows the real 980 row, so the
+    // 3rd tile must wrap. Using the container width would wrongly keep 3 tiles on row 1.
+    const tiles = [makeTile(325), makeTile(325), makeTile(325), makeTile(325)]
+    const { sdk, mocks } = createMockSdk({ ...ROWS_STYLE, rows_per_page: "1" }, 1000, tiles, 1, 980)
+
+    applyRowsPerPageLimit(sdk)
+
+    expect(mocks.hideTilesAfterNth).toHaveBeenCalledWith(2)
   })
 
   test("applies independently for a second masonry widget instance on the same page", () => {
