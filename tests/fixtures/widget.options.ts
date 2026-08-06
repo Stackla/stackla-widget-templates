@@ -54,11 +54,11 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
     }
   },
   style: {
-    auto_refresh: "0",
+    auto_refresh: "1",
     click_through_url: "[EXPAND]",
     enable_custom_tiles_per_page: true,
-    custom_tile_per_page_type: "rows",
-    load_more_type: "scroll",
+    custom_tile_per_page_type: "tiles",
+    load_more_type: "button",
     margin: "10",
     name: "NextGen Widget Sample 3.0",
     polling_frequency: "30",
