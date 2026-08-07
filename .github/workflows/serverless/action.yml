@@ -33,12 +33,13 @@ runs:
   steps:
     - name: Install NPM
       if: inputs.install == 'true'
-      run: cd ${{ inputs.working-directory }} && npm install
+      run: cd ${{ inputs.working-directory }} && npm ci
       env:
         npm_config_arch: ${{ inputs.arch }}
         npm_config_platform: ${{ inputs.linux }}
       shell: bash
-    - uses: ./.github/workflows/aws
+    - name: Configure AWS credentials
+      uses: Stackla/stackla-github-actions/aws@stable
       with:
         aws-region: ${{ inputs.aws-region }}
     - name: Do Build
@@ -56,7 +57,7 @@ runs:
         aws s3 sync dist/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.stage }}/widgets/
         aws s3 sync assets/ s3://ugc-nextgen-widgets-ap-southeast-2/templates/${{ inputs.stage }}/widgets/assets/
     - name: Sentry Release
-      uses: getsentry/action-release@v1
+      uses: getsentry/action-release@v3
       if: inputs.sentry-auth-token != ''
       env:
         SENTRY_AUTH_TOKEN: ${{ inputs.sentry-auth-token }}
