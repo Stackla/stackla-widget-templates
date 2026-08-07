@@ -57,6 +57,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
     auto_refresh: "1",
     click_through_url: "[EXPAND]",
     enable_custom_tiles_per_page: true,
+    custom_tile_per_page_type: "tiles",
     load_more_type: "button",
     margin: "10",
     name: "NextGen Widget Sample 3.0",
@@ -103,7 +104,7 @@ const widgetOptions: SharedWidgetOptions["widgetOptions"] & {
     providerLayer: "",
     connectedContentWidgetId: "",
     defaultBounds: "",
-    rows_per_page: "",
+    rows_per_page: "2",
     text_caption_paragraph_font_size: "",
     pinColor: "",
     pinTextColor: ""
