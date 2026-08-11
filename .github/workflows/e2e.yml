@@ -4,8 +4,6 @@ on:
     workflow_call:
     workflow_dispatch:
 
-env:
-
 jobs:
     playwright-run:
         runs-on: ubuntu-latest

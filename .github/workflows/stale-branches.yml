@@ -12,8 +12,6 @@ permissions:
     contents: write
     pull-requests: read
 
-env:
-
 jobs:
     stale_branches:
         runs-on: ubuntu-latest
