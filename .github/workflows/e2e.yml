@@ -4,9 +4,6 @@ on:
     workflow_call:
     workflow_dispatch:
 
-env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
 jobs:
     playwright-run:
         runs-on: ubuntu-latest
@@ -15,12 +12,12 @@ jobs:
                 shard: [1, 2, 3]
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
               with:
                   submodules: recursive
 
             - name: Cache node modules
-              uses: actions/cache@v4
+              uses: actions/cache@v6
               with:
                   path: |
                       ~/.npm
@@ -31,19 +28,20 @@ jobs:
 
             - name: Cache Playwright browsers
               id: playwright-cache
-              uses: actions/cache@v4
+              uses: actions/cache@v6
               with:
                   path: ~/.cache/ms-playwright
                   key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-playwright-
 
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v7
               with:
-                  node-version: 20
+                  node-version: 24
+                  cache: 'npm'
 
             - name: Install dependencies
-              run: npm install
+              run: npm ci
 
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps chromium
@@ -58,14 +56,14 @@ jobs:
               run: npm run test:playwright -- --shard=${{ matrix.shard }}/3
 
             - name: Upload Playwright artifact
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               if: failure()
               with:
                   name: playwright-report-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
                   path: playwright-report/
                   if-no-files-found: ignore
 
-            - uses: actions/upload-artifact@v4
+            - uses: actions/upload-artifact@v7
               with:
                   name: test-results-${{ steps.uuid-gen.outputs.uuid }}-shard-${{ matrix.shard }}
                   path: test-results/

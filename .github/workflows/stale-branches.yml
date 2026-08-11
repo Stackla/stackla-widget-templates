@@ -12,15 +12,12 @@ permissions:
     contents: write
     pull-requests: read
 
-env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
 jobs:
     stale_branches:
         runs-on: ubuntu-latest
         steps:
             - name: Stale Branches
-              uses: crs-k/stale-branches@v8.2.2
+              uses: crs-k/stale-branches@v10.0.0
               with:
                   repo-token: '${{ secrets.GITHUB_TOKEN }}'
                   days-before-stale: 180
