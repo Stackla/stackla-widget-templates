@@ -54,5 +54,6 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7
       - name: trigger deploy
         run: gh workflow run release.yml --ref master -F environment=staging
