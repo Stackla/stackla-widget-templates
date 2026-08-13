@@ -1,4 +1,5 @@
 name: 'Serverless Deploy'
+description: Deploy action
 inputs:
   stage:
     required: true
@@ -13,9 +14,11 @@ inputs:
   arch:
     required: false
     default: 'arm64'
+    description: the npm target architecture used for installing native dependencies
   platform:
     required: false
     default: 'linux'
+    description: the npm target platform used for installing native dependencies
   build:
     required: false
     default: 'false'
@@ -39,8 +42,10 @@ runs:
         npm_config_platform: ${{ inputs.linux }}
       shell: bash
     - name: Configure AWS credentials
-      uses: Stackla/stackla-github-actions/aws@stable
+      uses: aws-actions/configure-aws-credentials@v6
       with:
+        role-to-assume: arn:aws:iam::953585160895:role/GitHubAction-AssumeRoleWithAction
+        role-session-name: GitHub_to_AWS_via_FederatedOIDC
         aws-region: ${{ inputs.aws-region }}
     - name: Do Build
       if: inputs.build == 'true'
