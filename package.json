@@ -50,7 +50,7 @@
     "@swc/core-linux-x64-musl": "^1.13.20",
     "@swc/core-win32-arm64-msvc": "^1.13.20",
     "@swc/core-win32-ia32-msvc": "^1.13.20",
-    "@swc/core-win32-x64-msvc": "^1.13.20"
+    "@swc/core-win32-x64-msvc": "^1.16.0"
   },
   "devDependencies": {
     "@happy-dom/jest-environment": "^18.0.1",
