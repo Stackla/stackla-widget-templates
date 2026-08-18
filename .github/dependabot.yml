@@ -17,4 +17,5 @@ registries:
   npm-github:
     type: npm-registry
     url: https://npm.pkg.github.com
+    scope: "@stackla"
     token: ${{secrets.STACKLA_BOT_GITHUB_TOKEN}}
