@@ -1,4 +1,4 @@
-name: 'Serverless Deploy'
+name: 'CDK Deploy'
 description: Deploy action
 inputs:
   stage:
@@ -51,10 +51,15 @@ runs:
       if: inputs.build == 'true'
       run: cd ${{ inputs.working-directory }} && npm run build
       shell: bash
-    - name: Deploy serverless
+    - name: Build and deploy Lambda
       env:
         APP_ENV: ${{ inputs.stage }}
-      run: cd ${{ inputs.working-directory }} && npx sls deploy --stage ${{ inputs.stage }} --region ${{ inputs.aws-region }}
+        AWS_REGION: ${{ inputs.aws-region }}
+      run: |
+        cd ${{ inputs.working-directory }}
+        npm run build:lambda
+        npm run smoke-test:lambda
+        npx cdk deploy --context stage=${{ inputs.stage }} --context region=${{ inputs.aws-region }} --require-approval never
       shell: bash
     - name: Release to S3
       shell: bash
