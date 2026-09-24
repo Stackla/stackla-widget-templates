@@ -110,15 +110,44 @@ Decision: add `scripts/build-lambda.js`, calling esbuild's Node API directly:
 - `scripts/smoke-test-lambda.js` — new, not in the reference. Because this Lambda renders
   Handlebars templates from disk rather than doing a mechanical SQS→HTTP POST like
   `google-request-worker`, a template-based sanity check is worth more than trusting the
-  bundler blindly (esbuild bundling of `hbs`/`handlebars`, whose dynamic `require()`
-  patterns are a known rough edge for bundlers — `serverless.ts`'s vestigial, unused
-  `custom.esbuild.otherExternal: ["hbs"]` key, dead since this repo has never actually run
-  `serverless-esbuild`, is exactly this concern from a prior, abandoned attempt). The
-  script `require()`s the bundled `dist-lambda/src/functions/main/handler.js` in-process
-  and invokes it with a Function-URL-shaped mock event for `GET /preview?widgetType=carousel`,
-  asserting a 200 response containing expected markup. Run after `build:lambda` in CI and
-  locally, catching real bundling breakage that CloudFormation-template assertions
+  bundler blindly. This concern was real, not speculative: the first `build-lambda.js`
+  attempt failed outright — esbuild couldn't resolve `@stackla/widget-utils/handlebars`
+  (a subpath export resolved via the `require` condition to `dist/cjs/handlebars/index.js`
+  in the `packages/widget-utils` git submodule, which needs `npm run build:utils` before
+  it's importable at all; this is a local/CI environment-setup requirement, not a bug —
+  `main.yml`'s CI already checks out submodules recursively and runs `npm ci`, which
+  triggers the submodule's own `prepare` build script). The script `require()`s the
+  bundled `dist-lambda/src/functions/main/handler.js` in-process and invokes it with a
+  Function-URL-shaped mock event, asserting a 200 JSON response from a route with no
+  on-disk template dependency (`/development/stackla/cs/image/disable` — deliberately
+  **not** `/preview`, see "Pre-existing finding" below). Run after `build:lambda` in CI
+  and locally, catching real bundling breakage that CloudFormation-template assertions
   (`cdk/stack.spec.ts`) cannot.
+
+## Pre-existing finding (not fixed in this PR): `/preview` et al.'s relative path likely doesn't resolve in a real deploy
+
+Investigating the smoke test surfaced something worth flagging separately, out of scope to
+fix here: `getContent()` in `src/libs/express.ts` resolves `dist/<widgetType>/*.hbs` via
+`path.resolve(__dirname, "../../../../../dist/${widgetType}")` — five literal `../`
+segments. Verified empirically (`sls offline` against this repo's actual, currently-shipping
+`serverless-webpack` build, unmodified): this only resolves correctly because
+`serverless-webpack`'s compiled output nests `handler.js` five directories below the repo
+root (`server/service/src/functions/main/handler.js` — confirmed by directly inspecting a
+fresh local build), and `sls offline` executes that file in place, so the five `../`
+happen to land back on the **repo root's own** `dist/` (the widget-bundle build output,
+`npm run build:*`'s target — not a deployment-package copy). A real deployed Lambda zip,
+whatever its exact internal root turns out to be, does not preserve that specific
+five-level depth relative to a same-named sibling `dist/` (this repo's own
+`serverless.ts`/`config/*.json` package declares `dist/` as a **direct** top-level member
+of the deployment package, i.e. 0 levels of nesting from the package root — the same
+structure this migration's `build-lambda.js` produces). That mismatch strongly suggests
+`/preview`, `/dev`, `/docker`, `/multi-preview`, and `/staging` already fail with `ENOENT`
+in real `staging`/`production` deployments today, and only ever appear to work when
+exercised through local `sls offline`. This is an application-level bug in code this
+migration doesn't touch, predates this PR, and isn't something an infra migration should
+silently paper over or "fix" by inventing a deployment-package layout to match undocumented
+existing behavior — it's called out here and in the PR description so the owning team can
+verify against real staging and decide whether/how to fix it.
 
 ## Stack contents
 
