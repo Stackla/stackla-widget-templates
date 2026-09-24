@@ -210,16 +210,41 @@ The reference dropped local Serverless offline emulation entirely, because its c
 runs `sls offline start` on port 4003 — CI depends on a working local HTTP server for
 `main` today.
 
-Decision: replace `sls offline` with a **plain Express listener** — `scripts/dev-server.ts`,
+Decision: replace `sls offline` with an Express listener — `scripts/dev-server.ts`,
 `expressApp.listen(port)` using the same `getPort()` logic `serverless.ts` had
 (4003 for `development`/`pipeline`/`testing`, matching `playwright.config.ts`'s
-`baseURL: 'http://localhost:4003'`). This is a strict simplification, not a feature loss:
-`expressApp` (in `src/libs/express.ts`) is already framework-agnostic — `serverless-http`
-only wraps it for real Lambda event translation, which local dev never needed to round-trip
-through in the first place. `start:lambda`/`start:lambda:test`/`start:lambda:pipeline`
-scripts are repointed at this script (env vars — `NODE_ENV`, `APP_ENV` — unchanged, since
-`getDomain()`/`determineEnvironment()` in `express.ts` already read `process.env.APP_ENV`
-directly, not anything Serverless-offline-specific).
+`baseURL: 'http://localhost:4003'`). `expressApp` (in `src/libs/express.ts`) is already
+framework-agnostic — `serverless-http` only wraps it for real Lambda event translation,
+which local dev never needed to round-trip through in the first place.
+
+**Caught during implementation, not anticipated in the initial design:** running
+`dev-server.ts` directly via plain `ts-node` breaks `/preview` and its sibling routes
+outright (confirmed — it crashes the request). `getContent()` in `express.ts` resolves
+`dist/<widgetType>` via 5 literal `../` from its own `__dirname`; under unbundled ts-node
+execution, `__dirname` is per-source-file (`express.ts`'s own directory, `src/libs`, only
+2 levels below the repo root), so 5 levels up badly overshoots. Bundling (webpack, in the
+current `sls-offline` pipeline; esbuild here) collapses every module's `__dirname` down to
+wherever the single compiled output file physically sits — which is what makes that
+relative path resolve at all, and is *not* optional for this app. Fix: `scripts/serve-dev.js`
+bundles `dev-server.ts` with esbuild to `.dev-server/service/src/functions/main/server.js`
+— 5 directories below the repo root, deliberately reproducing the exact depth
+`server/service/src/functions/main/handler.js` has under the current, unmodified
+`serverless-webpack` build (confirmed via `sls offline` against the untouched pipeline,
+before any files were deleted) — then requires and runs that bundle. `start:lambda` /
+`start:lambda:test` / `start:lambda:pipeline` run `node scripts/serve-dev.js` (env vars —
+`NODE_ENV`, `APP_ENV` — unchanged, since `getDomain()`/`determineEnvironment()` in
+`express.ts` already read `process.env.APP_ENV` directly, not anything
+Serverless-offline-specific). Verified end-to-end: both `/development/stackla/cs/image/disable`
+and `/preview?widgetType=carousel` return 200 with correct content from the bundled dev
+server, matching `sls offline`'s current behavior exactly.
+
+This local-dev bundle's placement is **deliberately different** from
+`scripts/build-lambda.js`'s CDK deployment-package placement (`dist-lambda/src/functions/main/handler.js`,
+3 levels, `dist/`/`views`/`assets` as direct package-root siblings — the structure declared
+by `serverless.ts`'s own `package.include`). Local dev must keep working exactly as it does
+today regardless of what's actually true of the deployed package's internal layout — see
+"Pre-existing finding" below for why those two structures aren't the same, and why that's
+an intentional, documented divergence rather than an inconsistency.
 
 ## Cutover (full replace, single PR)
 
