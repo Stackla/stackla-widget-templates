@@ -5,9 +5,11 @@ test-results/
 playwright-report/
 *.d.ts
 *.map
-.serverless
-server
 .vscode/settings.json
 .DS_Store
 dist/*
 meta.json
+# CDK
+/cdk.out
+/dist-lambda
+/.dev-server
