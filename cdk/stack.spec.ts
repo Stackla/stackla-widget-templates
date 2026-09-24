@@ -32,10 +32,6 @@ function getFunctionProperties(template: Template) {
   return fn.Properties
 }
 
-function getAliasLogicalId(template: Template) {
-  const [logicalId] = Object.keys(template.findResources("AWS::Lambda::Alias"))
-  return logicalId
-}
 
 describe("WidgetTemplatesStack", () => {
   it("throws for an unrecognized stage", () => {
@@ -150,15 +146,18 @@ describe("WidgetTemplatesStack", () => {
     }
   )
 
+  // AWS::Lambda::Url binds to an alias via TargetFunctionArn (the underlying function)
+  // plus a separate Qualifier naming the alias — not a Ref to the alias resource itself.
+  // Qualifier: "live" is what actually routes traffic through the provisioned-concurrency
+  // alias instead of $LATEST; asserting it directly is the load-bearing check here.
   it.each(["development", "staging", "production"])(
-    "binds the IAM-authorized function URL to the alias (not the bare function) in %s",
+    "binds the IAM-authorized function URL to the 'live' alias (not $LATEST) in %s",
     (stage) => {
       const template = synthStack(stage)
-      const aliasLogicalId = getAliasLogicalId(template)
 
       template.hasResourceProperties("AWS::Lambda::Url", {
         AuthType: "AWS_IAM",
-        TargetFunctionArn: { Ref: aliasLogicalId }
+        Qualifier: "live"
       })
     }
   )
