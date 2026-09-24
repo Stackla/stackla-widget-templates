@@ -238,6 +238,30 @@ Serverless-offline-specific). Verified end-to-end: both `/development/stackla/cs
 and `/preview?widgetType=carousel` return 200 with correct content from the bundled dev
 server, matching `sls offline`'s current behavior exactly.
 
+**A second gap, also only caught by actually running the e2e suite (not just curling
+routes by hand):** even after bundling correctly, the full 54-test Playwright suite failed
+outright against `serve-dev.js` — the first `/preview` page load succeeded, but the very
+next request (`POST /development/widgets/:wid/draft`, which the widget's own client-side
+JS calls to fetch tile data) crashed the whole server, taking every subsequent test down
+with `ERR_CONNECTION_REFUSED`. Root cause, confirmed by inspecting
+`node_modules/serverless-http/lib/request.js`: `serverless-http`'s `ServerlessRequest`
+assigns the raw Lambda-event body string directly onto `req.body` (`Object.assign(this, {
+body, ... })` — no JSON parsing). `express.ts`'s own route handler calls
+`JSON.parse(req.body)` itself, assuming that string is already there — a
+`serverless-http`-specific idiom, not standard Express (which never populates `req.body`
+without body-parser middleware, which `express.ts` doesn't register). A bare
+`expressApp.listen()` therefore gets `req.body === undefined`, `JSON.parse(undefined)`
+throws, and — since the throw happens inside an async handler with no `try`/`catch` — Node
+kills the process on the resulting unhandled rejection (real Lambda invocations, and
+`serverless-http` locally via `sls offline`, are isolated per request, so this was never
+fatal before). Fixed in `scripts/dev-server.ts` by wrapping `expressApp` in a plain
+`http.Server` that buffers the raw request body and assigns it to `req.body` before
+delegating — exactly mirroring `ServerlessRequest` — plus a `process.on('unhandledRejection', ...)`
+handler as defense in depth. Both fixes are transport-level, in the new dev-server
+entrypoint only; `src/libs/express.ts` is untouched. Verified: the full e2e suite (54
+tests across all 6 widget types) now passes against this server, matching `master`'s
+`sls-offline` baseline exactly (confirmed via a side-by-side `git worktree` comparison).
+
 This local-dev bundle's placement is **deliberately different** from
 `scripts/build-lambda.js`'s CDK deployment-package placement (`dist-lambda/src/functions/main/handler.js`,
 3 levels, `dist/`/`views`/`assets` as direct package-root siblings — the structure declared
