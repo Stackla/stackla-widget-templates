@@ -39,7 +39,7 @@ async function main() {
   require(outfile)
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error)
   process.exit(1)
 })

@@ -39,7 +39,7 @@ async function main() {
   console.info(`Lambda bundle written to ${outdir}`)
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error)
   process.exit(1)
 })

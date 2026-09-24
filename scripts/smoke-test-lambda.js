@@ -59,7 +59,7 @@ async function main() {
   process.exit(0)
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error("Lambda smoke test failed:", error)
   process.exit(1)
 })

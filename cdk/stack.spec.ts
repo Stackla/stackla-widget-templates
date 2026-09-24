@@ -32,7 +32,6 @@ function getFunctionProperties(template: Template) {
   return fn.Properties
 }
 
-
 describe("WidgetTemplatesStack", () => {
   it("throws for an unrecognized stage", () => {
     expect(() => synthStack("typo-stage")).toThrow(/Unknown stage/)
@@ -134,7 +133,7 @@ describe("WidgetTemplatesStack", () => {
   // replicated exactly or the setting is a silent no-op.
   it.each(["development", "staging", "production"])(
     "publishes a 'live' alias with provisioned concurrency 10 in %s",
-    (stage) => {
+    stage => {
       const template = synthStack(stage)
 
       template.hasResourceProperties("AWS::Lambda::Alias", {
@@ -152,7 +151,7 @@ describe("WidgetTemplatesStack", () => {
   // alias instead of $LATEST; asserting it directly is the load-bearing check here.
   it.each(["development", "staging", "production"])(
     "binds the IAM-authorized function URL to the 'live' alias (not $LATEST) in %s",
-    (stage) => {
+    stage => {
       const template = synthStack(stage)
 
       template.hasResourceProperties("AWS::Lambda::Url", {
