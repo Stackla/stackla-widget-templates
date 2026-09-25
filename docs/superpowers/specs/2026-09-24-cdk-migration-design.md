@@ -262,6 +262,26 @@ entrypoint only; `src/libs/express.ts` is untouched. Verified: the full e2e suit
 tests across all 6 widget types) now passes against this server, matching `master`'s
 `sls-offline` baseline exactly (confirmed via a side-by-side `git worktree` comparison).
 
+**A third gap, found only after opening the PR and watching real CI (not local runs) fail:**
+all 3 e2e shards failed in CI with `Error: Timed out waiting 120000ms from
+config.webServer`, despite the full suite passing locally every time it was run by hand.
+Root cause, confirmed via a side-by-side `git worktree` simulation of the exact CI steps
+(`npm ci`, no manual pre-build) with `CI=true` (forcing a fresh `webServer` start instead
+of reusing a leftover local process, matching real CI): a genuine race between
+`start:test`'s two concurrent processes — `watch:test` (`esbuild.js --watch`, builds
+`dist/`) and the HTTP server. `sls offline`'s slow webpack-based startup always gave the
+watcher a head start long enough to finish its first `dist/` build before anything served
+traffic; `scripts/serve-dev.js` starts in ~300ms, so a request can land before `dist/`
+exists. `getContent()` then throws on the missing file — and since Express never sends a
+response for that unhandled rejection (the `unhandledRejection` guard from the second gap
+above stops the *process* from crashing, but doesn't answer the *request*), the connection
+just hangs instead of erroring quickly, and Playwright's `webServer` readiness poll blocks
+for the full 120s. Fixed by running a one-shot `build:testing`/`build:development` before
+starting the concurrent watch+server pair in `start:test`/`start` (`package.json`), so
+`dist/` is guaranteed to exist before the server accepts any traffic — eliminating the race
+outright rather than trying to win it. Verified: the full 54-test suite passes with
+`CI=true` both in a clean worktree simulation and the main working tree.
+
 This local-dev bundle's placement is **deliberately different** from
 `scripts/build-lambda.js`'s CDK deployment-package placement (`dist-lambda/src/functions/main/handler.js`,
 3 levels, `dist/`/`views`/`assets` as direct package-root siblings — the structure declared
