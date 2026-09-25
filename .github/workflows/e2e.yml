@@ -43,6 +43,14 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
+            - name: Build widget-utils
+              # @stackla/widget-utils (packages/widget-utils, a git submodule) resolves
+              # via its own dist/ output (see its package.json "exports" map) — npm
+              # ci/install doesn't build it automatically. The dev server that backs these
+              # e2e tests (scripts/serve-dev.js, bundling src/libs/express.ts) imports it,
+              # so this step is required for the webServer to start at all.
+              run: npm run build:utils
+
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps chromium
 
