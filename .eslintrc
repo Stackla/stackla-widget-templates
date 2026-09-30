@@ -35,7 +35,6 @@
       "jest.config.js",
       "playwright.config.ts",
       "esbuild.js",
-      "serverless.ts",
       "src/libs/express.ts"
     ],
     "overrides": [
@@ -54,6 +53,14 @@
           "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
           "playwright/no-wait-for-timeout": "warn",
           "playwright/no-force-option": "warn",
+          "playwright/expect-expect": "off"
+        }
+      },
+      {
+        "files": ["./cdk/**/*.ts"],
+        "rules": {
+          "playwright/no-standalone-expect": "off",
+          "playwright/no-duplicate-hooks": "off",
           "playwright/expect-expect": "off"
         }
       }
