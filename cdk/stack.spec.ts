@@ -17,11 +17,12 @@ afterAll(() => {
   fs.rmSync(distLambdaDir, { recursive: true, force: true })
 })
 
-function synthStack(stage: string, region = "us-west-1") {
+function synthStack(stage: string, region = "us-west-1", nameSuffix = "") {
   const app = new App()
-  const stack = new WidgetTemplatesStack(app, `test-${stage}`, {
+  const stack = new WidgetTemplatesStack(app, `test-${stage}${nameSuffix}`, {
     env: { account: "123456789012", region },
-    stage
+    stage,
+    nameSuffix
   })
   return Template.fromStack(stack)
 }
@@ -160,4 +161,93 @@ describe("WidgetTemplatesStack", () => {
       })
     }
   )
+
+  // Blue/green cutover support (docs/production-cutover-runbook.md): a transitional
+  // stack must deploy under distinct physical names so it can coexist with the
+  // still-live steady-state stack, but must otherwise behave identically — same alias
+  // name, same provisioned concurrency, same Function URL wiring, same IAM statements.
+  describe("with nameSuffix set (transitional blue/green stack)", () => {
+    it("suffixes the function name, role name, and log group name", () => {
+      const template = synthStack("staging", "us-west-1", "-cutover")
+
+      const props = getFunctionProperties(template)
+      expect(props.FunctionName).toBe("widget-templates-staging-cutover-main")
+
+      template.hasResourceProperties("AWS::IAM::Role", {
+        RoleName: "widget-templates-staging-cutover-us-west-1-lambdaRole"
+      })
+
+      template.hasResourceProperties("AWS::Logs::LogGroup", {
+        LogGroupName: "/aws/lambda/widget-templates-staging-cutover-main",
+        RetentionInDays: 14
+      })
+    })
+
+    it("defaults to no suffix (canonical names) when nameSuffix is omitted", () => {
+      const template = synthStack("staging")
+
+      const props = getFunctionProperties(template)
+      expect(props.FunctionName).toBe("widget-templates-staging-main")
+    })
+
+    it.each(["development", "staging", "production"])(
+      "still publishes a 'live' alias with provisioned concurrency 10 in %s",
+      stage => {
+        const template = synthStack(stage, "us-west-1", "-cutover")
+
+        template.hasResourceProperties("AWS::Lambda::Alias", {
+          Name: "live",
+          ProvisionedConcurrencyConfig: {
+            ProvisionedConcurrentExecutions: 10
+          }
+        })
+      }
+    )
+
+    it.each(["development", "staging", "production"])(
+      "still binds the IAM-authorized function URL to the 'live' alias (not $LATEST) in %s",
+      stage => {
+        const template = synthStack(stage, "us-west-1", "-cutover")
+
+        template.hasResourceProperties("AWS::Lambda::Url", {
+          AuthType: "AWS_IAM",
+          Qualifier: "live"
+        })
+      }
+    )
+
+    it("does not suffix the production self-referencing lambda ARN in its IAM statements", () => {
+      // PRODUCTION_FUNCTION_ARN is a literal, ported-as-is string (see cdk/stack.ts) —
+      // it must stay pointed at the canonical, non-suffixed production function
+      // regardless of nameSuffix, matching how the reference migration treats
+      // externally-referenced ARNs (e.g. queueArns) under a blue/green deploy.
+      const template = synthStack("production", "us-east-1", "-cutover")
+
+      const selfArn = "arn:aws:lambda:us-east-1:953585160895:function:widget-templates-production-main"
+
+      template.hasResourceProperties("AWS::IAM::Policy", {
+        PolicyDocument: Match.objectLike({
+          Statement: Match.arrayWith([
+            Match.objectLike({ Effect: "Allow", Action: "lambda:GetFunction", Resource: selfArn })
+          ])
+        })
+      })
+    })
+
+    it("still grants s3:PutBucketTagging on all resources in staging", () => {
+      const template = synthStack("staging", "us-west-1", "-cutover")
+
+      template.hasResourceProperties("AWS::IAM::Policy", {
+        PolicyDocument: Match.objectLike({
+          Statement: Match.arrayWith([
+            Match.objectLike({
+              Effect: "Allow",
+              Action: "s3:PutBucketTagging",
+              Resource: "*"
+            })
+          ])
+        })
+      })
+    })
+  })
 })

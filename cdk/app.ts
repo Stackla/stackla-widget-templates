@@ -3,6 +3,10 @@ import { WidgetTemplatesStack } from "./stack"
 
 const app = new cdk.App()
 const stage: string = app.node.tryGetContext("stage") ?? "development"
+// Only set for a transitional blue/green cutover deploy — see
+// docs/production-cutover-runbook.md. Empty for normal deploys, which get the canonical
+// `widget-templates-<stage>-*` resource names.
+const nameSuffix: string = app.node.tryGetContext("nameSuffix") ?? ""
 
 // serverless.ts's own region was always `${opt:region}` — purely CLI-supplied, with no
 // baked-in default per stage — and config/*.json encode no per-stage region (unlike
@@ -18,9 +22,10 @@ const synthesizer = new cdk.CliCredentialsStackSynthesizer({
   bucketPrefix: "cdk-assets/"
 })
 
-const stack = new WidgetTemplatesStack(app, `widget-templates-${stage}`, {
+const stack = new WidgetTemplatesStack(app, `widget-templates-${stage}${nameSuffix}`, {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region },
   stage,
+  nameSuffix,
   synthesizer
 })
 

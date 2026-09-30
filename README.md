@@ -36,7 +36,7 @@ Stackla Widget Templates provides a robust development environment for creating 
 - **Build System**: ESBuild with custom configuration
 - **Styling**: SCSS with PostCSS processing
 - **Templates**: Handlebars
-- **Framework**: AWS Serverless Framework
+- **Framework**: AWS CDK
 - **Testing**: Playwright (E2E), Vitest (unit tests)
 - **Package Management**: npm workspaces
 
@@ -296,7 +296,7 @@ stackla-widget-templates/
 ├── esbuild.js                 # Custom build configuration
 ├── package.json               # Project dependencies and scripts
 ├── playwright.config.ts       # Playwright configuration
-├── serverless.ts              # AWS Serverless configuration
+├── cdk/                        # AWS CDK stack (Lambda deployment)
 ├── setup.sh                   # Setup automation script
 ├── tsconfig.json              # TypeScript configuration
 └── vitest.config.ts           # Vitest test configuration
@@ -399,15 +399,19 @@ test('widget displays correctly', async ({ page }) => {
 
 ### AWS Lambda Deployment
 
-The project uses Serverless Framework for deployment:
+The project deploys its one Lambda function (`main`) via **AWS CDK** (`cdk/` —
+`WidgetTemplatesStack`), not Serverless Framework:
 
 ```bash
 # Deploy to staging
-sls deploy --stage staging
+npm run deploy:staging
 
-# Deploy to production  
-sls deploy --stage production
+# Deploy to production
+npm run deploy:production
 ```
+
+Each `deploy:<stage>` script bundles the Lambda (`build:lambda`), smoke-tests the bundle
+in-process (`smoke-test:lambda`), then runs `cdk deploy`.
 
 ### CI/CD Pipeline
 
@@ -420,15 +424,15 @@ sls deploy --stage production
 2. **release.yml** - Deployment
    - Trigger: Manual workflow dispatch
    - Environments: staging, production
-   - Steps: E2E Tests → Build → Deploy to AWS → Sync Assets to S3
+   - Steps: E2E Tests → Build → Build/smoke-test/deploy Lambda via CDK (`.github/workflows/cdk-deploy/`) → Sync Assets to S3
 
 ### Deployment Configuration
 
-Defined in `serverless.ts`:
-- Lambda function configuration
-- API Gateway setup
-- Deployment bucket settings
-- Environment-specific variables
+Defined in `cdk/stack.ts` (`WidgetTemplatesStack`) and `cdk/app.ts`:
+- Lambda function configuration (runtime, memory, timeout, IAM role/statements per stage)
+- Provisioned-concurrency alias + IAM-authorized Function URL
+- Environment-specific variables (`STAGE_CONFIGS` in `cdk/stack.ts`)
+- Stack synthesizer / deployment bucket settings (`cdk/app.ts`)
 
 ### Manual Deployment
 
@@ -438,12 +442,25 @@ For manual deployments:
 # Build for target environment
 npm run build:staging
 
-# Deploy via Serverless Framework
-sls deploy --stage staging --region us-west-1
+# Build, smoke-test, and deploy the Lambda via CDK
+npm run build:lambda
+npm run smoke-test:lambda
+npx cdk deploy --context stage=staging --context region=us-west-1 --require-approval never
 
-# View deployment info
-sls info --stage staging
+# View the stack's resources / diff before deploying
+npx cdk diff --context stage=staging --context region=us-west-1
 ```
+
+### Blue/green cutover of the `main` Lambda
+
+`main` is exposed only via an IAM-authorized Lambda Function URL (no SQS or other buffered
+trigger), so a same-name full-replace deploy has a real gap where that URL doesn't exist.
+Per the org's Lambda cutover policy, `cdk/stack.ts` supports deploying a second, distinctly
+named stack alongside the still-live original (`--context nameSuffix=-cutover`), so it can
+be verified before anyone is repointed to it and the original is deleted. See
+[`docs/production-cutover-runbook.md`](docs/production-cutover-runbook.md) for the full
+step-by-step process — this is required reading before cutting over `staging` or
+`production`, not just a nice-to-have.
 
 ## ♿ Accessibility
 
@@ -535,7 +552,7 @@ npm run test:e2e       # Run E2E tests
 
 ### External Resources
 
-- [Serverless Framework Docs](https://www.serverless.com/framework/docs/)
+- [AWS CDK Docs](https://docs.aws.amazon.com/cdk/v2/guide/home.html)
 - [Playwright Documentation](https://playwright.dev/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [ESBuild Documentation](https://esbuild.github.io/)

@@ -273,3 +273,55 @@ Modify `.github/workflows/cdk-deploy/action.yml`, `.github/workflows/release.yml
       independently re-justifying each one; local dev/E2E now uses a plain Express server
       instead of `sls offline`.
 - [ ] Comment on UGCPH-563 with the PR link, summary, and the trigger/cutover-risk finding.
+
+---
+
+### Addendum (2026-09-30): retroactive blue/green cutover policy
+
+**Full context:** [docs/superpowers/specs/2026-09-24-cdk-migration-design.md](../specs/2026-09-24-cdk-migration-design.md#addendum-2026-09-30-retroactive-blue-green-cutover-policy)
+
+The org adopted a Lambda cutover policy, applied retroactively to this epic's PRs: `main`
+(Function URL, no other event-source trigger) must cut over via blue/green, not the
+full-replace this plan originally scoped. Added to this same PR/branch
+(`feat/UGCPH-563-cdk-migration`) rather than a follow-up ticket, per instruction.
+
+- [x] `cdk/stack.ts`: add optional `nameSuffix?: string` to `WidgetTemplatesStackProps`
+      (default `''`), append it to `functionName` and the IAM role's `roleName` (the log
+      group name is derived from `functionName`, so it's suffixed automatically). Leave
+      `PRODUCTION_FUNCTION_ARN` unsuffixed — it's a literal, ported-as-is self-referencing
+      ARN, not derived from `stage`/`nameSuffix`.
+- [x] `cdk/app.ts`: read `nameSuffix` from `--context nameSuffix=<suffix>` (default `''`),
+      append to the stack id (`widget-templates-${stage}${nameSuffix}`), pass through to
+      `WidgetTemplatesStackProps`.
+- [x] `cdk/stack.spec.ts`: add a `describe("with nameSuffix set (transitional blue/green
+      stack)")` block — suffixed function/role/log-group names, unsuffixed default,
+      alias/Function-URL wiring (`live` alias, provisioned concurrency 10, `Qualifier:
+      "live"`) still correct under a suffix, staging's `s3:PutBucketTagging` statement
+      still present under a suffix, and production's `PRODUCTION_FUNCTION_ARN` statements
+      staying pointed at the canonical non-suffixed ARN under a suffix.
+- [x] `npx vitest run cdk/stack.spec.ts` — PASS (24 tests: the original 14 plus 10 new).
+- [x] Rewrite `docs/production-cutover-runbook.md`: blue/green sequence (deploy
+      transitional stack → verify via `smoke-test:lambda` + a signed request to the live
+      transitional Function URL → repoint whoever calls the URL, since there's no
+      CloudFront/config file to swap for this internal-tooling Lambda → soak → delete the
+      old stack) as the primary flow, replacing the original mitigation-checklist framing.
+      Kept the underlying trigger/blast-radius analysis (Function URL only, no CloudFront
+      association, internal audience) — that finding is what justifies blue/green under the
+      policy, only the mechanism changed.
+- [x] `docs/superpowers/specs/2026-09-24-cdk-migration-design.md`: add the addendum this
+      plan addendum links to.
+- [x] `README.md`: "Deployment" section still described `sls deploy`/`serverless.ts`
+      (stale even before this policy update — the original migration never updated it).
+      Rewrote to describe `npm run deploy:<stage>` / `cdk deploy` / `cdk diff`, and added a
+      "Blue/green cutover of the `main` Lambda" subsection pointing at the runbook. Also
+      fixed two smaller stale references (`Framework: AWS Serverless Framework` → `AWS
+      CDK`; project-structure tree's `serverless.ts` line → `cdk/`) and the Serverless
+      Framework docs link → AWS CDK docs link.
+- [ ] Re-verify: `npm run build && npm run lint && npm run typecheck && npm test` (35
+      tests), all 3 Playwright e2e shards, GitGuardian, `cdk synth` for all 3 stages × both
+      normal and suffixed (`nameSuffix=-cutover`) configs, `npm run build:lambda && npm run
+      smoke-test:lambda`. Push and confirm GitHub Actions CI is green again.
+- [ ] Commit (`feat: UGCPH-563: <description>`, ending with the required
+      `Co-Authored-By` trailer) and push to `feat/UGCPH-563-cdk-migration`.
+- [ ] Comment on UGCPH-563 noting the blue/green addendum (best-effort — this ticket's
+      main comment already posted; don't block on a 403).

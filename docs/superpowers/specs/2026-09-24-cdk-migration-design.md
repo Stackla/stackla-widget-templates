@@ -336,3 +336,46 @@ an intentional, documented divergence rather than an inconsistency.
   all pass unchanged.
 - This repo's actual CI (`.github/workflows/main.yml`): `npm ci`, `npm run build`, `npm run
   lint`, `npm run typecheck`, `npm test` all pass locally before opening the PR.
+
+## Addendum (2026-09-30): retroactive blue/green cutover policy
+
+The org has since adopted a Lambda cutover policy that applies retroactively to this
+epic's PRs: a Lambda with a Function URl and no other event-source trigger (this repo's
+`main` — see "Critical trigger finding" above) must cut over via **blue/green** (deploy a
+second CloudFormation stack, verify it, repoint callers, then delete the old stack), not
+the full-replace (delete-then-recreate-under-the-same-name) approach this design doc
+originally scoped in "Cutover (full replace, single PR)" above.
+
+This does not change any of the "Stack contents" analysis above — the Lambda's config,
+IAM statements, provisioned-concurrency alias, and Function URL wiring are all unchanged.
+What changes:
+
+- `cdk/stack.ts`/`cdk/app.ts` gain an optional `nameSuffix` stack prop / `--context
+  nameSuffix=<suffix>` CDK context value (default `''`), which is appended to every
+  physical name this stack owns — `functionName`, the IAM role's `roleName`, and (via
+  `functionName`) the log group name — so a transitional stack (e.g. `nameSuffix:
+  '-cutover'`) can be deployed alongside the still-live original without a physical-name
+  collision. The stack id itself (`widget-templates-${stage}${nameSuffix}`) is likewise
+  suffixed. Normal deploys don't set it and get the canonical names, unchanged from the
+  original design.
+- `PRODUCTION_FUNCTION_ARN` (the literal, ported-as-is self-referencing ARN backing
+  production's `lambda:GetFunction`/`EnableReplication*`/`DisableReplication*`
+  statements) is **deliberately not** suffixed — it stays pointed at the canonical,
+  non-suffixed `widget-templates-production-main` regardless of `nameSuffix`, matching how
+  the `content-api` reference migration treats externally-referenced ARNs (its SQS queue
+  ARNs) under the same policy. See `cdk/stack.ts`'s comment on that constant.
+- `docs/production-cutover-runbook.md` was rewritten so the blue/green sequence (deploy
+  transitional stack → verify via `smoke-test:lambda` plus a signed request to the live
+  transitional Function URL → repoint whoever calls the URL → soak → delete the old stack)
+  is the primary documented flow, replacing the original mitigation-checklist framing (low-
+  traffic window + manual URL propagation as standalone bullet points, no actual parallel
+  deploy mechanism). The underlying trigger analysis — Function URL only, no CloudFront
+  association, internal template-authoring audience, no queue to buffer a gap — is
+  unchanged and is what justifies blue/green under the policy in the first place; only the
+  mechanism for avoiding the gap changed, from "be careful during the gap" to "there is no
+  gap because both stacks briefly coexist."
+- New `cdk/stack.spec.ts` coverage (see "with nameSuffix set (transitional blue/green
+  stack)"): suffixed function/role/log-group names, unsuffixed defaults, alias/Function-URL
+  wiring still correct under a suffix, and the `PRODUCTION_FUNCTION_ARN` non-suffixing
+  behavior above, asserted explicitly rather than left as an implicit consequence of the
+  constant being module-level.

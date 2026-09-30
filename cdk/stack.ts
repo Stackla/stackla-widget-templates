@@ -9,6 +9,10 @@ interface StageConfig {
   iamStatements: iam.PolicyStatementProps[]
 }
 
+// Ported verbatim from config/production.json's iam.role.statements as a literal string,
+// not derived from `stage`/`nameSuffix` — matches the reference migration's treatment of
+// externally-referenced ARNs (e.g. content-cdn-api's queueArns), which stay fixed under a
+// blue/green nameSuffix deploy rather than pointing the transitional stack at itself.
 const PRODUCTION_FUNCTION_ARN = "arn:aws:lambda:us-east-1:953585160895:function:widget-templates-production-main"
 
 const STAGE_CONFIGS: Record<"development" | "staging" | "production", StageConfig> = {
@@ -63,19 +67,32 @@ const PROVISIONED_CONCURRENT_EXECUTIONS = 10
 
 export interface WidgetTemplatesStackProps extends cdk.StackProps {
   stage: string
+  // Blue/green cutover support (see docs/production-cutover-runbook.md): the
+  // steady-state stack MUST reuse widget-templates-<stage>-main /
+  // widget-templates-<stage>-<region>-lambdaRole so the Lambda ARN and IAM
+  // role name don't change (the Function URL is bookmarked/used directly by
+  // template authors/QA — see the design doc's trigger finding). But that
+  // means a second CDK stack using those exact names can't be deployed
+  // *alongside* the still-live original without a physical-name collision.
+  // This optional suffix lets the cutover runbook stand up a transitional
+  // stack under distinct names first, verify it, repoint whoever calls the
+  // Function URL, delete the old stack, then redeploy without a suffix to
+  // reclaim the canonical names. Defaults to '' for normal (steady-state)
+  // deploys.
+  nameSuffix?: string
 }
 
 export class WidgetTemplatesStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: WidgetTemplatesStackProps) {
     super(scope, id, props)
 
-    const { stage } = props
+    const { stage, nameSuffix = "" } = props
     if (!(stage in STAGE_CONFIGS)) {
       throw new Error(`Unknown stage "${stage}" — expected one of: ${Object.keys(STAGE_CONFIGS).join(", ")}`)
     }
     const config = STAGE_CONFIGS[stage as keyof typeof STAGE_CONFIGS]
 
-    const functionName = `widget-templates-${stage}-main`
+    const functionName = `widget-templates-${stage}${nameSuffix}-main`
     const logGroup = new logs.LogGroup(this, "HandlerLogGroup", {
       logGroupName: `/aws/lambda/${functionName}`,
       retention: logs.RetentionDays.TWO_WEEKS,
@@ -85,7 +102,7 @@ export class WidgetTemplatesStack extends cdk.Stack {
     const role = new iam.Role(this, "HandlerServiceRole", {
       // Matches the actual deployed role name (Fn::Join with region) so nothing that
       // references the role by name breaks on cutover.
-      roleName: `widget-templates-${stage}-${this.region}-lambdaRole`,
+      roleName: `widget-templates-${stage}${nameSuffix}-${this.region}-lambdaRole`,
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
       managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole")]
     })
